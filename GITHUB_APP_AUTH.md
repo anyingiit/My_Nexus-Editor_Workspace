@@ -19,3 +19,15 @@ Verified 2026-08-04 using a directly generated RS256 JWT and a repository-scoped
 ## Runtime Rule
 
 Generate a fresh short-lived JWT and installation token when needed. Do not store either token or copy the private key into this repository.
+
+## Repository-Local Commit Identity
+
+Normal Git commits in this checkout use:
+
+- Name: `MyAnyAgent[bot]`
+- Email: `312959697+myanyagent[bot]@users.noreply.github.com`
+
+The identity and App credential helper are stored only in this checkout's
+`.git/config` and `.git/` directory. They do not change global Git settings or
+other repositories. The helper mints a fresh installation token on demand and
+never persists it.
