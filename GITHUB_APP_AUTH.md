@@ -31,3 +31,25 @@ The identity and App credential helper are stored only in this checkout's
 `.git/config` and `.git/` directory. They do not change global Git settings or
 other repositories. The helper mints a fresh installation token on demand and
 never persists it.
+
+## Cross-Device Bootstrap
+
+Prerequisites on each device:
+
+- Git and Node.js are installed.
+- `origin` uses the HTTPS URL for this repository.
+- The private key is provisioned separately at
+  `~/.secrets/myanyagent.2026-08-04.private-key.pem` with restrictive file
+  permissions.
+
+From the repository root, run:
+
+```bash
+MYANYAGENT_PRIVATE_KEY="$HOME/.secrets/myanyagent.2026-08-04.private-key.pem" \
+  ./scripts/bootstrap-myanyagent.sh
+```
+
+The bootstrap writes only this checkout's `.git/config`, validates the target
+remote, and verifies token minting without printing the token. It never copies
+the private key into the repository. For a different key location, set
+`MYANYAGENT_PRIVATE_KEY` to an absolute path.
