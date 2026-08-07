@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agents-v3/agent_in_loop_plan.schema.json",
+  "title": "Paired Agent-in-the-loop Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "experiment_id", "seed", "coding_model", "coding_model_hash", "common_budget", "arms", "assignments", "reviewer_profile_hash", "blinded"],
+  "properties": {
+    "schema_version": {"const": "3.0.0"},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "seed": {"type": "integer"},
+    "coding_model": {"type": "object"},
+    "coding_model_hash": {"$ref": "#/$defs/sha256"},
+    "common_budget": {"$ref": "#/$defs/budget"},
+    "arms": {"const": ["empty", "repository", "candidate"]},
+    "reviewer_profile_hash": {"$ref": "#/$defs/sha256"},
+    "blinded": {"const": true},
+    "assignments": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/assignment"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "commit": {"type": "string", "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"},
+    "budget": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tokens", "wall_seconds", "cash_microusd"],
+      "properties": {"tokens": {"type": "integer", "minimum": 1}, "wall_seconds": {"type": "integer", "minimum": 1}, "cash_microusd": {"type": "integer", "minimum": 0}}
+    },
+    "assignment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["blind_task_id", "issue_id", "issue_prompt_hash", "base_commit", "arm", "order", "coding_model_hash", "budget"],
+      "properties": {
+        "blind_task_id": {"type": "string", "pattern": "^[a-f0-9]{24}$"},
+        "issue_id": {"type": "string", "minLength": 1},
+        "issue_prompt_hash": {"$ref": "#/$defs/sha256"},
+        "base_commit": {"$ref": "#/$defs/commit"},
+        "arm": {"enum": ["empty", "repository", "candidate"]},
+        "order": {"type": "integer", "minimum": 0, "maximum": 2},
+        "coding_model_hash": {"$ref": "#/$defs/sha256"},
+        "budget": {"$ref": "#/$defs/budget"}
+      }
+    }
+  }
+}

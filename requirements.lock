@@ -1,0 +1,3 @@
+# Runtime dependency lock for the V3 harness. Build tooling is intentionally separate.
+PyYAML==6.0.3
+
