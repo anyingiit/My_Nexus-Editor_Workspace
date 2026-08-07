@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/agents-v3/task_packet.schema.json",
+  "title": "Bounded Task Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "run_id", "title", "objective", "role", "dependencies", "inputs", "allowed_context", "forbidden_context", "outputs", "acceptance_checks", "budget_request", "timeout_seconds", "idempotency_key", "retry_policy", "split_policy"],
+  "properties": {
+    "schema_version": {"const": "3.0.0"},
+    "task_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "run_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "title": {"type": "string", "minLength": 1, "maxLength": 256},
+    "objective": {"type": "string", "minLength": 1},
+    "role": {"enum": ["collector", "train_evidence_miner", "candidate_worker", "judge", "artifact_evaluator", "dev_evaluator", "final_evaluator", "deterministic_executor", "untrusted_code_runner"]},
+    "dependencies": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "inputs": {"type": "array", "items": {"$ref": "#/$defs/artifactRef"}},
+    "allowed_context": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "forbidden_context": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "outputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/outputSpec"}},
+    "acceptance_checks": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "budget_request": {"$ref": "#/$defs/budgetRequest"},
+    "timeout_seconds": {"type": "integer", "minimum": 1},
+    "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 256},
+    "retry_policy": {"enum": ["NONE", "CONFIGURED_TRANSIENT_ONLY"]},
+    "split_policy": {"enum": ["NEVER", "CONTROLLER_ONLY"]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "artifactRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_id", "sha256", "mount", "mode"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "mount": {"type": "string", "pattern": "^/"},
+        "mode": {"const": "ro"}
+      }
+    },
+    "outputSpec": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_type", "staging_path", "schema_id"],
+      "properties": {
+        "artifact_type": {"type": "string", "minLength": 1},
+        "staging_path": {"type": "string", "pattern": "^/work/output/"},
+        "schema_id": {"type": ["string", "null"]}
+      }
+    },
+    "budgetRequest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_input_tokens", "max_output_tokens", "max_cash_usd", "max_provider_quota", "max_tool_calls", "max_wall_clock_seconds"],
+      "properties": {
+        "max_input_tokens": {"type": "integer", "minimum": 0},
+        "max_output_tokens": {"type": "integer", "minimum": 0},
+        "max_cash_usd": {"type": "number", "minimum": 0},
+        "max_provider_quota": {"type": "number", "minimum": 0},
+        "max_tool_calls": {"type": "integer", "minimum": 0},
+        "max_wall_clock_seconds": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}
+
