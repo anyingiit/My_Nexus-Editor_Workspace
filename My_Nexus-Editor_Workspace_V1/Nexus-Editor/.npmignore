@@ -1,0 +1,7 @@
+apps/
+docs/
+openspec/
+node_modules/
+packages/*/src/
+packages/*/test/
+*.log
