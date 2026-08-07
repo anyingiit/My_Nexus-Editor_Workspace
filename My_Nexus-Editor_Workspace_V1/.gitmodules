@@ -1,0 +1,3 @@
+[submodule "Nexus-Editor"]
+	path = Nexus-Editor
+	url = https://github.com/floatboatai/Nexus-Editor
