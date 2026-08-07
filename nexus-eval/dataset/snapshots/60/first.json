@@ -1,0 +1,112 @@
+{
+  "pr_number": 60,
+  "title": "feat(core): add selection controls to setDocument",
+  "body": "## Summary / 摘要\r\n\r\nAdd selection controls to `EditorAPI.setDocument()`, allowing callers to preserve the current selection or apply an explicit selection after replacing the document.\r\n\r\n为 `EditorAPI.setDocument()` 增加选区控制能力：整文档替换后可保留当前光标/选区，或指定新的选区。\r\n\r\n## Changes / 变更\r\n\r\n- Add `SetDocumentOptions` and `EditorSelectionRange`.\r\n- Support `preserveSelection` and explicit `selection`.\r\n- Clamp selection positions to the new document length.\r\n- Preserve existing `silent` behavior.\r\n- Carry full options through IME-deferred document loads.\r\n- \r\n## Scope / 后续\r\n\r\nThis PR intentionally keeps plugin-layer migrations out of scope. Some toolbar/search flows currently replace the document and then restore selection in a separate step. Once the core API is accepted, those call sites can be migrated in a focused follow-up PR to reduce review scope and avoid conflicts with ongoing plugin work.\r\n\r\n本 PR 有意不改造 toolbar/search 等插件层调用，保持 core API 变更聚焦。当前部分插件流程仍采用 `setDocument()` 后再 `setSelection()` 的两步更新；待 core API 合入后，可单独提交插件层迁移 PR，降低本次 review 范围和与现有插件 PR 的冲突风险。\r\n\r\n## Testing / 测试\r\n\r\n- `corepack pnpm exec vitest run packages/core/test/editor.test.ts` passed\r\n- `corepack pnpm -r exec tsc --noEmit` passed\r\n- `corepack pnpm --filter @floatboat/nexus-core build` passed\r\n- `corepack pnpm exec vitest run --exclude apps/electron-demo/test/sample-vault.test.ts` passed\r\n\r\nNote: full `vitest run` has pre-existing Windows-local failures in `apps/electron-demo/test/sample-vault.test.ts` related to path separator / sample-vault fixture assertions.",
+  "created_at": "2026-06-11T08:13:32Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "2d1348823565788a05a15fe9efb0165df0c1a371",
+  "first_review_time": "2026-06-11T08:13:47Z",
+  "commits_at_first_review": [
+    {
+      "sha": "2d1348823565788a05a15fe9efb0165df0c1a371",
+      "message": "feat(core): add selection controls to setDocument",
+      "date": "2026-06-11T07:50:10Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "d6242b7d317a3732003f280d9802ba8c2e901d24",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2d1348823565788a05a15fe9efb0165df0c1a371/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2d1348823565788a05a15fe9efb0165df0c1a371/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=2d1348823565788a05a15fe9efb0165df0c1a371",
+        "patch": "@@ -207,6 +207,8 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n editor.getDocument()          // current Markdown string\n editor.getAst()               // current mdast Root\n editor.setDocument(md)        // replace entire document\n+editor.setDocument(md, { silent: true, preserveSelection: true })\n+editor.setDocument(md, { selection: { anchor: 0 } })\n editor.setSelection(pos)      // move cursor\n editor.focus() / editor.blur()\n editor.destroy()"
+      },
+      {
+        "sha": "291cfaf12f53925a0f575fc3a0b0cf3825f5b866",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2d1348823565788a05a15fe9efb0165df0c1a371/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2d1348823565788a05a15fe9efb0165df0c1a371/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=2d1348823565788a05a15fe9efb0165df0c1a371",
+        "patch": "@@ -207,6 +207,8 @@ pnpm dev:electron-demo\n editor.getDocument()          // 当前 Markdown 文本\n editor.getAst()               // 当前 mdast 语法树\n editor.setDocument(md)        // 替换整个文档\n+editor.setDocument(md, { silent: true, preserveSelection: true })\n+editor.setDocument(md, { selection: { anchor: 0 } })\n editor.setSelection(pos)      // 移动光标\n editor.focus() / editor.blur()\n editor.destroy()"
+      },
+      {
+        "sha": "11bb0ba09bcd14e3de71d876efa98028d966da08",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 47,
+        "deletions": 11,
+        "changes": 58,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=2d1348823565788a05a15fe9efb0165df0c1a371",
+        "patch": "@@ -32,8 +32,10 @@ import type {\n   EditorEventContext,\n   EditorEventHandler,\n   EditorEventMap,\n+  EditorSelectionRange,\n   NexusPlugin,\n   ParserLike,\n+  SetDocumentOptions,\n   TocEntry,\n } from \"./types\";\n import { createWidgetExtension } from \"./widget-extension\";\n@@ -157,6 +159,32 @@ function extractToc(ast: Root): TocEntry[] {\n   return entries;\n }\n \n+function clampPosition(pos: number, docLength: number): number {\n+  if (!Number.isFinite(pos)) return 0;\n+  return Math.max(0, Math.min(docLength, Math.trunc(pos)));\n+}\n+\n+function resolveDocumentSelection(\n+  before: EditorSelectionRange,\n+  docLength: number,\n+  opts: SetDocumentOptions | undefined,\n+): EditorSelectionRange | undefined {\n+  if (opts?.selection) {\n+    const anchor = clampPosition(opts.selection.anchor, docLength);\n+    const head = clampPosition(opts.selection.head ?? opts.selection.anchor, docLength);\n+    return { anchor, head };\n+  }\n+\n+  if (opts?.preserveSelection) {\n+    return {\n+      anchor: clampPosition(before.anchor, docLength),\n+      head: clampPosition(before.head, docLength),\n+    };\n+  }\n+\n+  return undefined;\n+}\n+\n function createParser(plugins: NexusPlugin[]): ParserLike {\n   // Build the unified pipeline ONCE, not per-parse call. Each\n   // `unified().use(...)` chain resolves plugin graphs, initializes extensions,\n@@ -259,7 +287,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   // 组合输入（IME）状态与被推迟的文档回灌。组合输入进行中调用 setDocument 会被\n   // 推迟到 compositionend 再应用，避免整文档替换打断输入法、丢失合成中文字、视口跳顶。\n   let composing = false;\n-  let pendingDocumentLoad: { next: string; silent: boolean } | null = null;\n+  let pendingDocumentLoad: { next: string; opts?: SetDocumentOptions } | null = null;\n   // Initial AST: when a custom parser is provided, honour it (tests rely on\n   // this — they install plugins that mutate the tree). Otherwise use the\n   // Lezer string parser, which is dramatically faster than remark and\n@@ -364,23 +392,33 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   }\n \n   // 整文档替换的实际执行体。setDocument（公开 API）在组合输入中会推迟调用本函数。\n-  function performSetDocument(next: string, silent: boolean) {\n+  function performSetDocument(next: string, opts?: SetDocumentOptions) {\n     const beforeSelection = view.state.selection.main;\n+    const silent = opts?.silent === true;\n+    const selection = resolveDocumentSelection(\n+      { anchor: beforeSelection.anchor, head: beforeSelection.head },\n+      next.length,\n+      opts\n+    );\n     debugNexus(\"setDocument\", {\n       silent,\n       oldLength: view.state.doc.length,\n       nextLength: next.length,\n       beforeSelection: { anchor: beforeSelection.anchor, head: beforeSelection.head },\n+      selection,\n     });\n \n-    view.dispatch({\n+    const dispatchSpec = {\n       changes: {\n         from: 0,\n         to: view.state.doc.length,\n         insert: next\n       },\n       annotations: silent ? silentDocChange.of(true) : undefined,\n-    });\n+      ...(selection ? { selection } : {}),\n+    };\n+\n+    view.dispatch(dispatchSpec);\n \n     // silent 模式下仍同步 currentAst，使 getAst() / getTableOfContents() 反映已载入文件。\n     if (silent) {\n@@ -395,10 +433,10 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   // compositionend 时应用被推迟的文档回灌；整文档替换后排队中的组合输入变更已失效。\n   function applyPendingDocumentLoad(): boolean {\n     if (!pendingDocumentLoad) return false;\n-    const { next, silent } = pendingDocumentLoad;\n+    const { next, opts } = pendingDocumentLoad;\n     pendingDocumentLoad = null;\n     pendingCompositionMarkdown = null;\n-    performSetDocument(next, silent);\n+    performSetDocument(next, opts);\n     return true;\n   }\n \n@@ -719,20 +757,18 @@ export function createEditor(config: EditorConfig): EditorAPI {\n         return;\n       }\n \n-      const silent = opts?.silent === true;\n-\n       // 组合输入（IME）进行中：整文档替换会打断输入法、丢失合成中文字并把视口重置到顶部。\n       // 推迟到 compositionend 再应用，只保留最后一次请求。\n       if (composing || view.composing || view.compositionStarted) {\n-        pendingDocumentLoad = { next, silent };\n+        pendingDocumentLoad = { next, opts };\n         debugNexus(\"setDocument-deferred-composing\", {\n-          silent,\n+          silent: opts?.silent === true,\n           nextLength: next.length,\n         });\n         return;\n       }\n \n-      performSetDocument(next, silent);\n+      performSetDocument(next, opts);\n     },\n     replaceSelection(text) {\n       if (destroyed) return;"
+      },
+      {
+        "sha": "9b4954f59499d05d17d28c897c382b78d0545392",
+        "filename": "packages/core/src/index.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Findex.ts?ref=2d1348823565788a05a15fe9efb0165df0c1a371",
+        "patch": "@@ -29,6 +29,7 @@ export type {\n   EditorEventHandler,\n   EditorEventHandlers,\n   EditorEventMap,\n+  EditorSelectionRange,\n   LivePreviewConfig,\n   LivePreviewLabels,\n   LivePreviewNode,\n@@ -40,6 +41,7 @@ export type {\n   ParserLike,\n   SlashCommandDef,\n   SlashMenuState,\n+  SetDocumentOptions,\n   TocEntry,\n   WidgetDefinition,\n   WidgetRenderContext"
+      },
+      {
+        "sha": "f7d9f5f8c7be63758d67fb315d7cd5de570e79a8",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 27,
+        "deletions": 1,
+        "changes": 28,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=2d1348823565788a05a15fe9efb0165df0c1a371",
+        "patch": "@@ -133,6 +133,32 @@ export interface TocEntry {\n   to: number;\n }\n \n+export interface EditorSelectionRange {\n+  anchor: number;\n+  head: number;\n+}\n+\n+export interface SetDocumentOptions {\n+  /**\n+   * When true, skip the onChange pipeline. Use when loading a file from disk\n+   * to avoid treating the load as a user edit.\n+   */\n+  silent?: boolean;\n+  /**\n+   * Keep the current main selection after replacing the document. Positions\n+   * are clamped to the new document length.\n+   */\n+  preserveSelection?: boolean;\n+  /**\n+   * Apply an explicit selection after replacing the document. Takes precedence\n+   * over preserveSelection. head defaults to anchor.\n+   */\n+  selection?: {\n+    anchor: number;\n+    head?: number;\n+  };\n+}\n+\n export interface EditorAPI {\n   getDocument(): string;\n   getAst(): Root;\n@@ -154,7 +180,7 @@ export interface EditorAPI {\n    * 并把视口重置到顶部。此时本次替换会延迟到 compositionend 再应用，只保留\n    * 最后一次请求。\n    */\n-  setDocument(next: string, opts?: { silent?: boolean }): void;\n+  setDocument(next: string, opts?: SetDocumentOptions): void;\n   replaceSelection(text: string): void;\n   undo(): boolean;\n   redo(): boolean;"
+      },
+      {
+        "sha": "261647e2893b0dcd83d4545811ff61d5c33869a9",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 130,
+        "deletions": 1,
+        "changes": 131,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2d1348823565788a05a15fe9efb0165df0c1a371/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=2d1348823565788a05a15fe9efb0165df0c1a371",
+        "patch": "@@ -90,6 +90,88 @@ describe(\"createEditor\", () => {\n     editor.destroy();\n   });\n \n+  it(\"preserves selection when setDocument is called with preserveSelection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello world\" });\n+\n+    editor.setSelection(6, 11);\n+    editor.setDocument(\"hello nexus\", { preserveSelection: true });\n+\n+    expect(editor.getDocument()).toBe(\"hello nexus\");\n+    expect(editor.getSelection()).toEqual({ anchor: 6, head: 11 });\n+    editor.destroy();\n+  });\n+\n+  it(\"clamps preserved selection to the new document length\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"0123456789\" });\n+\n+    editor.setSelection(8, 10);\n+    editor.setDocument(\"abc\", { preserveSelection: true });\n+\n+    expect(editor.getSelection()).toEqual({ anchor: 3, head: 3 });\n+    editor.destroy();\n+  });\n+\n+  it(\"applies explicit selection after setDocument\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"old\" });\n+\n+    editor.setDocument(\"new document\", {\n+      selection: { anchor: 4, head: 12 },\n+    });\n+\n+    expect(editor.getSelection()).toEqual({ anchor: 4, head: 12 });\n+    editor.destroy();\n+  });\n+\n+  it(\"clamps explicit setDocument selection positions\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"old\" });\n+\n+    editor.setDocument(\"abc\", {\n+      selection: { anchor: -10, head: 99 },\n+    });\n+\n+    expect(editor.getSelection()).toEqual({ anchor: 0, head: 3 });\n+    editor.destroy();\n+  });\n+\n+  it(\"lets explicit selection override preserveSelection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"old document\" });\n+\n+    editor.setSelection(0, 3);\n+    editor.setDocument(\"new document\", {\n+      preserveSelection: true,\n+      selection: { anchor: 4 },\n+    });\n+\n+    expect(editor.getSelection()).toEqual({ anchor: 4, head: 4 });\n+    editor.destroy();\n+  });\n+\n+  it(\"preserves selection for silent document loads without emitting change\", () => {\n+    const container = document.createElement(\"div\");\n+    const docs: string[] = [];\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"# Old\",\n+      onChange(doc) {\n+        docs.push(doc);\n+      },\n+    });\n+\n+    editor.setSelection(2);\n+    editor.setDocument(\"# New\", { silent: true, preserveSelection: true });\n+\n+    expect(editor.getDocument()).toBe(\"# New\");\n+    expect(editor.getSelection()).toEqual({ anchor: 2, head: 2 });\n+    expect(docs).toEqual([]);\n+    expect(editor.getAst().children[0]?.type).toBe(\"heading\");\n+    editor.destroy();\n+  });\n+\n   it(\"keeps the editor usable when the parser throws\", () => {\n     const container = document.createElement(\"div\");\n     const docs: string[] = [];\n@@ -365,7 +447,7 @@ describe(\"createEditor\", () => {\n \n     editor.destroy();\n \n-    expect(() => editor.setDocument(\"after-destroy\")).not.toThrow();\n+    expect(() => editor.setDocument(\"after-destroy\", { preserveSelection: true })).not.toThrow();\n     expect(() => editor.focus()).not.toThrow();\n     expect(() => editor.blur()).not.toThrow();\n \n@@ -511,6 +593,53 @@ describe(\"createEditor — composition-safe setDocument\", () => {\n     editor.destroy();\n   });\n \n+  it(\"keeps deferred setDocument selection options after IME composition ends\", () => {\n+    const container = document.createElement(\"div\");\n+    let capturedView: EditorView | null = null;\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello world\",\n+      plugins: [{ name: \"capture\", cmExtensions: [captureViewPlugin((view) => (capturedView = view))] }],\n+    });\n+    const view = requireEditorView(capturedView);\n+\n+    editor.setSelection(6, 11);\n+    view.contentDOM.dispatchEvent(new Event(\"compositionstart\", { bubbles: true }));\n+    editor.setDocument(\"hello nexus\", { silent: true, preserveSelection: true });\n+\n+    expect(editor.getDocument()).toBe(\"hello world\");\n+\n+    view.contentDOM.dispatchEvent(new Event(\"compositionend\", { bubbles: true }));\n+\n+    expect(editor.getDocument()).toBe(\"hello nexus\");\n+    expect(editor.getSelection()).toEqual({ anchor: 6, head: 11 });\n+    editor.destroy();\n+  });\n+\n+  it(\"uses the latest deferred setDocument call while IME composition is active\", () => {\n+    const container = document.createElement(\"div\");\n+    let capturedView: EditorView | null = null;\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"base text\",\n+      plugins: [{ name: \"capture\", cmExtensions: [captureViewPlugin((view) => (capturedView = view))] }],\n+    });\n+    const view = requireEditorView(capturedView);\n+\n+    editor.setSelection(5, 9);\n+    view.contentDOM.dispatchEvent(new Event(\"compositionstart\", { bubbles: true }));\n+    editor.setDocument(\"first\", { preserveSelection: true });\n+    editor.setDocument(\"second\", { selection: { anchor: 2, head: 99 } });\n+\n+    expect(editor.getDocument()).toBe(\"base text\");\n+\n+    view.contentDOM.dispatchEvent(new Event(\"compositionend\", { bubbles: true }));\n+\n+    expect(editor.getDocument()).toBe(\"second\");\n+    expect(editor.getSelection()).toEqual({ anchor: 2, head: 6 });\n+    editor.destroy();\n+  });\n+\n   it(\"keeps the in-flight composition text when no external load is pending\", async () => {\n     vi.useFakeTimers();\n     const container = document.createElement(\"div\");"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=60",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

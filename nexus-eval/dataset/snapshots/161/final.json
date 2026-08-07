@@ -1,0 +1,53 @@
+{
+  "pr_number": 161,
+  "title": "fix(slash): handle menu clicks inside shadow DOM",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "a99145edabc8094db3ed5605efd3b11298c1b425",
+  "merge_commit_sha": "88d2c7da71652fef576b80723a4c11009aa5cd3a",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "a99145edabc8094db3ed5605efd3b11298c1b425",
+      "message": "fix(slash): handle menu clicks inside shadow DOM",
+      "date": "2026-07-15T07:34:37Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-slash/src/menu-ui.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 11,
+      "changes": 25
+    },
+    {
+      "filename": "packages/plugin-slash/test/menu-ui.test.ts",
+      "status": "modified",
+      "additions": 44,
+      "deletions": 0,
+      "changes": 44
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=161",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

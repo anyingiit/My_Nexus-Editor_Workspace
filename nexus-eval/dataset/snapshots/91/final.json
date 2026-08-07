@@ -1,0 +1,53 @@
+{
+  "pr_number": 91,
+  "title": "fix(search): make whole-word matching Unicode-aware",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T07:00:50Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "f06b8aa18291b8532a53d691cdfaa44d89f384a0",
+  "merge_commit_sha": "14837dbd5ed9fae006f8d9c83da45cdbfb6f60cf",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "f06b8aa18291b8532a53d691cdfaa44d89f384a0",
+      "message": "fix(search): make whole-word matching Unicode-aware",
+      "date": "2026-07-01T14:18:49Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 9,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=91",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

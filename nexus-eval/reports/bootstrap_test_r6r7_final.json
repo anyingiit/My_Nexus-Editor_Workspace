@@ -1,0 +1,23 @@
+{
+  "split": "test",
+  "tag": "r6r7_final",
+  "n_iter": 10000,
+  "seed": 1234,
+  "ours_vs_baseline": {
+    "n": 17,
+    "delta_acc": -0.0588,
+    "p_value": 1.0
+  },
+  "ours_vs_empty": {
+    "n": 17,
+    "delta_acc": -0.0588,
+    "p_value": 1.0
+  },
+  "observed": {
+    "acc": {
+      "empty": 0.8235,
+      "baseline": 0.8235,
+      "ours": 0.7647
+    }
+  }
+}

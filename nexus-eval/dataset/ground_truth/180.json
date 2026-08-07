@@ -1,0 +1,19 @@
+{
+  "pr_number": 180,
+  "title": "feat(toolbar): add insertTable helper and table-picker grid UI",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "CarasuLee",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-23T18:55:11Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=180) <br/>All committers have signed the CLA."
+    }
+  ]
+}

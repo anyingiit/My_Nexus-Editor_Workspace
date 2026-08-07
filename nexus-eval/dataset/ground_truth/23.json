@@ -1,0 +1,26 @@
+{
+  "pr_number": 23,
+  "title": "feat: implement 7 Roadmap items across 6 packages",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T06:15:34Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "qian1tang",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:02Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=23) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T06:15:32Z",
+      "body": "感谢这份体量很大的贡献 👏 里面不少单项功能（搜索、列表、SDK 绑定、e2e）质量都不错。\n\n但本 PR 跨 6 个包、39 个文件、捆了 7 个 roadmap 项，没法作为一个整体评审或合并，按 `CONTRIBUTING.md` §2「One PR, one concern」必须拆分。几个具体点：\n\n- **CI / Playwright** 不该塞进功能 PR。新增 `e2e` job、把 `publish` 改成 `needs: [verify, e2e]`、引入整套 Playwright 工具链，会改变之后**每一个** PR 的合并门禁，这属于基础设施改动（roadmap #25/#26），应当走独立、单独评审的 PR。\n- **多光标提案**：本 PR 加了 `add-multi-cursor/` 的 OpenSpec 但没有对应实现代码，而它和 #57 的 `add-core-multi-cursor` 是同一个 roadmap #6 的两份重复提案。#57 已经带实现+测试落地，建议丢弃这份提案、采用 #57。\n- **undo 分组 (#8)**：本 PR 用 `transactionFilter` 打 `table.edit` 标记，相比 #31 的 `joinToEvent` 方案要弱一些；两份重复实现也需要先收敛成一个。\n\n因此先关闭本 PR。建议拆成几个聚焦的 PR：(a) CI+Playwright 基础设施、(b) 搜索 wholeWord/fuzzy、(c) toolbar 列表 toggle/reorder、(d) React/Vue 容器属性+onReady、(e) #8 history。每块都更容易独立评审合并。\n\n🧭 一条提交建议：基础设施（CI、构建门禁、工具链）和功能改动要分开提。功能 PR 不应顺带改变别人 PR 的合并门禁——把它拆出来单独评审，既降低风险，也让功能本身更快落地。\n\n🙌\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

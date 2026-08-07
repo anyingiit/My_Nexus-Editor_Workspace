@@ -1,0 +1,95 @@
+{
+  "pr_number": 2,
+  "title": "feat(electron): i18n for renderer UI driven by language setting",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-12T03:18:47Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "a2d65ae5ee70942fb50824a5ee1e335fd0c8609f",
+  "merge_commit_sha": "3251c03bfc0c468bb3f0b0668ee895c92e530e1f",
+  "base_sha": "37c230a902fd37f30a6adbe2127d2d0120761297",
+  "commits": [
+    {
+      "sha": "a2d65ae5ee70942fb50824a5ee1e335fd0c8609f",
+      "message": "feat(electron): i18n for renderer UI driven by language setting\n\nAdd message bundles and runtime (setUiLocale, t, subscribeLocale). Wire toolbar, status line, settings panel, vault/outline/search/backlinks, and live-preview image chrome to locale changes from settings.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-11T13:54:02Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 49,
+      "deletions": 21,
+      "changes": 70
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 11,
+      "changes": 28
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 4,
+      "changes": 9
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/i18n/messages.ts",
+      "status": "added",
+      "additions": 765,
+      "deletions": 0,
+      "changes": 765
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/i18n/runtime.ts",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/outline-panel.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 2,
+      "changes": 13
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 10,
+      "changes": 30
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 168,
+      "deletions": 39,
+      "changes": 207
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 15,
+      "changes": 41
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

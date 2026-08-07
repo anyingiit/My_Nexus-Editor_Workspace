@@ -1,0 +1,17 @@
+{
+  "pr_number": 73,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Contributor must sign the CLA before acceptance."
+    },
+    {
+      "id": 2,
+      "summary": "Commit email not linked to GitHub account; add email to account."
+    },
+    {
+      "id": 3,
+      "summary": "PR duplicates existing implementation #29 and will be closed."
+    }
+  ]
+}

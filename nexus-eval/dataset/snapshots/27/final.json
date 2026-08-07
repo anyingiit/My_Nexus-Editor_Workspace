@@ -1,0 +1,46 @@
+{
+  "pr_number": 27,
+  "title": "fix(electron): 提升 dev-electron 启动稳定性",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-22T12:52:19Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "19ca3333a9c508a24665441586d8637c0ff7c9bd",
+  "merge_commit_sha": "e99038ea3bf35c7f70186d90285a6cbd680cafa3",
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "commits": [
+    {
+      "sha": "19ca3333a9c508a24665441586d8637c0ff7c9bd",
+      "message": "fix(electron): harden dev startup flow",
+      "date": "2026-05-21T09:38:41Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/scripts/dev-electron.mjs",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 5,
+      "changes": 41
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=27",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

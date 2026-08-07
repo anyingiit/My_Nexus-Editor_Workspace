@@ -1,0 +1,53 @@
+{
+  "pr_number": 176,
+  "title": "fix(core): align fenced code folding with CommonMark",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "be271bd4987743b3edcdf3fa85ba21c77345b608",
+  "merge_commit_sha": "731825e9cd114f559751c3f9714f26b4405d3d15",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "be271bd4987743b3edcdf3fa85ba21c77345b608",
+      "message": "fix(core): align fenced code folding with CommonMark",
+      "date": "2026-07-23T09:20:50Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/markdown-fold.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 8,
+      "changes": 45
+    },
+    {
+      "filename": "packages/core/test/markdown-fold.test.ts",
+      "status": "modified",
+      "additions": 111,
+      "deletions": 0,
+      "changes": 111
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=176",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

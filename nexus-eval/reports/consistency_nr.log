@@ -1,0 +1,6 @@
+PR 67: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 68: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 69: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 71: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 72: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+C (self-consistency, full agreement) = 1.00 over 5 PRs x 5 runs

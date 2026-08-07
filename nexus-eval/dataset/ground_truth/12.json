@@ -1,0 +1,33 @@
+{
+  "pr_number": 12,
+  "title": "feat(search): add fuzzy search helpers",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-14T04:38:56Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ChainCoinLab",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "COMMENTED",
+      "submitted_at": "2026-05-13T11:22:28Z",
+      "body": "## Review: PR #12 — feat(search): add fuzzy search helpers\n\n**Assessment:** Adds fuzzy search helpers to plugin-search (+185/-2). Overlaps significantly with PR #16 which implements a more complete fuzzy search with fzf-like scoring. \n\n**Recommendation:** If PR #16 is merged first, this PR will likely conflict or become redundant. Suggest closing in favor of #16 which has a more thorough implementation (scoring algorithm, match indices, UI toggle)."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:38:46Z",
+      "body": "### Code review\n\nThanks for the contribution. A few notes on the diff itself, then a coordination concern that prompts closing this PR in favor of #16.\n\nImplementation notes (all lower-confidence, none catastrophic):\n\n- **\"Smallest line-local window\" guarantee can fail for queries with repeated first characters.** `findFuzzyWindow` does a forward greedy pass to locate the end of the subsequence, then a backward shrink. The backward shrink walks all the way to the first occurrence of `needle[0]` from the left, even if a later occurrence would yield a smaller window. Example: query `\"aba\"` against `\"aabba\"` returns `{from:0, to:5}` (\"aabba\"), but the smallest valid window is `{from:1, to:5}` (\"abba\"). No test covers repeated-character queries, so the README's \"smallest contiguous text window\" guarantee is unverified.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/ff33917f7b58883414d0460d2afcddb82079b5a9/packages/plugin-search/src/index.ts\n\n- **`SearchOptions.fuzzy` is programmatic-only.** No `SearchPluginOptions.fuzzy`, no `SearchPluginLabels.fuzzy`, no panel toggle. For a user-facing roadmap item (#17), the UI wiring is the more impactful half.\n\n- **New public capability without OpenSpec proposal.** Per the root `CLAUDE.md`, \"Always open @/openspec/AGENTS.md when the request: Introduces new capabilities.\" Sibling PRs #13/#14/#15 follow that pattern.\n\nCoordination — why closing:\n\nPR #16 (already merged-ready / reviewed by maintainer) implements the same Roadmap #17 fuzzy search but takes a more complete approach: it ships a separate `packages/core/src/fuzzy.ts` with fzf-style word-boundary/prefix/contiguous bonuses and gap penalty, exposes `fuzzyFilter`/`fuzzyMatch` as core primitives, AND wires the toggle through the search panel UI. Both PRs textually modify `packages/plugin-search/src/index.ts` and `packages/plugin-search/test/plugin-search.test.ts`, and both flip Roadmap #17 in `docs/ROADMAP.md` — they will conflict at merge.\n\nClosing this PR in favor of #16. The line-local window idea here is interesting and complementary — if you'd like to pick up #16's stalls (its panel toggle is currently dead UI, `replaceAllMatches` isn't updated for fuzzy, and the match-shape needs work — see [my review on #16](https://github.com/floatboatai/Nexus-Editor/pull/16#issuecomment-4447439684)), a follow-up PR addressing those would be very welcome.\n\nThanks again for the work — the algorithm sketch and tests here are useful reference material for the follow-up.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:38:56Z",
+      "body": "Closing in favor of #16 — see review comment above. The fuzzy approach there is more complete and the two PRs would conflict at merge. Thanks for the contribution."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

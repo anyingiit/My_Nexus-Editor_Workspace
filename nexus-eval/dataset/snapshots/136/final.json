@@ -1,0 +1,67 @@
+{
+  "pr_number": 136,
+  "title": "feat(search): add fuzzy search helpers",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+  "merge_commit_sha": "9622e72c7ea0d2d4e39f5eeabfa55c9331196203",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+      "message": "feat(search): add fuzzy search helpers",
+      "date": "2026-07-07T02:42:18Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 5,
+      "changes": 10
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 59,
+      "deletions": 0,
+      "changes": 59
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 82,
+      "deletions": 0,
+      "changes": 82
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=136",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

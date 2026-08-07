@@ -1,0 +1,79 @@
+{
+  "pr_number": 26,
+  "title": "feat(search): 增加整词匹配支持",
+  "body": "## 修改背景\r\n\r\n我在阅读 `plugin-search` 和 Electron demo 搜索栏实现时，发现搜索面板 UI 已经有 “By word / 整词匹配” 入口，但底层辅助函数 `findSearchMatches` 和 `replaceAllMatches` 还没有真正支持整词匹配。\r\n\r\n这会导致：\r\n- 插件 UI 能表达整词匹配能力\r\n- 但外部复用这些辅助函数时，行为并不完整\r\n\r\n## 本次修改\r\n\r\n我主要做了三件事：\r\n\r\n1. 在 `SearchOptions` 中补充 `wholeWord` 选项\r\n2. 统一搜索正则构造逻辑，让查找和替换行为保持一致\r\n3. 补充整词匹配相关测试，并把 Electron demo 搜索栏接上该能力\r\n\r\n## 效果\r\n\r\n例如搜索 `cat`：\r\n\r\n`cat scatter cat cat_ cat-cat`\r\n\r\n开启整词匹配后：\r\n- 会命中独立出现的 `cat`\r\n- 会命中 `cat-cat` 中被标点分隔的 `cat`\r\n- 不会误命中 `scatter` 中的 `cat`\r\n- 不会误命中 `cat_` 这种标识符片段\r\n\r\n## 验证\r\n\r\n我做了以下验证：\r\n\r\n- 运行 `packages/plugin-search/test/plugin-search.test.ts`\r\n- 检查 `packages/plugin-search` 的 TypeScript 类型\r\n- 检查 `apps/electron-demo` 的 TypeScript 类型\r\n\r\n## 说明\r\n\r\n这个改动不涉及破坏性 API 变更，属于对现有搜索能力的补全，也让插件层和 demo 层的行为更一致。\r\n\r\n\r\n\r\n\r\n<!--\r\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\r\n  e.g.  feat(toolbar): list toggle for multi-line selection\r\nAllowed scopes — see CONTRIBUTING.md §2\r\n\r\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2\r\n-->\r\n\r\n## Summary / 摘要\r\n\r\n<!-- One sentence summary of the change. / 一句话说明改了什么。 -->\r\n\r\n## Motivation / 背景与动机\r\n\r\n<!-- Why is this change needed? Link issue / roadmap entry / OpenSpec change. -->\r\n<!-- 解决什么问题？关联 issue / roadmap 条目 / OpenSpec change id。 -->\r\n\r\n- Issue:\r\n- Roadmap (docs/ROADMAP.md):\r\n- OpenSpec change:\r\n\r\n## Changes / 变更内容\r\n\r\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\r\n\r\n- `packages/core`:\r\n- `packages/plugin-*`:\r\n- `apps/electron-demo`:\r\n- `openspec/`:\r\n\r\n## Testing / 测试\r\n\r\n<!-- How was this verified? Commands and scenarios covered. -->\r\n<!-- 描述如何验证，附上命令与覆盖的场景。 -->\r\n\r\n- [ ] `pnpm test` passes / 全绿\r\n- [ ] Affected packages build (`pnpm build`) / 受影响包构建通过\r\n- [ ] New / updated vitest cases / 新增或更新的 vitest 用例：\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：\r\n\r\n## Checklist / 自检清单\r\n\r\n- [ ] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n- [ ] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\r\n- [ ] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则\r\n- [ ] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec\r\n- [ ] No secrets / personal vault data committed / 无敏感信息被提交\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\n<!-- Attach screenshots or gifs for visible UI changes. / 改动可见 UI 时请附上截图或 gif。 -->\r\n",
+  "created_at": "2026-05-21T10:39:48Z",
+  "draft": false,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "head_sha_at_first_review": "51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+  "first_review_time": "2026-05-22T13:04:19Z",
+  "commits_at_first_review": [
+    {
+      "sha": "51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+      "message": "feat(search): add whole-word matching support",
+      "date": "2026-05-21T09:38:23Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 1,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "ca4a1c630ce168a4a5c66a4361061102808f0d62",
+        "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 3,
+        "changes": 32,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/51f056c7aa6a9e665ebec0f94c63bcf106279d5f/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/51f056c7aa6a9e665ebec0f94c63bcf106279d5f/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts?ref=51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+        "patch": "@@ -100,6 +100,16 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   replaceAllBtn.title = \"Replace all\";\n   replaceAllBtn.style.cssText = BTN_STYLES;\n \n+  const wholeWordToggle = document.createElement(\"input\");\n+  wholeWordToggle.type = \"checkbox\";\n+  wholeWordToggle.id = \"nexus-search-whole-word\";\n+\n+  const wholeWordLabel = document.createElement(\"label\");\n+  wholeWordLabel.htmlFor = wholeWordToggle.id;\n+  wholeWordLabel.textContent = \"Whole word\";\n+  wholeWordLabel.style.cssText = \"display:flex;align-items:center;gap:4px;color:var(--nexus-text-muted, #666);\";\n+  wholeWordLabel.prepend(wholeWordToggle);\n+\n   // Count label\n   const countLabel = document.createElement(\"span\");\n   countLabel.style.cssText = COUNT_STYLES;\n@@ -113,7 +123,18 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   const spacer = document.createElement(\"div\");\n   spacer.style.flex = \"1\";\n \n-  bar.append(findInput, prevBtn, nextBtn, countLabel, replaceInput, replaceBtn, replaceAllBtn, spacer, closeBtn);\n+  bar.append(\n+    findInput,\n+    prevBtn,\n+    nextBtn,\n+    countLabel,\n+    wholeWordLabel,\n+    replaceInput,\n+    replaceBtn,\n+    replaceAllBtn,\n+    spacer,\n+    closeBtn\n+  );\n \n   // State\n   let matches: Array<{ from: number; to: number }> = [];\n@@ -129,7 +150,9 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n       return;\n     }\n     const doc = editor.getDocument();\n-    matches = findSearchMatches(doc, query);\n+    matches = findSearchMatches(doc, query, {\n+      wholeWord: wholeWordToggle.checked,\n+    });\n     if (matches.length === 0) {\n       currentIdx = -1;\n       countLabel.textContent = \"0 results\";\n@@ -178,13 +201,16 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n     const query = findInput.value;\n     if (!query) return;\n     const doc = editor.getDocument();\n-    const newDoc = replaceAllMatches(doc, query, replaceInput.value);\n+    const newDoc = replaceAllMatches(doc, query, replaceInput.value, {\n+      wholeWord: wholeWordToggle.checked,\n+    });\n     editor.setDocument(newDoc);\n     updateMatches();\n   }\n \n   // Event handlers\n   findInput.addEventListener(\"input\", updateMatches);\n+  wholeWordToggle.addEventListener(\"change\", updateMatches);\n   findInput.addEventListener(\"keydown\", (e) => {\n     if (e.key === \"Enter\") { e.shiftKey ? goPrev() : goNext(); e.preventDefault(); }\n     if (e.key === \"Escape\") { close(); }"
+      },
+      {
+        "sha": "3e6123cbb4c07ae92b4642d26ff290839c79b0ae",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 4,
+        "changes": 16,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/51f056c7aa6a9e665ebec0f94c63bcf106279d5f/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/51f056c7aa6a9e665ebec0f94c63bcf106279d5f/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+        "patch": "@@ -25,6 +25,7 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  wholeWord?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -79,6 +80,15 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function createSearchPattern(query: string, options: SearchOptions = {}): RegExp {\n+  const escaped = escapeRegExp(query);\n+  const source = options.wholeWord\n+    ? `(?<![\\\\p{L}\\\\p{N}_])${escaped}(?![\\\\p{L}\\\\p{N}_])`\n+    : escaped;\n+  const flags = options.caseSensitive ? \"gu\" : \"giu\";\n+  return new RegExp(source, flags);\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,8 +98,7 @@ export function findSearchMatches(\n     return [];\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const pattern = createSearchPattern(query, options);\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n@@ -116,8 +125,7 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n+  return doc.replace(createSearchPattern(query, options), replacement);\n }\n \n function resolveLabel("
+      },
+      {
+        "sha": "c51bb67e307e42c6a390d15c038d9b444ce49685",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/51f056c7aa6a9e665ebec0f94c63bcf106279d5f/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/51f056c7aa6a9e665ebec0f94c63bcf106279d5f/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+        "patch": "@@ -21,10 +21,25 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat scatter cat cat_ cat-cat\", \"cat\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" },\n+      { from: 12, to: 15, text: \"cat\" },\n+      { from: 21, to: 24, text: \"cat\" },\n+      { from: 25, to: 28, text: \"cat\" }\n+    ]);\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"replaces only whole-word matches when requested\", () => {\n+    expect(replaceAllMatches(\"cat scatter cat cat_ cat-cat\", \"cat\", \"dog\", { wholeWord: true })).toBe(\n+      \"dog scatter dog cat_ dog-dog\"\n+    );\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=26",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

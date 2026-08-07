@@ -1,0 +1,24 @@
+{
+  "pr_number": 70,
+  "title": "feat(core): improve markdown list editing keymap",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "zhanghang0915",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-18T02:36:37Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=70) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:41:39Z",
+      "body": "感谢改进 markdown 列表编辑 keymap 🙏 这块对编辑体验有实际价值。当前对 main 为 CONFLICTING，需 rebase（#57 多光标重写了 markdown-keymap.ts 的 Enter 处理，用 changeByRange 支持多光标）。rebase 时请确保你的改动在多光标场景下也成立，并补充对应 vitest 用例。\n\n⚠️ 这个 PR 目前 **CLA 未签署**，在签署前我们无法合并。请点开 PR 里 CLA 机器人留的链接签一下；签完并按上面的点调整后，维护者会重新评审。感谢理解 🙏"
+    }
+  ]
+}

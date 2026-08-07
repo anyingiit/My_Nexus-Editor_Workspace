@@ -1,0 +1,29 @@
+{
+  "pr_number": 153,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR scope too broad: includes unrelated plugin-history undo grouping"
+    },
+    {
+      "id": 2,
+      "summary": "PR description incomplete: Summary/Motivation/Testing/Compliance not filled"
+    },
+    {
+      "id": 3,
+      "summary": "README contradiction: fuzzy matching default vs requiring { fuzzy: true }"
+    },
+    {
+      "id": 4,
+      "summary": "Roadmap attribution wrong: capability placed under plugin-search but changes in slash command"
+    },
+    {
+      "id": 5,
+      "summary": "plugin-history touches CodeMirror history internals, high risk, needs separate design/test explanation"
+    },
+    {
+      "id": 6,
+      "summary": "Suggested rework: split into two PRs, one for slash fuzzy matching, one for history undo grouping"
+    }
+  ]
+}

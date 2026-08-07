@@ -1,0 +1,397 @@
+{
+  "pr_number": 18,
+  "title": "feat(electron): add snapshot history for draft restore and reuse",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "22aff241040695e65bf803cb4d57e8480adff4e8",
+      "message": "feat(electron): add snapshot history for draft restore and reuse",
+      "date": "2026-05-13T11:49:21Z"
+    },
+    {
+      "sha": "50364039ae70b756cdf2d54e04f753ca3b385a67",
+      "message": "fix(electron): improve snapshot history restore usability",
+      "date": "2026-05-13T14:28:53Z"
+    },
+    {
+      "sha": "9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+      "message": "fix(electron): address snapshot history review",
+      "date": "2026-05-14T12:11:29Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "modified",
+      "additions": 155,
+      "deletions": 23,
+      "changes": 178
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 1,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 71,
+      "deletions": 1,
+      "changes": 72
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/electron/snapshots.ts",
+      "status": "added",
+      "additions": 140,
+      "deletions": 0,
+      "changes": 140
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 120,
+      "deletions": 2,
+      "changes": 122
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/history-panel.ts",
+      "status": "added",
+      "additions": 174,
+      "deletions": 0,
+      "changes": 174
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/snapshot-entry.ts",
+      "status": "added",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/state.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/test/history-panel.test.ts",
+      "status": "added",
+      "additions": 49,
+      "deletions": 0,
+      "changes": 49
+    },
+    {
+      "filename": "apps/electron-demo/test/snapshots.test.ts",
+      "status": "added",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67
+    },
+    {
+      "filename": "apps/electron-demo/test/state.test.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "openspec/changes/add-snapshot-history/design.md",
+      "status": "added",
+      "additions": 123,
+      "deletions": 0,
+      "changes": 123
+    },
+    {
+      "filename": "openspec/changes/add-snapshot-history/proposal.md",
+      "status": "added",
+      "additions": 42,
+      "deletions": 0,
+      "changes": 42
+    },
+    {
+      "filename": "openspec/changes/add-snapshot-history/specs/snapshot-history/spec.md",
+      "status": "added",
+      "additions": 79,
+      "deletions": 0,
+      "changes": 79
+    },
+    {
+      "filename": "openspec/changes/add-snapshot-history/tasks.md",
+      "status": "added",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    }
+  ],
+  "compare_final": {
+    "status": "diverged",
+    "ahead_by": 3,
+    "behind_by": 19,
+    "files": [
+      {
+        "sha": "8f1ca39180ce309731985eb07337c5ed4fa2c455",
+        "filename": "apps/electron-demo/dist-electron/main.js",
+        "status": "modified",
+        "additions": 155,
+        "deletions": 23,
+        "changes": 178,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fdist-electron%2Fmain.js",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fdist-electron%2Fmain.js",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fdist-electron%2Fmain.js?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -29,8 +29,88 @@ module.exports = __toCommonJS(main_exports);\n var import_electron = require(\"electron\");\n var import_promises = require(\"fs/promises\");\n var import_node_fs = require(\"fs\");\n-var import_node_path = __toESM(require(\"path\"));\n+var import_node_path2 = __toESM(require(\"path\"));\n var import_node_url = require(\"url\");\n+\n+// electron/snapshots.ts\n+var import_node_path = __toESM(require(\"path\"));\n+var DEFAULT_SNAPSHOT_LIMIT = 20;\n+var DEFAULT_SNAPSHOT_CONTENT_BYTES = 512 * 1024;\n+function createEmptySnapshotStore() {\n+  return { byDocument: {} };\n+}\n+function createSnapshotDocumentRef(filePath) {\n+  return {\n+    documentId: filePath ? documentIdFromPath(filePath) : \"untitled\",\n+    filePath\n+  };\n+}\n+function assertSnapshotContentSize(content, limitBytes = DEFAULT_SNAPSHOT_CONTENT_BYTES) {\n+  const size = Buffer.byteLength(content, \"utf-8\");\n+  if (size > limitBytes) {\n+    throw new Error(`Snapshot content exceeds ${limitBytes} bytes`);\n+  }\n+}\n+function summarizeSnapshot(content) {\n+  const lines = content.split(/\\r?\\n/).map((line) => line.trim()).filter((line) => line.length > 0);\n+  if (lines.length === 0) return \"(empty document)\";\n+  const preferred = lines.find((line) => !line.startsWith(\"#\")) ?? lines[0];\n+  return preferred.length > 96 ? `${preferred.slice(0, 93)}...` : preferred;\n+}\n+function createSnapshotEntry(input) {\n+  const createdAt = input.createdAt ?? (/* @__PURE__ */ new Date()).toISOString();\n+  const baseTitle = input.title?.trim() || summarizeSnapshot(input.content);\n+  return {\n+    id: `${createdAt}-${Math.random().toString(36).slice(2, 10)}`,\n+    docKey: input.docKey,\n+    filePath: input.filePath,\n+    title: baseTitle,\n+    content: input.content,\n+    createdAt,\n+    summary: summarizeSnapshot(input.content)\n+  };\n+}\n+function listSnapshots(store, docKey) {\n+  return [...store.byDocument[docKey] ?? []];\n+}\n+function addSnapshot(store, entry, limit = DEFAULT_SNAPSHOT_LIMIT) {\n+  const current = store.byDocument[entry.docKey] ?? [];\n+  const next = [entry, ...current].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, limit);\n+  return {\n+    byDocument: {\n+      ...store.byDocument,\n+      [entry.docKey]: next\n+    }\n+  };\n+}\n+function parseSnapshotStore(raw) {\n+  const parsed = JSON.parse(raw);\n+  if (!parsed.byDocument || typeof parsed.byDocument !== \"object\") {\n+    throw new Error(\"Invalid snapshot store shape\");\n+  }\n+  const byDocument = {};\n+  for (const [docKey, value] of Object.entries(parsed.byDocument)) {\n+    if (!Array.isArray(value)) continue;\n+    byDocument[docKey] = value.filter(isSnapshotEntryLike).sort((a, b) => {\n+      return b.createdAt.localeCompare(a.createdAt);\n+    });\n+  }\n+  return { byDocument };\n+}\n+function isSnapshotEntryLike(value) {\n+  if (!value || typeof value !== \"object\") return false;\n+  const entry = value;\n+  return typeof entry.id === \"string\" && typeof entry.docKey === \"string\" && (typeof entry.filePath === \"string\" || entry.filePath === null) && typeof entry.title === \"string\" && typeof entry.content === \"string\" && typeof entry.createdAt === \"string\" && typeof entry.summary === \"string\";\n+}\n+function isCaseInsensitiveFileSystem() {\n+  return process.platform === \"darwin\" || process.platform === \"win32\";\n+}\n+function documentIdFromPath(filePath) {\n+  const resolved = import_node_path.default.resolve(filePath).replace(/\\\\/g, \"/\");\n+  return isCaseInsensitiveFileSystem() ? resolved.toLowerCase() : resolved;\n+}\n+\n+// electron/main.ts\n import_electron.protocol.registerSchemesAsPrivileged([\n   {\n     scheme: \"nexus-vault\",\n@@ -56,7 +136,7 @@ function createWindow() {\n     webPreferences: {\n       contextIsolation: true,\n       nodeIntegration: false,\n-      preload: import_node_path.default.join(__dirname, \"preload.js\")\n+      preload: import_node_path2.default.join(__dirname, \"preload.js\")\n     }\n   });\n   mainWindow.once(\"ready-to-show\", () => {\n@@ -66,7 +146,7 @@ function createWindow() {\n   if (devUrl) {\n     mainWindow.loadURL(devUrl);\n   } else {\n-    mainWindow.loadFile(import_node_path.default.join(__dirname, \"../dist/index.html\"));\n+    mainWindow.loadFile(import_node_path2.default.join(__dirname, \"../dist/index.html\"));\n   }\n   mainWindow.webContents.on(\"before-input-event\", (_event, input) => {\n     const meta = input.meta || input.control;\n@@ -117,10 +197,10 @@ function assertInsideVault(target) {\n   if (!activeVault) {\n     throw new Error(\"No active vault\");\n   }\n-  const resolved = import_node_path.default.resolve(target);\n-  const rel = import_node_path.default.relative(activeVault, resolved);\n+  const resolved = import_node_path2.default.resolve(target);\n+  const rel = import_node_path2.default.relative(activeVault, resolved);\n   if (rel === \"\" || rel === \".\") return resolved;\n-  if (rel.startsWith(\"..\") || import_node_path.default.isAbsolute(rel)) {\n+  if (rel.startsWith(\"..\") || import_node_path2.default.isAbsolute(rel)) {\n     throw new Error(`Path escapes vault: ${target}`);\n   }\n   return resolved;\n@@ -132,7 +212,7 @@ async function scanDirectory(dir) {\n     if (entry.name.startsWith(\".\") && SKIP_DIRS.has(entry.name)) continue;\n     if (SKIP_DIRS.has(entry.name)) continue;\n     if (entry.name.startsWith(\".\")) continue;\n-    const childPath = import_node_path.default.join(dir, entry.name);\n+    const childPath = import_node_path2.default.join(dir, entry.name);\n     if (entry.isDirectory()) {\n       const children = await scanDirectory(childPath);\n       if (children.length > 0) {\n@@ -146,7 +226,7 @@ async function scanDirectory(dir) {\n       continue;\n     }\n     if (entry.isFile()) {\n-      const ext = import_node_path.default.extname(entry.name).toLowerCase();\n+      const ext = import_node_path2.default.extname(entry.name).toLowerCase();\n       if (!SUPPORTED_EXT.has(ext)) continue;\n       nodes.push({ name: entry.name, path: childPath, kind: \"file\" });\n     }\n@@ -190,7 +270,7 @@ function startWatcher(vaultPath) {\n   }\n }\n function vaultStatePath() {\n-  return import_node_path.default.join(import_electron.app.getPath(\"userData\"), \"vault.json\");\n+  return import_node_path2.default.join(import_electron.app.getPath(\"userData\"), \"vault.json\");\n }\n async function readVaultState() {\n   const file = vaultStatePath();\n@@ -209,6 +289,37 @@ async function readVaultState() {\n async function writeVaultState(state) {\n   await (0, import_promises.writeFile)(vaultStatePath(), JSON.stringify(state, null, 2), \"utf-8\");\n }\n+function snapshotStorePath() {\n+  return import_node_path2.default.join(import_electron.app.getPath(\"userData\"), \"snapshots.json\");\n+}\n+function snapshotTempPath() {\n+  return `${snapshotStorePath()}.tmp`;\n+}\n+async function readSnapshotStore() {\n+  const file = snapshotStorePath();\n+  if (!(0, import_node_fs.existsSync)(file)) return createEmptySnapshotStore();\n+  try {\n+    const raw = await (0, import_promises.readFile)(file, \"utf-8\");\n+    return parseSnapshotStore(raw);\n+  } catch (err) {\n+    console.warn(\"[snapshot] failed to read store:\", err);\n+    if ((0, import_node_fs.existsSync)(file)) {\n+      const corruptPath = `${file}.corrupt-${Date.now()}`;\n+      try {\n+        await (0, import_promises.copyFile)(file, corruptPath);\n+      } catch (copyErr) {\n+        console.warn(\"[snapshot] failed to preserve corrupt store:\", copyErr);\n+      }\n+    }\n+    return createEmptySnapshotStore();\n+  }\n+}\n+async function writeSnapshotStore(store) {\n+  const target = snapshotStorePath();\n+  const temp = snapshotTempPath();\n+  await (0, import_promises.writeFile)(temp, JSON.stringify(store, null, 2), \"utf-8\");\n+  await (0, import_promises.rename)(temp, target);\n+}\n import_electron.ipcMain.handle(\"vault:pick\", async () => {\n   if (!mainWindow) return null;\n   const result = await import_electron.dialog.showOpenDialog(mainWindow, {\n@@ -218,7 +329,7 @@ import_electron.ipcMain.handle(\"vault:pick\", async () => {\n   return { path: result.filePaths[0] };\n });\n import_electron.ipcMain.handle(\"vault:list\", async (_event, vaultPath) => {\n-  const abs = import_node_path.default.resolve(vaultPath);\n+  const abs = import_node_path2.default.resolve(vaultPath);\n   const info = await (0, import_promises.stat)(abs);\n   if (!info.isDirectory()) throw new Error(`Not a directory: ${abs}`);\n   activeVault = abs;\n@@ -235,12 +346,12 @@ async function collectFiles(dir, acc) {\n   for (const entry of entries) {\n     if (entry.name.startsWith(\".\")) continue;\n     if (SKIP_DIRS.has(entry.name)) continue;\n-    const childPath = import_node_path.default.join(dir, entry.name);\n+    const childPath = import_node_path2.default.join(dir, entry.name);\n     if (entry.isDirectory()) {\n       await collectFiles(childPath, acc);\n       continue;\n     }\n-    if (entry.isFile() && SUPPORTED_EXT.has(import_node_path.default.extname(entry.name).toLowerCase())) {\n+    if (entry.isFile() && SUPPORTED_EXT.has(import_node_path2.default.extname(entry.name).toLowerCase())) {\n       acc.push(childPath);\n     }\n   }\n@@ -282,19 +393,19 @@ import_electron.ipcMain.handle(\n     const baseNameRaw = segments.pop();\n     const subDirs = segments.join(\"/\");\n     const parent = assertInsideVault(\n-      subDirs ? import_node_path.default.join(parentDir, subDirs) : parentDir\n+      subDirs ? import_node_path2.default.join(parentDir, subDirs) : parentDir\n     );\n     if (subDirs) {\n       await (0, import_promises.mkdir)(parent, { recursive: true });\n     }\n-    const hasExt = SUPPORTED_EXT.has(import_node_path.default.extname(baseNameRaw).toLowerCase());\n+    const hasExt = SUPPORTED_EXT.has(import_node_path2.default.extname(baseNameRaw).toLowerCase());\n     const baseName = hasExt ? baseNameRaw : `${baseNameRaw}.md`;\n-    const ext = import_node_path.default.extname(baseName);\n+    const ext = import_node_path2.default.extname(baseName);\n     const stem = baseName.slice(0, baseName.length - ext.length);\n-    let candidate = import_node_path.default.join(parent, baseName);\n+    let candidate = import_node_path2.default.join(parent, baseName);\n     let suffix = 1;\n     while ((0, import_node_fs.existsSync)(candidate)) {\n-      candidate = import_node_path.default.join(parent, `${stem}-${suffix}${ext}`);\n+      candidate = import_node_path2.default.join(parent, `${stem}-${suffix}${ext}`);\n       suffix += 1;\n     }\n     const finalPath = assertInsideVault(candidate);\n@@ -307,7 +418,7 @@ import_electron.ipcMain.handle(\n   async (_event, parentDir, name) => {\n     const parent = assertInsideVault(parentDir);\n     const safeName = name.trim() || \"new-folder\";\n-    const target = assertInsideVault(import_node_path.default.join(parent, safeName));\n+    const target = assertInsideVault(import_node_path2.default.join(parent, safeName));\n     if ((0, import_node_fs.existsSync)(target)) {\n       throw new Error(`Folder already exists: ${safeName}`);\n     }\n@@ -319,13 +430,13 @@ import_electron.ipcMain.handle(\n   \"vault:rename\",\n   async (_event, oldPath, newName) => {\n     const src = assertInsideVault(oldPath);\n-    const parent = import_node_path.default.dirname(src);\n+    const parent = import_node_path2.default.dirname(src);\n     const trimmed = newName.trim();\n     if (!trimmed) throw new Error(\"New name cannot be empty\");\n     if (trimmed.includes(\"/\") || trimmed.includes(\"\\\\\")) {\n       throw new Error(\"New name cannot contain path separators\");\n     }\n-    const target = assertInsideVault(import_node_path.default.join(parent, trimmed));\n+    const target = assertInsideVault(import_node_path2.default.join(parent, trimmed));\n     if ((0, import_node_fs.existsSync)(target) && target !== src) {\n       throw new Error(`Target already exists: ${trimmed}`);\n     }\n@@ -356,16 +467,37 @@ import_electron.ipcMain.handle(\"vault:set-last\", async (_event, vaultPath) => {\n   await writeVaultState({ lastVault: vaultPath, recents });\n   return { ok: true };\n });\n+import_electron.ipcMain.handle(\n+  \"snapshot:create\",\n+  async (_event, input) => {\n+    assertSnapshotContentSize(input.content);\n+    const store = await readSnapshotStore();\n+    const documentRef = createSnapshotDocumentRef(input.filePath);\n+    const entry = createSnapshotEntry({\n+      docKey: documentRef.documentId,\n+      filePath: documentRef.filePath,\n+      content: input.content,\n+      title: input.title\n+    });\n+    const nextStore = addSnapshot(store, entry, DEFAULT_SNAPSHOT_LIMIT);\n+    await writeSnapshotStore(nextStore);\n+    return entry;\n+  }\n+);\n+import_electron.ipcMain.handle(\"snapshot:list\", async (_event, filePath) => {\n+  const store = await readSnapshotStore();\n+  return listSnapshots(store, createSnapshotDocumentRef(filePath).documentId);\n+});\n import_electron.app.whenReady().then(() => {\n   import_electron.protocol.handle(\"nexus-vault\", async (request) => {\n     try {\n       if (!activeVault) return new Response(\"No active vault\", { status: 404 });\n       const url = new URL(request.url);\n       const relPath = decodeURIComponent(url.pathname.replace(/^\\/+/, \"\"));\n       if (!relPath) return new Response(\"Empty path\", { status: 400 });\n-      const abs = import_node_path.default.resolve(activeVault, relPath);\n-      const rel = import_node_path.default.relative(activeVault, abs);\n-      if (rel.startsWith(\"..\") || import_node_path.default.isAbsolute(rel)) {\n+      const abs = import_node_path2.default.resolve(activeVault, relPath);\n+      const rel = import_node_path2.default.relative(activeVault, abs);\n+      if (rel.startsWith(\"..\") || import_node_path2.default.isAbsolute(rel)) {\n         return new Response(\"Path escapes vault\", { status: 403 });\n       }\n       if (!(0, import_node_fs.existsSync)(abs)) return new Response(\"Not found\", { status: 404 });"
+      },
+      {
+        "sha": "e7c8725665868c4031c096ae8c016ed65dbb2586",
+        "filename": "apps/electron-demo/dist-electron/preload.js",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 1,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fdist-electron%2Fpreload.js",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fdist-electron%2Fpreload.js",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fdist-electron%2Fpreload.js?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -69,6 +69,14 @@ var bridge = {\n   saveFileAs(content) {\n     return import_electron.ipcRenderer.invoke(\"demo:save-file-as\", content);\n   },\n-  vault: vaultBridge\n+  vault: vaultBridge,\n+  snapshots: {\n+    create(input) {\n+      return import_electron.ipcRenderer.invoke(\"snapshot:create\", input);\n+    },\n+    list(filePath) {\n+      return import_electron.ipcRenderer.invoke(\"snapshot:list\", filePath);\n+    }\n+  }\n };\n import_electron.contextBridge.exposeInMainWorld(\"nexusDemo\", bridge);"
+      },
+      {
+        "sha": "500f41c8183e1863c54dcb01797aee1fc6945482",
+        "filename": "apps/electron-demo/electron/main.ts",
+        "status": "modified",
+        "additions": 71,
+        "deletions": 1,
+        "changes": 72,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Felectron%2Fmain.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Felectron%2Fmain.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fmain.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -1,8 +1,20 @@\n import { app, BrowserWindow, dialog, ipcMain, net, protocol, shell } from \"electron\";\n-import { readFile, writeFile, readdir, mkdir, rename, stat } from \"node:fs/promises\";\n+import { readFile, writeFile, readdir, mkdir, rename, stat, copyFile } from \"node:fs/promises\";\n import { existsSync, watch, type FSWatcher } from \"node:fs\";\n import path from \"node:path\";\n import { pathToFileURL } from \"node:url\";\n+import {\n+  addSnapshot,\n+  assertSnapshotContentSize,\n+  createSnapshotDocumentRef,\n+  createEmptySnapshotStore,\n+  createSnapshotEntry,\n+  DEFAULT_SNAPSHOT_LIMIT,\n+  listSnapshots,\n+  parseSnapshotStore,\n+  type SnapshotEntry,\n+  type SnapshotStore,\n+} from \"./snapshots\";\n \n // Must be called before app ready — declares our custom scheme as privileged\n // so images served via nexus-vault:// pass fetch/<img> with credentials / CORS.\n@@ -238,6 +250,41 @@ async function writeVaultState(state: VaultState): Promise<void> {\n   await writeFile(vaultStatePath(), JSON.stringify(state, null, 2), \"utf-8\");\n }\n \n+function snapshotStorePath(): string {\n+  return path.join(app.getPath(\"userData\"), \"snapshots.json\");\n+}\n+\n+function snapshotTempPath(): string {\n+  return `${snapshotStorePath()}.tmp`;\n+}\n+\n+async function readSnapshotStore(): Promise<SnapshotStore> {\n+  const file = snapshotStorePath();\n+  if (!existsSync(file)) return createEmptySnapshotStore();\n+  try {\n+    const raw = await readFile(file, \"utf-8\");\n+    return parseSnapshotStore(raw);\n+  } catch (err) {\n+    console.warn(\"[snapshot] failed to read store:\", err);\n+    if (existsSync(file)) {\n+      const corruptPath = `${file}.corrupt-${Date.now()}`;\n+      try {\n+        await copyFile(file, corruptPath);\n+      } catch (copyErr) {\n+        console.warn(\"[snapshot] failed to preserve corrupt store:\", copyErr);\n+      }\n+    }\n+    return createEmptySnapshotStore();\n+  }\n+}\n+\n+async function writeSnapshotStore(store: SnapshotStore): Promise<void> {\n+  const target = snapshotStorePath();\n+  const temp = snapshotTempPath();\n+  await writeFile(temp, JSON.stringify(store, null, 2), \"utf-8\");\n+  await rename(temp, target);\n+}\n+\n // -- vault IPC handlers -------------------------------------------------------\n \n ipcMain.handle(\"vault:pick\", async () => {\n@@ -414,6 +461,29 @@ ipcMain.handle(\"vault:set-last\", async (_event, vaultPath: string) => {\n   return { ok: true };\n });\n \n+ipcMain.handle(\n+  \"snapshot:create\",\n+  async (_event, input: { filePath: string | null; content: string; title?: string }): Promise<SnapshotEntry> => {\n+    assertSnapshotContentSize(input.content);\n+    const store = await readSnapshotStore();\n+    const documentRef = createSnapshotDocumentRef(input.filePath);\n+    const entry = createSnapshotEntry({\n+      docKey: documentRef.documentId,\n+      filePath: documentRef.filePath,\n+      content: input.content,\n+      title: input.title,\n+    });\n+    const nextStore = addSnapshot(store, entry, DEFAULT_SNAPSHOT_LIMIT);\n+    await writeSnapshotStore(nextStore);\n+    return entry;\n+  }\n+);\n+\n+ipcMain.handle(\"snapshot:list\", async (_event, filePath: string | null): Promise<SnapshotEntry[]> => {\n+  const store = await readSnapshotStore();\n+  return listSnapshots(store, createSnapshotDocumentRef(filePath).documentId);\n+});\n+\n app.whenReady().then(() => {\n   // nexus-vault://vault/<rel> → read from activeVault/<rel>. Path is validated\n   // so requests cannot escape the vault (same rule as the IPC handlers)."
+      },
+      {
+        "sha": "250a4f072d662b9c94a6c3e0ebb6e0468e4f8e1a",
+        "filename": "apps/electron-demo/electron/preload.ts",
+        "status": "modified",
+        "additions": 19,
+        "deletions": 0,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fpreload.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -1,4 +1,5 @@\n import { contextBridge, ipcRenderer } from \"electron\";\n+import type { SnapshotEntry } from \"./snapshots\";\n \n export interface DemoFileHandle {\n   path: string;\n@@ -32,11 +33,21 @@ export interface VaultBridge {\n   onChanged(cb: (payload: { vault: string }) => void): () => void;\n }\n \n+export interface SnapshotBridge {\n+  create(input: {\n+    filePath: string | null;\n+    content: string;\n+    title?: string;\n+  }): Promise<SnapshotEntry>;\n+  list(filePath: string | null): Promise<SnapshotEntry[]>;\n+}\n+\n export interface DemoBridge {\n   openFile(): Promise<DemoFileHandle | null>;\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n   vault: VaultBridge;\n+  snapshots: SnapshotBridge;\n }\n \n const vaultBridge: VaultBridge = {\n@@ -93,6 +104,14 @@ const bridge: DemoBridge = {\n     return ipcRenderer.invoke(\"demo:save-file-as\", content);\n   },\n   vault: vaultBridge,\n+  snapshots: {\n+    create(input) {\n+      return ipcRenderer.invoke(\"snapshot:create\", input);\n+    },\n+    list(filePath) {\n+      return ipcRenderer.invoke(\"snapshot:list\", filePath);\n+    },\n+  },\n };\n \n contextBridge.exposeInMainWorld(\"nexusDemo\", bridge);"
+      },
+      {
+        "sha": "410545f4d203cd00ea3096dbbbf55e7fa5c468b5",
+        "filename": "apps/electron-demo/electron/snapshots.ts",
+        "status": "added",
+        "additions": 140,
+        "deletions": 0,
+        "changes": 140,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Felectron%2Fsnapshots.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Felectron%2Fsnapshots.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fsnapshots.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,140 @@\n+import path from \"node:path\";\n+\n+export interface SnapshotEntry {\n+  id: string;\n+  docKey: string;\n+  filePath: string | null;\n+  title: string;\n+  content: string;\n+  createdAt: string;\n+  summary: string;\n+}\n+\n+export interface SnapshotStore {\n+  byDocument: Record<string, SnapshotEntry[]>;\n+}\n+\n+export interface SnapshotDocumentRef {\n+  documentId: string;\n+  filePath: string | null;\n+}\n+\n+export interface CreateSnapshotInput {\n+  docKey: string;\n+  filePath: string | null;\n+  content: string;\n+  title?: string;\n+  createdAt?: string;\n+}\n+\n+export const DEFAULT_SNAPSHOT_LIMIT = 20;\n+export const DEFAULT_SNAPSHOT_CONTENT_BYTES = 512 * 1024;\n+\n+export function createEmptySnapshotStore(): SnapshotStore {\n+  return { byDocument: {} };\n+}\n+\n+export function createSnapshotDocumentRef(filePath: string | null): SnapshotDocumentRef {\n+  return {\n+    documentId: filePath ? documentIdFromPath(filePath) : \"untitled\",\n+    filePath,\n+  };\n+}\n+\n+export function normalizeDocKey(filePath: string | null): string {\n+  return createSnapshotDocumentRef(filePath).documentId;\n+}\n+\n+export function assertSnapshotContentSize(\n+  content: string,\n+  limitBytes = DEFAULT_SNAPSHOT_CONTENT_BYTES\n+): void {\n+  const size = Buffer.byteLength(content, \"utf-8\");\n+  if (size > limitBytes) {\n+    throw new Error(`Snapshot content exceeds ${limitBytes} bytes`);\n+  }\n+}\n+\n+export function summarizeSnapshot(content: string): string {\n+  const lines = content\n+    .split(/\\r?\\n/)\n+    .map((line) => line.trim())\n+    .filter((line) => line.length > 0);\n+\n+  if (lines.length === 0) return \"(empty document)\";\n+\n+  const preferred = lines.find((line) => !line.startsWith(\"#\")) ?? lines[0];\n+  return preferred.length > 96 ? `${preferred.slice(0, 93)}...` : preferred;\n+}\n+\n+export function createSnapshotEntry(input: CreateSnapshotInput): SnapshotEntry {\n+  const createdAt = input.createdAt ?? new Date().toISOString();\n+  const baseTitle = input.title?.trim() || summarizeSnapshot(input.content);\n+  return {\n+    id: `${createdAt}-${Math.random().toString(36).slice(2, 10)}`,\n+    docKey: input.docKey,\n+    filePath: input.filePath,\n+    title: baseTitle,\n+    content: input.content,\n+    createdAt,\n+    summary: summarizeSnapshot(input.content),\n+  };\n+}\n+\n+export function listSnapshots(store: SnapshotStore, docKey: string): SnapshotEntry[] {\n+  return [...(store.byDocument[docKey] ?? [])];\n+}\n+\n+export function addSnapshot(\n+  store: SnapshotStore,\n+  entry: SnapshotEntry,\n+  limit = DEFAULT_SNAPSHOT_LIMIT\n+): SnapshotStore {\n+  const current = store.byDocument[entry.docKey] ?? [];\n+  const next = [entry, ...current]\n+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))\n+    .slice(0, limit);\n+\n+  return {\n+    byDocument: {\n+      ...store.byDocument,\n+      [entry.docKey]: next,\n+    },\n+  };\n+}\n+\n+export function parseSnapshotStore(raw: string): SnapshotStore {\n+  const parsed = JSON.parse(raw) as Partial<SnapshotStore>;\n+  if (!parsed.byDocument || typeof parsed.byDocument !== \"object\") {\n+    throw new Error(\"Invalid snapshot store shape\");\n+  }\n+  const byDocument: Record<string, SnapshotEntry[]> = {};\n+  for (const [docKey, value] of Object.entries(parsed.byDocument)) {\n+    if (!Array.isArray(value)) continue;\n+    byDocument[docKey] = value.filter(isSnapshotEntryLike).sort((a, b) => {\n+      return b.createdAt.localeCompare(a.createdAt);\n+    });\n+  }\n+  return { byDocument };\n+}\n+\n+function isSnapshotEntryLike(value: unknown): value is SnapshotEntry {\n+  if (!value || typeof value !== \"object\") return false;\n+  const entry = value as Record<string, unknown>;\n+  return typeof entry.id === \"string\"\n+    && typeof entry.docKey === \"string\"\n+    && (typeof entry.filePath === \"string\" || entry.filePath === null)\n+    && typeof entry.title === \"string\"\n+    && typeof entry.content === \"string\"\n+    && typeof entry.createdAt === \"string\"\n+    && typeof entry.summary === \"string\";\n+}\n+\n+function isCaseInsensitiveFileSystem(): boolean {\n+  return process.platform === \"darwin\" || process.platform === \"win32\";\n+}\n+\n+function documentIdFromPath(filePath: string): string {\n+  const resolved = path.resolve(filePath).replace(/\\\\/g, \"/\");\n+  return isCaseInsensitiveFileSystem() ? resolved.toLowerCase() : resolved;\n+}"
+      },
+      {
+        "sha": "354bdfe8691608a56f789470ac55a0463b812fa4",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 120,
+        "deletions": 2,
+        "changes": 122,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -6,7 +6,9 @@ import { createSearchBar, type SearchBar } from \"./search-bar\";\n import { createVaultPanel, type VaultPanel } from \"./vault-panel\";\n import { LinkIndex, parseAnchor, findAnchorPosition } from \"./link-index\";\n import { createBacklinksPanel, type BacklinksPanel } from \"./backlinks-panel\";\n+import { createHistoryPanel, type HistoryPanel } from \"./history-panel\";\n import { perfStart, perfEnd, installLongTaskWatch } from \"./perf\";\n+import type { SnapshotEntry } from \"./snapshot-entry\";\n \n installLongTaskWatch(50);\n \n@@ -17,6 +19,7 @@ let outline: OutlinePanel;\n let searchBar: SearchBar;\n let vault: VaultPanel;\n let backlinks: BacklinksPanel;\n+let historyPanel: HistoryPanel;\n \n const linkIndex = new LinkIndex();\n state.linkIndex = linkIndex;\n@@ -71,6 +74,19 @@ function createAppToolbar(): HTMLElement {\n   searchBtn.style.fontSize = \"14px\";\n   searchBtn.addEventListener(\"click\", () => searchBar.open());\n \n+  const snapshotBtn = document.createElement(\"button\");\n+  snapshotBtn.textContent = \"Snapshot\";\n+  snapshotBtn.title = \"Create a manual snapshot\";\n+  snapshotBtn.addEventListener(\"click\", () => {\n+    void createSnapshot();\n+  });\n+\n+  const historyBtn = document.createElement(\"button\");\n+  historyBtn.textContent = \"\\u23F2\"; // ⏲\n+  historyBtn.title = \"Toggle history\";\n+  historyBtn.style.fontSize = \"14px\";\n+  historyBtn.addEventListener(\"click\", toggleHistory);\n+\n   const settingsBtn = document.createElement(\"button\");\n   settingsBtn.textContent = \"\\u2699\"; // ⚙\n   settingsBtn.title = \"Settings\";\n@@ -87,6 +103,8 @@ function createAppToolbar(): HTMLElement {\n     outlineBtn,\n     backlinksBtn,\n     searchBtn,\n+    snapshotBtn,\n+    historyBtn,\n     settingsBtn\n   );\n   return toolbar;\n@@ -110,15 +128,27 @@ function renderStatus(): void {\n   const vaultLabel = state.vaultPath\n     ? ` | Vault: ${state.vaultPath.split(/[\\\\/]/).pop()}`\n     : \"\";\n+  const statusText = state.statusMessage ? ` | ${state.statusMessage}` : \"\";\n   const errorText = state.error ? ` — Error: ${state.error}` : \"\";\n-  el.textContent = `${pathLabel}${dirtyMark}${statsText}${vaultLabel}${errorText}`;\n+  el.textContent = `${pathLabel}${dirtyMark}${statsText}${vaultLabel}${statusText}${errorText}`;\n }\n \n async function confirmDiscardIfDirty(): Promise<boolean> {\n   if (!state.dirty) return true;\n   return window.confirm(\"You have unsaved changes. Discard them and switch files?\");\n }\n \n+async function refreshSnapshots(): Promise<void> {\n+  try {\n+    state.snapshots = await window.nexusDemo.snapshots.list(state.activeFile ?? state.filePath);\n+  } catch (err) {\n+    state.error = err instanceof Error ? err.message : String(err);\n+    state.snapshots = [];\n+  }\n+  historyPanel?.update();\n+  renderStatus();\n+}\n+\n async function handleOpen(): Promise<void> {\n   try {\n     state.error = null;\n@@ -131,6 +161,7 @@ async function handleOpen(): Promise<void> {\n     shell.loadDocument(result.content);\n     vault.setActiveFile(result.path);\n     backlinks.refresh();\n+    await refreshSnapshots();\n   } catch (err) {\n     state.error = err instanceof Error ? err.message : String(err);\n   }\n@@ -168,6 +199,7 @@ async function handleSaveAs(): Promise<void> {\n     state.activeFile = result.path;\n     state.dirty = false;\n     vault.setActiveFile(result.path);\n+    await refreshSnapshots();\n   } catch (err) {\n     state.error = err instanceof Error ? err.message : String(err);\n   }\n@@ -202,6 +234,80 @@ function toggleBacklinks(): void {\n   togglePanel(backlinks.element, () => backlinks.refresh());\n }\n \n+function toggleHistory(): void {\n+  if (historyPanel.element.style.display === \"none\" && backlinks.element.style.display !== \"none\") {\n+    backlinks.element.style.display = \"none\";\n+  }\n+  if (historyPanel.element.style.display === \"none\" && outline.element.style.display !== \"none\") {\n+    outline.element.style.display = \"none\";\n+  }\n+  togglePanel(historyPanel.element, () => historyPanel.update());\n+}\n+\n+async function createSnapshot(): Promise<void> {\n+  try {\n+    state.error = null;\n+    state.statusMessage = null;\n+    const currentDoc = shell.editor.getDocument();\n+    await window.nexusDemo.snapshots.create({\n+      filePath: state.activeFile ?? state.filePath,\n+      content: currentDoc,\n+    });\n+    await refreshSnapshots();\n+    state.statusMessage = `Snapshot created (${new Date().toLocaleTimeString()})`;\n+    renderStatus();\n+  } catch (err) {\n+    state.statusMessage = null;\n+    state.error = err instanceof Error ? err.message : String(err);\n+    renderStatus();\n+  }\n+}\n+\n+async function restoreSnapshot(snapshot: SnapshotEntry): Promise<void> {\n+  try {\n+    state.error = null;\n+    state.statusMessage = null;\n+    if (!(await confirmDiscardIfDirty())) return;\n+    shell.loadDocument(snapshot.content);\n+    if (snapshot.filePath) {\n+      state.filePath = snapshot.filePath;\n+      state.activeFile = snapshot.filePath;\n+      vault.setActiveFile(snapshot.filePath);\n+    } else {\n+      state.filePath = null;\n+      state.activeFile = null;\n+      vault.setActiveFile(null);\n+    }\n+    backlinks.refresh();\n+    await refreshSnapshots();\n+    historyPanel.element.style.display = \"none\";\n+    shell.editor.focus();\n+    state.statusMessage = `Restored snapshot: ${snapshot.title}`;\n+    renderStatus();\n+  } catch (err) {\n+    state.statusMessage = null;\n+    state.error = err instanceof Error ? err.message : String(err);\n+    renderStatus();\n+  }\n+}\n+\n+async function reuseSnapshot(snapshot: SnapshotEntry): Promise<void> {\n+  state.error = null;\n+  state.statusMessage = null;\n+  if (!(await confirmDiscardIfDirty())) return;\n+  shell.loadDocument(snapshot.content);\n+  state.filePath = null;\n+  state.activeFile = null;\n+  state.dirty = true;\n+  vault.setActiveFile(null);\n+  backlinks.refresh();\n+  historyPanel.element.style.display = \"none\";\n+  shell.editor.focus();\n+  void refreshSnapshots();\n+  state.statusMessage = `Reused snapshot as new draft: ${snapshot.title}`;\n+  renderStatus();\n+}\n+\n async function handleVaultFileOpen(filePath: string): Promise<void> {\n   const total = perfStart(\"open-file\", { filePath });\n   try {\n@@ -226,6 +332,7 @@ async function handleVaultFileOpen(filePath: string): Promise<void> {\n     const bl = perfStart(\"open-file.backlinks.refresh\");\n     backlinks.refresh();\n     perfEnd(bl);\n+    await refreshSnapshots();\n   } catch (err) {\n     state.error = err instanceof Error ? err.message : String(err);\n   }\n@@ -406,9 +513,19 @@ function boot(): void {\n     onOpenFile: (filePath) => void handleVaultFileOpen(filePath),\n     getActiveFile: () => state.activeFile,\n   });\n+  historyPanel = createHistoryPanel({\n+    getSnapshots: () => state.snapshots,\n+    onRestore: (snapshot) => {\n+      void restoreSnapshot(snapshot);\n+    },\n+    onReuse: (snapshot) => {\n+      void reuseSnapshot(snapshot);\n+    },\n+  });\n+  historyPanel.element.style.display = \"none\";\n \n   editorColumn.append(searchBar.element, editorContainer);\n-  mainArea.append(vault.element, editorColumn, outline.element, backlinks.element);\n+  mainArea.append(vault.element, editorColumn, outline.element, backlinks.element, historyPanel.element);\n \n   // External file changes → re-seed the index (cheap for typical vaults).\n   window.nexusDemo.vault.onChanged(() => {\n@@ -423,6 +540,7 @@ function boot(): void {\n   });\n \n   renderStatus();\n+  void refreshSnapshots();\n   perfEnd(bootScope);\n \n   // Defer vault restore until after first paint so the window pops open with"
+      },
+      {
+        "sha": "ea83c852859a7ef13d36d2a069453ed565685fc6",
+        "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+        "status": "modified",
+        "additions": 20,
+        "deletions": 0,
+        "changes": 20,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -15,6 +15,16 @@ interface VaultState {\n   recents: string[];\n }\n \n+interface SnapshotEntry {\n+  id: string;\n+  docKey: string;\n+  filePath: string | null;\n+  title: string;\n+  content: string;\n+  createdAt: string;\n+  summary: string;\n+}\n+\n interface VaultBridge {\n   pick(): Promise<{ path: string } | null>;\n   list(vaultPath: string): Promise<VaultNode[]>;\n@@ -30,11 +40,21 @@ interface VaultBridge {\n   onChanged(cb: (payload: { vault: string }) => void): () => void;\n }\n \n+interface SnapshotBridge {\n+  create(input: {\n+    filePath: string | null;\n+    content: string;\n+    title?: string;\n+  }): Promise<SnapshotEntry>;\n+  list(filePath: string | null): Promise<SnapshotEntry[]>;\n+}\n+\n interface DemoBridge {\n   openFile(): Promise<DemoFileHandle | null>;\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n   vault: VaultBridge;\n+  snapshots: SnapshotBridge;\n }\n \n interface Window {"
+      },
+      {
+        "sha": "eb9b5539aeb2002bebe34230b5d310e85757e8d8",
+        "filename": "apps/electron-demo/src/renderer/history-panel.ts",
+        "status": "added",
+        "additions": 174,
+        "deletions": 0,
+        "changes": 174,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fhistory-panel.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fhistory-panel.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fhistory-panel.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,174 @@\n+import type { SnapshotEntry } from \"./snapshot-entry\";\n+\n+export interface HistoryPanelOptions {\n+  getSnapshots(): SnapshotEntry[];\n+  onRestore(snapshot: SnapshotEntry): void;\n+  onReuse(snapshot: SnapshotEntry): void;\n+}\n+\n+export interface HistoryPanel {\n+  element: HTMLElement;\n+  update(): void;\n+  destroy(): void;\n+}\n+\n+const PANEL_STYLES = `\n+  width: 280px;\n+  flex-shrink: 0;\n+  border-left: 1px solid var(--nexus-border, #eee);\n+  background: var(--nexus-bg, #fff);\n+  display: flex;\n+  flex-direction: column;\n+  font-family: system-ui, -apple-system, sans-serif;\n+  font-size: 13px;\n+  overflow: hidden;\n+`;\n+\n+const HEADER_STYLES = `\n+  padding: 8px 10px;\n+  border-bottom: 1px solid var(--nexus-border, #eee);\n+  font-size: 11px;\n+  font-weight: 600;\n+  text-transform: uppercase;\n+  letter-spacing: 0.5px;\n+  color: var(--nexus-text-muted, #888);\n+  flex-shrink: 0;\n+`;\n+\n+const LIST_STYLES = `\n+  flex: 1;\n+  overflow-y: auto;\n+  padding: 6px 0;\n+`;\n+\n+const EMPTY_STYLES = `\n+  padding: 16px 12px;\n+  color: var(--nexus-text-faint, #bbb);\n+  font-size: 12px;\n+  font-style: italic;\n+`;\n+\n+const ITEM_STYLES = `\n+  border-bottom: 1px solid var(--nexus-border-subtle, #f2f2f2);\n+  padding: 10px 12px;\n+`;\n+\n+const TITLE_STYLES = `\n+  font-size: 13px;\n+  font-weight: 600;\n+  color: var(--nexus-text, #24292e);\n+  margin-bottom: 4px;\n+  white-space: nowrap;\n+  overflow: hidden;\n+  text-overflow: ellipsis;\n+`;\n+\n+const META_STYLES = `\n+  font-size: 11px;\n+  color: var(--nexus-text-muted, #666);\n+  margin-bottom: 6px;\n+`;\n+\n+const SUMMARY_STYLES = `\n+  font-size: 12px;\n+  color: var(--nexus-text, #444);\n+  margin-bottom: 8px;\n+  line-height: 1.4;\n+`;\n+\n+const ACTION_ROW_STYLES = `\n+  display: flex;\n+  gap: 8px;\n+`;\n+\n+const ACTION_BTN_STYLES = `\n+  border: 1px solid var(--nexus-border, #ddd);\n+  background: var(--nexus-bg, #fff);\n+  border-radius: 4px;\n+  padding: 4px 8px;\n+  cursor: pointer;\n+  font-size: 12px;\n+  color: var(--nexus-text, #333);\n+`;\n+\n+function formatTimestamp(iso: string): string {\n+  const dt = new Date(iso);\n+  if (Number.isNaN(dt.getTime())) return iso;\n+  return dt.toLocaleString();\n+}\n+\n+export function createHistoryPanel(options: HistoryPanelOptions): HistoryPanel {\n+  const root = document.createElement(\"aside\");\n+  root.className = \"nexus-history-panel\";\n+  root.style.cssText = PANEL_STYLES;\n+\n+  const header = document.createElement(\"div\");\n+  header.style.cssText = HEADER_STYLES;\n+  header.textContent = \"History\";\n+\n+  const list = document.createElement(\"div\");\n+  list.style.cssText = LIST_STYLES;\n+\n+  root.append(header, list);\n+\n+  function update(): void {\n+    const snapshots = options.getSnapshots();\n+    list.textContent = \"\";\n+\n+    if (snapshots.length === 0) {\n+      const empty = document.createElement(\"div\");\n+      empty.style.cssText = EMPTY_STYLES;\n+      empty.textContent = \"No snapshots yet\";\n+      list.appendChild(empty);\n+      return;\n+    }\n+\n+    for (const snapshot of snapshots) {\n+      const item = document.createElement(\"section\");\n+      item.style.cssText = ITEM_STYLES;\n+      item.dataset.snapshotId = snapshot.id;\n+\n+      const title = document.createElement(\"div\");\n+      title.style.cssText = TITLE_STYLES;\n+      title.textContent = snapshot.title;\n+      title.title = snapshot.title;\n+\n+      const meta = document.createElement(\"div\");\n+      meta.style.cssText = META_STYLES;\n+      meta.textContent = `${snapshot.filePath ?? \"Untitled\"} · ${formatTimestamp(snapshot.createdAt)}`;\n+\n+      const summary = document.createElement(\"div\");\n+      summary.style.cssText = SUMMARY_STYLES;\n+      summary.textContent = snapshot.summary;\n+\n+      const actions = document.createElement(\"div\");\n+      actions.style.cssText = ACTION_ROW_STYLES;\n+\n+      const restoreBtn = document.createElement(\"button\");\n+      restoreBtn.type = \"button\";\n+      restoreBtn.textContent = \"Restore\";\n+      restoreBtn.style.cssText = ACTION_BTN_STYLES;\n+      restoreBtn.addEventListener(\"click\", () => options.onRestore(snapshot));\n+\n+      const reuseBtn = document.createElement(\"button\");\n+      reuseBtn.type = \"button\";\n+      reuseBtn.textContent = \"Reuse\";\n+      reuseBtn.style.cssText = ACTION_BTN_STYLES;\n+      reuseBtn.addEventListener(\"click\", () => options.onReuse(snapshot));\n+\n+      actions.append(restoreBtn, reuseBtn);\n+      item.append(title, meta, summary, actions);\n+      list.appendChild(item);\n+    }\n+  }\n+\n+  update();\n+\n+  return {\n+    element: root,\n+    update,\n+    destroy() {\n+      root.remove();\n+    },\n+  };\n+}"
+      },
+      {
+        "sha": "d96102e8292a599a76f29244a7b1c8b6dc23c537",
+        "filename": "apps/electron-demo/src/renderer/snapshot-entry.ts",
+        "status": "added",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsnapshot-entry.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsnapshot-entry.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsnapshot-entry.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,9 @@\n+export interface SnapshotEntry {\n+  id: string;\n+  docKey: string;\n+  filePath: string | null;\n+  title: string;\n+  content: string;\n+  createdAt: string;\n+  summary: string;\n+}"
+      },
+      {
+        "sha": "957db862956890c5da35a5e8450ec579cadd4e8e",
+        "filename": "apps/electron-demo/src/renderer/state.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 0,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstate.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstate.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstate.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -1,14 +1,17 @@\n import type { LinkIndex } from \"./link-index\";\n+import type { SnapshotEntry } from \"./snapshot-entry\";\n \n export interface AppState {\n   filePath: string | null;\n   content: string;\n   dirty: boolean;\n   error: string | null;\n+  statusMessage: string | null;\n   vaultPath: string | null;\n   vaultTree: VaultNode[];\n   activeFile: string | null;\n   linkIndex: LinkIndex | null;\n+  snapshots: SnapshotEntry[];\n }\n \n export function createState(): AppState {\n@@ -17,9 +20,11 @@ export function createState(): AppState {\n     content: \"\",\n     dirty: false,\n     error: null,\n+    statusMessage: null,\n     vaultPath: null,\n     vaultTree: [],\n     activeFile: null,\n     linkIndex: null,\n+    snapshots: [],\n   };\n }"
+      },
+      {
+        "sha": "8278814003ac769e643e4ff958ae8cbb5a65ada6",
+        "filename": "apps/electron-demo/src/renderer/style.css",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -99,3 +99,7 @@ body,\n .cm-editor .hljs-deletion { color: #dc322f; }\n .cm-editor .hljs-variable,\n .cm-editor .hljs-template-variable { color: #cb4b16; }\n+\n+.nexus-history-panel button:hover {\n+  background: var(--nexus-bg-muted, #f5f5f5);\n+}"
+      },
+      {
+        "sha": "9a20d34c32361ab2664055f52d7bf54b8e1c52fe",
+        "filename": "apps/electron-demo/test/history-panel.test.ts",
+        "status": "added",
+        "additions": 49,
+        "deletions": 0,
+        "changes": 49,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Ftest%2Fhistory-panel.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Ftest%2Fhistory-panel.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fhistory-panel.test.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,49 @@\n+import { describe, expect, it, vi } from \"vitest\";\n+import { createHistoryPanel } from \"../src/renderer/history-panel\";\n+import type { SnapshotEntry } from \"../src/renderer/snapshot-entry\";\n+\n+function makeSnapshot(overrides: Partial<SnapshotEntry> = {}): SnapshotEntry {\n+  return {\n+    id: \"snap-1\",\n+    docKey: \"doc-a\",\n+    filePath: \"/tmp/a.md\",\n+    title: \"Snapshot title\",\n+    content: \"# Hello\",\n+    createdAt: \"2026-05-13T12:00:00.000Z\",\n+    summary: \"# Hello\",\n+    ...overrides,\n+  };\n+}\n+\n+describe(\"history panel\", () => {\n+  it(\"renders an empty state when there are no snapshots\", () => {\n+    const panel = createHistoryPanel({\n+      getSnapshots: () => [],\n+      onRestore: vi.fn(),\n+      onReuse: vi.fn(),\n+    });\n+\n+    expect(panel.element.textContent).toContain(\"No snapshots yet\");\n+  });\n+\n+  it(\"renders snapshots and wires restore/reuse actions\", () => {\n+    const onRestore = vi.fn();\n+    const onReuse = vi.fn();\n+    const snapshot = makeSnapshot();\n+    const panel = createHistoryPanel({\n+      getSnapshots: () => [snapshot],\n+      onRestore,\n+      onReuse,\n+    });\n+\n+    const buttons = panel.element.querySelectorAll(\"button\");\n+    expect(panel.element.textContent).toContain(\"Snapshot title\");\n+    expect(buttons).toHaveLength(2);\n+\n+    buttons[0].dispatchEvent(new MouseEvent(\"click\", { bubbles: true }));\n+    buttons[1].dispatchEvent(new MouseEvent(\"click\", { bubbles: true }));\n+\n+    expect(onRestore).toHaveBeenCalledWith(snapshot);\n+    expect(onReuse).toHaveBeenCalledWith(snapshot);\n+  });\n+});"
+      },
+      {
+        "sha": "e3a64c3c50a3933a49ead43458b97498eef2e5b5",
+        "filename": "apps/electron-demo/test/snapshots.test.ts",
+        "status": "added",
+        "additions": 67,
+        "deletions": 0,
+        "changes": 67,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Ftest%2Fsnapshots.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Ftest%2Fsnapshots.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fsnapshots.test.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,67 @@\n+import { describe, expect, it } from \"vitest\";\n+import {\n+  addSnapshot,\n+  assertSnapshotContentSize,\n+  createSnapshotDocumentRef,\n+  createEmptySnapshotStore,\n+  createSnapshotEntry,\n+  DEFAULT_SNAPSHOT_CONTENT_BYTES,\n+  listSnapshots,\n+  normalizeDocKey,\n+  parseSnapshotStore,\n+  summarizeSnapshot,\n+} from \"../electron/snapshots\";\n+\n+describe(\"snapshot helpers\", () => {\n+  it(\"normalizes null file paths to the untitled document scope\", () => {\n+    expect(normalizeDocKey(null)).toBe(\"untitled\");\n+    expect(normalizeDocKey(\"C:\\\\vault\\\\note.md\")).toContain(\"vault\");\n+  });\n+\n+  it(\"derives a document ref from the file path boundary\", () => {\n+    expect(createSnapshotDocumentRef(null)).toEqual({\n+      documentId: \"untitled\",\n+      filePath: null,\n+    });\n+    expect(createSnapshotDocumentRef(\"/tmp/a.md\").filePath).toBe(\"/tmp/a.md\");\n+  });\n+\n+  it(\"prefers the first non-heading line in the summary\", () => {\n+    expect(summarizeSnapshot(\"\\n\\n# Heading\\nbody\")).toBe(\"body\");\n+    expect(summarizeSnapshot(\"\\n\\n# Heading\")).toBe(\"# Heading\");\n+    expect(summarizeSnapshot(\"\")).toBe(\"(empty document)\");\n+  });\n+\n+  it(\"adds newest snapshots first and enforces retention\", () => {\n+    const store = createEmptySnapshotStore();\n+    const first = createSnapshotEntry({\n+      docKey: \"doc-a\",\n+      filePath: \"/tmp/a.md\",\n+      content: \"# One\",\n+      createdAt: \"2026-05-13T10:00:00.000Z\",\n+    });\n+    const second = createSnapshotEntry({\n+      docKey: \"doc-a\",\n+      filePath: \"/tmp/a.md\",\n+      content: \"# Two\",\n+      createdAt: \"2026-05-13T11:00:00.000Z\",\n+    });\n+\n+    const withFirst = addSnapshot(store, first, 1);\n+    const withSecond = addSnapshot(withFirst, second, 1);\n+\n+    const items = listSnapshots(withSecond, \"doc-a\");\n+    expect(items).toHaveLength(1);\n+    expect(items[0].summary).toBe(\"# Two\");\n+  });\n+\n+  it(\"rejects snapshot content above the byte cap\", () => {\n+    expect(() => {\n+      assertSnapshotContentSize(\"a\".repeat(DEFAULT_SNAPSHOT_CONTENT_BYTES + 1));\n+    }).toThrow(/exceeds/i);\n+  });\n+\n+  it(\"throws on corrupt persisted data\", () => {\n+    expect(() => parseSnapshotStore(\"{not-json\")).toThrow();\n+  });\n+});"
+      },
+      {
+        "sha": "10e557d175b135cfc72bc7835d29d9bc7e53c574",
+        "filename": "apps/electron-demo/test/state.test.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Ftest%2Fstate.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/apps%2Felectron-demo%2Ftest%2Fstate.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fstate.test.ts?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -8,5 +8,6 @@ describe(\"createState\", () => {\n     expect(state.content).toBe(\"\");\n     expect(state.dirty).toBe(false);\n     expect(state.error).toBeNull();\n+    expect(state.statusMessage).toBeNull();\n   });\n });"
+      },
+      {
+        "sha": "7477d2e6a594827453939a8874e5f29cf8d91e23",
+        "filename": "openspec/changes/add-snapshot-history/design.md",
+        "status": "added",
+        "additions": 123,
+        "deletions": 0,
+        "changes": 123,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-snapshot-history%2Fdesign.md?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,123 @@\n+## Context\n+\n+The product direction increasingly points toward local-first note and writing workflows. The electron demo already has vault navigation, slash commands, live preview, and file persistence, but it still lacks a lightweight mechanism for checkpointing document evolution beyond linear undo/redo.\n+\n+The requested user value is practical rather than archival:\n+- \"What did I have a few minutes ago?\"\n+- \"Can I roll back to a previous draft?\"\n+- \"Can I reuse an earlier draft without overwriting the current note?\"\n+\n+That makes full-blown version-control semantics unnecessary for v1. We can satisfy the workflow with host-managed snapshots in the demo app.\n+\n+## Goals / Non-Goals\n+\n+**Goals:**\n+- Let users manually create a named-or-untitled snapshot of the current editor content.\n+- Let users view recent snapshots for the active document in reverse chronological order.\n+- Let users restore a snapshot into the current editor session.\n+- Let users reuse a snapshot as a new unsaved draft, so old content can seed a fresh edit without mutating the original file on disk.\n+- Persist snapshots across app restarts.\n+- Keep the implementation small, testable, and entirely within `apps/electron-demo`.\n+\n+**Non-Goals:**\n+- Automatic time-travel on every keystroke.\n+- Cross-device sync, collaboration, CRDT, or Git integration.\n+- Prompt history, model output history, or AI conversation state.\n+- A public snapshot API in `@floatboat/nexus-core`.\n+- Branching timelines, diffs, merge UI, or retention policies beyond a simple cap.\n+\n+## Decisions\n+\n+**Decision: Scope v1 to Electron demo, not `@floatboat/nexus-core`.**\n+The core editor is intentionally storage-agnostic and single-document oriented. Snapshots require persistence, file identity, retention, and UI decisions that belong to the host app. Keeping this in the demo avoids prematurely locking the core into a storage contract that other hosts may not want.\n+\n+Alternatives considered:\n+- Add snapshot primitives to `@floatboat/nexus-core`: rejected because core should not own persistence concerns.\n+- Create a reusable `plugin-snapshots` package immediately: rejected because there is only one host implementation today, and the right abstraction is not yet proven.\n+\n+**Decision: Manual snapshots only for v1.**\n+Manual snapshots provide clear user intent and avoid complex policies around debounce intervals, snapshot spam, and retention pressure. They also keep testing and UX straightforward.\n+\n+Alternatives considered:\n+- Auto-snapshot on every save: useful, but easy to add later once the storage and panel UX exist.\n+- Auto-snapshot on timer or debounce: rejected as too noisy for the first slice.\n+\n+**Decision: Persist snapshots in `app.getPath(\"userData\")/snapshots.json`.**\n+This matches the existing vault persistence pattern and avoids new dependencies. The storage file will contain an index keyed by document identity, plus a per-document list of snapshot entries.\n+\n+**Decision: Key snapshots by document identity with an untitled fallback.**\n+For saved files, the key is the normalized absolute path.\n+For unsaved docs, the key is a synthetic scope such as `untitled`.\n+This keeps retrieval deterministic while still allowing snapshots before first save.\n+\n+**Decision: \"Reuse\" means load snapshot content as a new unsaved draft.**\n+This best matches the product language without requiring duplication-on-disk flows. Reusing a snapshot clears the active file association in the renderer state, marks the document dirty, and lets the user decide where to save it.\n+\n+Alternatives considered:\n+- \"Reuse\" as copy-to-clipboard: too weak, does not feel like a real editing workflow.\n+- \"Reuse\" as create sibling file automatically: too opinionated and would require naming UX plus filesystem writes.\n+\n+**Decision: Retain a bounded number of snapshots per document.**\n+Keep the newest `N` snapshots per document, with `N = 20` as the proposed default. This prevents unbounded growth while remaining generous enough for demo use.\n+\n+## Data Model\n+\n+Suggested persisted shape:\n+\n+```ts\n+interface SnapshotEntry {\n+  id: string;\n+  docKey: string;\n+  filePath: string | null;\n+  title: string;\n+  content: string;\n+  createdAt: string; // ISO timestamp\n+  summary: string;   // first non-empty line or truncated preview\n+}\n+\n+interface SnapshotStore {\n+  byDocument: Record<string, SnapshotEntry[]>;\n+}\n+```\n+\n+Notes:\n+- `title` is display-oriented metadata, not a required user-entered field.\n+- `summary` avoids rendering full document content in the list by default.\n+- `content` stores the full markdown payload so restore/reuse does not need the original file to still exist.\n+\n+## UI Flow\n+\n+Renderer additions:\n+- A toolbar action or button: `Snapshot`\n+- A side panel: `History`\n+- Each history item shows:\n+  - timestamp,\n+  - file label / untitled label,\n+  - summary preview,\n+  - actions: `Restore`, `Reuse`\n+\n+Behavior:\n+- `Restore` replaces the current editor document after a dirty-state confirmation when needed.\n+- `Reuse` loads the snapshot content into the editor as a new unsaved draft:\n+  - `state.filePath = null`\n+  - `state.activeFile = null`\n+  - `state.dirty = true`\n+\n+## Risks / Trade-offs\n+\n+- **Snapshot list grows large** → bounded retention per document mitigates this.\n+- **Unsaved-document identity is coarse** → acceptable for v1; later iterations can add per-session untitled ids if needed.\n+- **Restore may surprise users if it mutates the current document abruptly** → confirm when dirty and keep the action clearly labeled.\n+- **Storage file corruption** → follow the vault-state pattern: fall back to an empty store if JSON parse fails.\n+\n+## Migration Plan\n+\n+Net-additive only. No existing user data needs migration.\n+\n+If the project later introduces a generalized snapshot service or a reusable package, the demo's `snapshots.json` format can be migrated in place because each snapshot entry is self-contained.\n+\n+## Open Questions\n+\n+- Should saving a file optionally create a snapshot automatically after v1?\n+- Should the panel allow deletion of individual snapshots in v1, or is bounded retention sufficient?\n+- Should snapshot timestamps be grouped by day in the UI, or kept as a flat list for the first implementation?"
+      },
+      {
+        "sha": "d2f1c9af73c5fa752e3b5c6ec3b5e06f5a072937",
+        "filename": "openspec/changes/add-snapshot-history/proposal.md",
+        "status": "added",
+        "additions": 42,
+        "deletions": 0,
+        "changes": 42,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-snapshot-history%2Fproposal.md?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,42 @@\n+# Change: Add Snapshot History to Electron Demo\n+\n+## Why\n+\n+The electron demo currently supports only immediate undo/redo and normal file save flows. Users cannot inspect older document states, restore a known-good revision, or reuse a previous draft as the starting point for a new edit. This is especially limiting for note-taking and AI-assisted writing workflows, where users often want lightweight checkpoints without introducing full collaboration or Git-style versioning.\n+\n+The roadmap already includes `#19 Version history / snapshots | core + host storage | P2 | planned`, with a note that the electron demo should land the reference implementation first. This change proposes that reference implementation with a deliberately narrow scope: local snapshot history for the demo app, with no changes to cloud sync, collaboration, or prompt orchestration.\n+\n+## What Changes\n+\n+- Add a **Snapshot History** capability to `apps/electron-demo` for the currently active document.\n+- Allow users to create **manual snapshots** from the UI.\n+- Persist recent snapshots in host-managed storage under Electron `userData`, keyed by document identity.\n+- Provide a renderer-side history panel that lets users:\n+  - inspect recent snapshots,\n+  - restore a snapshot into the editor,\n+  - reuse a snapshot as a new unsaved draft.\n+- Add dirty-state safeguards before destructive restore actions.\n+- Keep the implementation **host-side only** for v1: `@floatboat/nexus-core` remains document-centric and storage-agnostic.\n+\n+## Impact\n+\n+- Affected specs: `snapshot-history` (new capability)\n+- Affected code:\n+  - `apps/electron-demo/electron/main.ts` (snapshot persistence + IPC)\n+  - `apps/electron-demo/electron/preload.ts` (bridge)\n+  - `apps/electron-demo/src/renderer/bridge.d.ts` (types)\n+  - `apps/electron-demo/src/renderer/state.ts` (snapshot UI state)\n+  - `apps/electron-demo/src/renderer/app.ts` (toolbar + panel wiring)\n+  - `apps/electron-demo/src/renderer/history-panel.ts` (new)\n+  - `apps/electron-demo/src/renderer/style.css` (panel styles)\n+  - tests for main-process storage and renderer panel behavior\n+- No new runtime dependencies required; snapshots are stored as JSON in Electron `userData`.\n+- Back-compat:\n+  - normal Open / Save / Save As flows remain unchanged,\n+  - undo/redo remains unchanged,\n+  - no changes to public `@floatboat/nexus-core` APIs in this proposal.\n+\n+## Notes\n+\n+- This proposal intentionally covers **document snapshots**, not AI prompt history. Prompt history can later build on the same persistence and UI patterns, but is out of scope for a two-day reference PR.\n+- This proposal is a natural first slice of roadmap item `#19 Version history / snapshots`."
+      },
+      {
+        "sha": "96a34cf0d0cf138707d5e5cb826bb4bf4da4b3a4",
+        "filename": "openspec/changes/add-snapshot-history/specs/snapshot-history/spec.md",
+        "status": "added",
+        "additions": 79,
+        "deletions": 0,
+        "changes": 79,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Fspecs%2Fsnapshot-history%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Fspecs%2Fsnapshot-history%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-snapshot-history%2Fspecs%2Fsnapshot-history%2Fspec.md?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,79 @@\n+## ADDED Requirements\n+\n+### Requirement: Manual Snapshot Creation\n+\n+The electron demo SHALL allow the user to create a manual snapshot of the current editor document, capturing the full markdown content together with timestamped metadata.\n+\n+#### Scenario: Create snapshot for a saved file\n+- **WHEN** a saved document is open in the editor\n+- **AND** the user triggers the snapshot action\n+- **THEN** a new snapshot entry SHALL be persisted for that document's file identity\n+- **AND** the snapshot SHALL include the full markdown content, a created-at timestamp, and a human-readable summary\n+\n+#### Scenario: Create snapshot for an unsaved document\n+- **WHEN** the current document has no file path\n+- **AND** the user triggers the snapshot action\n+- **THEN** a new snapshot entry SHALL be persisted under the unsaved-document scope\n+- **AND** snapshot creation SHALL succeed without requiring the user to save first\n+\n+### Requirement: Snapshot Listing\n+\n+The electron demo SHALL let the user inspect recent snapshots for the currently active document in reverse chronological order.\n+\n+#### Scenario: Show newest snapshot first\n+- **WHEN** the active document has multiple snapshots\n+- **THEN** the history panel SHALL render the newest snapshot before older ones\n+\n+#### Scenario: Empty history state\n+- **WHEN** the active document has no snapshots\n+- **THEN** the history panel SHALL show a clear empty state\n+- **AND** the absence of snapshots SHALL NOT be treated as an error\n+\n+### Requirement: Snapshot Restore\n+\n+The electron demo SHALL allow the user to restore a selected snapshot into the current editor session.\n+\n+#### Scenario: Restore snapshot into a clean editor\n+- **WHEN** the user selects `Restore` on a snapshot\n+- **AND** the current editor session is not dirty\n+- **THEN** the editor content SHALL be replaced with the snapshot content\n+- **AND** the restored document SHALL remain associated with the current file path when one exists\n+\n+#### Scenario: Restore snapshot with unsaved changes\n+- **WHEN** the user selects `Restore` on a snapshot\n+- **AND** the current editor session is dirty\n+- **THEN** the app SHALL prompt for confirmation before replacing the document\n+- **AND** declining the prompt SHALL leave the current editor content unchanged\n+\n+### Requirement: Snapshot Reuse as New Draft\n+\n+The electron demo SHALL allow the user to reuse a selected snapshot as a new unsaved draft rather than overwriting the current file session.\n+\n+#### Scenario: Reuse snapshot clears active file association\n+- **WHEN** the user selects `Reuse` on a snapshot\n+- **THEN** the snapshot content SHALL be loaded into the editor\n+- **AND** the current renderer state SHALL no longer point at an active file path\n+- **AND** the document SHALL be marked dirty so the user can choose a save destination explicitly\n+\n+### Requirement: Snapshot Persistence\n+\n+Snapshot history SHALL persist across electron-demo app restarts using host-managed local storage.\n+\n+#### Scenario: Snapshot available after relaunch\n+- **WHEN** the user creates a snapshot and closes the app\n+- **AND** the app is launched again later\n+- **THEN** the snapshot SHALL still appear in the history list for the same document identity\n+\n+#### Scenario: Corrupt snapshot store fallback\n+- **WHEN** the persisted snapshot storage file cannot be parsed\n+- **THEN** the app SHALL fall back to an empty snapshot store\n+- **AND** snapshot listing SHALL remain functional for newly created entries\n+\n+### Requirement: Bounded Retention\n+\n+The electron demo SHALL retain only a bounded number of the most recent snapshots per document.\n+\n+#### Scenario: Oldest snapshot is dropped after reaching the cap\n+- **WHEN** the number of snapshots for one document exceeds the configured retention cap\n+- **THEN** the oldest snapshot SHALL be removed from persisted storage\n+- **AND** the newest snapshots SHALL be preserved"
+      },
+      {
+        "sha": "e1cac04c5aa7e052ee8a3a66f38c18690b1412c5",
+        "filename": "openspec/changes/add-snapshot-history/tasks.md",
+        "status": "added",
+        "additions": 29,
+        "deletions": 0,
+        "changes": 29,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9784fa46a0e5adf49111e1aa1966f4468fee08a0/openspec%2Fchanges%2Fadd-snapshot-history%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-snapshot-history%2Ftasks.md?ref=9784fa46a0e5adf49111e1aa1966f4468fee08a0",
+        "patch": "@@ -0,0 +1,29 @@\n+## 1. OpenSpec\n+- [x] 1.1 Scaffold `proposal.md`, `design.md`, `tasks.md`, and `specs/snapshot-history/spec.md`\n+- [ ] 1.2 Validate the change with `openspec validate add-snapshot-history --strict` (`openspec` CLI not installed in the local environment)\n+\n+## 2. Main-process Persistence + IPC\n+- [x] 2.1 Add snapshot store read/write helpers in `apps/electron-demo/electron/main.ts`\n+- [x] 2.2 Persist snapshots in `userData/snapshots.json` with graceful fallback on missing/corrupt files\n+- [x] 2.3 Add IPC to create a snapshot for the current document\n+- [x] 2.4 Add IPC to list snapshots for a document key\n+- [x] 2.5 Enforce bounded retention per document (default 20 newest entries)\n+\n+## 3. Preload + Types\n+- [x] 3.1 Extend `preload.ts` with `nexusDemo.snapshots.*`\n+- [x] 3.2 Extend `bridge.d.ts` with `SnapshotEntry` and snapshot bridge types\n+\n+## 4. Renderer\n+- [x] 4.1 Extend renderer state with currently loaded snapshots\n+- [x] 4.2 Add `history-panel.ts` to render the snapshot list and actions\n+- [x] 4.3 Add a toolbar button or entry point to create a manual snapshot\n+- [x] 4.4 Wire panel refresh when the active document changes or a new snapshot is created\n+- [x] 4.5 Implement `Restore` with dirty-state confirmation\n+- [x] 4.6 Implement `Reuse` as a new unsaved draft loaded into the editor\n+- [x] 4.7 Add snapshot panel styles in `style.css`\n+\n+## 5. Verification\n+- [x] 5.1 Add tests for snapshot storage helpers\n+- [x] 5.2 Add renderer tests for history panel rendering and restore/reuse actions\n+- [x] 5.3 Run relevant test suites and electron-demo build successfully\n+- [ ] 5.4 Manually smoke-test: create snapshot, relaunch app, restore snapshot, reuse snapshot as new draft"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=18",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

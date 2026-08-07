@@ -1,0 +1,109 @@
+{
+  "pr_number": 40,
+  "title": "feat(core): add plugin lifecycle hooks and enhanced event bus system",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "34fb814124f8a773ad2b85c67f6b46b0107f1e30",
+  "merge_commit_sha": null,
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "34fb814124f8a773ad2b85c67f6b46b0107f1e30",
+      "message": "feat(core): add plugin lifecycle hooks and enhanced event bus system\n\nIntroduce a comprehensive plugin lifecycle management system that\ntransforms the plugin architecture from flat registration to a\nfull lifecycle-managed model.\n\n=== New Features ===\n\nPlugin Lifecycle Hooks (NexusPlugin extensions):\n- onEditorReady — called after editor is fully initialised\n- onBeforeChange — guard before change events (can cancel)\n- onAfterChange — observe after change events\n- onBeforeSetDocument — guard before document replacement (can cancel)\n- onSelectionChange — react to cursor/selection changes\n- onDestroy — clean up plugin resources on teardown\n\nEnhanced EventBus (upgraded from EventEmitter):\n- once() — one-shot subscriptions\n- Priority ordering — higher-priority handlers run first\n- Error isolation — crashes never break other handlers\n- Pause/resume — batch events for replay\n- Wildcard '*' — subscribe to all events\n- listenerCount() — introspection API\n\nExtended EditorEventMap (9 new events):\n- editorReady, paste, drop, keydown, themeChange\n- beforeChange, beforeSetDocument, destroy, error\n\nDynamic Plugin Management (EditorAPI):\n- addPlugin(plugin) — register at runtime\n- removePlugin(name) — unregister (fires onDestroy)\n- hasPlugin(name) — query registration\n\nBackward Compatibility:\n- Existing EditorAPI.on/off API unchanged\n- Existing plugins continue without modification\n- All 266 existing core tests pass without changes\n- React/Vue bindings automatically inherit new API methods\n\n=== Changed Files ===\n\nModified:\n- packages/core/src/editor.ts — integrate PluginHost + EventBus, wire\n  all lifecycle hooks and new events\n- packages/core/src/index.ts — export new classes and types\n- packages/core/src/types.ts — extend NexusPlugin, EditorEventMap,\n  EditorAPI with new members\n- packages/core/test/events.test.ts — 30 new tests for new events/APIs\n\nNew:\n- packages/core/src/event-bus.ts — EventBus class (drop-in EventEmitter\n  upgrade with once, priority, error isolation, pause/resume, wildcard)\n- packages/core/src/plugin-host.ts — PluginHost class for lifecycle\n  management with error isolation\n- packages/core/test/event-bus.test.ts — 24 tests for EventBus\n- packages/core/test/plugin-host.test.ts — 25 tests for PluginHost\n- packages/core/test/fixtures/stats-plugin.ts — demo plugin showcasing\n  all lifecycle hooks and event-bus usage\n- docs/examples/plugin-lifecycle-examples.ts — comprehensive API\n  usage documentation with real-world examples\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>",
+      "date": "2026-06-01T17:09:40Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/examples/plugin-lifecycle-examples.ts",
+      "status": "added",
+      "additions": 269,
+      "deletions": 0,
+      "changes": 269
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 63,
+      "deletions": 6,
+      "changes": 69
+    },
+    {
+      "filename": "packages/core/src/event-bus.ts",
+      "status": "added",
+      "additions": 246,
+      "deletions": 0,
+      "changes": 246
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/core/src/plugin-host.ts",
+      "status": "added",
+      "additions": 385,
+      "deletions": 0,
+      "changes": 385
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 74,
+      "deletions": 0,
+      "changes": 74
+    },
+    {
+      "filename": "packages/core/test/event-bus.test.ts",
+      "status": "added",
+      "additions": 332,
+      "deletions": 0,
+      "changes": 332
+    },
+    {
+      "filename": "packages/core/test/events.test.ts",
+      "status": "modified",
+      "additions": 263,
+      "deletions": 2,
+      "changes": 265
+    },
+    {
+      "filename": "packages/core/test/fixtures/stats-plugin.ts",
+      "status": "added",
+      "additions": 213,
+      "deletions": 0,
+      "changes": 213
+    },
+    {
+      "filename": "packages/core/test/plugin-host.test.ts",
+      "status": "added",
+      "additions": 360,
+      "deletions": 0,
+      "changes": 360
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=40",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

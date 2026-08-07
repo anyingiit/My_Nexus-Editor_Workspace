@@ -1,0 +1,6 @@
+# Transient LLM caches and per-run state (regenerable)
+harness/llmcache/
+harness/state/
+reports/cost_ledger.jsonl
+
+# Keep the dataset and ground truth; do not ignore.

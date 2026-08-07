@@ -1,0 +1,31 @@
+{
+  "pr_number": 67,
+  "title": "feat(react,vue): add onReady callback and container pass-through props",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T03:36:47Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "maidangzhu",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-17T08:19:26Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=67) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-06-23T03:36:46Z",
+      "body": "Closing this PR after internal review. The change is not suitable to continue as-is for this interview evaluation; please resubmit a clean, focused PR if needed."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T06:15:13Z",
+      "body": "感谢你实现 `onReady` + 容器属性透传（roadmap #4）👏\n\n这个功能有好几位贡献者同时在做，我们对比后选择以 #29 作为合并版本：它透传了完整的 `HTMLAttributes`（本 PR 是 `className`/`style`/`id` 三个硬编码属性，host 无法设置 `role`/`data-*`/`aria-*` 等），TypeScript 类型也更干净（避免了 vue 侧的 `as any`），react/vue 双端语义对齐并带 README。因此这里先关闭本 PR。\n\n另外本 PR 还捆进了一块无关的 `plugin-search`（wholeWord/regexp）改动——这部分和 onReady 不是一个 concern，按项目 `CONTRIBUTING.md` §2「One PR, one concern」应该拆开走独立 PR。\n\n🧭 一条提交建议：保持「一个 PR 只做一件事」。把 SDK 属性透传和搜索功能拆成两个 PR，每个都更容易被独立评审和合并，也不会因为一块有争议而拖住另一块。\n\n谢谢你的贡献，欢迎继续参与 🙌\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

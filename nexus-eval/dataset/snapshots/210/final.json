@@ -1,0 +1,88 @@
+{
+  "pr_number": 210,
+  "title": "feat(search): add fuzzy search mode with subsequence matcher",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "b534c262013ff0f6a2eeb5190922c8bde46421fa",
+  "merge_commit_sha": "9f5fd4c29c7b830e784e286082e6018bb8e1ceb5",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "b534c262013ff0f6a2eeb5190922c8bde46421fa",
+      "message": "feat(search): add fuzzy search mode with subsequence matcher\n\nImplements roadmap #17. Adds an opt-in 'fuzzy' toggle to the search panel\nthat navigates with a fzf-style subsequence matcher (consecutive-run and\nword-boundary bonuses, length penalty). The matcher is a pure, unit-tested\nmodule; panel integration is covered by jsdom tests.",
+      "date": "2026-08-04T09:12:20Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy.ts",
+      "status": "added",
+      "additions": 88,
+      "deletions": 0,
+      "changes": 88
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 231,
+      "deletions": 23,
+      "changes": 254
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy.test.ts",
+      "status": "added",
+      "additions": 71,
+      "deletions": 0,
+      "changes": 71
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 103,
+      "deletions": 1,
+      "changes": 104
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=210",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "pr_number": 94,
+  "title": "fix(toolbar): wrap buttons in narrow containers",
+  "body": "  ## Summary / 摘要\r\n\r\n  Allow the toolbar to wrap in narrow containers and prevent the electron demo layout from overflowing when the window is small.\r\n\r\n  ## Motivation / 背景与动机\r\n\r\n  The editor toolbar previously stayed on one line and showed a horizontal scrollbar in narrow windows, which made the toolbar visually collide with adjacent panels.\r\n\r\n  ## Changes / 变更内容\r\n\r\n  - `packages/plugin-toolbar`:\r\n    - Allow toolbar buttons to wrap across rows in narrow containers.\r\n    - Add a regression test for the wrapping style.\r\n  - `apps/electron-demo`:\r\n    - Add minimal overflow protection for the top toolbar.\r\n    - Add `min-width: 0` to the editor column so it can shrink correctly in the flex layout.\r\n\r\n  ## Testing / 测试\r\n\r\n  - [x] `pnpm exec vitest run packages/plugin-toolbar/test/plugin-toolbar.test.ts --config vitest.config.ts`\r\n  - [x] `pnpm typecheck`\r\n  - [x] `pnpm test`\r\n  - [x] `pnpm build`\r\n  - [x] `pnpm --filter @floatboat/nexus-electron-demo build`\r\n  - [x] Manual UI check in electron-demo: narrow the app window and verify toolbar buttons wrap instead of showing the previous horizontal overflow.\r\n\r\n  ## Compliance / 合规自检\r\n\r\n  - [x] AI disclosure: AI assistance was used to discuss and review the implementation. The final code was reviewed before submission.\r\n  - [x] New dependencies: none\r\n  - [x] No build artifacts committed\r\n  - [x] No secrets / `.env` / personal vault data committed\r\n",
+  "created_at": "2026-07-02T04:55:36Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+  "first_review_time": "2026-07-02T04:55:42Z",
+  "commits_at_first_review": [
+    {
+      "sha": "4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+      "message": "fix(toolbar): wrap buttons in narrow containers",
+      "date": "2026-07-02T04:46:48Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "f9716c70a68156019fbffae3068b7f8c764599b3",
+        "filename": "apps/electron-demo/src/renderer/style.css",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/4d227112d50d0b991ea68f6e55f1e5fcd87b1462/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/4d227112d50d0b991ea68f6e55f1e5fcd87b1462/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css?ref=4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+        "patch": "@@ -23,11 +23,14 @@ body,\n   background: #f0f0f0;\n   border-bottom: 1px solid #ddd;\n   flex-shrink: 0;\n+  min-width: 0;\n+  overflow-x: auto;\n }\n \n .toolbar button {\n   padding: 4px 12px;\n   cursor: pointer;\n+  flex-shrink: 0;\n }\n \n .main-area {\n@@ -38,6 +41,7 @@ body,\n \n .editor-column {\n   flex: 1;\n+  min-width: 0;\n   display: flex;\n   flex-direction: column;\n   overflow: hidden;"
+      },
+      {
+        "sha": "322ef3c73e0c46a79b52b2c664b36254584f01c1",
+        "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/4d227112d50d0b991ea68f6e55f1e5fcd87b1462/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/4d227112d50d0b991ea68f6e55f1e5fcd87b1462/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts?ref=4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+        "patch": "@@ -191,6 +191,8 @@ function defaultGroups(options?: ToolbarUIOptions): ToolbarGroup[] {\n const TOOLBAR_STYLES = `\n   display: flex;\n   align-items: center;\n+  align-content: center;\n+  flex-wrap: wrap;\n   gap: 2px;\n   padding: 6px 12px;\n   background: var(--nexus-bg-subtle, #f6f8fa);"
+      },
+      {
+        "sha": "55d014b9d6fb9a10876ca19f45557d85839ba4eb",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/4d227112d50d0b991ea68f6e55f1e5fcd87b1462/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/4d227112d50d0b991ea68f6e55f1e5fcd87b1462/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+        "patch": "@@ -469,6 +469,19 @@ describe(\"createToolbarPlugin\", () => {\n });\n \n describe(\"createToolbarUI\", () => {\n+  it(\"allows toolbar buttons to wrap in narrow containers\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello world\" });\n+    const toolbar = createToolbarUI(editor);\n+\n+    expect(toolbar.element.style.display).toBe(\"flex\");\n+    expect(toolbar.element.style.flexWrap).toBe(\"wrap\");\n+    expect(toolbar.element.style.alignContent).toBe(\"center\");\n+\n+    toolbar.destroy();\n+    editor.destroy();\n+  });\n+\n   it(\"shows custom text tooltip for icon-only toolbar buttons\", () => {\n     const container = document.createElement(\"div\");\n     const editor = createEditor({ container, initialValue: \"hello world\" });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=94",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "pr_number": 149,
+  "title": "feat(search): add backtracking fuzzy search to plugin-search",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "59176ae4df82629239980f9528004bfd67728f85",
+  "merge_commit_sha": null,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "59176ae4df82629239980f9528004bfd67728f85",
+      "message": "feat(search): add backtracking fuzzy search to plugin-search\n\nImplement DP-based subsequence matching with score-ranked deduplication,\nsearch panel toggle, and navigation helpers so users can find non-literal\nmatches without leaving the existing CodeMirror search UI.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-11T15:07:30Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy-match.ts",
+      "status": "added",
+      "additions": 287,
+      "deletions": 0,
+      "changes": 287
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 202,
+      "deletions": 9,
+      "changes": 211
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy-match.test.ts",
+      "status": "added",
+      "additions": 140,
+      "deletions": 0,
+      "changes": 140
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 98,
+      "deletions": 0,
+      "changes": 98
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 0,
+      "changes": 16
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=149",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

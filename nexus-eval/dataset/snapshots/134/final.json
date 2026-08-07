@@ -1,0 +1,60 @@
+{
+  "pr_number": 134,
+  "title": "feat(core): add list item drag reorder and table row height resize",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "5fdeba34e6094a329e986130db9c7ec7ac3eb5d4",
+  "merge_commit_sha": null,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "5fdeba34e6094a329e986130db9c7ec7ac3eb5d4",
+      "message": "feat(core): add list item drag reorder and table row height resize\n\n- List item drag reorder with grip handles (⋮) in live-preview.ts\n  Custom mousedown/mousemove/mouseup drag, editing locks,\n  CM6 coordsAtPos positioning, single-dispatch source update.\n- Table row height resize in live-preview-table.ts\n  Per-row resize handles with session-scoped height storage,\n  same editing-lock pattern as column resize.\n- Fix table addColumn to detect separator rows without\n  relying on ^-anchored SEPARATOR_RE regex.\n\nCo-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>",
+      "date": "2026-07-06T09:54:08Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 102,
+      "deletions": 1,
+      "changes": 103
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 227,
+      "deletions": 1,
+      "changes": 228
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=134",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

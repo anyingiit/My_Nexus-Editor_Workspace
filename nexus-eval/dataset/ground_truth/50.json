@@ -1,0 +1,21 @@
+{
+  "pr_number": 50,
+  "title": "fix(electron): Fix the issue of incompatible file paths during execution on the Windows operating system",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T08:01:42Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "qq1209974887",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T08:01:39Z",
+      "body": "感谢贡献 🙌 已在本地 rebase 到最新 main，跑通 `pnpm typecheck` + `pnpm test` + `pnpm build` 全绿后，以 squash 提交合入主分支：`bb83c3a`（保留你为 author + Co-authored-by）。\n\n为保持 main 线性整洁，这里采用 squash 后手动合并的方式落地，所以 PR 由系统关闭而非显示 merged，但你的提交已经在主分支上了。再次感谢！"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

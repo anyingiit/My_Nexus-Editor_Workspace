@@ -1,0 +1,351 @@
+{
+  "pr_number": 49,
+  "title": "Feat(webcomponent)：Implement Web Component custom-element wrapper and provide a supporting demo project for usage",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:39:50Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "4c24bdeec56a981626b448747539bb2019f110ca",
+  "merge_commit_sha": null,
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "0823ed39ad0f49296e30606d98f3e81b3ee8bb91",
+      "message": "feat(webcomponent): Integrate nexus-editor as a native WebComponent",
+      "date": "2026-06-02T07:45:40Z"
+    },
+    {
+      "sha": "cccb5443edf15f739451be2adcb76326dcb0cfa5",
+      "message": "feat(webcomponent): Wrap the native WebComponent version of the nexus-editor editor",
+      "date": "2026-06-02T09:54:36Z"
+    },
+    {
+      "sha": "0b4daab0bfb96097b2532aed422782d1e2445faf",
+      "message": "feat(webcomponent): Wrap the native WebComponent version of the nexus-editor editor",
+      "date": "2026-06-03T04:21:39Z"
+    },
+    {
+      "sha": "95905fe9c05903a9b193ae6597fcf8563f6f843d",
+      "message": "feat(webcomponent): Add usage examples for the webcomponent package (webcomponent-demo)",
+      "date": "2026-06-03T07:49:31Z"
+    },
+    {
+      "sha": "1d2fa636f0c5df09cb6605771dc2bd6685f00f2c",
+      "message": "chore(webcomponent-demo): add gitignore file for demo project",
+      "date": "2026-06-03T07:51:54Z"
+    },
+    {
+      "sha": "4c24bdeec56a981626b448747539bb2019f110ca",
+      "message": "test(webcomponent-demo): Fix test cases",
+      "date": "2026-06-03T09:02:45Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/webcomponent-demo/.gitignore",
+      "status": "added",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/webcomponent-demo/package.json",
+      "status": "added",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/app.ts",
+      "status": "added",
+      "additions": 153,
+      "deletions": 0,
+      "changes": 153
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/commands/editCommands.ts",
+      "status": "added",
+      "additions": 47,
+      "deletions": 0,
+      "changes": 47
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/commands/fileCommands.ts",
+      "status": "added",
+      "additions": 118,
+      "deletions": 0,
+      "changes": 118
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/commands/index.ts",
+      "status": "added",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/commands/keyboardShortcuts.ts",
+      "status": "added",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/BacklinksPanel/BacklinksPanel.css",
+      "status": "added",
+      "additions": 99,
+      "deletions": 0,
+      "changes": 99
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/BacklinksPanel/index.ts",
+      "status": "added",
+      "additions": 213,
+      "deletions": 0,
+      "changes": 213
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/Editor/Editor.css",
+      "status": "added",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/Editor/index.ts",
+      "status": "added",
+      "additions": 66,
+      "deletions": 0,
+      "changes": 66
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/OutlinePanel/OutlinePanel.css",
+      "status": "added",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/OutlinePanel/index.ts",
+      "status": "added",
+      "additions": 66,
+      "deletions": 0,
+      "changes": 66
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/SearchBar/SearchBar.css",
+      "status": "added",
+      "additions": 74,
+      "deletions": 0,
+      "changes": 74
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/SearchBar/index.ts",
+      "status": "added",
+      "additions": 195,
+      "deletions": 0,
+      "changes": 195
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/SettingsPanel/SettingsPanel.css",
+      "status": "added",
+      "additions": 172,
+      "deletions": 0,
+      "changes": 172
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/SettingsPanel/index.ts",
+      "status": "added",
+      "additions": 267,
+      "deletions": 0,
+      "changes": 267
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/StatusBar/StatusBar.css",
+      "status": "added",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/StatusBar/index.ts",
+      "status": "added",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/VaultPanel/VaultPanel.css",
+      "status": "added",
+      "additions": 150,
+      "deletions": 0,
+      "changes": 150
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/components/VaultPanel/index.ts",
+      "status": "added",
+      "additions": 542,
+      "deletions": 0,
+      "changes": 542
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/index.html",
+      "status": "added",
+      "additions": 194,
+      "deletions": 0,
+      "changes": 194
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/store/editorStore.ts",
+      "status": "added",
+      "additions": 49,
+      "deletions": 0,
+      "changes": 49
+    },
+    {
+      "filename": "apps/webcomponent-demo/src/types/index.ts",
+      "status": "added",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/BacklinksPanel.test.ts",
+      "status": "added",
+      "additions": 135,
+      "deletions": 0,
+      "changes": 135
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/OutlinePanel.test.ts",
+      "status": "added",
+      "additions": 88,
+      "deletions": 0,
+      "changes": 88
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/StatusBar.test.ts",
+      "status": "added",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/VaultPanel.test.ts",
+      "status": "added",
+      "additions": 68,
+      "deletions": 0,
+      "changes": 68
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/editCommands.test.ts",
+      "status": "added",
+      "additions": 74,
+      "deletions": 0,
+      "changes": 74
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/editorStore.test.ts",
+      "status": "added",
+      "additions": 74,
+      "deletions": 0,
+      "changes": 74
+    },
+    {
+      "filename": "apps/webcomponent-demo/test/fileCommands.test.ts",
+      "status": "added",
+      "additions": 31,
+      "deletions": 0,
+      "changes": 31
+    },
+    {
+      "filename": "apps/webcomponent-demo/tsconfig.json",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/webcomponent-demo/vite.config.ts",
+      "status": "added",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/webcomponent/package.json",
+      "status": "added",
+      "additions": 31,
+      "deletions": 0,
+      "changes": 31
+    },
+    {
+      "filename": "packages/webcomponent/src/index.ts",
+      "status": "added",
+      "additions": 78,
+      "deletions": 0,
+      "changes": 78
+    },
+    {
+      "filename": "packages/webcomponent/src/nexus-editor.ts",
+      "status": "added",
+      "additions": 264,
+      "deletions": 0,
+      "changes": 264
+    },
+    {
+      "filename": "packages/webcomponent/test/nexus-editor.test.ts",
+      "status": "added",
+      "additions": 557,
+      "deletions": 0,
+      "changes": 557
+    },
+    {
+      "filename": "packages/webcomponent/tsconfig.json",
+      "status": "added",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 45,
+      "deletions": 2,
+      "changes": 47
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=49",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

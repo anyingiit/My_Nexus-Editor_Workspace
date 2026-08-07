@@ -1,0 +1,13 @@
+{
+  "pr_number": 87,
+  "points": [
+    {
+      "id": 1,
+      "summary": "CLA must be signed before contribution accepted"
+    },
+    {
+      "id": 2,
+      "summary": "Run pnpm install and commit updated pnpm-lock.yaml to fix frozen-lockfile failure"
+    }
+  ]
+}

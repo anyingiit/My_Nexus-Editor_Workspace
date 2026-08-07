@@ -1,0 +1,70 @@
+{
+  "pr_number": 183,
+  "title": "fix(electron): preserve UNC roots in path joins",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-25T06:39:01Z",
+  "merged_by": null,
+  "closed_by": "xrq03",
+  "head_sha_final": "0b1f2cf38e41ddecb5a1020d14eb9851cdd65361",
+  "merge_commit_sha": "153677404ba4bf932674730c1bd0c10c41b11d8e",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "7dd8a82ca831332e0fa9db9fd209808c9744de4e",
+      "message": "fix(electron): preserve UNC roots in path joins",
+      "date": "2026-07-24T15:09:10Z"
+    },
+    {
+      "sha": "ce94118d9bbaef1a01113f40d2f49acf47c98e84",
+      "message": "test(electron): cover UNC path joining",
+      "date": "2026-07-24T15:09:13Z"
+    },
+    {
+      "sha": "0b1f2cf38e41ddecb5a1020d14eb9851cdd65361",
+      "message": "test(electron): cover UNC wikilink resolution",
+      "date": "2026-07-24T15:09:16Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 2,
+      "changes": 7
+    },
+    {
+      "filename": "apps/electron-demo/test/link-index.test.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "apps/electron-demo/test/path-utils.test.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 1,
+      "changes": 8
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=183",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

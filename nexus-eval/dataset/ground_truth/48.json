@@ -1,0 +1,31 @@
+{
+  "pr_number": 48,
+  "title": "feat(react,vue): add onReady callback and container attribute passthrough",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:37:53Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ember-spec",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-03T07:57:14Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=48) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=48) before we can accept your contribution.<br/><hr/>**qingyu14** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=48) it.</sub>"
+    },
+    {
+      "user": "ember-spec",
+      "created_at": "2026-06-03T08:00:58Z",
+      "body": "p0需求提交"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:37:51Z",
+      "body": "感谢这版 onReady + 容器属性透传 🙏 roadmap #4 已采用 #29 合入 main（`c55d37d`）。本 PR 与之重复，故关闭。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；非常欢迎你继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

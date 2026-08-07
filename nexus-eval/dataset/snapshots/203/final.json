@@ -1,0 +1,53 @@
+{
+  "pr_number": 203,
+  "title": "fix(electron): support Unicode unlinked mentions",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "985be17993a8ac64aff97112390e7b4ab610beab",
+  "merge_commit_sha": "baabe40a7ee53cf7d224990ef7d20fca08a7c875",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "985be17993a8ac64aff97112390e7b4ab610beab",
+      "message": "fix(electron): support Unicode unlinked mentions",
+      "date": "2026-08-01T02:44:35Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 46,
+      "deletions": 2,
+      "changes": 48
+    },
+    {
+      "filename": "apps/electron-demo/test/link-index.test.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=203",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

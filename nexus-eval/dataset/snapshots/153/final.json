@@ -1,0 +1,107 @@
+{
+  "pr_number": 153,
+  "title": "Feat/slash fuzzy matching",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-14T08:29:46Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "eec2a4b05758d2985146cf9dde82924d23c90ba3",
+  "merge_commit_sha": "a521a06a561bb28d0a549d306a036cfb65e697c9",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "eb1d6584a7aa8ce5e06611a7d0b1cef957b1bb59",
+      "message": "feat(slash): 斜杠命令默认启用模糊匹配\n\n默认启用模糊搜索(fuzzy matching)，不再需要传入 { fuzzy: true }。\n用户输入 /hd 即可匹配 Heading，/tt 可匹配含 title 关键词的命令。\n\n- 新增 fuzzyScore() 贪心左扫函数及评分加权\n- filterSlashCommands 默认执行模糊匹配（移除 opt-in 参数）\n- 模糊结果按 FUZZY_TITLE(500) / FUZZY_KEYWORD(250) 分级，低于所有精确匹配\n- 添加 23 个模糊匹配测试用例\n- 更新 README 说明",
+      "date": "2026-07-14T02:42:14Z"
+    },
+    {
+      "sha": "eec2a4b05758d2985146cf9dde82924d23c90ba3",
+      "message": "feat(history): 撤销/重做分组，与表编辑的 tableEditingCount 协调\n\n实现撤销分组功能：在表编辑期间的所有变更被合并为一个撤销单元，\n一次 Ctrl+Z 即可回退整个编辑会话。\n\n核心机制：\n- ViewPlugin 监听 isTableEditing 切换，记录 history.done 位置\n- 表编辑结束时计算区间内新增条目数\n- 自定义高优先级 Mod-z 绑定，检测到待批量撤销时一次性执行 N 次 undo\n- 导出 beginUndoGroup/view) / endUndoGroup(view) 手动 API\n- 添加 4 个分组测试用例",
+      "date": "2026-07-14T02:42:21Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/slash-state.ts",
+      "status": "modified",
+      "additions": 80,
+      "deletions": 0,
+      "changes": 80
+    },
+    {
+      "filename": "packages/core/test/slash-state.test.ts",
+      "status": "modified",
+      "additions": 207,
+      "deletions": 0,
+      "changes": 207
+    },
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 118,
+      "deletions": 4,
+      "changes": 122
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 72,
+      "deletions": 1,
+      "changes": 73
+    },
+    {
+      "filename": "packages/plugin-slash/README.md",
+      "status": "modified",
+      "additions": 39,
+      "deletions": 5,
+      "changes": 44
+    },
+    {
+      "filename": "packages/plugin-slash/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=153",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

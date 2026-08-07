@@ -1,0 +1,116 @@
+{
+  "pr_number": 69,
+  "title": "feat(search): add whole-word matching and unify search panel in demo",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T03:36:55Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "cff852214f9608a219ee9dc355f5be193a94f1f3",
+  "merge_commit_sha": "dab92c33e84f9ed560fbc36eb6f5d70f7897717f",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "cff852214f9608a219ee9dc355f5be193a94f1f3",
+      "message": "feat(search): add whole-word matching and unify search panel in demo\n\nAdd wholeWord option to plugin-search with CM6 search panel UI, replace the duplicate electron-demo search bar, and improve demo UX (save, vault, toolbar tooltips, dark chrome).",
+      "date": "2026-06-17T17:25:36Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 191,
+      "deletions": 78,
+      "changes": 269
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 241,
+      "changes": 241
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 98,
+      "deletions": 6,
+      "changes": 104
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 204,
+      "deletions": 22,
+      "changes": 226
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 320,
+      "deletions": 131,
+      "changes": 451
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 155,
+      "deletions": 36,
+      "changes": 191
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=69",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "pr_number": 65,
+  "title": "feat(wordcount): add @floatboat/nexus-plugin-wordcount with markdown-aware stats",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T03:36:40Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "59e141d3300a263369ce6f0431a42f7ca33e3b97",
+  "merge_commit_sha": "61a90a823e1232a9cd901f2285da91f348d036e8",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "59e141d3300a263369ce6f0431a42f7ca33e3b97",
+      "message": "feat(wordcount): add @floatboat/nexus-plugin-wordcount with markdown-aware stats\n\nIntroduces a new workspace package that layers a markdown-aware\nword / character / CJK / reading-time counter on top of the editor's\nexisting AST. Closes the gap between the naive\nEditorAPI.getDocumentStats() (which counts markdown syntax and treats\na 1000-character Chinese note as a single 'word') and what\nnotes-app hosts actually want to display.\n\nPublic surface (packages/plugin-wordcount):\n\n- countMarkdown(source, options) — pure function, walks mdast,\n  excludes code / math / HTML / frontmatter / definitions by default,\n  CJK-aware word counting, dual-rate reading time (Latin wpm + CJK cpm)\n- createWordCountPlugin(options) — returns a NexusPlugin + query\n  handle. Subscribes to editor change / selectionChange events;\n  full-doc recompute is debounced (default 150ms), selection\n  recompute is synchronous. Reuses editor.getAst() so there is no\n  double parsing on the hot path.\n- createStatusBar(plugin, options) — vanilla-DOM, role=status +\n  aria-live=polite, framework-agnostic, fully i18n-able.\n- attachWordCountPlugin(plugin, editor) — ergonomic binder.\n\nWired into apps/electron-demo with an absolute-positioned status bar\nin the editor container (CSS at the bottom of style.css).\n\nTests: 45 new vitest cases (34 pure-function + 11 plugin/status-bar\nintegration). Full suite: 362/362 green. pnpm typecheck clean.\npnpm build + pnpm build:electron-demo both succeed.\n\nWorkspace integration: tsconfig.base.json path alias, vitest.config.ts\nresolve alias, root package.json build script, README plugin tables\n(en + zh), ROADMAP rows (en + zh), CONTRIBUTING scope whitelist\n(en + zh).\n\nOpenSpec: openspec/changes/add-plugin-wordcount/ with proposal.md,\ntasks.md (all completed bar two flagged-with-rationale boxes),\ndesign.md (7 decisions + risks + open questions), and a wordcount\ncapability spec delta with 8 requirements / 23 scenarios.\n\nRoadmap entry: #28 under 'Developer Experience'. No breaking changes\nto existing public APIs.",
+      "date": "2026-06-17T07:48:34Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "CONTRIBUTING.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "openspec/changes/add-plugin-wordcount/design.md",
+      "status": "added",
+      "additions": 197,
+      "deletions": 0,
+      "changes": 197
+    },
+    {
+      "filename": "openspec/changes/add-plugin-wordcount/proposal.md",
+      "status": "added",
+      "additions": 102,
+      "deletions": 0,
+      "changes": 102
+    },
+    {
+      "filename": "openspec/changes/add-plugin-wordcount/specs/wordcount/spec.md",
+      "status": "added",
+      "additions": 221,
+      "deletions": 0,
+      "changes": 221
+    },
+    {
+      "filename": "openspec/changes/add-plugin-wordcount/tasks.md",
+      "status": "added",
+      "additions": 216,
+      "deletions": 0,
+      "changes": 216
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-wordcount/README.md",
+      "status": "added",
+      "additions": 205,
+      "deletions": 0,
+      "changes": 205
+    },
+    {
+      "filename": "packages/plugin-wordcount/package.json",
+      "status": "added",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "packages/plugin-wordcount/src/count.ts",
+      "status": "added",
+      "additions": 395,
+      "deletions": 0,
+      "changes": 395
+    },
+    {
+      "filename": "packages/plugin-wordcount/src/index.ts",
+      "status": "added",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "packages/plugin-wordcount/src/plugin.ts",
+      "status": "added",
+      "additions": 281,
+      "deletions": 0,
+      "changes": 281
+    },
+    {
+      "filename": "packages/plugin-wordcount/src/status-bar.ts",
+      "status": "added",
+      "additions": 167,
+      "deletions": 0,
+      "changes": 167
+    },
+    {
+      "filename": "packages/plugin-wordcount/test/count.test.ts",
+      "status": "added",
+      "additions": 226,
+      "deletions": 0,
+      "changes": 226
+    },
+    {
+      "filename": "packages/plugin-wordcount/test/plugin.test.ts",
+      "status": "added",
+      "additions": 251,
+      "deletions": 0,
+      "changes": 251
+    },
+    {
+      "filename": "packages/plugin-wordcount/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 73,
+      "deletions": 13,
+      "changes": 86
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=65",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "pr_number": 26,
+  "title": "feat(search): 增加整词匹配支持",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:38:50Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+      "message": "feat(search): add whole-word matching support",
+      "date": "2026-05-21T09:38:23Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 3,
+      "changes": 32
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 4,
+      "changes": 16
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=26",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

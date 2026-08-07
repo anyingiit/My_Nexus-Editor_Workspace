@@ -1,0 +1,256 @@
+{
+  "pr_number": 105,
+  "title": "feat(core): add runtime plugin management (hot add/remove)",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "02a9f266c0568184613e4d721afb534cc4988a5c",
+  "merge_commit_sha": "aa3c2c36d8a00a26c577a03df20876f1496540e0",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "02a9f266c0568184613e4d721afb534cc4988a5c",
+      "message": "feat(core): add runtime plugin management (hot add/remove)\n\nRoadmap #11 (plugin hot-reload) is blocked on #9 (widget API\nstandardization), but a large, useful subset is achievable today: plugins\nwhose hooks are all hot-pluggable (cmExtensions, shortcuts) can be\ninstalled onto and removed from a *live* editor via a new Compartment-backed\nregistry, with no recreation — document, undo history, selection, and\nscroll are all preserved. Plugins declaring construction-time hooks\n(widgets, remarkPlugins, slashCommands, commands, handlers) are rejected\nwith an explicit, actionable error rather than silently half-installed.\n\n- core: `addPlugin` / `removePlugin` / `getPlugins` + `pluginsChange` event\n  on EditorAPI, backed by a hook classifier + Compartment reconfigure\n  (packages/core/src/runtime-plugins.ts)\n- new package `@floatboat/nexus-plugin-typewriter`: typewriter-mode cursor\n  centering, used as an end-to-end proof of the mechanism (hot-pluggable\n  by construction). Getting its scrolling correct surfaced a real\n  CodeMirror pitfall — see design.md D4 for the investigation — CM keeps a\n  single pending scroll-target slot that native \"nearest\" input scrolling\n  overwrites every keystroke, racing any `scrollIntoView` effect. Fixed by\n  reading/writing scrollTop directly via requestMeasure instead.\n- electron-demo: a Plugins panel (mechanism/policy split — core knows\n  nothing about panels; the demo decides what to install and when) with a\n  dynamic-import install/uninstall toggle for the typewriter plugin\n- docs: core README runtime-plugin section + hook classification table,\n  ROADMAP entries (en/zh)\n\nFull OpenSpec proposal, design rationale, and spec deltas in\nopenspec/changes/add-runtime-plugin-management/. 543 tests passing.\n\nAI-assisted implementation (Claude Code), per CONTRIBUTING.md disclosure\nrequirements — see PR description for scope of assistance.\n\nCo-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>",
+      "date": "2026-07-03T01:09:05Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 35,
+      "deletions": 7,
+      "changes": 42
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 6,
+      "changes": 7
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 13,
+      "changes": 14
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/plugins-panel.ts",
+      "status": "added",
+      "additions": 817,
+      "deletions": 0,
+      "changes": 817
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "openspec/changes/add-runtime-plugin-management/design.md",
+      "status": "added",
+      "additions": 98,
+      "deletions": 0,
+      "changes": 98
+    },
+    {
+      "filename": "openspec/changes/add-runtime-plugin-management/proposal.md",
+      "status": "added",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67
+    },
+    {
+      "filename": "openspec/changes/add-runtime-plugin-management/specs/plugin-typewriter/spec.md",
+      "status": "added",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "openspec/changes/add-runtime-plugin-management/specs/runtime-plugin-management/spec.md",
+      "status": "added",
+      "additions": 98,
+      "deletions": 0,
+      "changes": 98
+    },
+    {
+      "filename": "openspec/changes/add-runtime-plugin-management/tasks.md",
+      "status": "added",
+      "additions": 41,
+      "deletions": 0,
+      "changes": 41
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 33,
+      "deletions": 4,
+      "changes": 37
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/runtime-plugins.ts",
+      "status": "added",
+      "additions": 184,
+      "deletions": 0,
+      "changes": 184
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 0,
+      "changes": 38
+    },
+    {
+      "filename": "packages/core/test/runtime-plugins.test.ts",
+      "status": "added",
+      "additions": 224,
+      "deletions": 0,
+      "changes": 224
+    },
+    {
+      "filename": "packages/plugin-typewriter/README.md",
+      "status": "added",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "packages/plugin-typewriter/package.json",
+      "status": "added",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "packages/plugin-typewriter/src/index.ts",
+      "status": "added",
+      "additions": 93,
+      "deletions": 0,
+      "changes": 93
+    },
+    {
+      "filename": "packages/plugin-typewriter/test/plugin-typewriter.test.ts",
+      "status": "added",
+      "additions": 157,
+      "deletions": 0,
+      "changes": 157
+    },
+    {
+      "filename": "packages/plugin-typewriter/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=105",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

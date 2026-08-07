@@ -1,0 +1,64 @@
+{
+  "pr_number": 168,
+  "title": "feat(search): show match count in search panel",
+  "body": "## Summary\n- show current and total match count in the custom search panel\n- keep the count in sync with query, selection, and document updates\n- add coverage for match count states and the close button glyph\n\n## Tests\n- pnpm.cmd vitest run packages/plugin-search/test/plugin-search.test.ts\n- pnpm.cmd --filter @floatboat/nexus-plugin-search build",
+  "created_at": "2026-07-21T05:41:11Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "f14ec7b27c8892754d890ea0336183d3e646aef5",
+  "first_review_time": "2026-07-21T05:41:18Z",
+  "commits_at_first_review": [
+    {
+      "sha": "f14ec7b27c8892754d890ea0336183d3e646aef5",
+      "message": "feat(search): show match count in search panel",
+      "date": "2026-07-21T05:38:25Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "1013d16f2fedb307ebfa43bbe506f3a908dbc179",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 51,
+        "deletions": 0,
+        "changes": 51,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/f14ec7b27c8892754d890ea0336183d3e646aef5/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/f14ec7b27c8892754d890ea0336183d3e646aef5/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=f14ec7b27c8892754d890ea0336183d3e646aef5",
+        "patch": "@@ -31,6 +31,11 @@ export interface SearchMatch {\n   text: string;\n }\n \n+export interface SearchMatchCount {\n+  current: number;\n+  total: number;\n+}\n+\n export interface SearchOptions {\n   caseSensitive?: boolean;\n   wholeWord?: boolean;\n@@ -882,6 +887,31 @@ function createSearchRow(testId: string): HTMLDivElement {\n   return row;\n }\n \n+function getSearchMatchCount(view: EditorView, query: SearchQuery): SearchMatchCount {\n+  if (!query.search || !query.valid) {\n+    return { current: 0, total: 0 };\n+  }\n+\n+  const mainSelection = view.state.selection.main;\n+  let current = 0;\n+  let total = 0;\n+  const cursor = query.getCursor(view.state);\n+\n+  for (let result = cursor.next(); !result.done; result = cursor.next()) {\n+    const match = result.value;\n+    total += 1;\n+    if (match.from === mainSelection.from && match.to === mainSelection.to) {\n+      current = total;\n+    }\n+  }\n+\n+  return { current, total };\n+}\n+\n+function formatSearchMatchCount(count: SearchMatchCount): string {\n+  return `${count.current} / ${count.total}`;\n+}\n+\n class NexusSearchPanel implements Panel {\n   readonly dom: HTMLElement;\n   readonly pos = 80;\n@@ -891,6 +921,7 @@ class NexusSearchPanel implements Panel {\n   private readonly caseField: HTMLInputElement;\n   private readonly regexpField: HTMLInputElement;\n   private readonly wholeWordField: HTMLInputElement;\n+  private readonly matchCountField: HTMLSpanElement;\n   private readonly labels: SearchPluginLabels;\n   private readonly history: SearchHistoryController;\n   private readonly replaceRow?: HTMLDivElement;\n@@ -925,6 +956,10 @@ class NexusSearchPanel implements Panel {\n     this.caseField = this.createCheckbox(\"markdown-search-case-toggle\", \"case\", this.query.caseSensitive);\n     this.regexpField = this.createCheckbox(\"markdown-search-regexp-toggle\", \"re\", this.query.regexp);\n     this.wholeWordField = this.createCheckbox(\"markdown-search-word-toggle\", \"word\", this.query.wholeWord);\n+    this.matchCountField = document.createElement(\"span\");\n+    this.matchCountField.className = \"nexus-search-match-count\";\n+    this.matchCountField.dataset.testId = \"markdown-search-match-count\";\n+    this.matchCountField.setAttribute(\"aria-live\", \"polite\");\n \n     this.dom = document.createElement(\"div\");\n     this.dom.className = \"cm-search nexus-search-panel\";\n@@ -958,6 +993,7 @@ class NexusSearchPanel implements Panel {\n \n     const searchRowChildren: HTMLElement[] = [\n       this.searchField,\n+      this.matchCountField,\n       createLabel(this.caseField, resolvedLabels.matchCase),\n       createLabel(this.regexpField, resolvedLabels.regexp),\n       createLabel(this.wholeWordField, resolvedLabels.byWord),\n@@ -997,16 +1033,22 @@ class NexusSearchPanel implements Panel {\n     closeButton.setAttribute(\"aria-label\", resolvedLabels.close);\n     closeButton.title = resolvedLabels.close;\n     this.dom.append(closeButton);\n+    this.updateMatchCount();\n   }\n \n   update(update: ViewUpdate): void {\n+    let queryChanged = false;\n     for (const transaction of update.transactions) {\n       for (const effect of transaction.effects) {\n         if (effect.is(setSearchQuery) && !effect.value.eq(this.query)) {\n           this.setQuery(effect.value);\n+          queryChanged = true;\n         }\n       }\n     }\n+    if (queryChanged || update.docChanged || update.selectionSet) {\n+      this.updateMatchCount();\n+    }\n   }\n \n   mount(): void {\n@@ -1066,13 +1108,15 @@ class NexusSearchPanel implements Panel {\n     if (!query.eq(this.query)) {\n       this.query = query;\n       this.view.dispatch({ effects: setSearchQuery.of(query) });\n+      this.updateMatchCount();\n     }\n   }\n \n   private submitSearch(runSearchCommand: () => void): void {\n     this.commit();\n     this.history.record(this.searchField.value);\n     runSearchCommand();\n+    this.updateMatchCount();\n   }\n \n   private setReplaceExpanded(expanded: boolean, focusReplace = false): void {\n@@ -1137,6 +1181,13 @@ class NexusSearchPanel implements Panel {\n     this.caseField.checked = query.caseSensitive;\n     this.regexpField.checked = query.regexp;\n     this.wholeWordField.checked = query.wholeWord;\n+    this.updateMatchCount();\n+  }\n+\n+  private updateMatchCount(): void {\n+    this.matchCountField.textContent = formatSearchMatchCount(\n+      getSearchMatchCount(this.view, this.query)\n+    );\n   }\n }\n "
+      },
+      {
+        "sha": "71ad205557f583e8ad5a775eb0f12d683c701832",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 30,
+        "deletions": 0,
+        "changes": 30,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/f14ec7b27c8892754d890ea0336183d3e646aef5/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/f14ec7b27c8892754d890ea0336183d3e646aef5/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=f14ec7b27c8892754d890ea0336183d3e646aef5",
+        "patch": "@@ -653,6 +653,36 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     container.remove();\n   });\n \n+  it(\"shows the current and total search match count\", () => {\n+    const harness = setupSearchPanel();\n+    const count = harness.container.querySelector<HTMLElement>(\n+      '[data-test-id=\"markdown-search-match-count\"]'\n+    );\n+    expect(count).not.toBeNull();\n+    expect(count?.textContent).toBe(\"0 / 0\");\n+\n+    harness.input.value = \"alpha\";\n+    harness.input.dispatchEvent(new Event(\"input\", { bubbles: true, cancelable: true }));\n+    expect(count?.textContent).toBe(\"0 / 2\");\n+\n+    submitSearch(harness.input, \"alpha\");\n+    expect(count?.textContent).toBe(\"1 / 2\");\n+\n+    submitSearch(harness.input, \"alpha\");\n+    expect(count?.textContent).toBe(\"2 / 2\");\n+\n+    harness.input.value = \"missing\";\n+    harness.input.dispatchEvent(new Event(\"input\", { bubbles: true, cancelable: true }));\n+    expect(count?.textContent).toBe(\"0 / 0\");\n+\n+    const closeButton = harness.container.querySelector<HTMLButtonElement>(\n+      '[data-test-id=\"markdown-search-close\"]'\n+    );\n+    expect(closeButton?.textContent).toBe(\"\\u00d7\");\n+\n+    harness.destroy();\n+  });\n+\n   it(\"keeps existing Enter navigation when search history is disabled\", () => {\n     const harness = setupSearchPanel({ history: false } as Parameters<typeof createSearchPlugin>[0]);\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=168",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

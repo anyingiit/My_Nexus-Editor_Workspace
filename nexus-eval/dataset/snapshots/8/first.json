@@ -1,0 +1,72 @@
+{
+  "pr_number": 8,
+  "title": "feat(core): add getSelectedText() API",
+  "body": " PR Title:\r\n\r\n   feat(core): add getSelectedText() API\r\n\r\n   PR Description:\r\n\r\n   ## Summary / 摘要\r\n\r\n   Add `getSelectedText()` method to EditorAPI for retrieving currently selected text.\r\n\r\n   新增 `getSelectedText()` 方法到 EditorAPI，用于获取当前选中的文本。\r\n\r\n   ## Motivation / 背景与动机\r\n\r\n   This is a P0 roadmap item required for core API completeness. Users need a simple way to retrieve the currently selected text for features like custom formatting, AI-powered text transformation, and context-aware commands.\r\n\r\n   这是 P0 路线图项目，是核心 API 完善的必需功能。用户需要一个简单的方式获取当前选中的文本，用于自定义格式化、AI 驱动的文本转换、以及上下文感知的命令等场景。\r\n\r\n   - Issue: N/A\r\n   - Roadmap (docs/ROADMAP.md): P0 #5 - `getSelectedText()`\r\n   - OpenSpec change: N/A (straightforward API addition)\r\n\r\n   ## Changes / 变更内容\r\n\r\n   - `packages/core`:\r\n     - Add `getSelectedText()` method signature to `EditorAPI` interface in `types.ts`\r\n     - Implement method in `editor.ts` using `view.state.sliceDoc()` with selection range\r\n     - Returns empty string when no selection or editor is destroyed\r\n     - Handles reversed selections (head before anchor) correctly\r\n     - Add 6 comprehensive test cases in `editor.test.ts`\r\n   - `README.md` & `README.zh.md`:\r\n     - Update EditorAPI reference section with `getSelectedText()` entry\r\n     - Positioned after `getAst()` in the method list per CONTRIBUTING.md §91\r\n\r\n   ## Testing / 测试\r\n\r\n   - [x] `pnpm test` passes / 全绿 (220 tests, all passing)\r\n   - [x] Affected packages build (`pnpm build`) / 受影响包构建通过\r\n   - [x] New / updated vitest cases / 新增或更新的 vitest 用例：\r\n     - Empty selection returns empty string\r\n     - Single-line selection returns correct text\r\n     - Multi-line selection preserves newlines\r\n     - Markdown formatting (bold, italic) preserved in selection\r\n     - Destroyed editor returns empty string\r\n     - Reversed selection (head < anchor) handled correctly\r\n   - [x] Manual UI check in electron-demo / electron-demo 手动验证：\r\n     - Tested text selection and retrieval in live editor\r\n\r\n   ## Checklist / 自检清单\r\n\r\n   - [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n   - [x] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\r\n   - [ ] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则 (N/A)\r\n   - [ ] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec (N/A - straightforward API addition)\r\n   - [x] No secrets / personal vault data committed / 无敏感信息被提交\r\n\r\n   ## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\n   N/A - This is an API-only change with no visible UI modifications.",
+  "created_at": "2026-05-13T09:08:33Z",
+  "draft": false,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "head_sha_at_first_review": "c644d36fe1df9e31bd35a82338b12696b189eeb3",
+  "first_review_time": "2026-05-13T10:11:10Z",
+  "commits_at_first_review": [
+    {
+      "sha": "c644d36fe1df9e31bd35a82338b12696b189eeb3",
+      "message": "feat(core): add getSelectedText() API\n\nImplements Roadmap P0 #5 - getSelectedText() method for EditorAPI.\n\nChanges:\n- Add getSelectedText() method signature to EditorAPI interface\n- Implement method u",
+      "date": "2026-05-13T08:39:50Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 1,
+    "behind_by": 17,
+    "files": [
+      {
+        "sha": "14e634c03419102cf8631645b3b5ab4adc4252f3",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 0,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/c644d36fe1df9e31bd35a82338b12696b189eeb3/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/c644d36fe1df9e31bd35a82338b12696b189eeb3/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=c644d36fe1df9e31bd35a82338b12696b189eeb3",
+        "patch": "@@ -407,6 +407,11 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const sel = view.state.selection.main;\n       return { anchor: sel.anchor, head: sel.head };\n     },\n+    getSelectedText() {\n+      if (destroyed) return \"\";\n+      const sel = view.state.selection.main;\n+      return view.state.sliceDoc(sel.from, sel.to);\n+    },\n     getSlashCommands() {\n       return slashCommands;\n     },"
+      },
+      {
+        "sha": "c62ea15e79df3dff0c884a8b01e756d13eb70952",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/c644d36fe1df9e31bd35a82338b12696b189eeb3/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/c644d36fe1df9e31bd35a82338b12696b189eeb3/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=c644d36fe1df9e31bd35a82338b12696b189eeb3",
+        "patch": "@@ -129,6 +129,7 @@ export interface EditorAPI {\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;\n   getSelection(): { anchor: number; head: number };\n+  getSelectedText(): string;\n   getSlashCommands(): SlashCommandDef[];\n   uploadAsset(file: File): Promise<string | null>;\n   setSelection(anchor: number, head?: number): void;"
+      },
+      {
+        "sha": "8841bb6450dd9fe088cea06186607677f4f53dd1",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 92,
+        "deletions": 0,
+        "changes": 92,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/c644d36fe1df9e31bd35a82338b12696b189eeb3/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/c644d36fe1df9e31bd35a82338b12696b189eeb3/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=c644d36fe1df9e31bd35a82338b12696b189eeb3",
+        "patch": "@@ -407,4 +407,96 @@ describe(\"createEditor\", () => {\n     expect(html).toContain(\"console.log(1)\");\n     editor.destroy();\n   });\n+\n+  // ── getSelectedText ──\n+\n+  it(\"returns empty string when no text is selected\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text for single-line selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    editor.setSelection(0, 5);\n+    expect(editor.getSelectedText()).toBe(\"Hello\");\n+\n+    editor.setSelection(6, 11);\n+    expect(editor.getSelectedText()).toBe(\"world\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text for multi-line selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Line 1\\nLine 2\\nLine 3\"\n+    });\n+\n+    editor.setSelection(0, 13);\n+    expect(editor.getSelectedText()).toBe(\"Line 1\\nLine 2\");\n+\n+    editor.setSelection(7, 20);\n+    expect(editor.getSelectedText()).toBe(\"Line 2\\nLine 3\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text with markdown formatting\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"# Heading\\n\\n**bold** and *italic*\"\n+    });\n+\n+    editor.setSelection(0, 9);\n+    expect(editor.getSelectedText()).toBe(\"# Heading\");\n+\n+    editor.setSelection(11, 19);\n+    expect(editor.getSelectedText()).toBe(\"**bold**\");\n+\n+    editor.setSelection(11, 32);\n+    expect(editor.getSelectedText()).toBe(\"**bold** and *italic*\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"returns empty string when editor is destroyed\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    editor.setSelection(0, 5);\n+    expect(editor.getSelectedText()).toBe(\"Hello\");\n+\n+    editor.destroy();\n+    expect(editor.getSelectedText()).toBe(\"\");\n+  });\n+\n+  it(\"handles reversed selection (head before anchor)\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    // Reversed selection: anchor=11, head=6\n+    editor.setSelection(11, 6);\n+    expect(editor.getSelectedText()).toBe(\"world\");\n+\n+    editor.destroy();\n+  });\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

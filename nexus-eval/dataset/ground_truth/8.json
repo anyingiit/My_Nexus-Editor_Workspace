@@ -1,0 +1,54 @@
+{
+  "pr_number": 8,
+  "title": "feat(core): add getSelectedText() API",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:38:34Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "fengshunli",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-13T10:11:10Z",
+      "body": "Clean implementation of `getSelectedText()`. Good use of `sel.from/sel.to` instead of `anchor/head` to handle reversed selections correctly. Test coverage is comprehensive — edge cases (destroyed editor, reversed range, multiline, markdown preservation) are all addressed.\n\nOne minor suggestion for future consideration: if multi-cursor support is added later, this could be extended to return text from all selection ranges. But for the current single-selection API contract, this is solid.\n\nLGTM ✅"
+    },
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-13T11:22:24Z",
+      "body": "## Review: PR #8 — feat(core): add getSelectedText() API\n\n### ✅ Approved\n\n**Highlights:**\n1. Clean, minimal API addition — `getSelectedText()` on the editor instance.\n2. 92 lines of tests covering edge cases.\n3. No conflicts, mergeable.\n4. Backwards-compatible (additive only).\n\n**Note:** Very small scope (+100/-0). Functional and correct, but limited in demonstrating architectural thinking. Adequate for a utility PR."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-13T09:16:26Z",
+      "body": "@fengshunli 实现质量最高的一版 —— `destroyed` 守卫、`sel.from/.to`、6 个测试覆盖（multi-line / markdown / reversed / destroyed）都到位。两点请补：\n\n1. **README 同步**。CONTRIBUTING §91 要求公开 API 改动同步 `README.md` 和 `README.zh.md` 的 EditorAPI 速查表（参考 `getDocument()` / `getAst()` 那一段）。这是合入前的硬约束。\n2. **PR 模板**。`## Summary` / `## Motivation` / `## Changes` 几节没填，自检清单也未勾。麻烦补一下，方便后续追溯。\n\n补完后这版可以进。"
+    },
+    {
+      "user": "fengshunli",
+      "created_at": "2026-05-13T10:34:06Z",
+      "body": "> * build\r\n\r\ndone"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:38:16Z",
+      "body": "### Code review\n\nNo blocking issues — the implementation, tests, and README sync are all solid.\n\nOne lower-confidence note worth a look (not blocking):\n\n- The new `getSelectedText()` early-returns `\"\"` when `destroyed`, but the peer read accessors on `EditorAPI` (`getDocument`, `getAst`, `getSelection`, `getTableOfContents`, `exportHTML`) deliberately do not guard `destroyed` — the convention in `editor.ts` (introduced in `cd26df16` \"harden editor lifecycle semantics\") is reads pass through, writes/dispatch guard. The most direct peer is `getSelection()`, which reads the same `view.state.selection.main` without a guard. The practical consequence: after destroy, `getSelection()` returns a real range while `getSelectedText()` returns `\"\"` — callers pairing the two get inconsistent results, and the `\"\"` collides with the legitimate \"no selection\" return so consumers can't distinguish the two. If a destroyed-state policy is desired, applying it uniformly to all read accessors in a separate change would be more consistent.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/433a69b84d9084450b6bd12b6c595a051e1c91c9/packages/core/src/editor.ts#L405-L418\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:36Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=8) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=8) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=8) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:38:33Z",
+      "body": "感谢实现 getSelectedText() 🙏 roadmap #5 已采用 #21 合入 main（`ccbb25f`）——它在 getSelectedText 之外还提供了原子 replaceRange() 与多行列表 toggle，并带多行/换行选区测试。本 PR 与之重复，故关闭。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；欢迎继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

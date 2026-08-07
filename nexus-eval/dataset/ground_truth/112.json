@@ -1,0 +1,37 @@
+{
+  "pr_number": 112,
+  "title": "fix(core): eliminate unsafe as any casts in live preview modules",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "liuzhiqiang",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "APPROVED",
+      "submitted_at": "2026-07-03T06:13:05Z",
+      "body": "Reviewed PR #112.\n\nThis resubmission addresses the blockers from #110:\n\n- CLA check is now passing.\n- PR title now follows Conventional Commits: `fix(core): eliminate unsafe as any casts in live preview modules`.\n- The previous duplicated committer / unsigned-CLA issue is gone; this PR contains a single committer.\n\nLocal validation performed in an isolated checkout:\n\n```text\npnpm exec tsc --noEmit -p packages/core/tsconfig.json\npnpm exec tsc --noEmit -p packages/react/tsconfig.json\npnpm exec tsc --noEmit -p packages/vue/tsconfig.json\npnpm --filter @floatboat/nexus-core test -- live-preview --reporter=verbose\npnpm --filter @floatboat/nexus-core test -- --runInBand\n```\n\nThese checks passed.\n\nNotes:\n\n- `pnpm --filter @floatboat/nexus-core build` could not be completed locally because Rollup's macOS optional native package `@rollup/rollup-darwin-arm64` was missing in the local install, which is the known npm/pnpm optional-dependency environment issue and not a code failure from this PR.\n- I reviewed the changed areas in `live-preview-table.ts`, `live-preview-diag.ts`, `live-preview.ts`, `live-preview-renderers.ts`, and the new regression tests. The unsafe `as any` usage is replaced with narrower project-local types / guards, and the added tests cover empty table cells plus inline HTML in table cells.\n\nConclusion: approved from code-review perspective.\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [],
+  "golden_decision": "approve",
+  "gt_basis": "earliest admin decision review",
+  "admin_review": {
+    "user": "redreamality",
+    "state": "APPROVED",
+    "submitted_at": "2026-07-03T06:13:05Z",
+    "commit_id": "ae55307dd252aaa3f7a4101faedf5027789cc17c",
+    "author_association": "COLLABORATOR",
+    "evidence": {
+      "user": "redreamality",
+      "author_association": "COLLABORATOR",
+      "admin_by_association": true,
+      "admin_by_direct_push_weak": true,
+      "direct_push_count": 2,
+      "basis": "both"
+    }
+  }
+}

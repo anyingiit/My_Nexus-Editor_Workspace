@@ -1,0 +1,33 @@
+{
+  "pr_number": 84,
+  "points": [
+    {
+      "id": 1,
+      "summary": "package.json missing required scripts and devDependencies"
+    },
+    {
+      "id": 2,
+      "summary": "ESLint configs .eslintrc.json extend missing root config"
+    },
+    {
+      "id": 3,
+      "summary": "README.md contains unclosed fenced code block"
+    },
+    {
+      "id": 4,
+      "summary": "README.zh.md includes generated instruction text and unclosed code fence"
+    },
+    {
+      "id": 5,
+      "summary": "Binary artifact nexus-code-quality-pr.zip committed and should be removed"
+    },
+    {
+      "id": 6,
+      "summary": "PR body/checklist empty and CLA not signed"
+    },
+    {
+      "id": 7,
+      "summary": "Verify pnpm install and pnpm run check pass"
+    }
+  ]
+}

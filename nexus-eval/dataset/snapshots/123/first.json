@@ -1,0 +1,52 @@
+{
+  "pr_number": 123,
+  "title": "docs: 完善中文README，补充完整本地启动步骤与新手排错方案",
+  "body": "## Summary / 摘要\r\n完善中文README文档，补充完整本地项目启动流程与新手环境报错排错方案，降低新开发者上手门槛。\r\n\r\n## Motivation / 背景与动机\r\n新用户初次拉取项目后缺少清晰的本地部署指引，容易因未安装pnpm、依赖安装失败等问题无法运行项目，本次补充完整操作步骤提升文档友好度。\r\n- Issue: 无\r\n- Roadmap (docs/ROADMAP.md): 文档优化类需求\r\n- OpenSpec change: 无\r\n\r\n## Changes / 变更内容\r\n仅修改文档文件，无业务代码改动：\r\n- README.zh.md：新增本地启动教程，包含环境要求、依赖安装、开发启动、打包构建命令与常见问题解决办法\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n无UI界面变更，无需附加截图\r\n",
+  "created_at": "2026-07-03T15:58:49Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "be31eb0e3adc30405400013264cb470b73ac5251",
+  "first_review_time": "2026-07-03T15:58:57Z",
+  "commits_at_first_review": [
+    {
+      "sha": "be31eb0e3adc30405400013264cb470b73ac5251",
+      "message": "docs: 完善中文README，补充完整本地启动步骤与新手排错方案",
+      "date": "2026-07-03T15:43:30Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "8f0ee63befcafbf1f206077782b378e8d5139fdd",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/be31eb0e3adc30405400013264cb470b73ac5251/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/be31eb0e3adc30405400013264cb470b73ac5251/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=be31eb0e3adc30405400013264cb470b73ac5251",
+        "patch": "@@ -8,7 +8,14 @@\n 框架无关核心 · 官方 React 与 Vue 绑定 · MIT 协议。\n \n [English](./README.md) · [快速开始](#-快速开始) · [为什么选 Nexus？](#-为什么选-nexus-editor) · [路线图](#-路线图-tldr) · [参与贡献](#-参与贡献)\n+### 本地启动教程\n+#### 1. 环境要求\n+- Node.js >= 18\n+- pnpm 包管理器\n \n+#### 2. 安装依赖\n+```bash\n+pnpm install\n </div>\n \n ---"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=123",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

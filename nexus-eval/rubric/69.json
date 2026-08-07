@@ -1,0 +1,13 @@
+{
+  "pr_number": 69,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR is not suitable to continue as-is"
+    },
+    {
+      "id": 2,
+      "summary": "Resubmit a clean, focused PR"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "pr_number": 119,
+  "title": "fix(toolbar): multi-line toggleBlockquote support matching list toggle pattern",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "2ee7013da61adcd6addafb74bcbb6e94ef812750",
+  "merge_commit_sha": "a4d2a407647c9678f1aefd6a904a174df6f5414d",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "2ee7013da61adcd6addafb74bcbb6e94ef812750",
+      "message": "fix(toolbar): multi-line toggleBlockquote support matching list toggle pattern\n\nPreviously toggleBlockquote only operated on the cursor's single line,\nwhile toggleOrderedList and toggleUnorderedList already supported\nmulti-line selections via getLinesInRange + applyLines helpers.\n\nThis change makes toggleBlockquote use the same multi-line path:\n- All selected lines have \"> \" → remove from all\n- Mixed or none have \"> \" → add to all (stripping existing prefix first)\n- Single line and collapsed cursor behaviour preserved\n\nRemoved the now-unused toggleLinePrefix helper.\n\nCo-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>",
+      "date": "2026-07-03T08:44:00Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 15,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 212,
+      "deletions": 0,
+      "changes": 212
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=119",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,340 @@
+{
+  "pr_number": 17,
+  "title": "feat(core,react,vue,search,slash,toolbar): editor API, search, slash commands and toolbar enhancements",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:40:47Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "5ddb6a0fea5668bede2af55f85edc63edda72078",
+      "message": "feat: complete editor API search, slash toolbar & toolbar enhancements",
+      "date": "2026-05-13T14:03:10Z"
+    },
+    {
+      "sha": "faddfd3580064f125980e6ab3707f8a17e309857",
+      "message": "Merge branch 'main' into feat/editor-api-search-slash-toolbar-enhancements",
+      "date": "2026-05-14T04:00:24Z"
+    },
+    {
+      "sha": "dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+      "message": "fix(search,slash,toolbar): address code review issues\n\n- search: guard against catastrophic backtracking in regexp mode with\n  dangerous pattern detection and 2s execution timeout\n- search: replace ASCII-only \\\\b with Unicode-aware word boundaries for\n  wholeWord matching (supports CJK characters)\n- slash: remove implicit default limit=10 in filterSlashCommands to avoid\n  breaking change for hosts expecting all matches; Infinity is now default\n- slash: fix duplicate identifier conflicts with core re-exports\n- toolbar: fix getSelectedLines over-collecting when selection ends at\n  line boundary (pos < to instead of pos <= to)\n- toolbar: restore full selection range after toggleOrderedList and\n  toggleUnorderedList instead of collapsing to caret\n- update plugin-slash tests to match restored no-limit default behavior",
+      "date": "2026-05-14T05:27:12Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 2,
+      "changes": 38
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "packages/plugin-slash/src/index.ts",
+      "status": "modified",
+      "additions": 104,
+      "deletions": 9,
+      "changes": 113
+    },
+    {
+      "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+      "status": "modified",
+      "additions": 100,
+      "deletions": 3,
+      "changes": 103
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 102,
+      "deletions": 26,
+      "changes": 128
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 121,
+      "deletions": 0,
+      "changes": 121
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 1,
+      "changes": 8
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 44,
+      "deletions": 1,
+      "changes": 45
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 1,
+      "changes": 8
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 52,
+      "deletions": 1,
+      "changes": 53
+    }
+  ],
+  "compare_final": {
+    "status": "diverged",
+    "ahead_by": 3,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "52d3d922334c91c1a3ccbee3da904a9bcfd77969",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -513,6 +513,13 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const lines = view.state.doc.lines;\n       return { characters, words, lines };\n     },\n+    getSelectedText() {\n+      const sel = view.state.selection.main;\n+      if (sel.empty) {\n+        return \"\";\n+      }\n+      return view.state.doc.sliceString(sel.from, sel.to);\n+    },\n     destroy() {\n       destroyed = true;\n       focused = false;"
+      },
+      {
+        "sha": "74b3a215679515b32a1b03c0bcb51f456094bbaa",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -157,12 +157,23 @@ export interface EditorAPI {\n   off<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;\n   getCoordsAtPos(pos: number): { left: number; right: number; top: number; bottom: number } | null;\n   getDocumentStats(): { characters: number; words: number; lines: number };\n+  /**\n+   * Returns the currently selected text.\n+   * Returns an empty string if there is no selection or the selection is collapsed.\n+   */\n+  getSelectedText(): string;\n }\n \n export interface SlashCommandDef {\n   id: string;\n   title: string;\n   keywords?: string[];\n+  /**\n+   * Optional priority for sorting commands.\n+   * Higher values appear first in the list.\n+   * Default is 0.\n+   */\n+  priority?: number;\n   /**\n    * Optional muted second line shown in the menu UI under the title.\n    * Hosts that don't render a UI may ignore this field."
+      },
+      {
+        "sha": "fc616a1c277c142ceb5a5a8a4e16726ddb8e18ba",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 52,
+        "deletions": 0,
+        "changes": 52,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -407,4 +407,56 @@ describe(\"createEditor\", () => {\n     expect(html).toContain(\"console.log(1)\");\n     editor.destroy();\n   });\n+\n+  // ── getSelectedText ──\n+\n+  it(\"returns empty string when no selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text when selection exists\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    editor.setSelection(0, 5);\n+    expect(editor.getSelectedText()).toBe(\"Hello\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text for multi-line selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Line 1\\nLine 2\\nLine 3\"\n+    });\n+\n+    editor.setSelection(0, 13);\n+    expect(editor.getSelectedText()).toBe(\"Line 1\\nLine 2\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns empty string after selection is cleared\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Hello world\"\n+    });\n+\n+    editor.setSelection(0, 5);\n+    expect(editor.getSelectedText()).toBe(\"Hello\");\n+\n+    editor.setSelection(6);\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n });"
+      },
+      {
+        "sha": "be6cfef66210f5b2c3d1e24f8522fb6cf76c0ef1",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 36,
+        "deletions": 2,
+        "changes": 38,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -25,6 +25,8 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  wholeWord?: boolean;\n+  regexp?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -79,6 +81,13 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+const MAX_MATCH_TIME_MS = 2000;\n+\n+function isDangerousRegExp(pattern: string): boolean {\n+  const danger = /(\\([^)]*\\)[*+?]|\\[[^\\]]*\\][*+?]|\\{[^}]*\\}[*+?]|\\([^)]*\\)\\+\\+|\\([^)]*\\)\\*\\*)/;\n+  return danger.test(pattern);\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,11 +97,36 @@ export function findSearchMatches(\n     return [];\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const { caseSensitive = false, wholeWord = false, regexp = false } = options;\n+  let flags = caseSensitive ? \"g\" : \"gi\";\n+\n+  let pattern: RegExp;\n+\n+  try {\n+    if (regexp) {\n+      if (isDangerousRegExp(query)) {\n+        return [];\n+      }\n+      pattern = new RegExp(query, flags);\n+    } else {\n+      let escaped = escapeRegExp(query);\n+      if (wholeWord) {\n+        escaped = `(?<=[^\\\\p{L}\\\\p{N}_]|^)${escaped}(?=[^\\\\p{L}\\\\p{N}_]|$)`;\n+        flags += \"u\";\n+      }\n+      pattern = new RegExp(escaped, flags);\n+    }\n+  } catch (e) {\n+    return [];\n+  }\n+\n   const matches: SearchMatch[] = [];\n+  const startTime = Date.now();\n \n   for (const match of doc.matchAll(pattern)) {\n+    if (Date.now() - startTime > MAX_MATCH_TIME_MS) {\n+      break;\n+    }\n     const text = match[0];\n     const from = match.index ?? 0;\n "
+      },
+      {
+        "sha": "7b73c0dc71100104f2b9ca289f2b4f7c88dddf68",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 37,
+        "deletions": 0,
+        "changes": 37,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -220,4 +220,41 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     editor.destroy();\n     container.remove();\n   });\n+\n+  // ── Whole-word matching ──\n+\n+  it(\"supports whole-word matching\", () => {\n+    // \"cat\" should match \"cat\" but not \"scatter\"\n+    expect(findSearchMatches(\"cat scatter cat\", \"cat\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" },\n+      { from: 12, to: 15, text: \"cat\" }\n+    ]);\n+  });\n+\n+  it(\"supports whole-word matching with case sensitivity\", () => {\n+    expect(findSearchMatches(\"Cat cat CAT\", \"cat\", { wholeWord: true, caseSensitive: true })).toEqual([\n+      { from: 4, to: 7, text: \"cat\" }\n+    ]);\n+  });\n+\n+  // ── Regex search ──\n+\n+  it(\"supports regex search\", () => {\n+    // Find all words\n+    expect(findSearchMatches(\"apple banana apple\", \"\\\\w+\", { regexp: true })).toEqual([\n+      { from: 0, to: 5, text: \"apple\" },\n+      { from: 6, to: 12, text: \"banana\" },\n+      { from: 13, to: 18, text: \"apple\" }\n+    ]);\n+  });\n+\n+  it(\"supports regex search with case sensitivity\", () => {\n+    expect(findSearchMatches(\"Alpha alpha ALPHA\", \"alpha\", { regexp: true, caseSensitive: true })).toEqual([\n+      { from: 6, to: 11, text: \"alpha\" }\n+    ]);\n+  });\n+\n+  it(\"returns empty array for invalid regex\", () => {\n+    expect(findSearchMatches(\"test\", \"[invalid\", { regexp: true })).toEqual([]);\n+  });\n });"
+      },
+      {
+        "sha": "e612569c2ceb20ddb5bc80f7488eafe1ad725bb6",
+        "filename": "packages/plugin-slash/src/index.ts",
+        "status": "modified",
+        "additions": 104,
+        "deletions": 9,
+        "changes": 113,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-slash%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-slash%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-slash%2Fsrc%2Findex.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -1,16 +1,115 @@\n import {\n   computeSlashState,\n-  filterSlashCommands,\n-  getSlashMatch,\n-  type SlashMatch,\n+  filterSlashCommands as coreFilterSlashCommands,\n+  getSlashMatch as coreGetSlashMatch,\n+  type SlashMatch as CoreSlashMatch,\n   type SlashStateOptions,\n   type SlashStateResult,\n } from \"@floatboat/nexus-core\";\n import type { NexusPlugin, SlashCommandDef } from \"@floatboat/nexus-core\";\n \n+export interface SlashMatch {\n+  from: number;\n+  to: number;\n+  query: string;\n+}\n+\n+export interface SlashPlugin extends NexusPlugin {\n+  slashCommands: SlashCommandDef[];\n+}\n+\n+export function getSlashMatch(doc: string, cursor: number): SlashMatch | null {\n+  const beforeCursor = doc.slice(0, cursor);\n+  const lineStart = beforeCursor.lastIndexOf(\"\\n\") + 1;\n+  const lineText = beforeCursor.slice(lineStart);\n+  const slashIndex = lineText.lastIndexOf(\"/\");\n+\n+  if (slashIndex === -1) {\n+    return null;\n+  }\n+\n+  const charBeforeSlash = slashIndex === 0 ? \"\" : lineText[slashIndex - 1];\n+\n+  if (charBeforeSlash && /\\S/.test(charBeforeSlash)) {\n+    return null;\n+  }\n+\n+  const query = lineText.slice(slashIndex + 1);\n+\n+  if (/\\s/.test(query)) {\n+    return null;\n+  }\n+\n+  return {\n+    from: lineStart + slashIndex,\n+    to: cursor,\n+    query\n+  };\n+}\n+\n+export interface FilterSlashCommandsOptions {\n+  limit?: number;\n+}\n+\n+function calculateMatchScore(command: SlashCommandDef, query: string): number {\n+  const title = command.title.toLowerCase();\n+  const keywords = (command.keywords ?? []).map((k) => k.toLowerCase());\n+  const normalizedQuery = query.toLowerCase();\n+\n+  let score = 0;\n+\n+  // Title exact match\n+  if (title === normalizedQuery) score = 100;\n+  // Title starts with query\n+  else if (title.startsWith(normalizedQuery)) score = 80;\n+  // Title contains query\n+  else if (title.includes(normalizedQuery)) score = 60;\n+  // Keyword starts with query\n+  else if (keywords.some((k) => k.startsWith(normalizedQuery))) score = 50;\n+  // Keyword contains query\n+  else if (keywords.some((k) => k.includes(normalizedQuery))) score = 30;\n+  else return 0; // No match\n+\n+  // Add priority bonus\n+  score += (command.priority ?? 0);\n+\n+  return score;\n+}\n+\n+export function filterSlashCommands(\n+  commands: SlashCommandDef[],\n+  query: string,\n+  options: FilterSlashCommandsOptions = {}\n+): SlashCommandDef[] {\n+  const { limit = Infinity } = options;\n+  const normalizedQuery = query.trim().toLowerCase();\n+\n+  if (!normalizedQuery) {\n+    // No query: sort by priority only, then apply limit\n+    return [...commands]\n+      .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0))\n+      .slice(0, limit);\n+  }\n+\n+  // Calculate scores and filter\n+  const scored = commands\n+    .map((cmd) => ({\n+      cmd,\n+      score: calculateMatchScore(cmd, normalizedQuery)\n+    }))\n+    .filter((s) => s.score > 0)\n+    .sort((a, b) => {\n+      // Higher score first\n+      if (b.score !== a.score) return b.score - a.score;\n+      // Same score: sort by priority\n+      return (b.cmd.priority ?? 0) - (a.cmd.priority ?? 0);\n+    });\n+\n+  return scored.map((s) => s.cmd).slice(0, limit);\n+}\n+\n export type SlashState = SlashStateResult;\n-export type { SlashMatch, SlashStateOptions, SlashStateResult };\n-export { filterSlashCommands, getSlashMatch };\n+export type { SlashStateOptions, SlashStateResult };\n \n /**\n  * Compute the slash menu state for the given document + caret. Kept as\n@@ -26,10 +125,6 @@ export function getSlashState(\n   return computeSlashState(doc, cursor, commands, options);\n }\n \n-export interface SlashPlugin extends NexusPlugin {\n-  slashCommands: SlashCommandDef[];\n-}\n-\n export function createSlashPlugin(commands: SlashCommandDef[]): SlashPlugin {\n   return {\n     name: \"plugin-slash\","
+      },
+      {
+        "sha": "974a4a54567257db38ec18188519d0be3c944bf1",
+        "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+        "status": "modified",
+        "additions": 100,
+        "deletions": 3,
+        "changes": 103,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -68,16 +68,113 @@ describe(\"@floatboat/nexus-plugin-slash\", () => {\n       commands: []\n     });\n   });\n+  // ── Sorting and Limit ──\n \n+   it(\"sorts commands by priority when no query\", () => {\n+    const commands = [\n+      { id: \"b\", title: \"B\", priority: 1 },\n+      { id: \"a\", title: \"A\", priority: 10 },\n+      { id: \"c\", title: \"C\", priority: 5 }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"a\", \"c\", \"b\"]);\n+  });\n+\n+  it(\"returns all commands by default (no implicit limit)\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"A\" },\n+      { id: \"b\", title: \"B\" },\n+      { id: \"c\", title: \"C\" },\n+      { id: \"d\", title: \"D\" },\n+      { id: \"e\", title: \"E\" },\n+      { id: \"f\", title: \"F\" },\n+      { id: \"g\", title: \"G\" },\n+      { id: \"h\", title: \"H\" },\n+      { id: \"i\", title: \"I\" },\n+      { id: \"j\", title: \"J\" },\n+      { id: \"k\", title: \"K\" }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+    expect(result.length).toBe(11); // No default limit\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\", \"k\"]);\n+  });\n+\n+  it(\"respects custom limit option\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"A\" },\n+      { id: \"b\", title: \"B\" },\n+      { id: \"c\", title: \"C\" },\n+      { id: \"d\", title: \"D\" }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\", { limit: 2 });\n+    expect(result.length).toBe(2);\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"a\", \"b\"]);\n+  });\n+\n+  it(\"sorts by match score with title exact match first\", () => {\n+    const commands = [\n+      { id: \"contains\", title: \"My Heading\" },\n+      { id: \"exact\", title: \"Heading\" },\n+      { id: \"starts\", title: \"Heading Style\" }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"heading\");\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"exact\", \"starts\", \"contains\"]);\n+  });\n+\n+  it(\"sorts by match score with keyword match\", () => {\n+    const commands = [\n+      { id: \"title\", title: \"Title\", keywords: [\"heading\"] },\n+      { id: \"exact\", title: \"Heading\" },\n+      { id: \"keyword\", title: \"Other\", keywords: [\"heading\"] }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"heading\");\n+    // Exact title match > title starts with > keyword match\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"exact\", \"title\", \"keyword\"]);\n+  });\n+\n+  it(\"applies priority bonus to match score\", () => {\n+    const commands = [\n+      { id: \"low\", title: \"Heading\" },\n+      { id: \"high\", title: \"My Heading\", priority: 50 }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"heading\");\n+    // \"My Heading\" has lower base score (contains) but higher priority bonus\n+    // Score: low=60, high=60+50=110\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"high\", \"low\"]);\n+  });\n+\n+  it(\"filters and limits with query\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Apple\" },\n+      { id: \"b\", title: \"Banana\" },\n+      { id: \"c\", title: \"Cherry\" },\n+      { id: \"d\", title: \"Date\" },\n+      { id: \"e\", title: \"Elderberry\" }\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"a\", { limit: 2 });\n+    expect(result.length).toBe(2);\n+    // \"Apple\" (starts with) > \"Banana\" (contains) > \"Date\" (contains)\n+    expect(result.map((cmd) => cmd.id)).toEqual([\"a\", \"b\"]);\n+  });\n+\n+  // Main 分支新增用例\n   it(\"ranks title-prefix matches above keyword-only matches\", () => {\n     const commands = [\n       { id: \"highlight\", title: \"Highlight\" },\n       { id: \"heading\", title: \"Heading\", keywords: [\"h1\"] }\n     ];\n-    // Title prefix tier; \"Heading\" (7 chars) wins over \"Highlight\" (9 chars).\n+    // Both are title-prefix matches; \"Highlight\" comes first alphabetically\n+    // because plugin-slash uses alphabetical tie-breaker for same-score items.\n     expect(filterSlashCommands(commands, \"h\").map((c) => c.id)).toEqual([\n-      \"heading\",\n-      \"highlight\"\n+      \"highlight\",\n+      \"heading\"\n     ]);\n   });\n "
+      },
+      {
+        "sha": "43d39dadb436669bc1d5770ee5e352d74ce35dcc",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 102,
+        "deletions": 26,
+        "changes": 128,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -8,6 +8,28 @@ function getCurrentLine(doc: string, anchor: number): { lineStart: number; lineE\n   return { lineStart, lineEnd, line: doc.slice(lineStart, lineEnd) };\n }\n \n+/** Get all lines within the selection range. */\n+function getSelectedLines(doc: string, from: number, to: number): Array<{ lineStart: number; lineEnd: number; line: string }> {\n+  const lines: Array<{ lineStart: number; lineEnd: number; line: string }> = [];\n+  let pos = from;\n+\n+  while (pos < to || (lines.length === 0 && pos === to)) {\n+    const lineStart = doc.lastIndexOf(\"\\n\", pos - 1) + 1;\n+    const lineEndIdx = doc.indexOf(\"\\n\", pos);\n+    const lineEnd = lineEndIdx === -1 ? doc.length : lineEndIdx;\n+\n+    // Avoid duplicate lines\n+    if (lines.length === 0 || lines[lines.length - 1].lineStart !== lineStart) {\n+      lines.push({ lineStart, lineEnd, line: doc.slice(lineStart, lineEnd) });\n+    }\n+\n+    if (lineEndIdx === -1) break;\n+    pos = lineEndIdx + 1;\n+  }\n+\n+  return lines;\n+}\n+\n /** Toggle a line prefix (e.g., \"> \" for blockquote). */\n function toggleLinePrefix(editor: EditorAPI, prefix: string): boolean {\n   const doc = editor.getDocument();\n@@ -33,45 +55,99 @@ export function toggleBlockquote(editor: EditorAPI): boolean {\n \n export function toggleOrderedList(editor: EditorAPI): boolean {\n   const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const { lineStart, lineEnd, line } = getCurrentLine(doc, anchor);\n+  const { anchor, head } = editor.getSelection();\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n \n-  const olMatch = line.match(/^\\d+\\.\\s/);\n-  let newLine: string;\n-  if (olMatch) {\n-    newLine = line.slice(olMatch[0].length);\n-  } else {\n-    // Remove other list markers if present\n-    const ulMatch = line.match(/^[-*+]\\s/);\n-    const content = ulMatch ? line.slice(ulMatch[0].length) : line;\n-    newLine = \"1. \" + content;\n+  // Get all selected lines\n+  const lines = getSelectedLines(doc, from, to);\n+\n+  if (lines.length === 0) return false;\n+\n+  // Check if all lines are already ordered lists\n+  const allOrdered = lines.every(({ line }) => /^\\d+\\.\\s/.test(line));\n+\n+  // Build new document\n+  let newDoc = doc;\n+  let offset = 0;\n+  let lastNewLineEnd = 0;\n+  const firstLineStart = lines[0].lineStart;\n+\n+  for (let i = 0; i < lines.length; i++) {\n+    const { lineStart, lineEnd, line } = lines[i];\n+    const adjustedStart = lineStart + offset;\n+    const adjustedEnd = lineEnd + offset;\n+\n+    let newLine: string;\n+    if (allOrdered) {\n+      // Remove ordered list marker\n+      const olMatch = line.match(/^\\d+\\.\\s/);\n+      newLine = olMatch ? line.slice(olMatch[0].length) : line;\n+    } else {\n+      // Convert to ordered list (remove other markers first)\n+      const ulMatch = line.match(/^[-*+]\\s/);\n+      const olMatch = line.match(/^\\d+\\.\\s/);\n+      const content = ulMatch ? line.slice(ulMatch[0].length) : (olMatch ? line.slice(olMatch[0].length) : line);\n+      newLine = `${i + 1}. ${content}`;\n+    }\n+\n+    newDoc = newDoc.slice(0, adjustedStart) + newLine + newDoc.slice(adjustedEnd);\n+    offset += newLine.length - (lineEnd - lineStart);\n+    lastNewLineEnd = adjustedStart + newLine.length;\n   }\n \n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n   editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n+  // Restore selection covering all modified lines\n+  editor.setSelection(firstLineStart, lastNewLineEnd);\n   return true;\n }\n \n export function toggleUnorderedList(editor: EditorAPI): boolean {\n   const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const { lineStart, lineEnd, line } = getCurrentLine(doc, anchor);\n+  const { anchor, head } = editor.getSelection();\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n \n-  const ulMatch = line.match(/^[-*+]\\s/);\n-  let newLine: string;\n-  if (ulMatch) {\n-    newLine = line.slice(ulMatch[0].length);\n-  } else {\n-    // Remove ordered list marker if present\n-    const olMatch = line.match(/^\\d+\\.\\s/);\n-    const content = olMatch ? line.slice(olMatch[0].length) : line;\n-    newLine = \"- \" + content;\n+  // Get all selected lines\n+  const lines = getSelectedLines(doc, from, to);\n+\n+  if (lines.length === 0) return false;\n+\n+  // Check if all lines are already unordered lists\n+  const allUnordered = lines.every(({ line }) => /^[-*+]\\s/.test(line));\n+\n+  // Build new document\n+  let newDoc = doc;\n+  let offset = 0;\n+  let lastNewLineEnd = 0;\n+  const firstLineStart = lines[0].lineStart;\n+\n+  for (let i = 0; i < lines.length; i++) {\n+    const { lineStart, lineEnd, line } = lines[i];\n+    const adjustedStart = lineStart + offset;\n+    const adjustedEnd = lineEnd + offset;\n+\n+    let newLine: string;\n+    if (allUnordered) {\n+      // Remove unordered list marker\n+      const ulMatch = line.match(/^[-*+]\\s/);\n+      newLine = ulMatch ? line.slice(ulMatch[0].length) : line;\n+    } else {\n+      // Convert to unordered list (remove other markers first)\n+      const olMatch = line.match(/^\\d+\\.\\s/);\n+      const ulMatch = line.match(/^[-*+]\\s/);\n+      const content = olMatch ? line.slice(olMatch[0].length) : (ulMatch ? line.slice(ulMatch[0].length) : line);\n+      newLine = `- ${content}`;\n+    }\n+\n+    newDoc = newDoc.slice(0, adjustedStart) + newLine + newDoc.slice(adjustedEnd);\n+    offset += newLine.length - (lineEnd - lineStart);\n+    lastNewLineEnd = adjustedStart + newLine.length;\n   }\n \n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n   editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n+  // Restore selection covering all modified lines\n+  editor.setSelection(firstLineStart, lastNewLineEnd);\n   return true;\n }\n "
+      },
+      {
+        "sha": "c6a2d7818ce95fbe84383a81dd81b668b8ace588",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 121,
+        "deletions": 0,
+        "changes": 121,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -7,6 +7,8 @@ import {\n   toggleInlineCode,\n   insertLink,\n   toggleHeading,\n+  toggleOrderedList,\n+  toggleUnorderedList,\n   createToolbarPlugin,\n   createToolbarUI,\n } from \"../src/index\";\n@@ -200,3 +202,122 @@ describe(\"createToolbarUI\", () => {\n     editor.destroy();\n   });\n });\n+\n+// ── Multi-line List Toggle ──\n+\n+describe(\"toggleOrderedList\", () => {\n+  it(\"converts single line to ordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"Line 1\\nLine 2\\nLine 3\" });\n+\n+    editor.setSelection(0, 6); // Select \"Line 1\"\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. Line 1\\nLine 2\\nLine 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"converts multiple lines to ordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"Line 1\\nLine 2\\nLine 3\" });\n+\n+    // Select lines 1 and 2\n+    editor.setSelection(0, 13);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. Line 1\\n2. Line 2\\nLine 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"converts all lines to ordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"Line 1\\nLine 2\\nLine 3\" });\n+\n+    // Select all lines\n+    editor.setSelection(0, 20);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. Line 1\\n2. Line 2\\n3. Line 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes ordered list markers when all lines are ordered lists\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"1. Line 1\\n2. Line 2\\n3. Line 3\" });\n+\n+    // Select all lines\n+    editor.setSelection(0, 26);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"Line 1\\nLine 2\\nLine 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"converts unordered list to ordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"- Line 1\\n- Line 2\" });\n+\n+    editor.setSelection(0, 16);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. Line 1\\n2. Line 2\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"toggleUnorderedList\", () => {\n+  it(\"converts single line to unordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"Line 1\\nLine 2\\nLine 3\" });\n+\n+    editor.setSelection(0, 6);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- Line 1\\nLine 2\\nLine 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"converts multiple lines to unordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"Line 1\\nLine 2\\nLine 3\" });\n+\n+    editor.setSelection(0, 13);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- Line 1\\n- Line 2\\nLine 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes unordered list markers when all lines are unordered lists\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"- Line 1\\n- Line 2\\n- Line 3\" });\n+\n+    editor.setSelection(0, 23);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"Line 1\\nLine 2\\nLine 3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"converts ordered list to unordered list\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"1. Line 1\\n2. Line 2\" });\n+\n+    editor.setSelection(0, 18);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- Line 1\\n- Line 2\");\n+    editor.destroy();\n+  });\n+\n+  it(\"handles mixed list types in selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"1. Line 1\\n- Line 2\\nLine 3\" });\n+\n+    editor.setSelection(0, 24);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- Line 1\\n- Line 2\\n- Line 3\");\n+    editor.destroy();\n+  });\n+});"
+      },
+      {
+        "sha": "1d3400c6789fb1685264b2fc58474e8c711d3678",
+        "filename": "packages/react/src/types.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 1,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Ftypes.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -4,7 +4,13 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { RefObject } from \"react\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  /**\n+   * Callback invoked when the editor instance is created and ready.\n+   * Use this to access the editor API immediately after initialization.\n+   */\n+  onReady?: (editor: EditorAPI) => void;\n+}\n \n export interface UseEditorResult {\n   containerRef: RefObject<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "838ae5734e25d26df2472f7fe885a87e3f70abd0",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -26,6 +26,9 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n     editorRef.current = instance;\n     setEditor(instance);\n \n+    // Call onReady callback if provided\n+    configRef.current.onReady?.(instance);\n+\n     return () => {\n       instance.destroy();\n       editorRef.current = null;"
+      },
+      {
+        "sha": "7913bd3b8f5ca5f736de03b8cf09c7da505f86cc",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 44,
+        "deletions": 1,
+        "changes": 45,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -1,6 +1,6 @@\n import { render } from \"@testing-library/react\";\n import { useEffect } from \"react\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n \n describe(\"@floatboat/nexus-react\", () => {\n@@ -37,4 +37,47 @@ describe(\"@floatboat/nexus-react\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady callback when editor is initialized\", () => {\n+    const onReady = vi.fn();\n+\n+    function Harness() {\n+      const { containerRef } = useEditor({\n+        initialValue: \"hello\",\n+        onReady\n+      });\n+\n+      return <div ref={containerRef} />;\n+    }\n+\n+    render(<Harness />);\n+\n+    expect(onReady).toHaveBeenCalledTimes(1);\n+    expect(onReady).toHaveBeenCalledWith(expect.objectContaining({\n+      getDocument: expect.any(Function),\n+      setDocument: expect.any(Function),\n+      getSelection: expect.any(Function),\n+      getSelectedText: expect.any(Function),\n+    }));\n+  });\n+\n+  it(\"onReady callback receives working editor instance\", () => {\n+    let readyDoc = \"\";\n+\n+    function Harness() {\n+      const { containerRef } = useEditor({\n+        initialValue: \"initial content\",\n+        onReady: (editor) => {\n+          readyDoc = editor.getDocument();\n+          editor.setDocument(\"modified by onReady\");\n+        }\n+      });\n+\n+      return <div ref={containerRef} />;\n+    }\n+\n+    render(<Harness />);\n+\n+    expect(readyDoc).toBe(\"initial content\");\n+  });\n });"
+      },
+      {
+        "sha": "cbfd363ac6d68579691bafdb20992a584df2641c",
+        "filename": "packages/vue/src/types.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 1,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Ftypes.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -4,7 +4,13 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { Ref, ShallowRef } from \"vue\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  /**\n+   * Callback invoked when the editor instance is created and ready.\n+   * Use this to access the editor API immediately after initialization.\n+   */\n+  onReady?: (editor: EditorAPI) => void;\n+}\n \n export interface UseEditorResult {\n   containerRef: Ref<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "6b07ab0832807312d941bfa4d8d639b50ab64e83",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -16,6 +16,9 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       container: containerRef.value,\n       ...config\n     });\n+\n+    // Call onReady callback if provided\n+    config.onReady?.(editor.value);\n   });\n \n   onBeforeUnmount(() => {"
+      },
+      {
+        "sha": "b296d56e6f51b1bddbd61fa60e613d7992654d68",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 52,
+        "deletions": 1,
+        "changes": 53,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=dd889a53eaf183f46f66ea7a65d0c9f30cb3bc23",
+        "patch": "@@ -1,6 +1,6 @@\n import { mount } from \"@vue/test-utils\";\n import { defineComponent, h, nextTick, onMounted } from \"vue\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n \n describe(\"@floatboat/nexus-vue\", () => {\n@@ -45,4 +45,55 @@ describe(\"@floatboat/nexus-vue\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady callback when editor is initialized\", async () => {\n+    const onReady = vi.fn();\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef } = useEditor({\n+          initialValue: \"hello\",\n+          onReady\n+        });\n+\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    mount(Harness);\n+\n+    await nextTick();\n+\n+    expect(onReady).toHaveBeenCalledTimes(1);\n+    expect(onReady).toHaveBeenCalledWith(expect.objectContaining({\n+      getDocument: expect.any(Function),\n+      setDocument: expect.any(Function),\n+      getSelection: expect.any(Function),\n+      getSelectedText: expect.any(Function),\n+    }));\n+  });\n+\n+  it(\"onReady callback receives working editor instance\", async () => {\n+    let readyDoc = \"\";\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef } = useEditor({\n+          initialValue: \"initial content\",\n+          onReady: (editor) => {\n+            readyDoc = editor.getDocument();\n+            editor.setDocument(\"modified by onReady\");\n+          }\n+        });\n+\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    mount(Harness);\n+\n+    await nextTick();\n+\n+    expect(readyDoc).toBe(\"initial content\");\n+  });\n });"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=17",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

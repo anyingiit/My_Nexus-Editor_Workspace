@@ -1,0 +1,24 @@
+{
+  "pr_number": 6,
+  "title": "feat(core): add getSelectedText API",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-13T09:19:20Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ChainCoinLab",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-13T09:16:28Z",
+      "body": "@ChainCoinLab 感谢投入。注意到你针对 ROADMAP #5 同时开了 #6 和 #7，再加上 #8（@fengshunli）也是同一题，我们倾向以 **#8** 作为合入基线，理由：\n\n- #8 加了 `if (destroyed) return \"\"` 守卫，与本文件其它 16 处 API 的失活态处理一致\n- #8 测试覆盖更广（multi-line / markdown 格式 / destroyed 后调用 / reversed selection 共 6 个 case）\n\n你的 #7 已经做对 README 同步这件事，比 #8 完整 —— 那块我们会在 review #8 时要求他对齐。建议你把 #6 和 #7 一起撤掉，避免重复 review 占资源。如果对项目感兴趣，ROADMAP 还有不少 planned 项可挑（#15 regex 已经有 #9 在做）；#5 已被 #8 覆盖，不再排队。再次感谢。\n\n另外 PR body 里 \"Tests: Not run in this step\" 顺带一提：之后投稿前请至少跑一次 `pnpm test`，对 reviewer 是基本尊重。"
+    },
+    {
+      "user": "ChainCoinLab",
+      "created_at": "2026-05-13T09:19:19Z",
+      "body": "Closing this duplicate PR."
+    }
+  ]
+}

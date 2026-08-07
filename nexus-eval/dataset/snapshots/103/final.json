@@ -1,0 +1,95 @@
+{
+  "pr_number": 103,
+  "title": "feat(mermaid): create @floatboat/nexus-plugin-mermaid package",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T15:28:46Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "c9c4a5565d6676711ed75c77c7145308d7e8a99b",
+  "merge_commit_sha": "2662ca76ad1700e95228994b05226820345294b3",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "c9c4a5565d6676711ed75c77c7145308d7e8a99b",
+      "message": "feat(mermaid): create @floatboat/nexus-plugin-mermaid package\n\nExtract mermaid diagram rendering into a standalone plugin package,\nfollowing the same WidgetDefinition pattern as plugin-math.\n\n- Lazy-load mermaid.js (~500KB) only when a mermaid block is rendered\n- SVG cache keyed by source string avoids redundant renders\n- Hover-revealed edit button for entering edit mode (consistent with\n  plugin-math)\n- Error display with 'Edit source' link for invalid mermaid syntax\n- Orphan DOM cleanup in destroy() for mermaid-injected nodes\n- 7 test cases covering normal render, edit mode, non-mermaid blocks,\n  async loading, syntax errors, and lifecycle cleanup\n\nOpenSpec: openspec/changes/add-missing-features (item 3.5)\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>",
+      "date": "2026-07-02T14:20:04Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-mermaid/package.json",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-mermaid/src/index.ts",
+      "status": "added",
+      "additions": 365,
+      "deletions": 0,
+      "changes": 365
+    },
+    {
+      "filename": "packages/plugin-mermaid/test/plugin-mermaid.test.ts",
+      "status": "added",
+      "additions": 243,
+      "deletions": 0,
+      "changes": 243
+    },
+    {
+      "filename": "packages/plugin-mermaid/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=103",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

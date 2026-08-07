@@ -1,0 +1,181 @@
+{
+  "pr_number": 51,
+  "title": "feat: 左右侧边栏可拖拽，顶部按钮功能收入原生菜单栏，修复暗色主题左右依然保留浅色问题，增加中文切换",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "792c2defa3aa295ef8163d047dcb14fa5cc4a5a8",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "a51d66b720b783757ba40863bf1999a7cd7917c1",
+      "message": "fix: 各列头部区域高度对齐，中间编辑区域滚动条优化",
+      "date": "2026-06-04T12:23:48Z"
+    },
+    {
+      "sha": "4b30445caece523f64a784e6ee31d3599a615c9d",
+      "message": "feat: 分栏可拖拽",
+      "date": "2026-06-04T13:09:17Z"
+    },
+    {
+      "sha": "3857f2b1619d3ae0194246e00d3df6937b7ea435",
+      "message": "fix: 右上角搜索和设置按钮状态",
+      "date": "2026-06-05T02:15:12Z"
+    },
+    {
+      "sha": "a4926e69f6d27ce0bb54c741e0be75824c029c0d",
+      "message": "feat: 增加全屏深色模式",
+      "date": "2026-06-05T02:55:59Z"
+    },
+    {
+      "sha": "bf6415f8588a4bc1377df78d9d795562a10ca11e",
+      "message": "feat: 增加中文支持",
+      "date": "2026-06-05T03:29:38Z"
+    },
+    {
+      "sha": "d423d5dce2a8bb9c7aceda24e779f91206cf7192",
+      "message": "feat: 最小宽度限制100",
+      "date": "2026-06-05T05:45:47Z"
+    },
+    {
+      "sha": "792c2defa3aa295ef8163d047dcb14fa5cc4a5a8",
+      "message": "feat: 顶部按钮功能全部收进原生菜单，左侧按钮收入File菜单，右侧按钮收入window按钮",
+      "date": "2026-06-05T06:17:01Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".npmrc",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "modified",
+      "additions": 132,
+      "deletions": 0,
+      "changes": 132
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 1,
+      "changes": 7
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 142,
+      "deletions": 1,
+      "changes": 143
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 102,
+      "deletions": 88,
+      "changes": 190
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 13,
+      "changes": 35
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/i18n.ts",
+      "status": "added",
+      "additions": 190,
+      "deletions": 0,
+      "changes": 190
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/outline-panel.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 5,
+      "changes": 23
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 7,
+      "changes": 31
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 50,
+      "deletions": 19,
+      "changes": 69
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 85,
+      "deletions": 5,
+      "changes": 90
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 27,
+      "deletions": 13,
+      "changes": 40
+    },
+    {
+      "filename": "packages/core/src/theme.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 1,
+      "changes": 5
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=51",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

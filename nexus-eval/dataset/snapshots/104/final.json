@@ -1,0 +1,277 @@
+{
+  "pr_number": 104,
+  "title": "feat(plugin-ai-assistant): add OpenAI-compatible editor assistant",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T16:01:10Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "bddad606145e5c3241d88567f0499cf6035a208b",
+  "merge_commit_sha": "63b72f65ea1817d0da761ea0b86445e1aa4c2ad9",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "bddad606145e5c3241d88567f0499cf6035a208b",
+      "message": "feat: add AI assistant sidebar",
+      "date": "2026-07-02T15:38:30Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "AI_ASSISTANT_PR_PLAN.zh.md",
+      "status": "added",
+      "additions": 845,
+      "deletions": 0,
+      "changes": 845
+    },
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "CONTRIBUTING.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 80,
+      "deletions": 0,
+      "changes": 80
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 64,
+      "deletions": 6,
+      "changes": 70
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 49,
+      "deletions": 0,
+      "changes": 49
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 126,
+      "deletions": 0,
+      "changes": 126
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "openspec/changes/add-ai-assistant/proposal.md",
+      "status": "added",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "openspec/changes/add-ai-assistant/specs/plugins/spec.md",
+      "status": "added",
+      "additions": 74,
+      "deletions": 0,
+      "changes": 74
+    },
+    {
+      "filename": "openspec/changes/add-ai-assistant/tasks.md",
+      "status": "added",
+      "additions": 41,
+      "deletions": 0,
+      "changes": 41
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/README.md",
+      "status": "added",
+      "additions": 74,
+      "deletions": 0,
+      "changes": 74
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/package.json",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/index.ts",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/openai-provider.ts",
+      "status": "added",
+      "additions": 120,
+      "deletions": 0,
+      "changes": 120
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/panel.ts",
+      "status": "added",
+      "additions": 246,
+      "deletions": 0,
+      "changes": 246
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/plugin.ts",
+      "status": "added",
+      "additions": 300,
+      "deletions": 0,
+      "changes": 300
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/storage.ts",
+      "status": "added",
+      "additions": 137,
+      "deletions": 0,
+      "changes": 137
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/tools.ts",
+      "status": "added",
+      "additions": 301,
+      "deletions": 0,
+      "changes": 301
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/src/types.ts",
+      "status": "added",
+      "additions": 152,
+      "deletions": 0,
+      "changes": 152
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/test/openai-provider.test.ts",
+      "status": "added",
+      "additions": 176,
+      "deletions": 0,
+      "changes": 176
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/test/plugin-panel.test.ts",
+      "status": "added",
+      "additions": 328,
+      "deletions": 0,
+      "changes": 328
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/test/tools.test.ts",
+      "status": "added",
+      "additions": 121,
+      "deletions": 0,
+      "changes": 121
+    },
+    {
+      "filename": "packages/plugin-ai-assistant/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=104",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

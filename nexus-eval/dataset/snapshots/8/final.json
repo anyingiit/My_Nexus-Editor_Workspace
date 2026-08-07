@@ -1,0 +1,74 @@
+{
+  "pr_number": 8,
+  "title": "feat(core): add getSelectedText() API",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:38:34Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "4a0a2cb760aaa40dac5e6115599bab6300806aa7",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "4a0a2cb760aaa40dac5e6115599bab6300806aa7",
+      "message": "feat(core): add getSelectedText() API\n\nImplements Roadmap P0 #5 - getSelectedText() method for EditorAPI.\n\nChanges:\n- Add getSelectedText() method signature to EditorAPI interface\n- Implement method using view.state.sliceDoc() with selection range\n- Add 6 comprehensive test cases covering:\n  - Empty selection\n  - Single-line selection\n  - Multi-line selection\n  - Markdown formatting preservation\n  - Destroyed editor state\n  - Reversed selection (head before anchor)\n\nThe method returns the currently selected text as a string, handling\nall edge cases including empty selections and reversed ranges. Returns\nempty string when editor is destroyed.\n\nAll 220 tests pass without regressions.",
+      "date": "2026-05-14T04:50:19Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 92,
+      "deletions": 0,
+      "changes": 92
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=8",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

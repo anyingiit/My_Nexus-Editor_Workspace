@@ -1,0 +1,13 @@
+{
+  "pr_number": 110,
+  "points": [
+    {
+      "id": 1,
+      "summary": "CLA not signed by all committers"
+    },
+    {
+      "id": 2,
+      "summary": "PR title must follow Conventional Commits"
+    }
+  ]
+}

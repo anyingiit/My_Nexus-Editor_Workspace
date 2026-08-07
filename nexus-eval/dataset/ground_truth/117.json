@@ -1,0 +1,43 @@
+{
+  "pr_number": 117,
+  "title": "docs(openspec): propose customizable keymap UI",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "criscool",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "APPROVED",
+      "submitted_at": "2026-07-03T10:59:54Z",
+      "body": "Reviewed PR #117.\n\nThis is a documentation-only OpenSpec proposal for customizable keymap UI. The scope is appropriately narrow and matches the expected proposal structure:\n\n- `proposal.md` explains why customizable keybindings are needed.\n- `design.md` covers registry / override-layer / persistence / conflict-detection considerations.\n- `specs/editor-core/spec.md` defines expected editor-core behavior.\n- `tasks.md` breaks the implementation into reviewable phases.\n\nValidation notes:\n\n- CLA is passing.\n- The PR only adds OpenSpec documentation and does not touch runtime code.\n- I also reviewed the related implementation PR #118; this proposal is useful as a standalone design artifact even if implementation details need to be reviewed separately.\n\nConclusion: approved from OpenSpec/proposal review perspective.\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T07:56:24Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=117) <br/>All committers have signed the CLA."
+    }
+  ],
+  "golden_decision": "approve",
+  "gt_basis": "earliest admin decision review",
+  "admin_review": {
+    "user": "redreamality",
+    "state": "APPROVED",
+    "submitted_at": "2026-07-03T10:59:54Z",
+    "commit_id": "34add58d2169367af52e83e09ba0027d346253ad",
+    "author_association": "COLLABORATOR",
+    "evidence": {
+      "user": "redreamality",
+      "author_association": "COLLABORATOR",
+      "admin_by_association": true,
+      "admin_by_direct_push_weak": true,
+      "direct_push_count": 2,
+      "basis": "both"
+    }
+  }
+}

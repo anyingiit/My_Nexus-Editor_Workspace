@@ -1,0 +1,265 @@
+{
+  "frozen_at_utc": "2026-08-07T05:14:35Z",
+  "combined_ours_sha256": "b77be1ffa2c7de1413d1b4ea4120790e9e7bf2dd7dd87a27eb13db33dbff98e2",
+  "harness_sha256": "d14eb4fe174b1e634776fbf90f20b6821b88b71fcfd9842ff594053c807d4951",
+  "files": {
+    "00-constraints.md": "426c1f20bac9e4cc1a2df740916bd457b6db5418ad3da53a3834dfef51269dd6",
+    "01-code-style.md": "69094e8b0b0110f271f32c56f7da897c9cc4970ce9e484cd983b6cb64da8d3ed",
+    "02-commit-completeness.md": "ece5f4e01fe0863bd23a361921e5977536046debd9d15af5f2ee6670b700a193",
+    "03-scope.md": "25b0c510525bfdd89349856045fe3554a9a1c5c4756e3564e547b60bba1058c1",
+    "04-workflow.md": "fc4c55923607d40e7b6398fb7d45496e0aed803547fe4a49d3e5e1914654e1cd",
+    "09-supplements.md": "10d8aa68568bd47b186d7837ae13520f0d3a0dcb7c121c1b589cda919d174053",
+    "AGENTS.md": "cb441533ae48704f86ababaa05fc93fccbf4fa5ca3384009fd93dd13080e4cde"
+  },
+  "split_sha256": "4ea70cd4b9d9ee435b7d9855ceba12f9aa1bb64f023f7dacd716854fea79fcd5",
+  "split_policy": "time-ascending by created_at (authoritative _pr_list.json); 60/20/20; universe = A (finalized PRs with an evidence-gated final actor, Round5 rule) UNION B (open PRs with an admin decision formal review where the REVIEW ACTOR's own author_association is OWNER/MEMBER/COLLABORATOR OR the actor carries direct-push weak evidence; other commenters' associations never substitute for the review actor); open PRs without an admin decision review excluded; unrecoverable first-review snapshots excluded (1.2)",
+  "split_boundaries": {
+    "earliest": "2026-05-11T13:16:30Z",
+    "latest": "2026-07-14T07:35:20Z",
+    "train_end": "2026-06-17T18:20:11Z",
+    "dev_end": "2026-07-02T14:22:06Z",
+    "test_end": "2026-07-14T07:35:20Z"
+  },
+  "first_review_basis_counts": {
+    "comment": 50,
+    "created_at": 3,
+    "formal_review": 26
+  },
+  "literal_first_review_counts": {
+    "first_activity_proxy": 53,
+    "literal_first_review": 26
+  },
+  "excluded_unrecoverable_first_review": [
+    {
+      "number": 23,
+      "created_at": "2026-05-15T10:09:05Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 65,
+      "created_at": "2026-06-17T07:39:20Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 83,
+      "created_at": "2026-06-29T14:06:42Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 97,
+      "created_at": "2026-07-02T07:16:23Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 137,
+      "created_at": "2026-07-07T04:29:19Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    }
+  ],
+  "excluded_self_finalized": [
+    {
+      "number": 6,
+      "created_at": "2026-05-13T07:35:13Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 7,
+      "created_at": "2026-05-13T08:52:27Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 25,
+      "created_at": "2026-05-18T13:13:36Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 35,
+      "created_at": "2026-05-28T06:08:09Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 37,
+      "created_at": "2026-05-29T06:56:28Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 39,
+      "created_at": "2026-06-01T15:55:11Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 41,
+      "created_at": "2026-06-02T06:57:51Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 42,
+      "created_at": "2026-06-02T07:15:57Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 43,
+      "created_at": "2026-06-02T08:32:09Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 44,
+      "created_at": "2026-06-02T10:23:31Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 45,
+      "created_at": "2026-06-02T10:25:25Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 46,
+      "created_at": "2026-06-02T12:12:09Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 54,
+      "created_at": "2026-06-10T06:22:03Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 56,
+      "created_at": "2026-06-10T08:52:08Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 93,
+      "created_at": "2026-07-02T04:54:44Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 94,
+      "created_at": "2026-07-02T04:55:36Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 113,
+      "created_at": "2026-07-03T06:24:55Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 114,
+      "created_at": "2026-07-03T06:42:14Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 115,
+      "created_at": "2026-07-03T06:45:36Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 138,
+      "created_at": "2026-07-07T10:07:56Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 145,
+      "created_at": "2026-07-10T03:52:04Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 146,
+      "created_at": "2026-07-10T04:16:49Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 151,
+      "created_at": "2026-07-13T11:29:26Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 152,
+      "created_at": "2026-07-13T12:59:03Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 155,
+      "created_at": "2026-07-14T08:56:53Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 157,
+      "created_at": "2026-07-14T14:19:18Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 160,
+      "created_at": "2026-07-15T07:45:15Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 163,
+      "created_at": "2026-07-17T03:34:19Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 182,
+      "created_at": "2026-07-24T14:49:18Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 183,
+      "created_at": "2026-07-24T15:15:42Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 196,
+      "created_at": "2026-07-28T13:44:57Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 202,
+      "created_at": "2026-07-31T14:18:19Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 212,
+      "created_at": "2026-08-04T10:23:56Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    }
+  ],
+  "n_candidates": 79,
+  "judge_model": "gpt-5.6-luna",
+  "judge_provider": "opencode-go",
+  "judge_reasoning": "max",
+  "fallback_enabled": false,
+  "note": "Frozen after dev-only iteration and dev criteria met. The formal test run happens once post-freeze. Round 6 universe = finalized PRs with an evidence-gated final actor UNION open PRs with an admin decision formal review (GT = earliest admin decision-review state); open PRs without an admin decision review excluded; author-self-finalized WITHOUT maintainer evidence excluded (1.1); unrecoverable first-review snapshots are excluded (1.2). Judge model+provider+reasoning are bound to this freeze."
+}

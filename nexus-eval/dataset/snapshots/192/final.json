@@ -1,0 +1,53 @@
+{
+  "pr_number": 192,
+  "title": "fix(search): reject empty-match regex patterns",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "999dd8484a315516268815c19ab8a822bd253e98",
+  "merge_commit_sha": "80eb0eebe0230cda921220faa474072479eab7ea",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "999dd8484a315516268815c19ab8a822bd253e98",
+      "message": "fix(search): reject empty-match regex patterns\n\nPrevent zero-length regex queries from producing unstable search results and add coverage for the empty-match guard.",
+      "date": "2026-07-28T11:48:39Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 1,
+      "changes": 12
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=192",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "pr_number": 156,
+  "title": "fix(live-preview): use live doc content for table column/row operations",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "zhenyu666-debug",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-14T09:25:43Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=156) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=156) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=156) it.</sub>"
+    },
+    {
+      "user": "zhenyu666-debug",
+      "created_at": "2026-07-15T09:04:01Z",
+      "body": "/cla check"
+    },
+    {
+      "user": "zhenyu666-debug",
+      "created_at": "2026-07-15T09:16:57Z",
+      "body": "/cla check"
+    },
+    {
+      "user": "zhenyu666-debug",
+      "created_at": "2026-07-15T09:36:27Z",
+      "body": "/cla check"
+    },
+    {
+      "user": "zhenyu666-debug",
+      "created_at": "2026-07-15T09:38:01Z",
+      "body": "/cla check"
+    },
+    {
+      "user": "zhenyu666-debug",
+      "created_at": "2026-07-15T09:44:37Z",
+      "body": "/cla check"
+    },
+    {
+      "user": "zhenyu666-debug",
+      "created_at": "2026-07-17T02:56:44Z",
+      "body": "I have signed the CLA at https://cla-assistant.io/floatboatai/Nexus-Editor but the license/cla check is still pending. Could you please help check if the signature was recorded correctly?"
+    }
+  ]
+}

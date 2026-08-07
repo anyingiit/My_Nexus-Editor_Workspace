@@ -1,0 +1,19 @@
+{
+  "pr_number": 189,
+  "title": "test(electron): cover Windows path normalization",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "catherine-meili",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-27T07:52:51Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=189) <br/>All committers have signed the CLA."
+    }
+  ]
+}

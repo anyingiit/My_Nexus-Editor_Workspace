@@ -1,0 +1,26 @@
+{
+  "pr_number": 97,
+  "title": "feat(core): add getSelectedText() API",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T15:27:08Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "yipiezi1",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T07:16:37Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=97) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T15:27:06Z",
+      "body": "严格审查结论：不通过。\n\n主要问题：\n\n1. PR 没有真正实现 `getSelectedText()`。diff 里只改了 `types.ts` 和测试，`editor.ts` 的实现并不是本 PR 新增内容；这说明提交没有做到“功能实现 + 类型 + 测试”的闭环。\n\n2. `EditorAPI` 中出现重复的 `getSelectedText()` 声明，说明候选人没有认真检查现有接口，直接叠加声明，代码卫生不过关。\n\n3. 提交历史包含 `Pre-exec backup: editor.test.ts` 这种明显不应进入正式 PR 的备份提交，体现出提交整理能力不足。\n\n4. 测试用例也是重复追加在已有 getSelectedText 测试之后，没有识别现有覆盖范围，增量价值很低。\n\n本地验证：`pnpm install --frozen-lockfile` 与 `pnpm typecheck` 通过；`pnpm test` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入用例执行。该环境问题不作为本 PR 的主要扣分点。\n\n建议关闭。这个 PR 暴露出候选人对代码库现状、diff 范围和提交质量的基本把控不足，不建议进入下一轮。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

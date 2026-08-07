@@ -1,0 +1,52 @@
+=== [dev] empty (tag=nr) ===
+[llm empty opencode-go] retry 0: finish=length
+[llm empty opencode-go] retry 0: finish=length
+[llm empty opencode-go] retry 1: finish=length
+[judge empty 67] decision=reject ci=pass reasons=0
+[judge empty 68] decision=approve ci=pass reasons=4
+[judge empty 69] decision=reject ci=unknown reasons=3
+[judge empty 71] decision=approve ci=pass reasons=5
+[judge empty 72] decision=approve ci=pass reasons=4
+[judge empty 73] decision=reject ci=unknown reasons=2
+[judge empty 75] decision=reject ci=unknown reasons=3
+[judge empty 76] decision=reject ci=unknown reasons=4
+[judge empty 81] decision=reject ci=pass reasons=3
+[judge empty 91] decision=reject ci=unknown reasons=3
+[judge empty 92] decision=reject ci=unknown reasons=5
+[judge empty 96] decision=reject ci=unknown reasons=4
+[judge empty 99] decision=reject ci=unknown reasons=4
+judge empty on dev: 13 PRs
+=== [dev] baseline (tag=nr) ===
+[llm empty opencode-go] retry 0: finish=length
+[llm empty opencode-go] retry 0: finish=length
+[llm empty opencode-go] retry 0: finish=length
+[judge baseline 67] decision=reject ci=pass reasons=2
+[judge baseline 68] decision=reject ci=pass reasons=3
+[judge baseline 69] decision=reject ci=unknown reasons=2
+[judge baseline 71] decision=reject ci=pass reasons=3
+[judge baseline 72] decision=approve ci=pass reasons=4
+[judge baseline 73] decision=reject ci=unknown reasons=4
+[judge baseline 75] decision=reject ci=unknown reasons=4
+[judge baseline 76] decision=reject ci=unknown reasons=5
+[judge baseline 81] decision=reject ci=pass reasons=3
+[judge baseline 91] decision=reject ci=unknown reasons=2
+[judge baseline 92] decision=reject ci=unknown reasons=5
+[judge baseline 96] decision=reject ci=unknown reasons=4
+[judge baseline 99] decision=reject ci=unknown reasons=4
+judge baseline on dev: 13 PRs
+=== [dev] ours (tag=nr) ===
+[judge ours 67] decision=reject ci=pass reasons=3
+[judge ours 68] decision=reject ci=pass reasons=4
+[judge ours 69] decision=reject ci=unknown reasons=5
+[judge ours 71] decision=reject ci=pass reasons=3
+[judge ours 72] decision=reject ci=pass reasons=3
+[judge ours 73] decision=reject ci=unknown reasons=4
+[judge ours 75] decision=reject ci=unknown reasons=5
+[judge ours 76] decision=reject ci=unknown reasons=5
+[judge ours 81] decision=reject ci=pass reasons=3
+[judge ours 91] decision=reject ci=unknown reasons=2
+[judge ours 92] decision=reject ci=unknown reasons=6
+[judge ours 96] decision=reject ci=unknown reasons=4
+[judge ours 99] decision=reject ci=unknown reasons=3
+judge ours on dev: 13 PRs
+DEV DONE (tag=nr)

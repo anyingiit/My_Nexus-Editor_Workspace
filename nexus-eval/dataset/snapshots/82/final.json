@@ -1,0 +1,81 @@
+{
+  "pr_number": 82,
+  "title": "feat(plugin-search): add fuzzy subsequence matcher and ranker",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "3c9941c0194d7fe52f2737ee759b58e71f8db46c",
+  "merge_commit_sha": "f44d847cf2dea40c929d0812f5a52a6a20580bf0",
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "commits": [
+    {
+      "sha": "3c9941c0194d7fe52f2737ee759b58e71f8db46c",
+      "message": "feat(plugin-search): add fuzzy subsequence matcher and ranker\n\nAdd fuzzyMatch(target, query) and fuzzyFilter(items, query) as pure\nhelpers for ranking slash menus, command palettes, and file pickers by\nsubsequence match. Distinct from the existing contiguous find/replace:\ncharacters match in order but not necessarily adjacent, and results carry\na score plus matched positions for highlighting.\n\nThe scorer is an O(query.length x target.length) dynamic-programming pass\n(start, consecutive-run, and word-boundary bonuses; leading/intervening\ngap penalties), so pathological repeated-character input stays bounded.\n\nResolves ROADMAP #17.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-29T05:42:18Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 73,
+      "deletions": 0,
+      "changes": 73
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy.ts",
+      "status": "added",
+      "additions": 231,
+      "deletions": 0,
+      "changes": 231
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy.test.ts",
+      "status": "added",
+      "additions": 145,
+      "deletions": 0,
+      "changes": 145
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=82",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

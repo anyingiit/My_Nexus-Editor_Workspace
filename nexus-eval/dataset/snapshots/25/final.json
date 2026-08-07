@@ -1,0 +1,53 @@
+{
+  "pr_number": 25,
+  "title": "完成笔试题",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-20T07:09:34Z",
+  "merged_by": null,
+  "closed_by": "ygs1425340918-arch",
+  "head_sha_final": "60c468d6e385f650f62e4742238ae593bce4691c",
+  "merge_commit_sha": "eb7519f3c4b7e77249b15c69c89e156963c7357a",
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "commits": [
+    {
+      "sha": "60c468d6e385f650f62e4742238ae593bce4691c",
+      "message": "feat(core): implement getSelectedText API aligning with roadmap",
+      "date": "2026-05-18T08:52:29Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

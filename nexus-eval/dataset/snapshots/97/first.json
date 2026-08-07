@@ -1,0 +1,39 @@
+{
+  "pr_number": 97,
+  "title": "feat(core): add getSelectedText() API",
+  "body": "## What\r\nAdd `getSelectedText()` method to EditorAPI that returns the currently selected text.\r\n\r\n## Why\r\nThis API was listed in the P0 roadmap and is commonly needed by editor consumers for:\r\n- Toolbar actions on selected text\r\n- Search within selection\r\n- Copy/cut without relying on browser events\r\n\r\n## How\r\n- Added `getSelectedText()` method in `editor.ts` using CM6's `state.sliceDoc()`\r\n- Added type declaration in `types.ts` `EditorAPI` interface\r\n- Added unit tests: empty selection returns \"\", text selection returns correct slice\r\n\r\n## Test\r\n47/47 tests passing including 2 new getSelectedText tests",
+  "created_at": "2026-07-02T07:16:23Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "3f568087331c3498a2ac460bc9c9eb6a46a7b3b9",
+  "first_review_time": "2026-07-02T07:16:37Z",
+  "commits_at_first_review": [],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "ffacfd5133a771849e4100ad17a1ee959243f489",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 22,
+        "deletions": 0,
+        "changes": 22,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3f568087331c3498a2ac460bc9c9eb6a46a7b3b9/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3f568087331c3498a2ac460bc9c9eb6a46a7b3b9/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=3f568087331c3498a2ac460bc9c9eb6a46a7b3b9",
+        "patch": "@@ -918,3 +918,25 @@ describe(\"createEditor — DOM event hook layer\", () => {\n     editor.destroy();\n   });\n });\n+\n+\n+describe(\"getSelectedText\", () => {\n+  it(\"returns empty string when nothing is selected\", () => {\n+    const editor = createEditor({\n+      container: document.getElementById(\"editor\")!,\n+      initialValue: \"hello world\",\n+    });\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text\", () => {\n+    const editor = createEditor({\n+      container: document.getElementById(\"editor\")!,\n+      initialValue: \"hello world\",\n+    });\n+    editor.setSelection({ anchor: 0, head: 5 });\n+    expect(editor.getSelectedText()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

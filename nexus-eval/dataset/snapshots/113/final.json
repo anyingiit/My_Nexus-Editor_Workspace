@@ -1,0 +1,141 @@
+{
+  "pr_number": 113,
+  "title": "feat(core): plugin architecture overhaul",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-03T06:31:15Z",
+  "merged_by": null,
+  "closed_by": "guoyanshuo",
+  "head_sha_final": "0627a9ab021cae7c0ddc2df8e3919f37f477dc8b",
+  "merge_commit_sha": "2a24153696e6ae6f69e05c76b27589cf596d35ac",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "206e8c261dc2b69847b15b332a2fe273be5b2333",
+      "message": "feat(core,plugin-wordcount): add plugin setup lifecycle in Phase 1\n\nIntroduce a backward-compatible plugin setup/onDispose lifecycle in core and migrate wordcount to auto-bind through setup while keeping the legacy attach helper intact. Update docs, demo wiring, and tests so existing static plugins continue to work unchanged.",
+      "date": "2026-07-03T03:10:54Z"
+    },
+    {
+      "sha": "1f62ad4146f5b3514318ddca4bb2e1967e08c1c6",
+      "message": "feat(core): add plugin dependency sorting, buses, and diagnostics\n\nImplement Phase 2 plugin extensibility with dependsOn-based topological ordering, runtime command and plugin-event bus APIs, and structured plugin diagnostics for dependency/setup/runtime failures. Update docs and tests while keeping existing plugins fully backward-compatible.",
+      "date": "2026-07-03T03:16:33Z"
+    },
+    {
+      "sha": "308145c36782ac978990ef5b8f4d90f7fd6a47ee",
+      "message": "feat(core): add runtime plugin lifecycle management APIs\n\nImplement Phase 3 ecosystem plugin management with use/unuse/reload APIs, active-plugin introspection, and runtime setup/teardown orchestration while preserving backwards compatibility for existing plugins. Update docs and tests to cover runtime activation, deactivation, and reload flows.",
+      "date": "2026-07-03T03:25:16Z"
+    },
+    {
+      "sha": "f8453b74a50fe7cb9e6afc857acebf15c08c59ee",
+      "message": "feat(core): add scoped setup facades for plugin context\n\nOptimize the plugin architecture by extending setup context with scoped command, event, and diagnostics facades, including automatic cleanup of setup-registered resources on plugin unload. Update docs and tests to cover the new context capabilities while preserving backward compatibility.",
+      "date": "2026-07-03T03:45:44Z"
+    },
+    {
+      "sha": "3cc09c73e3edcf137e16b51fd6f323e6fa010101",
+      "message": "fix(core): restore dependency diagnostics and align runtime-order test\n\nEnsure single-plugin dependency validation still emits missing-dependency diagnostics, and update the runtime dependsOn test fixture to declare its actual dependency so the assertion matches the intended behavior.",
+      "date": "2026-07-03T03:52:57Z"
+    },
+    {
+      "sha": "0627a9ab021cae7c0ddc2df8e3919f37f477dc8b",
+      "message": "test(wordcount): add runtime plugin activation and unload cleanup coverage\n\nAdd regression coverage for runtime plugin management by verifying wordcount can be activated via usePlugin and that status-bar DOM is removed after unusePlugin.",
+      "date": "2026-07-03T04:57:54Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 42,
+      "deletions": 0,
+      "changes": 42
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 0,
+      "deletions": 7,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 540,
+      "deletions": 25,
+      "changes": 565
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 97,
+      "deletions": 0,
+      "changes": 97
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 226,
+      "deletions": 0,
+      "changes": 226
+    },
+    {
+      "filename": "packages/plugin-wordcount/README.md",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 5,
+      "changes": 9
+    },
+    {
+      "filename": "packages/plugin-wordcount/src/plugin.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/plugin-wordcount/test/plugin.test.ts",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 1,
+      "changes": 39
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=109",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

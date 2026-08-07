@@ -1,0 +1,75 @@
+{
+  "pr_number": 88,
+  "title": "fix: allow copying markdown table cell text",
+  "body": "## Summary\n- allow native text selection inside markdown table cells\n- keep multi-cell range/row/column selection copyable as TSV\n- hold the table editing lock during mouse interactions to avoid CM6 widget rebuilds\n\n## Tests\n- pnpm exec vitest run packages/core/test/live-preview.test.ts\n- pnpm --filter @floatboat/nexus-core exec tsc --noEmit\n- pnpm test\n- pnpm --filter @floatboat/nexus-core build\n\nBug: 20260623-0561",
+  "created_at": "2026-07-01T08:37:03Z",
+  "draft": false,
+  "base_sha": "49bd8ab6391f3573df82ef68d9ddc764625f1f8f",
+  "head_sha_at_first_review": "fb2b9791dda6773f44f8e83c44d94731f9dfe554",
+  "first_review_time": "2026-07-01T08:37:14Z",
+  "commits_at_first_review": [
+    {
+      "sha": "fb2b9791dda6773f44f8e83c44d94731f9dfe554",
+      "message": "fix: allow copying markdown table cell text",
+      "date": "2026-07-01T08:33:14Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "b5acf20bb916f3014ee782b2dc4c4bbd94b60fb8",
+        "filename": "packages/core/src/live-preview-table.ts",
+        "status": "modified",
+        "additions": 60,
+        "deletions": 9,
+        "changes": 69,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/fb2b9791dda6773f44f8e83c44d94731f9dfe554/packages%2Fcore%2Fsrc%2Flive-preview-table.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/fb2b9791dda6773f44f8e83c44d94731f9dfe554/packages%2Fcore%2Fsrc%2Flive-preview-table.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Flive-preview-table.ts?ref=fb2b9791dda6773f44f8e83c44d94731f9dfe554",
+        "patch": "@@ -299,6 +299,7 @@ const GRIP_BG_HOVER = \"var(--nexus-border)\";\n const SELECT_BG = \"rgba(124, 108, 250, 0.12)\";\n const SELECT_BORDER = \"var(--nexus-accent)\";\n const DRAG_HIGHLIGHT_BG = \"rgba(124, 108, 250, 0.08)\";\n+const TEXT_SELECTION_DRAG_THRESHOLD_PX = 3;\n \n export class EditableTableWidget extends WidgetType {\n   private editing = false;\n@@ -471,7 +472,8 @@ export class EditableTableWidget extends WidgetType {\n     // CRITICAL: use padding, not margin. CM6 measures block widget height via\n     // getBoundingClientRect which EXCLUDES margin. margin:8px caused 16px of\n     // untracked height per table → cumulative click-drift below every table.\n-    wrapper.style.cssText = \"display:inline-block;position:relative;padding:8px 0;user-select:none;\";\n+    wrapper.style.cssText =\n+      \"display:inline-block;position:relative;padding:8px 0;user-select:text;-webkit-user-select:text;\";\n \n     // ── Table ──\n     const table = document.createElement(\"table\");\n@@ -731,6 +733,37 @@ export class EditableTableWidget extends WidgetType {\n       return (cells[col] as HTMLElement) ?? null;\n     }\n \n+    function hasNativeTextSelectionInCell(cell: HTMLElement): boolean {\n+      const selection = cell.ownerDocument.getSelection();\n+      if (!selection || selection.isCollapsed || selection.rangeCount === 0) return false;\n+      const range = selection.getRangeAt(0);\n+      return cell.contains(range.startContainer) || cell.contains(range.endContainer);\n+    }\n+\n+    function clearNativeTextSelection(): void {\n+      table.ownerDocument.getSelection()?.removeAllRanges();\n+    }\n+\n+    function serializeRangeSelection(range: { r1: number; c1: number; r2: number; c2: number }): string {\n+      const lines: string[] = [];\n+      for (let row = range.r1; row <= range.r2; row++) {\n+        const cells: string[] = [];\n+        for (let col = range.c1; col <= range.c2; col++) {\n+          cells.push(getCellElement(row, col)?.textContent ?? \"\");\n+        }\n+        lines.push(cells.join(\"\\t\"));\n+      }\n+      return lines.join(\"\\n\");\n+    }\n+\n+    function selectedCopyRange(): { r1: number; c1: number; r2: number; c2: number } | null {\n+      const range = getNormalizedRange();\n+      if (rangeActive && range) return range;\n+      if (selectedCol >= 0) return { r1: 0, c1: selectedCol, r2: rows.length - 1, c2: selectedCol };\n+      if (selectedRow >= 0) return { r1: selectedRow, c1: 0, r2: selectedRow, c2: colCount - 1 };\n+      return null;\n+    }\n+\n     function renderRangeSelection(): void {\n       const range = getNormalizedRange();\n       if (!range) { rangeBorder.style.display = \"none\"; return; }\n@@ -765,10 +798,7 @@ export class EditableTableWidget extends WidgetType {\n     }\n \n     function clearRangeSelection(): void {\n-      // Release editing lock if range was active (we locked it in mouseup)\n-      if (rangeActive) {\n-        releaseEditingLock(\"range\");\n-      }\n+      releaseEditingLock(\"range\");\n       rangeStart = null;\n       rangeEnd = null;\n       isRangeSelecting = false;\n@@ -1187,7 +1217,7 @@ export class EditableTableWidget extends WidgetType {\n         }\n         td.style.cssText =\n           \"position:relative;border-bottom:1px solid var(--nexus-border);border-right:1px solid var(--nexus-border);padding:8px 12px;\" +\n-          \"text-align:left;outline:none;min-width:60px;vertical-align:top;cursor:text;\";\n+          \"text-align:left;outline:none;min-width:60px;vertical-align:top;cursor:text;user-select:text;-webkit-user-select:text;\";\n         if (isHeader) {\n           td.style.fontWeight = \"bold\";\n           td.style.background = \"var(--nexus-bg-subtle)\";\n@@ -1232,6 +1262,7 @@ export class EditableTableWidget extends WidgetType {\n         const cellRow = curRowIdx;\n         const cellCol = colIdx;\n         let cellMouseMoved = false;\n+        let cellTextSelectionDrag = false;\n \n         const enterRawEditingMode = (): void => {\n           // Pin THIS cell to its currently rendered width before swapping\n@@ -1268,24 +1299,34 @@ export class EditableTableWidget extends WidgetType {\n \n         td.addEventListener(\"mousedown\", (e) => {\n           if (e.button !== 0) return; // only left button\n-          e.preventDefault();\n           e.stopPropagation();\n           const rawCaretOffset = rawSourceOffsetFromPoint(td, e);\n+          const startX = e.clientX;\n+          const startY = e.clientY;\n           cellMouseMoved = false;\n+          cellTextSelectionDrag = false;\n           clearSelection();\n \n           // Prepare range selection but don't render until mouse moves to a different cell\n           clearRangeSelection();\n+          acquireEditingLock(\"range\");\n           cellMouseDown = true;\n           rangeStart = { row: cellRow, col: cellCol };\n           rangeEnd = { row: cellRow, col: cellCol };\n           const onCellMouseMove = (me: MouseEvent): void => {\n             const target = cellAtPoint(me.clientX, me.clientY);\n             if (target && (target.row !== rangeStart!.row || target.col !== rangeStart!.col)) {\n+              me.preventDefault();\n+              clearNativeTextSelection();\n+              cellTextSelectionDrag = false;\n               cellMouseMoved = true;\n               isRangeSelecting = true;\n               rangeEnd = target;\n               renderRangeSelection();\n+              return;\n+            }\n+            if (target && Math.hypot(me.clientX - startX, me.clientY - startY) > TEXT_SELECTION_DRAG_THRESHOLD_PX) {\n+              cellTextSelectionDrag = true;\n             }\n           };\n           const onCellMouseUp = (): void => {\n@@ -1295,6 +1336,10 @@ export class EditableTableWidget extends WidgetType {\n             isRangeSelecting = false;\n \n             const range = getNormalizedRange();\n+            if (cellTextSelectionDrag || hasNativeTextSelectionInCell(td)) {\n+              clearRangeSelection();\n+              return;\n+            }\n             if (!cellMouseMoved || (range && range.r1 === range.r2 && range.c1 === range.c2)) {\n               // Single cell click — activate editing\n               clearRangeSelection();\n@@ -1310,8 +1355,6 @@ export class EditableTableWidget extends WidgetType {\n             } else {\n               // Multi-cell range selected — keep range visible, focus wrapper for key events\n               rangeActive = true;\n-              // Lock editing to prevent CM6 from rebuilding the widget and losing range state\n-              acquireEditingLock(\"range\");\n               wrapper.focus({ preventScroll: true });\n             }\n           };\n@@ -1581,6 +1624,14 @@ export class EditableTableWidget extends WidgetType {\n         }\n       }\n     });\n+    wrapper.addEventListener(\"copy\", (e) => {\n+      const range = selectedCopyRange();\n+      if (!range) return;\n+      const text = serializeRangeSelection(range);\n+      if (!text) return;\n+      e.clipboardData?.setData(\"text/plain\", text);\n+      e.preventDefault();\n+    });\n     wrapper.tabIndex = -1;\n     wrapper.style.outline = \"none\";\n "
+      },
+      {
+        "sha": "c4c4b57317ef1e19072e5c2636d8b58bb42c60ca",
+        "filename": "packages/core/test/live-preview.test.ts",
+        "status": "modified",
+        "additions": 78,
+        "deletions": 0,
+        "changes": 78,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/fb2b9791dda6773f44f8e83c44d94731f9dfe554/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/fb2b9791dda6773f44f8e83c44d94731f9dfe554/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Flive-preview.test.ts?ref=fb2b9791dda6773f44f8e83c44d94731f9dfe554",
+        "patch": "@@ -784,6 +784,84 @@ describe(\"live preview\", () => {\n     expect(firstCell?.contentEditable).not.toBe(\"true\");\n     expect(firstCell?.style.background).toContain(\"124, 108, 250\");\n     expect(secondCell?.style.background).toContain(\"124, 108, 250\");\n+\n+    const copied: Record<string, string> = {};\n+    const copyEvent = new Event(\"copy\", { bubbles: true, cancelable: true });\n+    Object.defineProperty(copyEvent, \"clipboardData\", {\n+      configurable: true,\n+      value: {\n+        setData: (type: string, value: string) => {\n+          copied[type] = value;\n+        },\n+      },\n+    });\n+    container.querySelector<HTMLElement>(\".nexus-table-wrapper\")?.dispatchEvent(copyEvent);\n+\n+    expect(copyEvent.defaultPrevented).toBe(true);\n+    expect(copied[\"text/plain\"]).toBe(\"1\\t2\");\n+    editor.destroy();\n+    container.remove();\n+  });\n+\n+  it(\"allows native text selection inside a table cell without entering edit mode\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"| A | B |\\n| --- | --- |\\n| Alpha Beta | 2 |\",\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    const cell = container.querySelectorAll<HTMLElement>(\"tr\")[2]?.querySelectorAll<HTMLElement>(\".nexus-cell\")[0];\n+    expect(cell).not.toBeUndefined();\n+    expect(cell?.style.userSelect).toBe(\"text\");\n+\n+    cell!.getBoundingClientRect = () => ({\n+      x: 0,\n+      y: 0,\n+      left: 0,\n+      top: 0,\n+      right: 160,\n+      bottom: 30,\n+      width: 160,\n+      height: 30,\n+      toJSON: () => ({})\n+    });\n+\n+    cell?.dispatchEvent(new MouseEvent(\"mousedown\", {\n+      bubbles: true,\n+      cancelable: true,\n+      button: 0,\n+      clientX: 12,\n+      clientY: 15\n+    }));\n+    document.dispatchEvent(new MouseEvent(\"mousemove\", {\n+      bubbles: true,\n+      cancelable: true,\n+      button: 0,\n+      clientX: 72,\n+      clientY: 15\n+    }));\n+\n+    const text = cell!.firstChild;\n+    expect(text?.textContent).toBe(\"Alpha Beta\");\n+    const range = document.createRange();\n+    range.setStart(text!, 0);\n+    range.setEnd(text!, 5);\n+    document.getSelection()?.removeAllRanges();\n+    document.getSelection()?.addRange(range);\n+\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", {\n+      bubbles: true,\n+      button: 0,\n+      clientX: 72,\n+      clientY: 15\n+    }));\n+\n+    expect(cell?.contentEditable).not.toBe(\"true\");\n+    expect(document.getSelection()?.toString()).toBe(\"Alpha\");\n+    document.getSelection()?.removeAllRanges();\n     editor.destroy();\n     container.remove();\n   });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=88",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "pr_number": 47,
+  "title": "feat(core): Markdown live preview sync scroll",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:39:42Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "dddf-fly",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-02T13:01:59Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=47) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:39:41Z",
+      "body": "感谢 Markdown 同步滚动 🙏 `mdastToPreviewHtml` 的测试很充分，但核心的滚动数学（二分定位、suppress 反馈防抖、editor↔preview 镜像）目前没有任何自动化测试——jsdom 无布局确实难测，但按本轮门槛「核心逻辑必须有自动化测试」这条没满足。建议在带布局的环境（如 Playwright）补上滚动行为测试后重提；另 `case \"html\"` 直出 node.value 建议加注释说明仅预览用途。\n\n—— 评审基于本轮统一的质量门槛（本地 build/test/typecheck 全绿 + 无已知正确性缺陷 + 核心逻辑有自动化测试）。修好后非常欢迎基于当前 main 重新提交 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

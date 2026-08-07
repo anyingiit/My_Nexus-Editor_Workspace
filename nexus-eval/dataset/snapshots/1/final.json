@@ -1,0 +1,175 @@
+{
+  "pr_number": 1,
+  "title": "Feat/shaoyongqiang demo",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-12T03:18:25Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "c8701e56647842ca10cfd9054952cda76ec44c1c",
+  "merge_commit_sha": "7ec9f88d2768ea0e1699efdbaf42c0221e6eb0b1",
+  "base_sha": "37c230a902fd37f30a6adbe2127d2d0120761297",
+  "commits": [
+    {
+      "sha": "5fe903d900a3997e73fe595c43d9a59fc06297bb",
+      "message": "chore: 添加 Cursor 开发规则与 Electron 下载脚本\n\n- 新增 .cursor/rules：monorepo 总则、TypeScript/Vue/React、Vitest 测试、electron-demo 专题约定\n- electron-demo：package.json 增加 electron:download，用于在网络或证书异常后补全 Electron 二进制\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-11T11:49:21Z"
+    },
+    {
+      "sha": "4c3231b99ecb14533f7f227a155cf8f2a9cc0379",
+      "message": "feat: 实现文档统计面板功能\n\n- 核心指标：字数、字符数、段落数、行数统计\n- 扩展指标：代码块、链接、图片、表格数量统计\n- UI功能：实时更新、折叠面板、响应式设计\n- 增强功能：写作目标追踪、数据导出（CSV/JSON）、文档复杂度分析\n- 技术实现：Core层StatsService + React层StatsPanel组件",
+      "date": "2026-05-11T12:45:47Z"
+    },
+    {
+      "sha": "c8701e56647842ca10cfd9054952cda76ec44c1c",
+      "message": "fix: 修复React版本不一致导致的Hooks调用错误\n\n- 将packages/react的React版本从^19.2.0降级到^18.2.0\n- 添加react-dom依赖\n- 在vite.config.ts中添加React别名配置，强制使用同一个React实例",
+      "date": "2026-05-11T12:50:54Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".cursor/rules/nexus-electron-demo.mdc",
+      "status": "added",
+      "additions": 51,
+      "deletions": 0,
+      "changes": 51
+    },
+    {
+      "filename": ".cursor/rules/nexus-monorepo.mdc",
+      "status": "added",
+      "additions": 69,
+      "deletions": 0,
+      "changes": 69
+    },
+    {
+      "filename": ".cursor/rules/nexus-testing.mdc",
+      "status": "added",
+      "additions": 39,
+      "deletions": 0,
+      "changes": 39
+    },
+    {
+      "filename": ".cursor/rules/nexus-typescript.mdc",
+      "status": "added",
+      "additions": 62,
+      "deletions": 0,
+      "changes": 62
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 1,
+      "changes": 16
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/react-stats-panel.tsx",
+      "status": "added",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 368,
+      "deletions": 0,
+      "changes": 368
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "docs/design/document-stats-panel.md",
+      "status": "added",
+      "additions": 224,
+      "deletions": 0,
+      "changes": 224
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 72,
+      "deletions": 2,
+      "changes": 74
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/stats-panel.ts",
+      "status": "added",
+      "additions": 141,
+      "deletions": 0,
+      "changes": 141
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 1,
+      "changes": 32
+    },
+    {
+      "filename": "packages/react/package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/stats-panel.tsx",
+      "status": "added",
+      "additions": 315,
+      "deletions": 0,
+      "changes": 315
+    },
+    {
+      "filename": "packages/react/src/use-stats.ts",
+      "status": "added",
+      "additions": 250,
+      "deletions": 0,
+      "changes": 250
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 15,
+      "changes": 63
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

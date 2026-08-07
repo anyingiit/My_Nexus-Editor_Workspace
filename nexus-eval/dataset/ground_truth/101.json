@@ -1,0 +1,24 @@
+{
+  "pr_number": 101,
+  "title": "feat(wc): add <nexus-editor> Web Component wrapper (@floatboat/nexus-wc, ROADMAP #22)",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "Rock-1",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T09:35:41Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=101) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=101) before we can accept your contribution.<br/><hr/>**Rock-1** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=101) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T15:30:06Z",
+      "body": "严格审查结论：通过初筛，建议进入面试环节；本评论不代表合并主分支。\n\n相对这批 PR 来看，这个实现质量明显更高：\n\n1. 方向清晰：新增 `@floatboat/nexus-wc` 包，解决非 React/Vue host 直接使用 `<nexus-editor>` 的集成问题，和 Roadmap #22 对齐。\n\n2. 工程接入完整：root build、tsconfig path、vitest alias、package exports、README、OpenSpec 都有覆盖，没有明显漏接包的问题。\n\n3. 生命周期考虑较充分：显式 `defineNexusEditor()` 注册，避免 import side effect；处理 connected/disconnected/reparent；移除时捕获文档；重建时恢复 selection/focus；`nexus-ready` 在重建后重新发出。\n\n4. 受控文档语义做得比较认真：`value` 属性/属性更新使用 silent `setDocument`，避免受控回环；属性移除不清空文档；销毁期间的外部 value 更新会覆盖 pending document；还覆盖了 IME composition 场景。\n\n5. 测试覆盖比其他候选明显更扎实，包含 attribute parsing、controlled document、element lifecycle、config rebuild、event detail 等关键路径。\n\n仍需正式合入前继续关注：\n- 配置变更通过重建 editor 实现，会丢 undo history；README 已说明，但产品层需要确认是否可接受。\n- 自定义元素使用 light DOM，样式隔离与 host CSS 冲突边界需要后续真实 demo 验证。\n- `nexus-ready` 同步触发时机对声明式 HTML 用户可能有监听 race，README 已提示，但 API 体验仍可再打磨。\n\n本地验证：`pnpm install --frozen-lockfile` 与 `pnpm typecheck` 通过；`pnpm test` / `pnpm build` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入实际用例/构建执行。该环境问题不作为本 PR 的扣分点。\n\n候选人判断：建议面试。不要合并主分支，后续面试重点追问 Web Component 生命周期、受控组件语义、attribute/property 设计、重建与 undo history 取舍、SSR/import side effect 边界。\n"
+    }
+  ]
+}

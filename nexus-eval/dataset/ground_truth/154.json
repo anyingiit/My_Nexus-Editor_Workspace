@@ -1,0 +1,26 @@
+{
+  "pr_number": 154,
+  "title": "fix(live-preview): use live doc content for table column/row operations",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-14T08:29:48Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "zhenyu666-debug",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-14T08:14:35Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=154) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you all sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=154) before we can accept your contribution.<br/>**1** out of **2** committers have signed the CLA.<br/><br/>:white_check_mark: 2391384896<br/>:x: zhuangzhenyu19<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=154) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-14T08:29:44Z",
+      "body": "感谢提交。这个 PR 暂不合并，先关闭处理。\n\n修复方向是有价值的：table widget 使用 stale snapshot 处理行列操作确实可能导致问题。但当前实现风险较高：\n\n- `liveSource()` 使用 `this.source.length + 512` 猜测当前表格范围，无法可靠定位 Markdown table 的真实结束位置，可能误读/误替换表格后的正文，也可能漏读更长表格。\n- `dispatch()` 移除了原有 stale guard，直接替换从 `tableFrom` 到推测 `liveEnd` 的范围，存在误写风险。\n- 没有新增自动化回归测试；`live-preview-table.ts` 是高风险区域，必须覆盖表格后正文、单元格编辑后首次 add/delete、IME、selection、undo/redo 等场景。\n- PR 夹带 `.github/PR_CHECKLIST.md`，且包含个人邮箱/个人流程说明，与本次 bug fix 无关，不适合进入主仓库。\n\n建议返工方向：基于当前语法树或重新解析 live doc 来可靠确定 table range，保留必要的 stale 防护，移除无关文档，并补充完整回归测试后重新提交。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

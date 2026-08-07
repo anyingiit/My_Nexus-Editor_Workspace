@@ -1,0 +1,315 @@
+{
+  "pr_number": 202,
+  "title": "feat: add document operation layer",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-31T14:58:49Z",
+  "merged_by": null,
+  "closed_by": "uppercaveman",
+  "head_sha_final": "7744d5fda554fe98bafe0079056632691640c853",
+  "merge_commit_sha": "cf35894f216d7aff8c11be31c24324a79adc4212",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "f6cc9a9a9e4d41099a09574e7e3feacb9fa17f33",
+      "message": "feat: add document operation layer",
+      "date": "2026-07-31T12:27:36Z"
+    },
+    {
+      "sha": "7744d5fda554fe98bafe0079056632691640c853",
+      "message": "feat: add document operation layer for AI editing",
+      "date": "2026-07-31T14:54:11Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 0,
+      "changes": 34
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 0,
+      "changes": 31
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "openspec/changes/add-document-operation-layer/design.md",
+      "status": "added",
+      "additions": 60,
+      "deletions": 0,
+      "changes": 60
+    },
+    {
+      "filename": "openspec/changes/add-document-operation-layer/proposal.md",
+      "status": "added",
+      "additions": 31,
+      "deletions": 0,
+      "changes": 31
+    },
+    {
+      "filename": "openspec/changes/add-document-operation-layer/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67
+    },
+    {
+      "filename": "openspec/changes/add-document-operation-layer/tasks.md",
+      "status": "added",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "packages/core/src/document-operation.ts",
+      "status": "added",
+      "additions": 198,
+      "deletions": 0,
+      "changes": 198
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 98,
+      "deletions": 0,
+      "changes": 98
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 51,
+      "deletions": 0,
+      "changes": 51
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 3618,
+      "deletions": 4428,
+      "changes": 8046
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "d905616e3e837bbb0c793098ccfdc412cda035b8",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 34,
+        "deletions": 0,
+        "changes": 34,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -96,6 +96,40 @@ export default function App() {\n > 💡 **New to CodeMirror?** You don't need to know it. `<Editor />` handles the lifecycle — just drop it in.\n </details>\n \n+## AI-ready Document API\n+\n+The optional `editor.document` facade lets an AI agent inspect and update\n+individual mdast nodes without replacing the whole document. Node IDs are\n+stable for the lifetime of the editor and are not written into Markdown.\n+\n+```ts\n+const tree = editor.document.getTree();\n+const paragraph = tree.children?.find((node) => node.type === \"paragraph\");\n+\n+if (paragraph) {\n+  editor.document.applyPatch({\n+    type: \"replace\",\n+    nodeId: paragraph.id,\n+    content: \"Updated by an AI agent.\",\n+  });\n+}\n+\n+editor.document.findNode(nodeId);\n+editor.document.getPath(nodeId); // [\"root\", \"paragraph\"]\n+editor.document.applyPatch({\n+  type: \"insert\",\n+  parentId: tree.id,\n+  position: \"last\",\n+  content: { type: \"paragraph\", value: \"A new paragraph.\" },\n+});\n+\n+editor.document.applyPatch({ type: \"delete\", nodeId });\n+```\n+\n+Patches use the normal editor transaction, change events, and undo history.\n+The editor provides deterministic document primitives only; the agent or host\n+application supplies the model and decides when to call them.\n+\n <details>\n <summary><b>Vue 3</b></summary>\n "
+      },
+      {
+        "sha": "38c793f5bddb97560e0143a6221b796f5cbca520",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 31,
+        "deletions": 0,
+        "changes": 31,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -96,6 +96,37 @@ export default function App() {\n > 💡 **不熟 CodeMirror？** 不需要懂。`<Editor />` 已经处理好生命周期，直接用就行。\n </details>\n \n+## AI-ready 文档 API\n+\n+可选的 `editor.document` facade 允许 AI Agent 查询并修改单个 mdast 节点，\n+无需替换整篇文档。节点 ID 只在当前 editor 生命周期内稳定，不会写入 Markdown。\n+\n+```ts\n+const tree = editor.document.getTree();\n+const paragraph = tree.children?.find((node) => node.type === \"paragraph\");\n+\n+if (paragraph) {\n+  editor.document.applyPatch({\n+    type: \"replace\",\n+    nodeId: paragraph.id,\n+    content: \"由 AI Agent 更新的段落。\",\n+  });\n+}\n+\n+editor.document.findNode(nodeId);\n+editor.document.getPath(nodeId); // [\"root\", \"paragraph\"]\n+editor.document.applyPatch({\n+  type: \"insert\",\n+  parentId: tree.id,\n+  position: \"last\",\n+  content: { type: \"paragraph\", value: \"新增段落。\" },\n+});\n+editor.document.applyPatch({ type: \"delete\", nodeId });\n+```\n+\n+Patch 使用现有编辑 transaction，因此会触发原有 change 事件并进入 undo 历史。\n+编辑器只提供确定性的文档操作能力，模型和 Agent 编排由宿主应用负责。\n+\n <details>\n <summary><b>Vue 3</b></summary>\n "
+      },
+      {
+        "sha": "9df88bb9651ecabb6238284995e3526fe28dbc41",
+        "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+        "status": "modified",
+        "additions": 19,
+        "deletions": 0,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -335,6 +335,24 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n   const toolbar = createToolbarUI(editor);\n   container.insertBefore(toolbar.element, container.firstChild);\n \n+  const aiTools = document.createElement(\"div\");\n+  aiTools.className = \"demo-ai-tools\";\n+  const rewriteButton = document.createElement(\"button\");\n+  rewriteButton.type = \"button\";\n+  rewriteButton.textContent = \"Mock AI Rewrite\";\n+  rewriteButton.title = \"Replace the first paragraph through the document operation API\";\n+  rewriteButton.addEventListener(\"click\", () => {\n+    const paragraph = editor.document.getTree().children?.find((node) => node.type === \"paragraph\");\n+    if (!paragraph) return;\n+    editor.document.applyPatch({\n+      type: \"replace\",\n+      nodeId: paragraph.id,\n+      content: \"This paragraph was updated by a mock AI agent.\",\n+    });\n+  });\n+  aiTools.appendChild(rewriteButton);\n+  container.insertBefore(aiTools, toolbar.element.nextSibling);\n+\n   // The slash menu owns its own DOM root mounted on document.body so\n   // it can overflow the editor's clipping context (panels, scroll\n   // ancestors). Its lifecycle is tied to the shell — destroyed below.\n@@ -373,6 +391,7 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n         `${(t1 - t0).toFixed(1)}ms`, { bytes: content.length });\n     },\n     destroy() {\n+      aiTools.remove();\n       wordcount.destroy();\n       slashMenu.destroy();\n       toolbar.destroy();"
+      },
+      {
+        "sha": "9f589ef8683cbecb7df848d65e63c2db13939837",
+        "filename": "apps/electron-demo/src/renderer/style.css",
+        "status": "modified",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -190,3 +190,18 @@ body,\n   color: var(--nexus-accent, #2563eb);\n   font-weight: 500;\n }\n+.demo-ai-tools {\n+  display: flex;\n+  gap: 8px;\n+  padding: 6px 10px;\n+  border-bottom: 1px solid var(--border-color, #ddd);\n+}\n+\n+.demo-ai-tools button {\n+  border: 1px solid var(--border-color, #bbb);\n+  border-radius: 5px;\n+  background: var(--panel-bg, transparent);\n+  color: inherit;\n+  cursor: pointer;\n+  padding: 4px 9px;\n+}"
+      },
+      {
+        "sha": "9ec83b847da94dce6bc307de3de6232f6a07127d",
+        "filename": "openspec/changes/add-document-operation-layer/design.md",
+        "status": "added",
+        "additions": 60,
+        "deletions": 0,
+        "changes": 60,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-operation-layer%2Fdesign.md?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -0,0 +1,60 @@\n+## Context\n+\n+The core editor already maintains a parsed mdast tree and routes document\n+changes through CodeMirror. The operation layer should be an optional facade on\n+that existing `EditorAPI`, not a second document model.\n+\n+## Goals / Non-Goals\n+\n+- Goals: stable node handles during one editor instance, read-only tree\n+  snapshots, node lookup/path lookup, and precise patch updates.\n+- Non-goals: AI execution, network access, collaboration, persisted IDs, or a\n+  general-purpose mdast editor implementation.\n+\n+## Decisions\n+\n+- Expose `editor.document` as a typed `DocumentManager` on `EditorAPI`.\n+- Return operation nodes as defensive snapshots. The public shape contains\n+  `id`, `type`, optional `value`, and optional recursively mapped `children`;\n+  parser-specific fields such as `position` remain internal.\n+- Allocate IDs from an editor-local counter. Reconcile each new parsed tree\n+  with the previous operation tree by parent, node type, and sibling order with\n+  a source-position/content similarity preference. This preserves IDs for\n+  unchanged nodes and for nodes whose source offsets move. Nodes that are\n+  replaced by a patch retain their target ID; newly inserted nodes receive new\n+  IDs. IDs are not persisted in markdown and are invalid after `destroy()`.\n+- Implement patches by resolving the target node's current source range and\n+  dispatching one `replaceRange` transaction. `replace` accepts markdown\n+  content for a node. `insert` accepts a markdown fragment plus the parent and\n+  sibling position; the fragment is parsed after insertion and receives fresh\n+  IDs. `delete` removes the target source range, including the surrounding\n+  block separator where safe.\n+- Reject stale, unknown, malformed, or structurally invalid patches with a\n+  descriptive error and leave the document unchanged.\n+- Return `getPath()` as the ordered mdast type path (for example\n+  `['root', 'section', 'paragraph']`); callers use the node ID itself for\n+  addressing.\n+- Keep patch updates non-silent by default so existing `onChange`/`change`\n+  behavior and undo history remain intact. A single patch is one undo entry.\n+\n+## Alternatives considered\n+\n+- Persist IDs inside markdown: rejected because it changes the document format\n+  and breaks compatibility with existing files.\n+- Build a second mutable AST model: rejected because it would diverge from the\n+  live Lezer/mdast pipeline and risk breaking normal editing.\n+- Add an AI SDK: rejected because the editor only needs deterministic document\n+  primitives and must remain provider-neutral.\n+\n+## Risks / Trade-offs\n+\n+- Node identity is intentionally scoped to one editor lifetime, so callers must\n+  refresh handles after destroying/recreating an editor.\n+- Markdown serialization of inserted node objects is deliberately out of scope\n+  for the first version; accepting markdown fragments keeps formatting faithful\n+  and avoids introducing another serializer contract.\n+\n+## Migration Plan\n+\n+No migration is required. Existing consumers continue using the current API;\n+new consumers opt into `editor.document`."
+      },
+      {
+        "sha": "4ee2297a3c919ffac4d25ff2ce270fabd70cdf3a",
+        "filename": "openspec/changes/add-document-operation-layer/proposal.md",
+        "status": "added",
+        "additions": 31,
+        "deletions": 0,
+        "changes": 31,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-operation-layer%2Fproposal.md?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -0,0 +1,31 @@\n+# Change: Add an AI-ready document operation layer\n+\n+## Why\n+\n+Nexus-Editor already exposes a live mdast tree, but external agents can only\n+replace the entire markdown document. A stable node identity and small,\n+transactional document patch API will let integrations target a paragraph,\n+heading, or other mdast node without introducing an AI runtime or changing the\n+normal editor input path.\n+\n+## What Changes\n+\n+- Add an immutable, editor-lifetime-stable `id` to every node exposed through a\n+  document operation tree.\n+- Add `editor.document.getTree()`, `findNode(nodeId)`, and `getPath(nodeId)`.\n+- Add `replace`, `insert`, and `delete` document patches, applied through the\n+  existing editor transaction/update path.\n+- Preserve existing `getDocument()`, `getAst()`, `setDocument()`, selection,\n+  undo/redo, and user-edit behavior.\n+- Add core tests for identity, lookup, paths, and all patch operations.\n+- Add a small Electron demo action and README documentation showing a mock AI\n+  rewrite.\n+\n+## Impact\n+\n+- Affected specs: `editor-core` (new document operation capability)\n+- Affected code: `packages/core/src/types.ts`, `packages/core/src/editor.ts`,\n+  document-operation helpers/tests, Electron demo, and README.\n+- No AI SDK, LLM provider, MCP integration, or new runtime service.\n+- Patch operations produce one normal editor transaction, so they participate\n+  in the existing change event and undo history."
+      },
+      {
+        "sha": "c44936592f7c9147d715a0b241ebf17bb23e6e67",
+        "filename": "openspec/changes/add-document-operation-layer/specs/editor-core/spec.md",
+        "status": "added",
+        "additions": 67,
+        "deletions": 0,
+        "changes": 67,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Fspecs%2Feditor-core%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Fspecs%2Feditor-core%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-operation-layer%2Fspecs%2Feditor-core%2Fspec.md?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -0,0 +1,67 @@\n+## ADDED Requirements\n+\n+### Requirement: Stable document operation nodes\n+\n+The editor SHALL expose a document operation tree whose nodes have unique IDs,\n+node types, optional values, and recursively exposed children. IDs SHALL remain\n+stable for matching nodes for the lifetime of an editor instance and SHALL NOT\n+be written into markdown.\n+\n+#### Scenario: Read a document tree\n+\n+- **WHEN** a consumer calls `editor.document.getTree()`\n+- **THEN** it receives a root node and every reachable node has a unique ID\n+\n+#### Scenario: Node identity survives an unrelated edit\n+\n+- **WHEN** text is inserted before an existing paragraph and the document is\n+  reparsed\n+- **THEN** the existing paragraph keeps its operation-node ID\n+\n+### Requirement: Document node lookup\n+\n+The editor SHALL provide lookup by node ID and SHALL return the node's path as\n+an ordered list of mdast node types from root to that node. Unknown IDs SHALL return\n+`null` (or an empty path, as specified by the public type) without mutating the\n+document.\n+\n+#### Scenario: Find a node and its path\n+\n+- **WHEN** a consumer passes a node ID returned by `getTree()`\n+- **THEN** `findNode` returns that node and `getPath` identifies its ancestry\n+\n+### Requirement: Structured document patches\n+\n+The editor SHALL support replace, insert, and delete patches addressed by node\n+ID. Each valid patch SHALL update the existing editor document through one\n+normal transaction, participate in undo history, and emit the existing change\n+notification. Invalid or stale patches SHALL fail without a partial update.\n+\n+#### Scenario: Replace a node\n+\n+- **WHEN** a consumer applies a replace patch to a paragraph ID with new\n+  markdown content\n+- **THEN** only that node's source range is replaced and the editor exposes the\n+  updated markdown and tree\n+\n+#### Scenario: Insert a sibling node\n+\n+- **WHEN** a consumer applies an insert patch to a parent with a valid sibling\n+  position and markdown fragment\n+- **THEN** the fragment appears at that position and receives operation-node IDs\n+\n+#### Scenario: Delete a node\n+\n+- **WHEN** a consumer applies a delete patch to a non-root node ID\n+- **THEN** that node is removed and the remaining tree is still queryable\n+\n+### Requirement: Backward compatibility\n+\n+The document operation layer SHALL be optional and SHALL NOT change the\n+behavior or signatures of existing document and editing APIs.\n+\n+#### Scenario: Existing document API remains usable\n+\n+- **WHEN** an existing consumer uses `getDocument()`, `getAst()`, or\n+  `setDocument()` without the operation layer\n+- **THEN** those calls behave as before"
+      },
+      {
+        "sha": "ab6a6462baabbcd96101d9da72b684840afe7381",
+        "filename": "openspec/changes/add-document-operation-layer/tasks.md",
+        "status": "added",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/openspec%2Fchanges%2Fadd-document-operation-layer%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-operation-layer%2Ftasks.md?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -0,0 +1,13 @@\n+## 1. Core document operation API\n+\n+- [x] 1.1 Define `DocumentNode`, `DocumentPatch`, and `DocumentManager` types.\n+- [x] 1.2 Add editor-local node identity reconciliation and tree snapshots.\n+- [x] 1.3 Implement node lookup and path lookup.\n+- [x] 1.4 Implement replace, insert, and delete patches through one editor transaction.\n+\n+## 2. Verification and documentation\n+\n+- [x] 2.1 Add core tests for stable IDs, lookup, paths, and patch behavior.\n+- [x] 2.2 Add the mock AI rewrite action to the Electron demo.\n+- [x] 2.3 Document the AI-ready API and agent integration flow in README files.\n+- [x] 2.4 Run typecheck, focused tests, and the relevant build."
+      },
+      {
+        "sha": "81ec6e76c0a3912d6a9500d83efac6d79ab2e9e5",
+        "filename": "packages/core/src/document-operation.ts",
+        "status": "added",
+        "additions": 198,
+        "deletions": 0,
+        "changes": 198,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Fdocument-operation.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Fdocument-operation.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Fdocument-operation.ts?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -0,0 +1,198 @@\n+import type { Root } from \"mdast\";\n+\n+export interface DocumentNode {\n+  id: string;\n+  type: string;\n+  value?: string;\n+  children?: DocumentNode[];\n+}\n+\n+export type DocumentNodeContent = string | {\n+  type: string;\n+  value?: string;\n+  depth?: number;\n+  children?: DocumentNodeContent[];\n+};\n+\n+export interface ReplacePatch {\n+  type: \"replace\";\n+  nodeId: string;\n+  content: DocumentNodeContent;\n+}\n+\n+export interface InsertPatch {\n+  type: \"insert\";\n+  parentId: string;\n+  position: \"before\" | \"after\" | \"first\" | \"last\";\n+  content: DocumentNodeContent;\n+  referenceId?: string;\n+}\n+\n+export interface DeletePatch {\n+  type: \"delete\";\n+  nodeId: string;\n+}\n+\n+export type DocumentPatch = ReplacePatch | InsertPatch | DeletePatch;\n+\n+export interface DocumentManager {\n+  getTree(): DocumentNode;\n+  findNode(nodeId: string): DocumentNode | null;\n+  getPath(nodeId: string): string[];\n+  applyPatch(patch: DocumentPatch): void;\n+}\n+\n+export interface InternalDocumentNode {\n+  id: string;\n+  type: string;\n+  value?: string;\n+  children: InternalDocumentNode[];\n+  from: number;\n+  to: number;\n+  parentId: string | null;\n+  source: string;\n+}\n+\n+export interface DocumentTreeState {\n+  tree: InternalDocumentNode;\n+  byId: Map<string, InternalDocumentNode>;\n+}\n+\n+function nodeValue(node: any): string | undefined {\n+  return typeof node.value === \"string\" ? node.value : undefined;\n+}\n+\n+function nodeDisplayValue(node: any): string | undefined {\n+  const direct = nodeValue(node);\n+  if (direct !== undefined) return direct;\n+  if (node.type !== \"paragraph\" && node.type !== \"heading\") return undefined;\n+  const text = (Array.isArray(node.children) ? node.children : [])\n+    .map((child: any) => nodeDisplayValue(child) ?? \"\")\n+    .join(\"\");\n+  return text;\n+}\n+\n+function sourceRange(node: any, sourceLength: number): { from: number; to: number } {\n+  const from = typeof node.position?.start?.offset === \"number\" ? node.position.start.offset : 0;\n+  const to = typeof node.position?.end?.offset === \"number\"\n+    ? node.position.end.offset\n+    : node.type === \"root\" ? sourceLength : from;\n+  return {\n+    from: Math.max(0, Math.min(sourceLength, from)),\n+    to: Math.max(from, Math.min(sourceLength, to)),\n+  };\n+}\n+\n+function snapshot(node: InternalDocumentNode): DocumentNode {\n+  const result: DocumentNode = { id: node.id, type: node.type };\n+  if (node.value !== undefined) result.value = node.value;\n+  if (node.children.length > 0) result.children = node.children.map(snapshot);\n+  return result;\n+}\n+\n+function createInternal(\n+  node: any,\n+  source: string,\n+  parentId: string | null,\n+  previous: InternalDocumentNode | undefined,\n+  allocate: () => string,\n+): InternalDocumentNode {\n+  const children = Array.isArray(node.children) ? node.children : [];\n+  const oldChildren = previous?.children ?? [];\n+  const oldByKey = new Map<string, InternalDocumentNode[]>();\n+  for (const child of oldChildren) {\n+    const key = `${child.type}|${child.value ?? \"\"}|${child.source}`;\n+    const bucket = oldByKey.get(key) ?? [];\n+    bucket.push(child);\n+    oldByKey.set(key, bucket);\n+  }\n+\n+  const mappedChildren: InternalDocumentNode[] = [];\n+  const used = new Set<string>();\n+  const matches: Array<InternalDocumentNode | undefined> = [];\n+  for (const child of children) {\n+    const childRange = sourceRange(child, source.length);\n+    const key = `${child.type}|${nodeDisplayValue(child) ?? \"\"}|${source.slice(childRange.from, childRange.to)}`;\n+    const exact = oldByKey.get(key)?.find((candidate) => !used.has(candidate.id));\n+    matches.push(exact);\n+    if (exact) used.add(exact.id);\n+  }\n+  for (let index = 0; index < children.length; index++) {\n+    const child = children[index];\n+    const positional = oldChildren[index] && !used.has(oldChildren[index].id) ? oldChildren[index] : undefined;\n+    const matching = matches[index] ?? (positional && positional.type === child.type ? positional : undefined);\n+    if (matching) used.add(matching.id);\n+    mappedChildren.push(createInternal(child, source, \"\", matching, allocate));\n+  }\n+\n+  const range = sourceRange(node, source.length);\n+  const result: InternalDocumentNode = {\n+    id: previous?.id ?? (parentId === null ? \"root\" : allocate()),\n+    type: node.type,\n+    value: nodeDisplayValue(node),\n+    children: mappedChildren,\n+    from: range.from,\n+    to: range.to,\n+    parentId,\n+    source: source.slice(range.from, range.to),\n+  };\n+  for (const child of mappedChildren) child.parentId = result.id;\n+  return result;\n+}\n+\n+export function createDocumentTree(\n+  ast: Root,\n+  source: string,\n+  previous: DocumentTreeState | undefined,\n+  nextId: () => string,\n+): DocumentTreeState {\n+  const tree = createInternal(ast, source, null, previous?.tree, nextId);\n+  const byId = new Map<string, InternalDocumentNode>();\n+  const visit = (node: InternalDocumentNode) => {\n+    byId.set(node.id, node);\n+    for (const child of node.children) visit(child);\n+  };\n+  visit(tree);\n+  return { tree, byId };\n+}\n+\n+export function getDocumentSnapshot(state: DocumentTreeState): DocumentNode {\n+  return snapshot(state.tree);\n+}\n+\n+export function getNodeSnapshot(state: DocumentTreeState, id: string): DocumentNode | null {\n+  const node = state.byId.get(id);\n+  return node ? snapshot(node) : null;\n+}\n+\n+export function getNodePath(state: DocumentTreeState, id: string): string[] {\n+  const node = state.byId.get(id);\n+  if (!node) return [];\n+  const path: string[] = [];\n+  let current: InternalDocumentNode | undefined = node;\n+  while (current) {\n+    path.unshift(current.type);\n+    current = current.parentId ? state.byId.get(current.parentId) : undefined;\n+  }\n+  return path;\n+}\n+\n+export function getInternalNode(state: DocumentTreeState, id: string): InternalDocumentNode | undefined {\n+  return state.byId.get(id);\n+}\n+\n+export function findNodeIndex(parent: InternalDocumentNode, id: string): number {\n+  return parent.children.findIndex((child) => child.id === id);\n+}\n+\n+export function serializeDocumentContent(content: DocumentNodeContent): string {\n+  if (typeof content === \"string\") return content;\n+  if (content.type === \"root\") return (content.children ?? []).map(serializeDocumentContent).join(\"\\n\\n\");\n+  if (content.type === \"heading\") {\n+    const depth = Math.max(1, Math.min(6, content.depth ?? 1));\n+    const text = content.value ?? (content.children ?? []).map(serializeDocumentContent).join(\"\");\n+    return `${\"#\".repeat(depth)} ${text}`;\n+  }\n+  if (content.value !== undefined) return content.value;\n+  return (content.children ?? []).map(serializeDocumentContent).join(\"\");\n+}"
+      },
+      {
+        "sha": "db648f27987b275b4649177904c8643200024a40",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 98,
+        "deletions": 0,
+        "changes": 98,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -41,6 +41,18 @@ import type {\n   TocEntry,\n } from \"./types\";\n import { createWidgetExtension } from \"./widget-extension\";\n+import {\n+  createDocumentTree,\n+  findNodeIndex,\n+  getDocumentSnapshot,\n+  getInternalNode,\n+  getNodePath,\n+  getNodeSnapshot,\n+  serializeDocumentContent,\n+  type DocumentManager,\n+  type DocumentPatch,\n+  type DocumentTreeState,\n+} from \"./document-operation\";\n \n const FLOATBOAT_MARKDOWN_DEBUG_STORAGE_KEY = \"floatboat:markdown-debug\";\n const COMPOSITION_FLUSH_DELAY_MS = 60;\n@@ -301,8 +313,77 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   // Forward ref so emitChange/setDocument can run lezerTreeToMdast against\n   // the live EditorState once the view is constructed.\n   const viewRef: { current: EditorView | null } = { current: null };\n+  let nextDocumentNodeId = 1;\n+  let documentTree: DocumentTreeState;\n   let api!: EditorAPI;\n \n+  const rebuildDocumentTree = (ast: Root, source: string): void => {\n+    documentTree = createDocumentTree(ast, source, documentTree, () => `node_${nextDocumentNodeId++}`);\n+  };\n+\n+  rebuildDocumentTree(currentAst, config.initialValue ?? \"\");\n+\n+  const documentManager: DocumentManager = {\n+    getTree() {\n+      return getDocumentSnapshot(documentTree);\n+    },\n+    findNode(nodeId) {\n+      return getNodeSnapshot(documentTree, nodeId);\n+    },\n+    getPath(nodeId) {\n+      return getNodePath(documentTree, nodeId);\n+    },\n+    applyPatch(patch: DocumentPatch) {\n+      if (destroyed) throw new Error(\"Cannot apply a document patch after destroy()\");\n+      const current = viewRef.current;\n+      if (!current) throw new Error(\"Editor view is not ready\");\n+      const nodeId = patch.type === \"insert\" ? patch.parentId : patch.nodeId;\n+      const target = getInternalNode(documentTree, nodeId);\n+      if (!target) throw new Error(`Unknown document node: ${nodeId}`);\n+\n+      if (patch.type === \"replace\") {\n+        if (target.id === documentTree.tree.id) {\n+          performSetDocument(serializeDocumentContent(patch.content), undefined);\n+          return;\n+        }\n+        applyDocumentRange(target.from, target.to, serializeDocumentContent(patch.content));\n+        return;\n+      }\n+\n+      if (patch.type === \"delete\") {\n+        if (target.id === documentTree.tree.id) throw new Error(\"The root node cannot be deleted\");\n+        const from = target.from;\n+        const to = target.to < current.state.doc.length && current.state.doc.sliceString(target.to, target.to + 2) === \"\\n\\n\"\n+          ? target.to + 2\n+          : target.to;\n+        applyDocumentRange(from, to, \"\");\n+        return;\n+      }\n+\n+      const parent = target;\n+      if (parent.type !== \"root\" && parent.children.length === 0 && (patch.position === \"before\" || patch.position === \"after\")) {\n+        throw new Error(\"before/after insertion requires a referenceId or an existing sibling\");\n+      }\n+      let index = parent.children.length;\n+      if (patch.referenceId) {\n+        const referenceIndex = findNodeIndex(parent, patch.referenceId);\n+        if (referenceIndex < 0) throw new Error(`Reference node is not a child of ${parent.id}: ${patch.referenceId}`);\n+        index = patch.position === \"before\" ? referenceIndex : referenceIndex + 1;\n+      } else if (patch.position === \"first\") {\n+        index = 0;\n+      } else if (patch.position === \"last\" || patch.position === \"after\") {\n+        index = parent.children.length;\n+      } else {\n+        throw new Error(\"before insertion requires referenceId\");\n+      }\n+      const fragment = serializeDocumentContent(patch.content);\n+      const separator = parent.children.length > 0 ? \"\\n\\n\" : \"\";\n+      const insertionPoint = index < parent.children.length ? parent.children[index].from : target.to;\n+      const insert = index < parent.children.length ? `${fragment}${separator}` : `${separator}${fragment}`;\n+      applyDocumentRange(insertionPoint, insertionPoint, insert);\n+    },\n+  };\n+\n   function setFocused(next: boolean) {\n     if (destroyed || focused === next) {\n       return;\n@@ -329,6 +410,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n     // mdast pipeline (e.g. with bespoke remark plugins).\n     if (customParser) {\n       currentAst = parseDocument(customParser, markdown);\n+      rebuildDocumentTree(currentAst, markdown);\n       config.onChange?.(markdown, currentAst);\n       emitter.emit(\"change\", markdown, currentAst);\n       return;\n@@ -339,6 +421,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n     // even on large docs). Falls back to a headless parse pre-view.\n     // User remark transformer plugins (if any) run via transformAst.\n     currentAst = transformAst(lezerAstFromAnywhere(viewRef, markdown));\n+    rebuildDocumentTree(currentAst, markdown);\n     config.onChange?.(markdown, currentAst);\n     emitter.emit(\"change\", markdown, currentAst);\n   }\n@@ -443,9 +526,22 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       } else {\n         currentAst = transformAst(lezerAstFromAnywhere(viewRef, next));\n       }\n+      rebuildDocumentTree(currentAst, next);\n     }\n   }\n \n+  function applyDocumentRange(from: number, to: number, insert: string): void {\n+    view.dispatch({\n+      changes: { from, to, insert },\n+      scrollIntoView: true,\n+    });\n+    const next = view.state.doc.toString();\n+    currentAst = customParser\n+      ? parseDocument(customParser, next)\n+      : transformAst(lezerAstFromAnywhere(viewRef, next));\n+    rebuildDocumentTree(currentAst, next);\n+  }\n+\n   // compositionend 时应用被推迟的文档回灌；整文档替换后排队中的组合输入变更已失效。\n   function applyPendingDocumentLoad(): boolean {\n     if (!pendingDocumentLoad) return false;\n@@ -729,6 +825,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   viewRef.current = view;\n \n   api = {\n+    document: documentManager,\n     getDocument() {\n       return view.state.doc.toString();\n     },\n@@ -842,6 +939,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n         } else {\n           currentAst = transformAst(lezerAstFromAnywhere(viewRef, next));\n         }\n+        rebuildDocumentTree(currentAst, next);\n       }\n     },\n     undo() {"
+      },
+      {
+        "sha": "b1d27e622b28d59028aa794b67d94ed0096961f6",
+        "filename": "packages/core/src/index.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Findex.ts?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -1,4 +1,13 @@\n export { createEditor } from \"./editor\";\n+export type {\n+  DeletePatch,\n+  DocumentManager,\n+  DocumentNode,\n+  DocumentNodeContent,\n+  DocumentPatch,\n+  InsertPatch,\n+  ReplacePatch,\n+} from \"./document-operation\";\n export { markdownAutoPair } from \"./markdown-autopair\";\n export { markdownFold, markdownFoldService } from \"./markdown-fold\";\n export { markdownKeymap, handleMarkdownEnter } from \"./markdown-keymap\";"
+      },
+      {
+        "sha": "310e1ae40f5468961e5bff07cd15aa2d7f1f43b9",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -1,6 +1,7 @@\n import type { Extension } from \"@codemirror/state\";\n import type { Blockquote, Code, Definition, Delete, Emphasis, FootnoteDefinition, FootnoteReference, Heading, Html, Image, InlineCode, Link, List, Root, Strong, Table, ThematicBreak } from \"mdast\";\n import type { Plugin } from \"unified\";\n+import type { DocumentManager } from \"./document-operation\";\n \n export interface CodeHighlightToken {\n   /** Absolute offset in the source markdown (beginning of the highlighted span). */\n@@ -184,6 +185,8 @@ export interface SetDocumentOptions {\n }\n \n export interface EditorAPI {\n+  /** Structured, node-addressable document operations for external tooling. */\n+  document: DocumentManager;\n   getDocument(): string;\n   getAst(): Root;\n   getTableOfContents(): TocEntry[];"
+      },
+      {
+        "sha": "12b305181152dbb0c660a106f7b5e90a0d02d793",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 51,
+        "deletions": 0,
+        "changes": 51,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=7744d5fda554fe98bafe0079056632691640c853",
+        "patch": "@@ -15,6 +15,57 @@ afterEach(() => {\n });\n \n describe(\"createEditor\", () => {\n+  it(\"exposes stable document node ids, lookup, and paths\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"# Title\\n\\nFirst paragraph.\\n\\nSecond paragraph.\",\n+    });\n+\n+    const before = editor.document.getTree();\n+    const first = before.children?.find((node) => node.type === \"paragraph\");\n+    expect(first).toBeDefined();\n+    expect(first && editor.document.findNode(first.id)).toEqual(first);\n+    expect(first && editor.document.getPath(first.id)).toEqual([\"root\", \"paragraph\"]);\n+\n+    editor.setDocument(\"Intro\\n\\n# Title\\n\\nFirst paragraph.\\n\\nSecond paragraph.\");\n+    const after = editor.document.getTree();\n+    const moved = after.children?.find((node) =>\n+      node.type === \"paragraph\" && node.children?.some((child) => child.value === \"First paragraph.\"));\n+    expect(moved?.id).toBe(first?.id);\n+    expect(new Set(after.children?.map((node) => node.id)).size).toBe(after.children?.length ?? 0);\n+    editor.destroy();\n+  });\n+\n+  it(\"applies replace, insert, and delete document patches\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"First paragraph.\\n\\nSecond paragraph.\" });\n+    const initial = editor.document.getTree();\n+    const first = initial.children?.[0];\n+    const second = initial.children?.[1];\n+    expect(first?.type).toBe(\"paragraph\");\n+    expect(second?.type).toBe(\"paragraph\");\n+    if (!first || !second) throw new Error(\"Expected two paragraphs\");\n+\n+    editor.document.applyPatch({ type: \"replace\", nodeId: first.id, content: \"Updated paragraph.\" });\n+    expect(editor.getDocument()).toBe(\"Updated paragraph.\\n\\nSecond paragraph.\");\n+\n+    editor.document.applyPatch({\n+      type: \"insert\",\n+      parentId: editor.document.getTree().id,\n+      position: \"last\",\n+      content: { type: \"paragraph\", value: \"Inserted by an agent.\" },\n+    });\n+    expect(editor.getDocument()).toContain(\"Second paragraph.\\n\\nInserted by an agent.\");\n+\n+    const updatedSecond = editor.document.findNode(second.id);\n+    expect(updatedSecond).not.toBeNull();\n+    editor.document.applyPatch({ type: \"delete\", nodeId: second.id });\n+    expect(editor.getDocument()).not.toContain(\"Second paragraph.\");\n+    expect(editor.document.findNode(second.id)).toBeNull();\n+    editor.destroy();\n+  });\n+\n   it(\"creates an editor with the initial document\", () => {\n     const container = document.createElement(\"div\");\n     const editor = createEditor({ container, initialValue: \"# Hello\" });"
+      },
+      {
+        "sha": "3a4afe73a6e06cc2ef95386e4fdfdd22c39044b3",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 3618,
+        "deletions": 4428,
+        "changes": 8046,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7744d5fda554fe98bafe0079056632691640c853/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7744d5fda554fe98bafe0079056632691640c853/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=7744d5fda554fe98bafe0079056632691640c853"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=202",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

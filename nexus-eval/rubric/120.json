@@ -1,0 +1,29 @@
+{
+  "pr_number": 120,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR remains in Draft status and cannot be merged"
+    },
+    {
+      "id": 2,
+      "summary": "PR must be marked ready for review"
+    },
+    {
+      "id": 3,
+      "summary": "Contributor License Agreement has not been signed"
+    },
+    {
+      "id": 4,
+      "summary": "Commit author email is not linked to GitHub user"
+    },
+    {
+      "id": 5,
+      "summary": "Li wenbo does not appear to be a GitHub user"
+    },
+    {
+      "id": 6,
+      "summary": "Re-submit using GitHub-bound email and complete CLA signing"
+    }
+  ]
+}

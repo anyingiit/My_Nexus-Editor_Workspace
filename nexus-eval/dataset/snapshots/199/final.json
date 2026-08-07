@@ -1,0 +1,105 @@
+{
+  "pr_number": 199,
+  "title": "fix(core): restore AST fidelity for headings, titles and reference links",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "5221d226838b583d2b96f0726389765450ec3315",
+  "merge_commit_sha": "c09cac164187e6806d42ae554cf477e4ffd02076",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "1fc7b7a120904ba81d3946e5b2efd91e91986b32",
+      "message": "fix(core): keep heading text for setext and closed ATX headings\n\n`headingTextRange` was written for the ATX shape only: skip the leading\n`HeaderMark` run, then trim a trailing one. Both heading forms use the same\n`HeaderMark` node name, so that walk misreads the other two layouts:\n\n- setext (`title\\n=====`) has a single mark — the underline, *after* the\n  text. It was skipped as the opening mark and trimmed as the closing mark,\n  leaving `cursor` past `end` and an empty range.\n- closed ATX (`## title ##`) puts the heading text in raw source rather than\n  a child node, so both marks are adjacent siblings. The leading `while`\n  consumed them both and pushed `cursor` to the node end.\n\nEither way `depth` and `position` stayed correct while `children` came out\nempty, so the damage surfaced in AST consumers rather than in the editor:\nunlabeled outline entries (an accessible-name failure), short word counts,\nand `exportHTML()` emitting `<h1></h1>`.\n\nSplit the two forms apart instead of sharing one walk, and take a single\nnode at each end rather than looping. `lezer-helpers` already maps\n`SetextHeading1/2` to a depth, so setext was meant to work — this restores\nthe text to match.",
+      "date": "2026-07-29T04:45:42Z"
+    },
+    {
+      "sha": "57af5ea6778a1277ac30eacfe178ebb068a01afb",
+      "message": "fix(core): read link and image titles instead of hardcoding null\n\n`title` was pinned to `null` on every Link and Image, even though Lezer\nalready exposes the title as a `LinkTitle` child. CommonMark permits three\ndelimiter forms — `\"…\"`, `'…'`, `(…)` — so read the child and strip whichever\npair it carries, collapsing an empty title to `null` the way remark does.\n\nDestinations get the same treatment: the `<…>` form exists so a url can\ncontain spaces, and the brackets are delimiters rather than part of the url.\n\n`adaptLinkReference` re-parsed the definition line with one regex,\n`/^\\[([^\\]]+)\\]:\\s*(\\S+)(?:\\s+\"([^\"]*)\")?/`, which lost three things the node\ntree already had right — `\\S+` truncated an angle-bracketed url at the first\nspace, only the double-quoted title form matched, and `identifier` kept the\nauthor's casing where mdast case-folds it so `[Foo]` resolves against\n`[foo]: …`. Read the `LinkLabel` / `URL` / `LinkTitle` children instead.\n\n`live-preview-table.ts` already reads `node.title`, so it benefits directly.",
+      "date": "2026-07-29T04:52:01Z"
+    },
+    {
+      "sha": "5221d226838b583d2b96f0726389765450ec3315",
+      "message": "fix(core): emit linkReference and imageReference for reference links\n\n`[text][ref]`, `[text][]` and `[text]` all came out as `{type:\"link\"}` with\nthe whole raw source as the url, so `[full][ref]` exported as\n`<a href=\"[full][ref]\">` — a dead link — and the editor published the same\nstring as `data-link-url` while hiding none of the brackets, since the node\nfell through to the GFM bare-URL branch.\n\nmdast models these as separate node types: the destination stays in the\ncompanion `definition`, and the reference carries `identifier` / `label` /\n`referenceType` for the renderer to resolve. Classify the three forms off the\n`LinkLabel` child and emit `linkReference`, with `imageReference` as the\n`![alt][ref]` counterpart. `plugin-wordcount` already handled both types,\nwhich is a good sign they were always the intended output.\n\nThe label walk that Link used moves into `readLinkLabelChildren` so\nreferences share it and keep nested marks — `[**bold**][ref]` stays a Strong.\n\nChanging the node type means the decoration path has to follow, or the\neditor silently stops rendering reference links: `linkReference` joins the\n`LivePreviewNode` union and the `isLivePreviewNode` allowlist, and\n`getInlineMarkerStyle` gains a case that hides the brackets without\nattaching a url it does not have.\n\nOne known deviation from remark, documented on `readReference`: CommonMark\ndemands a matching definition and falls back to literal text otherwise.\nChecking that needs all definitions up front, turning this adapter's single\npass into two, and staying cheap enough for the live-preview hot path is why\nit exists — so an undefined reference is still emitted as a `linkReference`.",
+      "date": "2026-07-29T05:04:31Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/lezer-mdast-adapter.ts",
+      "status": "modified",
+      "additions": 211,
+      "deletions": 64,
+      "changes": 275
+    },
+    {
+      "filename": "packages/core/src/live-preview-ranges.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 6,
+      "changes": 30
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "packages/core/test/lezer-mdast-adapter-links.test.ts",
+      "status": "added",
+      "additions": 173,
+      "deletions": 0,
+      "changes": 173
+    },
+    {
+      "filename": "packages/core/test/lezer-mdast-adapter.test.ts",
+      "status": "added",
+      "additions": 78,
+      "deletions": 0,
+      "changes": 78
+    },
+    {
+      "filename": "packages/core/test/live-preview-ranges.test.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 0,
+      "changes": 16
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=199",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

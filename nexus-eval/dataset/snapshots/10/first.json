@@ -1,0 +1,68 @@
+{
+  "pr_number": 10,
+  "title": "chore(roadmap): mark #5 and #15 as in-progress",
+  "body": "## Summary / 摘要\n\n把两条 ROADMAP 状态从 `planned` 改成 `in-progress`，并在备注里挂上对应在 review 的 PR 链接：\n\n- **#5 `getSelectedText()` API** — PR #8 in review\n- **#15 Regex search** — PR #9 in review\n\n中英双份同步。\n\n## Motivation / 背景与动机\n\n按 ROADMAP \"Maintenance §2\"：start work → `in-progress`。两条 P0 / P1 都已有候选 PR 在迭代，状态滞后会让 contributor 重复挑题（参考 #5 已经收到 3 份重复提交）。提前在 ROADMAP 标 in-progress + PR 号能减少这种碰撞。\n\n## Changes / 变更内容\n\n- \\`docs/ROADMAP.md\\`: 第 26 行 (#15) 与第 36 行 (#5) 状态字段改为 \\`in-progress\\`，备注追加 PR 引用\n- \\`docs/ROADMAP.zh.md\\`: 同步两处\n\n## Testing / 测试\n\n文档改动，无需测试。\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\n- [x] No secrets / personal vault data committed / 无敏感信息被提交\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "created_at": "2026-05-13T09:21:55Z",
+  "draft": false,
+  "base_sha": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2",
+  "head_sha_at_first_review": "a593b47e104d16184f440e06ba00c418baafa28c",
+  "first_review_time": "2026-05-13T09:21:55Z",
+  "commits_at_first_review": [
+    {
+      "sha": "a593b47e104d16184f440e06ba00c418baafa28c",
+      "message": "chore(roadmap): mark #5 getSelectedText and #15 regex search as in-progress\n\nBoth items now have active PRs under review (#8 and #9 respectively).\nAligns with maintenance §2 status transitions.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-05-13T09:21:22Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "6e55c6c7171b1c7b81771787889f26ba0cdc8bfc",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a593b47e104d16184f440e06ba00c418baafa28c/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a593b47e104d16184f440e06ba00c418baafa28c/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=a593b47e104d16184f440e06ba00c418baafa28c",
+        "patch": "@@ -23,7 +23,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | # | Feature | Package | Priority | Status | Needs OpenSpec | Notes |\n |---|---|---|---|---|---|---|\n | 2  | Whole-word matching | `plugin-search` | P1 | planned | No | Extension of existing search options |\n-| 15 | Regex search | `plugin-search` | P1 | planned | No | Watch escape edge cases |\n+| 15 | Regex search | `plugin-search` | P1 | in-progress | No | Watch escape edge cases — PR #9 in review |\n | 16 | Command / search history | `plugin-search` + `plugin-slash` | P2 | planned | Yes | Needs persistence (localStorage or host-injected) |\n | 17 | Fuzzy search | `plugin-search` | P2 | planned | No | Evaluate fzf-like algorithm vs. third-party lib |\n | 3  | Slash command sorting + limit | `plugin-slash` | P0 | done | Yes | Landed alongside the floating menu UI — see `openspec/changes/add-slash-menu-ui` |\n@@ -33,7 +33,7 @@ This document maps every planned feature to **package ownership / priority / sta\n \n | # | Feature | Package | Priority | Status | Needs OpenSpec | Notes |\n |---|---|---|---|---|---|---|\n-| 5 | `getSelectedText()` API | `core` | P0 | planned | No | Public API addition; needs types + tests |\n+| 5 | `getSelectedText()` API | `core` | P0 | in-progress | No | Public API addition; needs types + tests — PR #8 in review |\n | 6 | Multi-cursor / multi-selection | `core` | P1 | planned | Yes | CM6 supports it; must verify live-preview and table interactions |\n | 7 | AST enhancement / Markdown extensions | `core` + `preset-gfm` | P2 | planned | Yes | Affects serialization and every AST-dependent plugin |\n | 8 | Undo / redo grouping | `plugin-history` | P1 | planned | No | Coordinate with table's `tableEditingCount` |"
+      },
+      {
+        "sha": "e5616fe2a74675044a9f20e208da89a1e1fd8e32",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a593b47e104d16184f440e06ba00c418baafa28c/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a593b47e104d16184f440e06ba00c418baafa28c/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=a593b47e104d16184f440e06ba00c418baafa28c",
+        "patch": "@@ -23,7 +23,7 @@\n | # | 功能 | 归属包 | 优先级 | 状态 | 需要 OpenSpec | 备注 |\n |---|---|---|---|---|---|---|\n | 2  | whole-word 匹配 | `plugin-search` | P1 | planned | 否 | 现有 search 选项扩展 |\n-| 15 | 正则搜索 | `plugin-search` | P1 | planned | 否 | 注意转义边界用例 |\n+| 15 | 正则搜索 | `plugin-search` | P1 | in-progress | 否 | 注意转义边界用例 —— PR #9 review 中 |\n | 16 | 历史命令 / 搜索记忆 | `plugin-search` + `plugin-slash` | P2 | planned | 是 | 需要持久化层（localStorage 或宿主注入） |\n | 17 | 模糊搜索 | `plugin-search` | P2 | planned | 否 | 评估 fzf-like 算法 vs. 第三方 lib |\n | 3  | Slash 命令排序与 limit | `plugin-slash` | P0 | done | 是 | 与浮层菜单 UI 一并落地 —— 见 `openspec/changes/add-slash-menu-ui` |\n@@ -33,7 +33,7 @@\n \n | # | 功能 | 归属包 | 优先级 | 状态 | 需要 OpenSpec | 备注 |\n |---|---|---|---|---|---|---|\n-| 5 | `getSelectedText()` API | `core` | P0 | planned | 否 | 公共 API 增量，需补类型 + 测试 |\n+| 5 | `getSelectedText()` API | `core` | P0 | in-progress | 否 | 公共 API 增量，需补类型 + 测试 —— PR #8 review 中 |\n | 6 | 多光标 / 多选支持 | `core` | P1 | planned | 是 | CM6 已有底层，需在 live-preview 与表格交互中验证不破坏 |\n | 7 | AST 增强 / Markdown 扩展 | `core` + `preset-gfm` | P2 | planned | 是 | 影响序列化与所有依赖 AST 的插件 |\n | 8 | undo / redo 分组 | `plugin-history` | P1 | planned | 否 | 注意与表格交互的 `tableEditingCount` 协同 |"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ]
+  }
+}

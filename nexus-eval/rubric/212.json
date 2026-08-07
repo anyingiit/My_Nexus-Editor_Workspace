@@ -1,0 +1,13 @@
+{
+  "pr_number": 212,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Sign the Contributor License Agreement."
+    },
+    {
+      "id": 2,
+      "summary": "PR superseded by #213 with required branch name."
+    }
+  ]
+}

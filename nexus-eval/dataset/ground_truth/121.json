@@ -1,0 +1,33 @@
+{
+  "pr_number": 121,
+  "title": "feat(core): markdown live preview",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-03T11:42:06Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "arieslx",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-07-03T11:42:03Z",
+      "body": "感谢提交。CLA 已通过，PR 也不是 Draft；本地验证中 `pnpm install --frozen-lockfile`、`packages/core` typecheck、`apps/electron-demo` typecheck、core editor 相关测试均已跑到通过。electron-demo 的 split-preview / markdown-preview-renderer 测试在本机启动阶段卡在 Rollup native optional dependency 的 macOS code signature / `@rollup/rollup-darwin-arm64` 环境问题，暂不能作为代码失败依据。\n\n不过这个 PR 当前不能通过，主要阻塞点如下：\n\n1. **安全问题：split preview 对 Markdown raw HTML 直接 `innerHTML` 注入。**\n   `apps/electron-demo/src/renderer/markdown-preview-renderer.ts` 中 `case \"html\"` 直接 `el.innerHTML = (node as Html).value`。core live-preview 里已有默认 HTML sanitizer，会移除 `script/iframe/object/embed/style`、事件属性、`javascript:` URL 等危险内容；但这个新分栏预览 renderer 绕开了这条防线。在 Electron demo 里打开含不可信 HTML 的 Markdown 时，这会变成明显 XSS / renderer 注入风险。\n\n2. **架构上与现有 live preview 渲染路径分叉过大。**\n   这个 PR 在 electron-demo 新写了一套 Markdown AST → DOM renderer，而不是复用/抽象 core live-preview 已有渲染与 sanitizer 能力。这样会造成预览能力分叉：HTML 安全策略、插件扩展、GFM/表格/特殊节点处理都会和主编辑器 live preview 不一致，后续维护成本和行为差异风险很高。\n\n3. **与已有分屏同步方案方向撞车。**\n   roadmap #13 已有更聚焦的实现路径：用 core `exportHTML({ sourceMap })` 提供 source map，再在 demo 中做同步滚动。当前 PR 直接新增一套 AST renderer 和大量滚动同步逻辑，改动面更大，也更容易引入安全和一致性问题。\n\n候选人判断：能看出作者对滚动同步、锚点映射和测试覆盖做了比较多思考，工程投入不错；但对 Electron/Markdown raw HTML 安全边界和复用现有渲染链路的判断不足。建议不通过本轮代码审核；如果后续重提，需要先复用 core 的 sanitizer/渲染能力或保证等价安全策略，并尽量避免和现有方案重复造一套 renderer。\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T10:51:29Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=121) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T11:42:05Z",
+      "body": "感谢提交。CLA 已通过，PR 也不是 Draft；本地验证中 `pnpm install --frozen-lockfile`、`packages/core` typecheck、`apps/electron-demo` typecheck、core editor 相关测试均已跑到通过。electron-demo 的 split-preview / markdown-preview-renderer 测试在本机启动阶段卡在 Rollup native optional dependency 的 macOS code signature / `@rollup/rollup-darwin-arm64` 环境问题，暂不能作为代码失败依据。\n\n不过这个 PR 当前不能通过，主要阻塞点如下：\n\n1. **安全问题：split preview 对 Markdown raw HTML 直接 `innerHTML` 注入。**\n   `apps/electron-demo/src/renderer/markdown-preview-renderer.ts` 中 `case \"html\"` 直接 `el.innerHTML = (node as Html).value`。core live-preview 里已有默认 HTML sanitizer，会移除 `script/iframe/object/embed/style`、事件属性、`javascript:` URL 等危险内容；但这个新分栏预览 renderer 绕开了这条防线。在 Electron demo 里打开含不可信 HTML 的 Markdown 时，这会变成明显 XSS / renderer 注入风险。\n\n2. **架构上与现有 live preview 渲染路径分叉过大。**\n   这个 PR 在 electron-demo 新写了一套 Markdown AST → DOM renderer，而不是复用/抽象 core live-preview 已有渲染与 sanitizer 能力。这样会造成预览能力分叉：HTML 安全策略、插件扩展、GFM/表格/特殊节点处理都会和主编辑器 live preview 不一致，后续维护成本和行为差异风险很高。\n\n3. **与已有分屏同步方案方向撞车。**\n   roadmap #13 已有更聚焦的实现路径：用 core `exportHTML({ sourceMap })` 提供 source map，再在 demo 中做同步滚动。当前 PR 直接新增一套 AST renderer 和大量滚动同步逻辑，改动面更大，也更容易引入安全和一致性问题。\n\n候选人判断：能看出作者对滚动同步、锚点映射和测试覆盖做了比较多思考，工程投入不错；但对 Electron/Markdown raw HTML 安全边界和复用现有渲染链路的判断不足。建议不通过本轮代码审核；如果后续重提，需要先复用 core 的 sanitizer/渲染能力或保证等价安全策略，并尽量避免和现有方案重复造一套 renderer。"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

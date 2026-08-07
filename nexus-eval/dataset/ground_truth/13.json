@@ -1,0 +1,50 @@
+{
+  "pr_number": 13,
+  "title": "feat(slash): add priority sort and result limit to slash commands",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:38:54Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "hcq104729-commits",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "COMMENTED",
+      "submitted_at": "2026-05-13T10:59:36Z",
+      "body": "## Review Summary\n\nThanks for the PR! Here's my review of the slash command sorting + result limit implementation.\n\n### ✅ What's Good\n\n1. **Correct Roadmap alignment** — Targets P0 #3 (slash command sorting + limit), good choice.\n2. **Backwards-compatible API** — `priority` is optional (defaults to 0), `maxResults` is optional (returns all when omitted). Existing callers won't break.\n3. **Clean sort logic** — Priority desc → title asc (case-insensitive) is a sensible default.\n4. **Solid test coverage** — 8 new test cases covering priority sort, title tiebreaker, maxResults limit, composition of filter+sort+limit, and edge cases (empty list, missing priority).\n5. **Good commit structure** — 6 atomic commits following Conventional Commits.\n\n### ⚠️ Suggestions / Minor Issues\n\n1. **Duplicated logic between core and plugin-slash**: The sort+limit logic is copy-pasted into both `packages/core/src/slash-state.ts` and `packages/plugin-slash/src/index.ts`. Consider having plugin-slash re-export or delegate to core's `filterSlashCommands` to avoid drift. Not a blocker for merge, but worth noting for maintainability.\n\n2. **Sort stability**: `Array.sort` is stable in modern engines (ES2019+), so the title tiebreaker will preserve insertion order for equal titles — that's fine. Just noting it's engine-dependent for very old targets.\n\n3. **`maxResults: 0` edge case**: Current code treats `maxResults > 0` as the guard, so `maxResults: 0` returns all results (same as omitted). This is probably fine, but worth documenting — a caller passing 0 might expect an empty array.\n\n4. **Design docs in `docs/superpowers/`**: The plan and spec files are thorough but this directory doesn't exist in the project convention (project uses `openspec/` for design docs). Consider moving to `openspec/changes/` to match the existing pattern, or remove if these were just working notes.\n\n### 📊 Overall Assessment\n\n| Dimension | Score | Notes |\n|-----------|-------|-------|\n| Implementation difficulty | Medium | Straightforward sort+limit, well-scoped |\n| Completeness | Good | Feature works, tests pass, backwards-compatible |\n| Code style | Good | Clean TypeScript, consistent with existing patterns |\n\n**Verdict**: Solid implementation of a focused feature. The main improvement opportunity is deduplicating the core/plugin-slash logic. Approve with minor suggestions above."
+    },
+    {
+      "user": "ketd",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-05-13T11:11:46Z",
+      "body": "## Changes Requested\n\n你的 PR 目前存在合并冲突（merge conflicts），无法直接合入 main 分支。请先 rebase 或 merge 最新的 main 分支，解决冲突后 force-push 更新这个 PR。\n\n解决完冲突后我会重新评审。加油！"
+    },
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-13T11:34:00Z",
+      "body": "## Re-review: PR #13 — Conflicts Resolved ✅\n\n冲突已解决，重新审查通过。\n\n### Changes since last review:\n- Rebased onto latest main (now includes the 5-tier scoring from PR #5)\n- Sort logic correctly integrates with existing `scoreCommand` ranking — priority is now an additional sort dimension on top of relevance score\n- Added JSDoc for `maxResults` parameter\n- Moved design docs to `openspec/changes/` (addressed previous feedback about directory convention)\n- New commit: `docs(slash): add maxResults JSDoc and move design docs to openspec`\n\n### Updated assessment:\n- **Mergeable**: ✅ Yes\n- **Code**: +577/-29, clean integration with existing scoring system\n- **Tests**: 93 new test lines, 8 cases covering priority sort, title tiebreaker, maxResults limit, composition\n- **Backwards-compatible**: priority defaults to 0, maxResults optional\n\n**Approved.** Good job fixing the conflicts and addressing the feedback."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T03:53:40Z",
+      "body": "### Code review\n\nFound 2 issues:\n\n1. `computeSlashState` does not forward `maxResults`, contradicting the proposal. The PR's `filterSlashCommands` gains a `maxResults?: number` parameter, but `computeSlashState` still calls `filterSlashCommands(commands, match.query)` without passing it, while continuing to apply `options?.limit ?? DEFAULT_LIMIT` itself. The proposal (`openspec/changes/add-slash-sort-limit/proposal.md`) lists `computeSlashState(..., maxResults?: number)` as the public entry, so the new cap is unreachable from the only in-tree caller (`editor.ts`). Either thread `maxResults` through `computeSlashState` or remove the unreachable parameter and document `options.limit` as the single knob.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/packages/core/src/slash-state.ts#L178-L200\n\n2. `plugin-slash` does not mirror the core sort/limit change. The diff in `packages/plugin-slash/src/index.ts` adds only a stray whitespace line; no sort, no `maxResults`, no priority. The proposal/tasks claim plugin-slash should mirror the core changes, but the file re-exports `filterSlashCommands` from core, so the test additions in `plugin-slash/test/plugin-slash.test.ts` indirectly exercise core. Either drop the mirror requirement from the proposal/tasks (and remove the stray whitespace), or actually implement it.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/packages/plugin-slash/src/index.ts#L30-L36\n\nLower-confidence flags worth a look (not blocking): the empty-query branch silently drops the prior \"preserve registration order\" guarantee (the load-bearing comment from 89c75c1 was deleted), and the diff strips substantive JSDoc from `SlashCommandDef.description` and `run` in `types.ts` — unrelated to the feature, drops UI/contract docs for plugin authors.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:29Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=13) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=13) before we can accept your contribution.<br/><hr/>**HGJ** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=13) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:38:52Z",
+      "body": "感谢 slash 命令排序 + 数量限制 🙏 roadmap #3（排序 + limit）在 main 上已经是 done 状态（随浮动菜单 UI 一起落地，见 openspec/changes/add-slash-menu-ui）。本 PR 的能力已存在，故关闭。如果你发现现有实现有缺口，欢迎开 issue 指出。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；欢迎继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,254 @@
+{
+  "pr_number": 167,
+  "title": "test(electron): 引入可复用的 E2E 测试 Harness 和冒烟测试",
+  "body": "## Problem\r\n\r\nThe repository has a well-established Vitest/jsdom suite, but the Electron Demo has no end-to-end automation boundary. Renderer-level tests cannot validate Electron main/renderer integration, native-dialog handling, real file persistence, or complete user workflows.\r\n\r\n## Solution\r\n\r\nThis PR introduces a reusable Playwright Electron E2E harness for the Electron Demo.\r\n\r\n- Reusable Electron fixture that launches the built `dist-electron/main.js` entry point.\r\n- Isolated temporary workspace and Electron `user-data-dir` for every test.\r\n- Renderer diagnostics for `console.error` and `pageerror`, plus Electron stderr capture.\r\n- Failure artifacts: Playwright trace, screenshot, HTML report, and attached Electron diagnostics.\r\n- A dedicated GitHub Actions E2E job running under `xvfb-run` on Ubuntu 24.04.\r\n- A test-only `NEXUS_E2E=1` guard around the main-process native dialog stub.\r\n\r\n## Covered workflows\r\n\r\n- Application launch and accessible Markdown editor readiness.\r\n- Markdown editing with undo and redo assertions.\r\n- File lifecycle: open, edit, save, verify persisted contents with Node `fs.readFile`, modify on disk, and reopen through the application.\r\n\r\n## Running locally\r\n\r\n```bash\r\npnpm install --frozen-lockfile\r\npnpm typecheck\r\npnpm test\r\npnpm build\r\npnpm build:electron-demo\r\npnpm test:e2e\r\n```\r\n\r\n## CI and failure diagnostics\r\n\r\nE2E runs in an independent CI job. On failure, GitHub Actions uploads `apps/electron-demo/playwright-report/` and `apps/electron-demo/test-results/`; the harness retains screenshots, traces, and Electron diagnostics without relying on fixed waits or retries.\r\n\r\n## Dependency\r\n\r\n- `@playwright/test@1.61.1` — Apache-2.0 — development-only dependency for Electron E2E execution; locked in `pnpm-lock.yaml`.\r\n\r\n## AI assistance\r\n\r\nAI tools were used to assist with harness design, implementation iteration, and code review. The contributor reviewed the final scope and validation results.\r\n\r\n## Validation\r\n\r\nThe following checks passed locally:\r\n\r\n- `pnpm install --frozen-lockfile`\r\n- `pnpm typecheck`\r\n- `pnpm test`\r\n- `pnpm build`\r\n- `pnpm build:electron-demo`\r\n- `pnpm test:e2e` — 10 consecutive passing runs (3 tests per run)\r\n\r\n## Compliance\r\n\r\n- [ ] CLA signed — awaiting the repository's first-time contributor flow.\r\n- [x] New dependency documented with license and rationale.\r\n- [x] No build artifacts, test reports, secrets, or personal data committed.\r\n- [x] No public runtime API change; no OpenSpec proposal required.\r\n\r\n## Screenshots / recordings\r\n\r\nNot applicable: this change adds automated test infrastructure rather than a user-visible product change.",
+  "created_at": "2026-07-20T15:30:56Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "02d861507b0911ca869c7818c5ee98f8ab942ff2",
+  "first_review_time": "2026-07-20T15:32:08Z",
+  "commits_at_first_review": [
+    {
+      "sha": "138294f74c02f85ed1404ee944261f09d034eb26",
+      "message": "test(electron): add Playwright E2E harness",
+      "date": "2026-07-20T14:43:06Z"
+    },
+    {
+      "sha": "190c03152af1e2e3d6ec9d695194064faa939ed8",
+      "message": "fix(electron): harden Playwright E2E harness",
+      "date": "2026-07-20T14:57:26Z"
+    },
+    {
+      "sha": "02d861507b0911ca869c7818c5ee98f8ab942ff2",
+      "message": "fix(electron): harden E2E teardown and CI",
+      "date": "2026-07-20T15:10:06Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 3,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "83f7049724fc362f40f0401dea8f1a52441cb757",
+        "filename": ".github/workflows/ci.yml",
+        "status": "modified",
+        "additions": 44,
+        "deletions": 3,
+        "changes": 47,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/.github%2Fworkflows%2Fci.yml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/.github%2Fworkflows%2Fci.yml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/.github%2Fworkflows%2Fci.yml?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -28,7 +28,7 @@ env:\n jobs:\n   verify:\n     name: Test and Build\n-    runs-on: ubuntu-latest\n+    runs-on: ubuntu-24.04\n     steps:\n       - name: Checkout\n         uses: actions/checkout@v4\n@@ -59,10 +59,51 @@ jobs:\n       - name: Build Electron demo\n         run: pnpm build:electron-demo\n \n+  e2e:\n+    name: Electron E2E\n+    runs-on: ubuntu-24.04\n+    timeout-minutes: 15\n+    steps:\n+      - name: Checkout\n+        uses: actions/checkout@v4\n+\n+      - name: Setup pnpm\n+        uses: pnpm/action-setup@v4\n+        with:\n+          version: ${{ env.PNPM_VERSION }}\n+\n+      - name: Setup Node\n+        uses: actions/setup-node@v4\n+        with:\n+          node-version: ${{ env.NODE_VERSION }}\n+          cache: pnpm\n+\n+      - name: Install dependencies\n+        run: pnpm install --frozen-lockfile\n+\n+      - name: Build packages\n+        run: pnpm build\n+\n+      - name: Build Electron demo\n+        run: pnpm build:electron-demo\n+\n+      - name: Run Electron E2E tests\n+        run: xvfb-run --auto-servernum pnpm test:e2e\n+\n+      - name: Upload Playwright artifacts\n+        if: failure()\n+        uses: actions/upload-artifact@v4\n+        with:\n+          name: playwright-report\n+          path: |\n+            apps/electron-demo/playwright-report/\n+            apps/electron-demo/test-results/\n+          if-no-files-found: warn\n+\n   publish:\n     name: Publish Packages\n-    runs-on: ubuntu-latest\n-    needs: verify\n+    runs-on: ubuntu-24.04\n+    needs: [verify, e2e]\n     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.publish)\n     steps:\n       - name: Checkout"
+      },
+      {
+        "sha": "66cd1b2d463e05f538f90dc32444c945b709753f",
+        "filename": ".gitignore",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/.gitignore",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/.gitignore",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/.gitignore?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -5,6 +5,8 @@ node_modules/\n dist/\n dist-electron/\n release/\n+playwright-report/\n+test-results/\n *.tsbuildinfo\n \n # Logs"
+      },
+      {
+        "sha": "32f4f0b9ab97ec6e99c188f4f5bd360c89b4d420",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -267,6 +267,10 @@ pnpm test           # run all tests\n \n # Electron demo\n pnpm dev:electron-demo\n+\n+# Electron end-to-end tests (builds the demo first)\n+pnpm build:electron-demo\n+pnpm test:e2e\n ```\n \n </details>"
+      },
+      {
+        "sha": "71bb45299aa8f0b49350621009b5481c5bb4f313",
+        "filename": "apps/electron-demo/e2e/README.md",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2FREADME.md?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,27 @@\n+# Electron E2E tests\n+\n+The suite launches the packaged Electron main process from\n+`dist-electron/main.js`; it does not use a Vite development server. It covers\n+the critical editor path: application startup, Markdown editing with undo/redo,\n+and opening, saving, and reopening a Markdown file.\n+\n+Run the tests from the repository root:\n+\n+```bash\n+pnpm build\n+pnpm build:electron-demo\n+pnpm test:e2e\n+```\n+\n+Each test receives an isolated Electron user-data directory and temporary\n+workspace. Native file dialogs are stubbed in the Electron main process, so\n+the file lifecycle test uses real file IO without depending on an operating\n+system dialog. The fixture captures renderer console errors and preserves\n+Playwright traces and screenshots when a test fails.\n+\n+The suite launches the Electron binary supplied by the `electron` dependency;\n+it does not download or launch a separate Playwright browser.\n+\n+The Playwright Electron API is experimental. After upgrading `@playwright/test`,\n+rerun the full E2E suite and validate the GitHub Actions job before relying on\n+the upgrade."
+      },
+      {
+        "sha": "10b0d1893ec05dd6f8dd10d6a0f39a605254e38d",
+        "filename": "apps/electron-demo/e2e/editor-smoke.spec.ts",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Feditor-smoke.spec.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Feditor-smoke.spec.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Feditor-smoke.spec.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,27 @@\n+import { expect } from \"@playwright/test\";\n+import { test } from \"./fixtures/electron-app\";\n+import { EditorPage } from \"./helpers/editor\";\n+\n+test(\"launches with an accessible markdown editor\", async ({ window }) => {\n+  await expect(window.getByRole(\"button\", { name: \"Open\" })).toBeVisible();\n+  await expect(window.getByRole(\"button\", { name: \"Save\", exact: true })).toBeVisible();\n+  await expect(window.getByRole(\"textbox\", { name: \"Markdown editor\" })).toBeVisible();\n+  await expect(window.locator(\"#status-line\")).toContainText(\"Untitled\");\n+});\n+\n+test(\"edits markdown and supports undo and redo\", async ({ window }) => {\n+  const editor = new EditorPage(window);\n+  const markdown = \"# Hello Nexus\\n\\n- [x] E2E works\";\n+\n+  await editor.replaceMarkdown(markdown);\n+  await editor.expectDirty();\n+  await expect(editor.editor).toContainText(\"Hello Nexus\");\n+  await expect(editor.editor).toContainText(\"E2E works\");\n+\n+  await editor.undo();\n+  await expect(editor.editor).not.toContainText(\"Hello Nexus\");\n+\n+  await editor.redo();\n+  await expect(editor.editor).toContainText(\"Hello Nexus\");\n+  await expect(editor.editor).toContainText(\"E2E works\");\n+});"
+      },
+      {
+        "sha": "709b143cb3026b17ff75893c984ff44de6e415bb",
+        "filename": "apps/electron-demo/e2e/file-lifecycle.spec.ts",
+        "status": "added",
+        "additions": 41,
+        "deletions": 0,
+        "changes": 41,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Ffile-lifecycle.spec.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Ffile-lifecycle.spec.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Ffile-lifecycle.spec.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,41 @@\n+import { expect } from \"@playwright/test\";\n+import { test } from \"./fixtures/electron-app\";\n+import { EditorPage } from \"./helpers/editor\";\n+import {\n+  createMarkdownFile,\n+  readMarkdownFile,\n+  stubOpenFileDialog,\n+  writeMarkdownFile,\n+} from \"./helpers/test-vault\";\n+\n+test(\"opens, saves, and reopens a markdown file\", async ({ electronApp, window, workspaceDir }) => {\n+  const filePath = await createMarkdownFile(\n+    workspaceDir,\n+    \"notes/critical-workflow.md\",\n+    \"# Original note\\n\\nThis came from disk.\",\n+  );\n+  const savedMarkdown = \"# Persisted note\\n\\n- [x] Saved by E2E\";\n+  const reloadedMarkdown = \"# Reloaded from disk\\n\\n- [x] File IO verified\";\n+  const editor = new EditorPage(window);\n+\n+  const restoreOpenFileDialog = await stubOpenFileDialog(electronApp, filePath);\n+  try {\n+    await window.getByRole(\"button\", { name: \"Open\" }).click();\n+    await expect(editor.editor).toContainText(\"Original note\");\n+    await expect(window.locator(\"#status-line\")).toContainText(\"critical-workflow.md\");\n+\n+    await editor.replaceMarkdown(savedMarkdown);\n+    await editor.expectDirty();\n+    await window.getByRole(\"button\", { name: \"Save\", exact: true }).click();\n+\n+    await expect.poll(() => readMarkdownFile(filePath)).toBe(savedMarkdown);\n+    await expect(editor.statusLine).not.toContainText(\"[modified]\");\n+\n+    await writeMarkdownFile(filePath, reloadedMarkdown);\n+    await window.getByRole(\"button\", { name: \"Open\" }).click();\n+    await expect(editor.editor).toContainText(\"Reloaded from disk\");\n+    await expect(editor.editor).toContainText(\"File IO verified\");\n+  } finally {\n+    await restoreOpenFileDialog();\n+  }\n+});"
+      },
+      {
+        "sha": "336f35ca98d182d7dd3499e20875a773142be3ac",
+        "filename": "apps/electron-demo/e2e/fixtures/electron-app.ts",
+        "status": "added",
+        "additions": 223,
+        "deletions": 0,
+        "changes": 223,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Ffixtures%2Felectron-app.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Ffixtures%2Felectron-app.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Ffixtures%2Felectron-app.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,223 @@\n+import {\n+  _electron as electron,\n+  type ConsoleMessage,\n+  expect,\n+  test as base,\n+  type ElectronApplication,\n+  type Page,\n+  type TestInfo,\n+} from \"@playwright/test\";\n+import { mkdtemp, rm } from \"node:fs/promises\";\n+import { tmpdir } from \"node:os\";\n+import path from \"node:path\";\n+\n+const electronBinary = require(\"electron\") as string;\n+const appDirectory = path.resolve(__dirname, \"../..\");\n+\n+export interface ElectronTestContext {\n+  electronApp: ElectronApplication;\n+  window: Page;\n+  workspaceDir: string;\n+  userDataDir: string;\n+}\n+\n+interface E2EFixtures extends ElectronTestContext {\n+  e2eContext: ElectronTestContext;\n+}\n+\n+function describeError(error: unknown): string {\n+  if (error instanceof Error) return error.stack ?? error.message;\n+  return String(error);\n+}\n+\n+function recordedTestFailure(testInfo: TestInfo): string | undefined {\n+  if (testInfo.status === testInfo.expectedStatus) return undefined;\n+\n+  const error = testInfo.error;\n+  return (\n+    error?.stack ??\n+    error?.message ??\n+    error?.value ??\n+    `Test finished with ${testInfo.status} instead of ${testInfo.expectedStatus}.`\n+  );\n+}\n+\n+function formatDiagnostics(\n+  rendererErrors: string[],\n+  processLogs: string[],\n+  testFailure: unknown,\n+  teardownErrors: unknown[],\n+): string {\n+  const sections: string[] = [];\n+\n+  if (testFailure) {\n+    sections.push(`Test failure:\\n${describeError(testFailure)}`);\n+  }\n+  if (rendererErrors.length > 0) {\n+    sections.push(`Renderer console errors:\\n${rendererErrors.join(\"\\n\")}`);\n+  }\n+  if (processLogs.length > 0) {\n+    sections.push(`Electron process stderr:\\n${processLogs.join(\"\\n\")}`);\n+  }\n+  if (teardownErrors.length > 0) {\n+    sections.push(\n+      `Fixture teardown errors:\\n${teardownErrors.map(describeError).join(\"\\n\\n\")}`,\n+    );\n+  }\n+\n+  return sections.join(\"\\n\\n\");\n+}\n+\n+async function captureTeardownError(\n+  teardownErrors: unknown[],\n+  operation: () => Promise<void> | void,\n+): Promise<void> {\n+  try {\n+    await operation();\n+  } catch (error) {\n+    teardownErrors.push(error);\n+  }\n+}\n+\n+async function attachDiagnostics(\n+  testInfo: TestInfo,\n+  rendererErrors: string[],\n+  processLogs: string[],\n+  testFailure: unknown,\n+  teardownErrors: unknown[],\n+): Promise<void> {\n+  const details = formatDiagnostics(rendererErrors, processLogs, testFailure, teardownErrors);\n+  if (!details) return;\n+\n+  await testInfo.attach(\"electron-diagnostics\", {\n+    body: Buffer.from(details),\n+    contentType: \"text/plain\",\n+  });\n+}\n+\n+export const test = base.extend<E2EFixtures>({\n+  e2eContext: [\n+    async ({}, use, testInfo) => {\n+      const rendererErrors: string[] = [];\n+      const processLogs: string[] = [];\n+      const teardownErrors: unknown[] = [];\n+      const rendererListeners = new Map<\n+        Page,\n+        { onConsole: (message: ConsoleMessage) => void; onPageError: (error: Error) => void }\n+      >();\n+      let workspaceDir: string | undefined;\n+      let userDataDir: string | undefined;\n+      let app: ElectronApplication | undefined;\n+      let stderr: NodeJS.ReadableStream | null = null;\n+      let testFailure: unknown;\n+\n+      const onStderr = (chunk: Buffer) => {\n+        processLogs.push(chunk.toString());\n+      };\n+\n+      const observeRenderer = (page: Page) => {\n+        if (rendererListeners.has(page)) return;\n+\n+        const onConsole = (message: ConsoleMessage) => {\n+          if (message.type() === \"error\") rendererErrors.push(message.text());\n+        };\n+        const onPageError = (error: Error) => rendererErrors.push(error.message);\n+\n+        page.on(\"console\", onConsole);\n+        page.on(\"pageerror\", onPageError);\n+        rendererListeners.set(page, { onConsole, onPageError });\n+      };\n+\n+      try {\n+        workspaceDir = await mkdtemp(path.join(tmpdir(), \"nexus-e2e-workspace-\"));\n+        userDataDir = await mkdtemp(path.join(tmpdir(), \"nexus-e2e-user-data-\"));\n+\n+        app = await electron.launch({\n+          executablePath: electronBinary,\n+          args: [\"dist-electron/main.js\", `--user-data-dir=${userDataDir}`],\n+          cwd: appDirectory,\n+          env: { ...process.env, NEXUS_E2E: \"1\" },\n+        });\n+\n+        stderr = app.process().stderr;\n+        stderr?.on(\"data\", onStderr);\n+        app.on(\"window\", observeRenderer);\n+\n+        const window = await app.firstWindow();\n+        observeRenderer(window);\n+        await expect(window.getByRole(\"textbox\", { name: \"Markdown editor\" })).toBeVisible();\n+\n+        await use({ electronApp: app, window, workspaceDir, userDataDir });\n+\n+        testFailure ??= recordedTestFailure(testInfo);\n+\n+        if (rendererErrors.length > 0) {\n+          throw new Error(formatDiagnostics(rendererErrors, processLogs, undefined, []));\n+        }\n+      } catch (error) {\n+        testFailure = error;\n+        throw error;\n+      } finally {\n+        for (const [page, listeners] of rendererListeners) {\n+          await captureTeardownError(teardownErrors, () => {\n+            page.off(\"console\", listeners.onConsole);\n+            page.off(\"pageerror\", listeners.onPageError);\n+          });\n+        }\n+        await captureTeardownError(teardownErrors, () => {\n+          app?.off(\"window\", observeRenderer);\n+        });\n+        await captureTeardownError(teardownErrors, () => app?.close());\n+        await captureTeardownError(teardownErrors, () => {\n+          stderr?.off(\"data\", onStderr);\n+        });\n+        if (workspaceDir) {\n+          const directory = workspaceDir;\n+          await captureTeardownError(teardownErrors, () =>\n+            rm(directory, { recursive: true, force: true }),\n+          );\n+        }\n+        if (userDataDir) {\n+          const directory = userDataDir;\n+          await captureTeardownError(teardownErrors, () =>\n+            rm(directory, { recursive: true, force: true }),\n+          );\n+        }\n+\n+        try {\n+          await attachDiagnostics(\n+            testInfo,\n+            rendererErrors,\n+            processLogs,\n+            testFailure,\n+            teardownErrors,\n+          );\n+        } catch (error) {\n+          teardownErrors.push(error);\n+          process.stderr.write(`Unable to attach Electron E2E diagnostics: ${describeError(error)}\\n`);\n+        }\n+\n+        if (teardownErrors.length > 0 && !testFailure) {\n+          throw new AggregateError(teardownErrors, \"Electron E2E fixture teardown failed\");\n+        }\n+      }\n+    },\n+    { auto: true },\n+  ],\n+\n+  electronApp: async ({ e2eContext }, use) => {\n+    await use(e2eContext.electronApp);\n+  },\n+\n+  window: async ({ e2eContext }, use) => {\n+    await use(e2eContext.window);\n+  },\n+\n+  workspaceDir: async ({ e2eContext }, use) => {\n+    await use(e2eContext.workspaceDir);\n+  },\n+\n+  userDataDir: async ({ e2eContext }, use) => {\n+    await use(e2eContext.userDataDir);\n+  },\n+});"
+      },
+      {
+        "sha": "e683ed87c819daf660e8d891f4ebb75795b71296",
+        "filename": "apps/electron-demo/e2e/helpers/editor.ts",
+        "status": "added",
+        "additions": 32,
+        "deletions": 0,
+        "changes": 32,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Fhelpers%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Fhelpers%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Fhelpers%2Feditor.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,32 @@\n+import { expect, type Locator, type Page } from \"@playwright/test\";\n+\n+const modifier = process.platform === \"darwin\" ? \"Meta\" : \"Control\";\n+const redoShortcut = process.platform === \"darwin\" ? \"Meta+Shift+Z\" : \"Control+Y\";\n+\n+export class EditorPage {\n+  readonly editor: Locator;\n+  readonly statusLine: Locator;\n+\n+  constructor(private readonly page: Page) {\n+    this.editor = page.getByRole(\"textbox\", { name: \"Markdown editor\" });\n+    this.statusLine = page.locator(\"#status-line\");\n+  }\n+\n+  async replaceMarkdown(markdown: string): Promise<void> {\n+    await this.editor.click();\n+    await this.editor.press(`${modifier}+A`);\n+    await this.page.keyboard.insertText(markdown);\n+  }\n+\n+  async undo(): Promise<void> {\n+    await this.editor.press(`${modifier}+Z`);\n+  }\n+\n+  async redo(): Promise<void> {\n+    await this.editor.press(redoShortcut);\n+  }\n+\n+  async expectDirty(): Promise<void> {\n+    await expect(this.statusLine).toContainText(\"[modified]\");\n+  }\n+}"
+      },
+      {
+        "sha": "6436f37f16edb95eaf21de93a4af8fcad432681e",
+        "filename": "apps/electron-demo/e2e/helpers/test-vault.ts",
+        "status": "added",
+        "additions": 53,
+        "deletions": 0,
+        "changes": 53,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Fhelpers%2Ftest-vault.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fe2e%2Fhelpers%2Ftest-vault.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Fhelpers%2Ftest-vault.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,53 @@\n+import { mkdir, readFile, writeFile } from \"node:fs/promises\";\n+import path from \"node:path\";\n+import type { ElectronApplication } from \"@playwright/test\";\n+\n+const originalOpenDialogKey = \"__nexusE2EOriginalShowOpenDialog\";\n+\n+export async function createMarkdownFile(\n+  workspaceDir: string,\n+  relativePath: string,\n+  content: string,\n+): Promise<string> {\n+  const filePath = path.join(workspaceDir, relativePath);\n+  await mkdir(path.dirname(filePath), { recursive: true });\n+  await writeFile(filePath, content, \"utf8\");\n+  return filePath;\n+}\n+\n+export async function readMarkdownFile(filePath: string): Promise<string> {\n+  return readFile(filePath, \"utf8\");\n+}\n+\n+export async function writeMarkdownFile(filePath: string, content: string): Promise<void> {\n+  await writeFile(filePath, content, \"utf8\");\n+}\n+\n+export async function stubOpenFileDialog(\n+  electronApp: ElectronApplication,\n+  filePath: string,\n+): Promise<() => Promise<void>> {\n+  await electronApp.evaluate(({ dialog }, options) => {\n+    if (process.env.NEXUS_E2E !== \"1\") {\n+      throw new Error(\"The file dialog stub is available only when NEXUS_E2E=1.\");\n+    }\n+\n+    const state = globalThis as typeof globalThis & Record<string, unknown>;\n+    state[options.originalKey] ??= dialog.showOpenDialog;\n+    dialog.showOpenDialog = async () => ({\n+      canceled: false,\n+      filePaths: [options.filePath],\n+    });\n+  }, { filePath, originalKey: originalOpenDialogKey });\n+\n+  return async () => {\n+    await electronApp.evaluate(({ dialog }, originalKey) => {\n+      const state = globalThis as typeof globalThis & Record<string, unknown>;\n+      const original = state[originalKey];\n+      if (typeof original !== \"function\") return;\n+\n+      dialog.showOpenDialog = original as typeof dialog.showOpenDialog;\n+      delete state[originalKey];\n+    }, originalOpenDialogKey);\n+  };\n+}"
+      },
+      {
+        "sha": "fdff9dfcca0de8a446baf8cab28d86cda0f6ebf1",
+        "filename": "apps/electron-demo/package.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fpackage.json?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -13,6 +13,7 @@\n     \"build\": \"tsup electron/main.ts electron/preload.ts --outDir dist-electron --format cjs --platform node --external electron --clean && vite build\",\n     \"start\": \"electron dist-electron/main.js\",\n     \"test\": \"vitest run --config ../../vitest.config.ts\",\n+    \"test:e2e\": \"playwright test --config playwright.config.ts\",\n     \"dist\": \"pnpm run build && electron-builder\",\n     \"dist:mac\": \"pnpm run build && electron-builder --mac\",\n     \"dist:mac-arm64\": \"pnpm run build && electron-builder --mac --arm64\",\n@@ -32,6 +33,7 @@\n     \"highlight.js\": \"^11.11.0\"\n   },\n   \"devDependencies\": {\n+    \"@playwright/test\": \"1.61.1\",\n     \"electron\": \"^35.0.0\",\n     \"electron-builder\": \"^25.1.8\",\n     \"npm-run-all2\": \"^7.0.0\","
+      },
+      {
+        "sha": "4ddbba24203d57c8a7e92c430991e4f2d90ba887",
+        "filename": "apps/electron-demo/playwright.config.ts",
+        "status": "added",
+        "additions": 26,
+        "deletions": 0,
+        "changes": 26,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fplaywright.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fplaywright.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fplaywright.config.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -0,0 +1,26 @@\n+import { defineConfig } from \"@playwright/test\";\n+import path from \"node:path\";\n+\n+const outputDir = path.resolve(__dirname, \"test-results\");\n+const reportDir = path.resolve(__dirname, \"playwright-report\");\n+\n+export default defineConfig({\n+  testDir: \"./e2e\",\n+  testMatch: \"**/*.spec.ts\",\n+  outputDir,\n+  timeout: 30_000,\n+  expect: {\n+    timeout: 5_000,\n+  },\n+  fullyParallel: false,\n+  workers: 1,\n+  retries: 0,\n+  reporter: [\n+    [\"list\"],\n+    [\"html\", { open: \"never\", outputFolder: reportDir }],\n+  ],\n+  use: {\n+    screenshot: \"only-on-failure\",\n+    trace: \"retain-on-failure\",\n+  },\n+});"
+      },
+      {
+        "sha": "6d2d7df8a2606701f042451cc0a5ee492cb46e26",
+        "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -332,6 +332,9 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n \n   editorRef.current = editor;\n \n+  const editorInput = container.querySelector<HTMLElement>(\".cm-content\");\n+  editorInput?.setAttribute(\"aria-label\", \"Markdown editor\");\n+\n   const toolbar = createToolbarUI(editor);\n   container.insertBefore(toolbar.element, container.firstChild);\n "
+      },
+      {
+        "sha": "6373f4c9c980811f7de5b292c864f61909e20c35",
+        "filename": "apps/electron-demo/test/editor-shell.test.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Ftest%2Feditor-shell.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Ftest%2Feditor-shell.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Feditor-shell.test.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -15,6 +15,7 @@ describe(\"createEditorShell\", () => {\n     });\n \n     expect(container.querySelector(\".cm-editor\")).not.toBeNull();\n+    expect(container.querySelector(\".cm-content\")?.getAttribute(\"aria-label\")).toBe(\"Markdown editor\");\n     shell.destroy();\n   });\n "
+      },
+      {
+        "sha": "88d396222b4ee89dbadf11aeeb918f72f1043a11",
+        "filename": "apps/electron-demo/tsconfig.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/apps%2Felectron-demo%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftsconfig.json?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -16,6 +16,7 @@\n     \"src/**/*.ts\",\n     \"src/**/*.d.ts\",\n     \"electron/**/*.ts\",\n+    \"e2e/**/*.ts\",\n     \"test/**/*.ts\"\n   ]\n }"
+      },
+      {
+        "sha": "126331f232366a667ce287b8562cfb62ff9d46de",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -7,6 +7,7 @@\n     \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build\",\n     \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n+    \"test:e2e\": \"pnpm --filter @floatboat/nexus-electron-demo test:e2e\",\n     \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\",\n     \"build:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo build\",\n     \"publish:packages\": \"pnpm -r --filter \\\"./packages/*\\\" publish --access public --no-git-checks\""
+      },
+      {
+        "sha": "740b4a22da688461412977a724d8a0511ad6629c",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 38,
+        "deletions": 0,
+        "changes": 38,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -75,6 +75,9 @@ importers:\n         specifier: ^11.11.0\n         version: 11.11.1\n     devDependencies:\n+      '@playwright/test':\n+        specifier: 1.61.1\n+        version: 1.61.1\n       electron:\n         specifier: ^35.0.0\n         version: 35.7.5\n@@ -927,6 +930,11 @@ packages:\n     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}\n     engines: {node: '>=14'}\n \n+  '@playwright/test@1.61.1':\n+    resolution: {integrity: sha512-8nKv6+0RJSL9FE4jYOEGXnPeM/Hg12qZpmqzZjRh3qM0Y7c3z1mrOTfFLids72RDQYVh9WpLEfR5WdpNX4fkig==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n   '@replit/codemirror-indentation-markers@6.5.3':\n     resolution: {integrity: sha512-hL5Sfvw3C1vgg7GolLe/uxX5T3tmgOA3ZzqlMv47zjU1ON51pzNWiVbS22oh6crYhtVhv8b3gdXwoYp++2ilHw==}\n     peerDependencies:\n@@ -2158,6 +2166,11 @@ packages:\n   fs.realpath@1.0.0:\n     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}\n \n+  fsevents@2.3.2:\n+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}\n+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}\n+    os: [darwin]\n+\n   fsevents@2.3.3:\n     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}\n     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}\n@@ -2934,6 +2947,16 @@ packages:\n   pkg-types@1.3.1:\n     resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}\n \n+  playwright-core@1.61.1:\n+    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n+  playwright@1.61.1:\n+    resolution: {integrity: sha512-DWnY5o3YbLWK4GovuAVwpqL+1VwGNdUGrRr++8j8PtQQzvAVZUIMjKQ90fY689sEJZJBbZVw1rXaOKSTitkzPQ==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n   plist@3.1.0:\n     resolution: {integrity: sha512-uysumyrvkUX0rX/dEVqt8gC3sTBzd4zoWfLeS29nb53imdaXVvLINYXTI2GNqzaMuvacNx4uJQ8+b3zXR0pkgQ==}\n     engines: {node: '>=10.4.0'}\n@@ -4268,6 +4291,10 @@ snapshots:\n   '@pkgjs/parseargs@0.11.0':\n     optional: true\n \n+  '@playwright/test@1.61.1':\n+    dependencies:\n+      playwright: 1.61.1\n+\n   '@replit/codemirror-indentation-markers@6.5.3(@codemirror/language@6.12.3)(@codemirror/state@6.6.0)(@codemirror/view@6.41.0)':\n     dependencies:\n       '@codemirror/language': 6.12.3\n@@ -5715,6 +5742,9 @@ snapshots:\n \n   fs.realpath@1.0.0: {}\n \n+  fsevents@2.3.2:\n+    optional: true\n+\n   fsevents@2.3.3:\n     optional: true\n \n@@ -6752,6 +6782,14 @@ snapshots:\n       mlly: 1.8.2\n       pathe: 2.0.3\n \n+  playwright-core@1.61.1: {}\n+\n+  playwright@1.61.1:\n+    dependencies:\n+      playwright-core: 1.61.1\n+    optionalDependencies:\n+      fsevents: 2.3.2\n+\n   plist@3.1.0:\n     dependencies:\n       '@xmldom/xmldom': 0.8.13"
+      },
+      {
+        "sha": "f3726077ad07b8fd620b179b61d1d0a210ef5ae5",
+        "filename": "vitest.config.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 2,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/02d861507b0911ca869c7818c5ee98f8ab942ff2/vitest.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/02d861507b0911ca869c7818c5ee98f8ab942ff2/vitest.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/vitest.config.ts?ref=02d861507b0911ca869c7818c5ee98f8ab942ff2",
+        "patch": "@@ -1,5 +1,5 @@\n import path from \"node:path\";\n-import { defineConfig } from \"vitest/config\";\n+import { configDefaults, defineConfig } from \"vitest/config\";\n \n export default defineConfig({\n   resolve: {\n@@ -19,6 +19,7 @@ export default defineConfig({\n   },\n   test: {\n     environment: \"jsdom\",\n-    setupFiles: [\"./vitest.setup.ts\"]\n+    setupFiles: [\"./vitest.setup.ts\"],\n+    exclude: [...configDefaults.exclude, \"apps/electron-demo/e2e/**\"],\n   }\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=167",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

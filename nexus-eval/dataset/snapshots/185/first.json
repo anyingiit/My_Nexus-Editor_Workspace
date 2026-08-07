@@ -1,0 +1,103 @@
+{
+  "pr_number": 185,
+  "title": "fix(react,vue): restore rejected controlled edits",
+  "body": "## Summary\r\n\r\nRestore the parent-owned document after React or Vue controlled bindings reject an editor-originated change.\r\n\r\n## Motivation\r\n\r\nThe controlled bindings only reconciled when `value` / `modelValue` changed. After an editor change, both bindings recorded the edited document as the last synchronized value. If the parent deliberately kept its existing value—for example, validation rejected the edit—the prop remained unchanged, no synchronization ran, and the editor incorrectly continued displaying the rejected content.\r\n\r\n## Changes\r\n\r\n- React: retain the internal synchronization revision and include it in the controlled-document reconciliation effect.\r\n- Vue: watch both `modelValue` and the internal synchronization revision.\r\n- In both bindings, accepted edits remain untouched while rejected edits are restored silently from the parent-owned value.\r\n- Add integration tests for rejected edits in React and Vue, strengthen React accepted-edit coverage, and add equivalent Vue accepted-edit coverage.\r\n\r\n## Testing\r\n\r\n- [x] Regression tests observed failing in both React and Vue before the implementation\r\n- [x] `pnpm vitest run packages/react/test/editor-react.test.tsx packages/vue/test/editor-vue.test.ts` — 28 tests passed\r\n- [x] `pnpm test` — 34 files, 540 tests passed\r\n- [x] `pnpm exec tsc --noEmit -p packages/react/tsconfig.json`\r\n- [x] `pnpm exec tsc --noEmit -p packages/vue/tsconfig.json`\r\n- [x] `pnpm --filter @floatboat/nexus-react build`\r\n- [x] `pnpm --filter @floatboat/nexus-vue build`\r\n- [x] `git diff --check`\r\n\r\n## OpenSpec\r\n\r\nNo OpenSpec change: this fixes the existing controlled-document contract rather than introducing a new capability or public API.\r\n\r\n## AI assistance disclosure\r\n\r\nAI assistance was used to diagnose the synchronization gap, implement the reconciliation change, and write the regression tests. The complete diff was validated with failing-before/passing-after tests, full-suite tests, scoped typechecks, and package builds. No dependencies were added.",
+  "created_at": "2026-07-25T06:36:12Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "2af46a24350d732540777c91f4d247b1ad2677f0",
+  "first_review_time": "2026-07-25T06:36:12Z",
+  "commits_at_first_review": [
+    {
+      "sha": "9be890f2ba7d849292ae688054177077693804f3",
+      "message": "fix(react): reconcile rejected controlled edits",
+      "date": "2026-07-25T06:22:46Z"
+    },
+    {
+      "sha": "84ac1aba9f51c32dea2a7fd5835cb98df510b999",
+      "message": "test(react): cover accepted and rejected controlled edits",
+      "date": "2026-07-25T06:22:50Z"
+    },
+    {
+      "sha": "de3769265958609f9f6da54b5457ebf60b384f63",
+      "message": "fix(vue): reconcile rejected controlled edits",
+      "date": "2026-07-25T06:22:53Z"
+    },
+    {
+      "sha": "2af46a24350d732540777c91f4d247b1ad2677f0",
+      "message": "test(vue): cover accepted and rejected controlled edits",
+      "date": "2026-07-25T06:22:55Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 4,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "d46a67cb7dc6bcc79e23907006b6338c20408a9f",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=2af46a24350d732540777c91f4d247b1ad2677f0",
+        "patch": "@@ -24,7 +24,7 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n   const containerRef = useRef<HTMLDivElement | null>(null);\n   const editorRef = useRef<ReturnType<typeof createEditor> | null>(null);\n   const [editor, setEditor] = useState<ReturnType<typeof createEditor> | null>(null);\n-  const [, setSyncRevision] = useState(0);\n+  const [syncRevision, setSyncRevision] = useState(0);\n   const configRef = useRef(config);\n   const lastSyncedDocRef = useRef<string | null>(null);\n \n@@ -78,7 +78,7 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n     instance.setDocument(value, { silent: true });\n     lastSyncedDocRef.current = value;\n     setSyncRevision((revision) => revision + 1);\n-  }, [config.value, editor]);\n+  }, [config.value, editor, syncRevision]);\n \n   return {\n     containerRef,"
+      },
+      {
+        "sha": "5087d609ea0da0f37b5f47c8c96a669a36f8f9dd",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 27,
+        "deletions": 2,
+        "changes": 29,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=2af46a24350d732540777c91f4d247b1ad2677f0",
+        "patch": "@@ -149,6 +149,30 @@ describe(\"@floatboat/nexus-react\", () => {\n     });\n   });\n \n+  it(\"restores the controlled value when the parent rejects a document change\", async () => {\n+    const onChange = vi.fn();\n+\n+    function Harness() {\n+      const { containerRef, editor } = useEditor({\n+        value: \"accepted\",\n+        onChange\n+      });\n+\n+      useEffect(() => {\n+        editor?.setDocument(\"rejected\");\n+      }, [editor]);\n+\n+      return <div ref={containerRef} />;\n+    }\n+\n+    const { container } = render(<Harness />);\n+\n+    await waitFor(() => {\n+      expect(onChange).toHaveBeenCalledWith(\"rejected\", expect.anything());\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"accepted\");\n+    });\n+  });\n+\n   it(\"skips silent setDocument when controlled value already matches the last change\", async () => {\n     const silentDocs: string[] = [];\n \n@@ -178,10 +202,11 @@ describe(\"@floatboat/nexus-react\", () => {\n       return <div ref={containerRef} />;\n     }\n \n-    render(<Harness />);\n+    const { container } = render(<Harness />);\n \n     await waitFor(() => {\n-      expect(silentDocs.filter((doc) => doc === \"beta\")).toHaveLength(0);\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"beta\");\n+      expect(silentDocs).toHaveLength(0);\n     });\n   });\n "
+      },
+      {
+        "sha": "2a49f051ea302f78bfca7fb8623d2193fc9b36bc",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=2af46a24350d732540777c91f4d247b1ad2677f0",
+        "patch": "@@ -60,8 +60,8 @@ export function useEditor(config: MaybeRefOrGetter<UseEditorConfig>): UseEditorR\n   });\n \n   watch(\n-    () => resolveConfig().modelValue,\n-    (value) => {\n+    () => [resolveConfig().modelValue, syncRevision.value] as const,\n+    ([value]) => {\n       const instance = editor.value;\n \n       if (!instance || value === undefined) {"
+      },
+      {
+        "sha": "6f6e77581f4bb1a9259df622243ee20a11e2b28b",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 55,
+        "deletions": 0,
+        "changes": 55,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/2af46a24350d732540777c91f4d247b1ad2677f0/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=2af46a24350d732540777c91f4d247b1ad2677f0",
+        "patch": "@@ -181,6 +181,61 @@ describe(\"@floatboat/nexus-vue\", () => {\n     });\n   });\n \n+  it(\"restores modelValue when the parent rejects a document change\", async () => {\n+    const onChange = vi.fn();\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor({\n+          modelValue: \"accepted\",\n+          onChange\n+        });\n+\n+        onMounted(() => {\n+          editor.value?.setDocument(\"rejected\");\n+        });\n+\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    const wrapper = mount(Harness);\n+    await nextTick();\n+\n+    await vi.waitFor(() => {\n+      expect(onChange).toHaveBeenCalledWith(\"rejected\", expect.anything());\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"accepted\");\n+    });\n+  });\n+\n+  it(\"keeps a document change when the parent accepts it\", async () => {\n+    const doc = ref(\"alpha\");\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor(() => ({\n+          modelValue: doc.value,\n+          onChange: (next) => {\n+            doc.value = next;\n+          }\n+        }));\n+\n+        onMounted(() => {\n+          editor.value?.setDocument(\"beta\");\n+        });\n+\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    const wrapper = mount(Harness);\n+    await nextTick();\n+\n+    await vi.waitFor(() => {\n+      expect(doc.value).toBe(\"beta\");\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"beta\");\n+    });\n+  });\n+\n   it(\"supports v-model on the Editor component\", async () => {\n     const doc = ref(\"alpha\");\n     const Parent = defineComponent({"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=185",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

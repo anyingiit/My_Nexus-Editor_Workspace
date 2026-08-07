@@ -1,0 +1,59 @@
+{
+  "pr_number": 15,
+  "title": "docs(openspec): propose cloud storage interface",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ChainCoinLab",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "COMMENTED",
+      "submitted_at": "2026-05-13T11:22:31Z",
+      "body": "## Review: PR #15 — docs(openspec): propose cloud storage interface\n\n**Assessment:** Another pure documentation PR from the same author — proposes cloud storage interface design. Same pattern as PR #14: well-written docs but zero implementation code. Per challenge criteria, docs-only PRs are considered low-quality.\n\nNo code changes beyond marking ROADMAP item as 'in progress'."
+    },
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-13T13:03:17Z",
+      "body": "## Re-review: PR #15 — Updated with Implementation ✅\n\n### Summary of Changes (Updated)\n\nPR has been significantly expanded from a docs-only proposal to a full implementation:\n- **+1474/-83**, 21 files, 5 commits\n- Now includes actual code: `packages/core/src/storage.ts` (173 lines), `vault-adapter.ts` (155 lines), electron-demo integration\n- 4 test files with substantial coverage (326 + 82 + 172 + 21 = 601 lines of tests)\n\n### ✅ What's Good\n\n1. **Well-designed storage abstraction** — `NoteVaultAdapter` interface is clean and provider-agnostic. Supports list/read/write/create/rename/delete/watch with proper capability flags.\n2. **Typed error handling** — `NoteVaultError` with typed error codes (conflict, auth-required, offline, etc.) is a solid pattern for adapter implementations.\n3. **Utility functions** — `flattenNoteVaultNodes` and `readAllNoteVaultFiles` with error callback are practical helpers.\n4. **Electron adapter** — Concrete implementation that bridges the IPC layer, with proper ref validation and path normalization.\n5. **Good test coverage** — 601 lines of tests across 4 files covering the interface contract, adapter behavior, vault panel, and path utilities.\n6. **OpenSpec docs** — Proposal/design/spec/tasks all present and well-structured.\n7. **Roadmap alignment** — Targets #23 (Cloud storage interface), P1 item.\n8. **No conflicts** — Mergeable.\n\n### Minor Notes\n\n- The `dist-electron/main.js` change looks like a build artifact — consider adding it to .gitignore or removing from the PR.\n- `readAllNoteVaultFiles` reads files sequentially; for large vaults a batched/parallel approach might be worth noting as future optimization.\n\n### Assessment\n\n| Dimension | Score |\n|-----------|-------|\n| Implementation difficulty | Medium-High (interface design + adapter + IPC integration + tests) |\n| Completeness | High (spec + implementation + tests + demo integration) |\n| Code style | Good (clean TypeScript, proper typing, consistent patterns) |\n\n**Approved.** Solid work — went from proposal-only to a complete implementation with good architecture."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:04:32Z",
+      "body": "### Code review\n\nFound 1 issue:\n\n1. `seedLinkIndex` is now a performance regression on vault open. The renderer's `readAllNoteVaultFiles` runs sequential `await adapter.read(ref)` calls, each round-tripping through the `vault:read` IPC. The previous `vault:read-all` handler did bounded-concurrency parallel reads (`CONCURRENCY=32`) and its comment explicitly noted it was \"~5-10x faster than serial on large vaults.\" The old handler is still in `main.ts` but is no longer called — dead code plus a real latency hit on cold open. Either parallelize inside `readAllNoteVaultFiles` (bounded concurrency, given the original EMFILE concern) or have the Electron adapter expose a batch path that maps to the existing `vault:read-all` IPC.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/9e4c5abb52d106232aa4654f6900ee864fdd6c2f/packages/core/src/storage.ts#L155-L172\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/9e4c5abb52d106232aa4654f6900ee864fdd6c2f/apps/electron-demo/electron/main.ts#L281-L290\n\nOther lower-confidence flags worth a look (not blocking, all ~75): `pathFromRef` returns `ref.displayPath ?? ref.id` despite the spec saying `displayPath` is UI-only and must not be treated as stable identity — `assertPathInsideVault` constrains the path to the vault but not which file inside it; `NoteVaultCapabilities` makes every basic op optional (`renameFile?`, `createFile?`, etc.) while spec.md mandates list/read/write/create/rename/delete as basic ops with an unconditional SHALL; `write` drops `NoteVaultWriteOptions` entirely, so `revision`/`etag` are silently ignored despite `optimisticWrites: false`; the watch listener hardcodes `kind: \"refreshed\"` so subscribers wired for `created|updated|deleted|renamed` never see fine-grained events.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:27Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=15) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=15) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=15) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:45:07Z",
+      "body": "感谢云存储接口的 OpenSpec 提案（roadmap #23）🙏 这正是 roadmap 要求的「设计先行」路径，方向对。这是 docs/openspec only 的提案 PR，当前对 main 为 MERGEABLE。请按 openspec/AGENTS.md 跑一下 `openspec validate --strict` 确认提案格式无误；维护者评审提案内容（NoteVault 接口、可插拔后端边界）后即可推进。\n\n⚠️ 该 PR 目前 **CLA 未签署**，签署前无法合并。请点 PR 内 CLA 机器人的链接签署；签完并调整后维护者会重新评审。感谢理解 🙏"
+    }
+  ],
+  "golden_decision": "approve",
+  "gt_basis": "earliest admin decision review",
+  "admin_review": {
+    "user": "ketd",
+    "state": "APPROVED",
+    "submitted_at": "2026-05-13T13:03:17Z",
+    "commit_id": "50fbc8c2c5d6c79201d0ae7c0253a3cab83f145e",
+    "author_association": "CONTRIBUTOR",
+    "evidence": {
+      "user": "ketd",
+      "author_association": "CONTRIBUTOR",
+      "admin_by_association": false,
+      "admin_by_direct_push_weak": true,
+      "direct_push_count": 95,
+      "basis": "direct_push_weak"
+    }
+  }
+}

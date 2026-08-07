@@ -1,0 +1,133 @@
+{
+  "pr_number": 73,
+  "title": "feat(react): add onReady and containerProps to <Editor/> (react + vue)",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:37:46Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "c3633881ce6c10203431f81a61f9cb9f1500b623",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "47f49a1466df20cd3d29a58f3bb193c9def0ffd4",
+      "message": "feat(react): add onReady callback and containerProps to <Editor/>\n\nonReady(editor) fires once after the editor is created, handing back the EditorAPI handle; containerProps forwards DOM attributes (className/style/id/data-*/aria-*) onto the root div. Uses an explicit containerProps field to avoid onChange collisions between EditorConfig and the div's own props.",
+      "date": "2026-06-22T04:36:55Z"
+    },
+    {
+      "sha": "de62d626e6c6b949fa931ac0325a29cfec99e4fd",
+      "message": "feat(vue): mirror onReady callback and containerProps in <Editor/>\n\nMatches the React binding's semantics so onReady timing and containerProps behave identically across frameworks.",
+      "date": "2026-06-22T04:36:55Z"
+    },
+    {
+      "sha": "c3633881ce6c10203431f81a61f9cb9f1500b623",
+      "message": "docs: document <Editor/> onReady and containerProps; mark roadmap #4 in-progress",
+      "date": "2026-06-22T04:36:55Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 4,
+      "changes": 8
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 2,
+      "changes": 13
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 32,
+      "deletions": 1,
+      "changes": 33
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 2,
+      "changes": 19
+    },
+    {
+      "filename": "packages/vue/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 2,
+      "changes": 10
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 40,
+      "deletions": 1,
+      "changes": 41
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=73",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "pr_number": 87,
+  "title": "fix(toolbar): support multi-line blockquote toggle",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "gali123456",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-07-03T11:31:56Z",
+      "body": "感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection / selection boundary 等用例；我本地用 `pnpm install --no-frozen-lockfile` 后跑 `packages/plugin-toolbar` 类型检查与测试、以及 core 测试均可通过。\n\n但当前 PR 暂不能通过审核，主要有两个阻塞项：\n\n1. **CLA 未签署**：CLA assistant 仍显示 `Contributor License Agreement is not signed yet`。在 CLA 通过前项目不能接受该贡献。\n2. **锁文件与 package.json 不一致**：`pnpm install --frozen-lockfile` 失败，报错为 `packages/plugin-toolbar/package.json` 中的 specifiers 与 `pnpm-lock.yaml` 不一致。CI 环境默认会按 frozen lockfile 安装，这会导致流水线直接失败。请在当前分支运行 `pnpm install` 并提交更新后的 `pnpm-lock.yaml`，确保 `pnpm install --frozen-lockfile` 可通过。\n\n候选人判断：实现能力可以，但交付完整性不足；需要先补齐 CLA 与 lockfile 合规后再重新提交。\n"
+    },
+    {
+      "user": "redreamality",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-07-03T11:33:35Z",
+      "body": "感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection / selection boundary 等用例；我本地用 `pnpm install --no-frozen-lockfile` 后跑 `packages/plugin-toolbar` 类型检查与测试、以及 core 测试均可通过。\n\n但当前 PR 暂不能通过审核，主要有两个阻塞项：\n\n1. **CLA 未签署**：CLA assistant 仍显示 `Contributor License Agreement is not signed yet`。在 CLA 通过前项目不能接受该贡献。\n2. **锁文件与 package.json 不一致**：`pnpm install --frozen-lockfile` 失败，报错为 `packages/plugin-toolbar/package.json` 中的 specifiers 与 `pnpm-lock.yaml` 不一致。CI 环境默认会按 frozen lockfile 安装，这会导致流水线直接失败。请在当前分支运行 `pnpm install` 并提交更新后的 `pnpm-lock.yaml`，确保 `pnpm install --frozen-lockfile` 可通过。\n\n候选人判断：实现能力可以，但交付完整性不足；需要先补齐 CLA 与 lockfile 合规后再重新提交。\n"
+    },
+    {
+      "user": "redreamality",
+      "state": "APPROVED",
+      "submitted_at": "2026-07-03T13:46:12Z",
+      "body": "复审更新：\n\n- CLA 现在已经通过。\n- 本 PR 当前只改动 `packages/plugin-toolbar/src/formatting.ts` 和 `packages/plugin-toolbar/test/plugin-toolbar.test.ts`，实现目标清晰：让 blockquote toggle 支持多行选择。\n- 代码逻辑检查通过：\n  - 选择范围会 normalize anchor/head；\n  - selection 结束在下一行行首时不会误包含下一行；\n  - 全部已引用时统一移除；混合选择时只补齐缺失的 `> `；\n  - 复用 `applyLines`，保持一次 replaceRange，undo/selection 行为与已有 list toggle 一致。\n- 类型检查通过：`pnpm exec tsc --noEmit -p packages/plugin-toolbar/tsconfig.json`。\n- 关于之前提到的 lockfile：PR head 分支单独 checkout 时仍会因为落后 main 导致 `pnpm install --frozen-lockfile` 失败；但我模拟 merge 最新 `origin/main` 后，`pnpm install --frozen-lockfile` 已通过，说明这不是本次改动引入的问题，合入最新 main 后可消除。\n- 本地 Vitest 启动被 macOS 上 `@rollup/rollup-darwin-arm64` 原生模块签名限制拦住，属于本机环境问题；新增测试用例本身覆盖了添加、移除、混合选择、反向选择、选择边界等关键路径。\n\n结论：本次重新提交后，代码实现和测试覆盖可以接受；建议保持 PR 打开，后续如 CI 在标准环境通过即可合并。\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-01T06:37:58Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=87) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T11:33:37Z",
+      "body": "感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection / selection boundary 等用例；我本地用 `pnpm install --no-frozen-lockfile` 后跑 `packages/plugin-toolbar` 类型检查与测试、以及 core 测试均可通过。\n\n但当前 PR 暂不能通过审核，主要有两个阻塞项：\n\n1. **CLA 未签署**：CLA assistant 仍显示 `Contributor License Agreement is not signed yet`。在 CLA 通过前项目不能接受该贡献。\n2. **锁文件与 package.json 不一致**：`pnpm install --frozen-lockfile` 失败，报错为 `packages/plugin-toolbar/package.json` 中的 specifiers 与 `pnpm-lock.yaml` 不一致。CI 环境默认会按 frozen lockfile 安装，这会导致流水线直接失败。请在当前分支运行 `pnpm install` 并提交更新后的 `pnpm-lock.yaml`，确保 `pnpm install --frozen-lockfile` 可通过。\n\n候选人判断：实现能力可以，但交付完整性不足；需要先补齐 CLA 与 lockfile 合规后再重新提交。"
+    },
+    {
+      "user": "gali123456",
+      "created_at": "2026-07-03T13:09:51Z",
+      "body": "> 感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection / selection boundary 等用例;我本地用 后跑 类型检查与测试、以及 core 测试均可通过。`pnpm install --no-frozen-lockfile``packages/plugin-toolbar`\r\n> \r\n> 但当前 PR 暂不能通过审核，主要有两个阻塞项：\r\n> \r\n> 1. **CLA 未签署**：CLA assistant 仍显示 。在 CLA 通过前项目不能接受该贡献。`Contributor License Agreement is not signed yet`\r\n> 2. **锁文件与 package.json 不一致**： 失败，报错为 中的 specifiers 与 不一致。CI 环境默认会按 frozen lockfile 安装，这会导致流水线直接失败。请在当前分支运行  并提交更新后的 ，确保  可通过。`pnpm install --frozen-lockfile``packages/plugin-toolbar/package.json``pnpm-lock.yaml``pnpm install``pnpm-lock.yaml``pnpm install --frozen-lockfile`\r\n> \r\n> 候选人判断：实现能力可以，但交付完整性不足;需要先补齐 CLA 与 lockfile 合规后再重新提交。\r\n\r\n"
+    },
+    {
+      "user": "gali123456",
+      "created_at": "2026-07-03T13:11:07Z",
+      "body": "> > 感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection / selection boundary 等用例;我本地用 后跑 类型检查与测试、以及 core 测试均可通过。`` pnpm install --no-frozen-lockfile``packages/plugin-toolbar ``\r\n> > 但当前 PR 暂不能通过审核，主要有两个阻塞项：\r\n> > \r\n> > 1. **CLA 未签署**：CLA assistant 仍显示 。在 CLA 通过前项目不能接受该贡献。`Contributor License Agreement is not signed yet`\r\n> > 2. **锁文件与 package.json 不一致**： 失败，报错为 中的 specifiers 与 不一致。CI 环境默认会按 frozen lockfile 安装，这会导致流水线直接失败。请在当前分支运行  并提交更新后的 ，确保  可通过。`` pnpm install --frozen-lockfile``packages/plugin-toolbar/package.json``pnpm-lock.yaml``pnpm install``pnpm-lock.yaml``pnpm install --frozen-lockfile ``\r\n> > \r\n> > 候选人判断：实现能力可以，但交付完整性不足;需要先补齐 CLA 与 lockfile 合规后再重新提交。\r\n\r\n感谢 review 和反馈。我已完成 CLA 签署，并提交了更新后的 pnpm-lock.yaml，以修复 frozen lockfile 安装失败的问题。\r\n\r\n本地已验证：\r\n- pnpm install --frozen-lockfile\r\n- pnpm exec vitest run packages/plugin-toolbar/test/plugin-toolbar.test.ts"
+    },
+    {
+      "user": "gali123456",
+      "created_at": "2026-07-03T15:01:59Z",
+      "body": "> 复审更新：\r\n> \r\n> * CLA现在已经通过了。\r\n> * 本 PR 当前只发生`packages/plugin-toolbar/src/formatting.ts`和`packages/plugin-toolbar/test/plugin-toolbar.test.ts`，实现目标明确：让 blockquote 切换支持多行选择。\r\n> * 代码逻辑检查通过：\r\n>   \r\n>   * 选择范围会标准化anchor/head；\r\n>   * 选择结束于下一行首时不会包含下一行；\r\n>   * 全部已引用时统一删除；混合选择时只补齐的`> `；\r\n>   * 复用`applyLines`，保持一次replaceRange，undo/selection行为与现有列表切换一致。\r\n> * 类型检查通过：`pnpm exec tsc --noEmit -p packages/plugin-toolbar/tsconfig.json`。\r\n> * 关于前面提到的lockfile：PR头分支单独签出时仍会因为后面main导致`pnpm install --frozen-lockfile`失败；但我模拟合并最新`origin/main`后，`pnpm install --frozen-lockfile`通过已，说明这不是本次引入的问题，合入最新main后可删除。\r\n> * 本地限制 Vitest 启动被 macOS`@rollup/rollup-darwin-arm64`上上游模块签名拦住，属于本机环境问题；新增测试用例本身覆盖了添加、删除、混合选择、反向选择、边界选择等关键路径。\r\n> \r\n> 结论：本次重新提交后，代码实现和测试覆盖可以接受；保持PR开放，后续如CI在标准环境下通过即可合并。\r\n\r\n感谢确认和复查。我会保持 PR 打开，等待 CI 在标准环境中运行结果。如后续还有需要调整的地方，我会继续跟进。"
+    },
+    {
+      "user": "gali123456",
+      "created_at": "2026-07-06T12:01:05Z",
+      "body": "Review and updates:\r\nThe input is empty, so there is no text to translate.\r\n> * The CLA has now been approved.\r\n* This PR only affects the files `packages/plugin-toolbar/src/formatting.ts` and `packages/plugin-toolbar/test/plugin-toolbar.test.ts`. The main goal is to enable multiple-line selections when switching between blockquotes.\r\n* Code logic check passed:\r\n>\r\n>   * The selection range will be standardized to anchor/head format;\r\n>   * Choose to end at the beginning of the next line, without including that line.\r\n*   Remove uniformly when all are quoted; only supplement `> ` during mixed selection;\r\n*   Reuse `applyLines`, keep one `replaceRange`, and ensure undo/selection behavior matches existing list switching.\r\n*   Type check passed: `pnpm exec tsc --noEmit -p packages/plugin-toolbar/tsconfig.json`.\r\n* Regarding the previously mentioned lockfile: When checking out the PR head branch alone, it still fails due to the subsequent main with `pnpm install --frozen-lockfile`; but when I simulate merging the latest `origin/main`, `pnpm install --frozen-lockfile` passes, indicating this isn't an issue introduced in this PR, and the latest main can be merged after deletion.\r\n* Local restrictions on Vitest startup are blocked by upstream module signatures on macOS `@rollup/rollup-darwin-arm64`, which is a native environment issue; the new test cases themselves cover key paths such as adding, deleting, mixed selection, reverse selection, and boundary selection.\r\n*\r\n* Conclusion: After resubmission this time, the code implementation and test coverage are acceptable; keep the PR open, and it can be merged if CI passes in standard environments in the future.   \r\n\r\n您好，感谢复审和更新。我看到目前 CLA 已通过，PR 的实现和测试覆盖也已经接受，后续主要等待 CI 在标准环境下通过。想请问一下，本次面试/评估结果大概什么时候会有通知？是否方便告知一个预计时间节点？如果还需要我补充信息或继续配合处理 PR，我这边可以及时跟进。谢谢！"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "earliest admin decision review",
+  "admin_review": {
+    "user": "redreamality",
+    "state": "CHANGES_REQUESTED",
+    "submitted_at": "2026-07-03T11:31:56Z",
+    "commit_id": "6c458c1d81c480de149062310256f842bf170291",
+    "author_association": "COLLABORATOR",
+    "evidence": {
+      "user": "redreamality",
+      "author_association": "COLLABORATOR",
+      "admin_by_association": true,
+      "admin_by_direct_push_weak": true,
+      "direct_push_count": 2,
+      "basis": "both"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "pr_number": 166,
+  "title": "feat(core): add lineWrapping config and runtime toggle",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "926470de435bc6aaf74c8c9145d43c5cbf92036d",
+  "merge_commit_sha": "e2fa940db0be8462c5bac5a1591ee35c3dac8006",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "926470de435bc6aaf74c8c9145d43c5cbf92036d",
+      "message": "feat(core): add lineWrapping config and runtime toggle\n\n- Add lineWrapping (boolean, default false) to EditorConfig\n- Add setLineWrapping(enabled) to EditorAPI for runtime toggle\n- Uses Compartment pattern (matching theme.ts) for reconfigure\n- Wire through React and Vue wrappers\n- Fix multiCursor prop not being passed through React/Vue wrappers\n- Add 6 tests covering config, runtime toggle, no-op on destroy, and multi-toggle",
+      "date": "2026-07-20T04:37:27Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 1,
+      "changes": 14
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 95,
+      "deletions": 0,
+      "changes": 95
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=166",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

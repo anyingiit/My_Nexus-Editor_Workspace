@@ -1,0 +1,77 @@
+{
+  "pr_number": 12,
+  "title": "feat(search): add fuzzy search helpers",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-14T04:38:56Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "ff33917f7b58883414d0460d2afcddb82079b5a9",
+  "merge_commit_sha": "d6454f67756d78530f12bb32d03603b50d0ae7f8",
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "commits": [
+    {
+      "sha": "8da5ce3079158ab2bca52817587e3f4b780b369a",
+      "message": "feat(search): add fuzzy search helpers",
+      "date": "2026-05-13T10:30:54Z"
+    },
+    {
+      "sha": "40ae2f3524de64e6d5bc6286f30c129a3fcd0dfd",
+      "message": "docs(search): document fuzzy search helpers",
+      "date": "2026-05-13T10:30:54Z"
+    },
+    {
+      "sha": "ff33917f7b58883414d0460d2afcddb82079b5a9",
+      "message": "docs: mark fuzzy search in progress",
+      "date": "2026-05-13T10:32:09Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 106,
+      "deletions": 0,
+      "changes": 106
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

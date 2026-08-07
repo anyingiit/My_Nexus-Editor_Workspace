@@ -1,0 +1,64 @@
+{
+  "pr_number": 138,
+  "title": "feat(plugin-search): add optional fuzzy matching to findSearchMatches",
+  "body": "## What\r\n\r\nAdds an opt-in `fuzzy` option to `findSearchMatches` in `@floatboat/nexus-plugin-search`.\r\nImplements roadmap item #17 (Fuzzy search, P2).\r\n\r\nWhen `{ fuzzy: true }` is passed, each line is matched as a subsequence of\r\nthe query and annotated with a relevance `score`, so callers can rank results.\r\n\r\n## Why\r\n\r\nExact and regex search require the query to appear contiguously. Fuzzy\r\nmatching lets users find lines by typing a loose, ordered subset of the\r\ncharacters — the same interaction model as a command palette / file finder.\r\n\r\n## Design\r\n\r\n- **Per-line matching.** Each line is treated as a candidate, so a match's\r\n  `from`/`to` stays bounded to a single line instead of spanning the whole\r\n  document.\r\n- **Greedy left-most subsequence** with a small scoring function\r\n  (contiguous runs, word-start hits, and a leading match are rewarded; gaps\r\n  are penalized). Scoring style mirrors the existing `slash-state.ts` ranking.\r\n- Query characters are always literal (never regex) in fuzzy mode.\r\n- Results stay in document order; sorting by `score` is left to the caller.\r\n\r\n## Scope / non-goals\r\n\r\n- Purely additive and opt-in — default, regex, whole-word, and case-sensitive\r\n  behavior are unchanged.\r\n- `replaceAllMatches`, the CM6 search panel, and search history are untouched.\r\n- No new dependencies.\r\n\r\n## Tests\r\n\r\nAdded 8 unit tests (fuzzy vs exact, out-of-order rejection, document order,\r\ncase sensitivity, literal-not-regex, empty query, score ranking, and \"no\r\nscore on exact matches\"). Full suite: 37/37 passing; package typecheck clean.",
+  "created_at": "2026-07-07T10:07:56Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07",
+  "first_review_time": "2026-07-07T10:08:08Z",
+  "commits_at_first_review": [
+    {
+      "sha": "cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07",
+      "message": "feat(plugin-search): add optional fuzzy matching to findSearchMatches",
+      "date": "2026-07-07T09:57:41Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "fa5f91f60ae35d4f9f5ffe9c4235bbdc74a1a650",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 106,
+        "deletions": 0,
+        "changes": 106,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07",
+        "patch": "@@ -21,12 +21,25 @@ export interface SearchMatch {\n   from: number;\n   to: number;\n   text: string;\n+  /**\n+   * Relevance score for fuzzy matches. Higher is a better match. Only\n+   * present when `SearchOptions.fuzzy` is enabled; exact, regex, and\n+   * whole-word matches leave this undefined.\n+   */\n+  score?: number;\n }\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n   wholeWord?: boolean;\n   regexp?: boolean;\n+  /**\n+   * Match each line as a fuzzy subsequence of the query instead of an\n+   * exact/regex substring. Query characters are always treated literally\n+   * (never as regex), and `regexp` / `wholeWord` are ignored while fuzzy\n+   * is enabled. Only affects `findSearchMatches`; replace is unchanged.\n+   */\n+  fuzzy?: boolean;\n }\n \n export interface SearchHistoryStorage {\n@@ -250,6 +263,95 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n   }\n }\n \n+// Fuzzy matching runs per line: each line is a candidate the same way a\n+// command palette treats each entry. Scoring lives here so a match's\n+// `from`/`to` stays bounded to one line instead of letting a subsequence\n+// span the whole document. Reward signals (contiguous runs, word starts,\n+// a leading hit) sit far enough apart that one strong signal outranks an\n+// accumulation of weaker ones, and gaps apply a small penalty.\n+const FUZZY_SCORE_CONSECUTIVE = 8;\n+const FUZZY_SCORE_WORD_START = 6;\n+const FUZZY_SCORE_LEADING = 4;\n+const FUZZY_PENALTY_GAP = 1;\n+\n+function isWordChar(char: string | undefined): boolean {\n+  return char !== undefined && /[A-Za-z0-9]/.test(char);\n+}\n+\n+interface FuzzyLineMatch {\n+  from: number;\n+  to: number;\n+  score: number;\n+}\n+\n+// Greedy left-most subsequence match of `query` within a single line.\n+// Returns the covering range (first..last matched character) and a score,\n+// or null when the line does not contain every query character in order.\n+// Both arguments are expected to be pre-normalized for case.\n+function matchFuzzyLine(line: string, query: string): FuzzyLineMatch | null {\n+  let queryIndex = 0;\n+  let firstMatch = -1;\n+  let lastMatch = -1;\n+  let score = 0;\n+\n+  for (let i = 0; i < line.length && queryIndex < query.length; i++) {\n+    if (line[i] !== query[queryIndex]) continue;\n+\n+    if (firstMatch < 0) {\n+      firstMatch = i;\n+      if (i === 0) score += FUZZY_SCORE_LEADING;\n+    } else {\n+      const gap = i - lastMatch - 1;\n+      if (gap === 0) {\n+        score += FUZZY_SCORE_CONSECUTIVE;\n+      } else {\n+        score -= gap * FUZZY_PENALTY_GAP;\n+      }\n+    }\n+\n+    if (!isWordChar(line[i - 1]) && isWordChar(line[i])) {\n+      score += FUZZY_SCORE_WORD_START;\n+    }\n+\n+    lastMatch = i;\n+    queryIndex++;\n+  }\n+\n+  if (queryIndex < query.length) {\n+    return null;\n+  }\n+\n+  return { from: firstMatch, to: lastMatch + 1, score };\n+}\n+\n+function findFuzzyMatches(doc: string, query: string, options: SearchOptions): SearchMatch[] {\n+  const caseSensitive = options.caseSensitive ?? false;\n+  const needle = caseSensitive ? query : query.toLowerCase();\n+  const matches: SearchMatch[] = [];\n+\n+  let lineStart = 0;\n+  for (const rawLine of doc.split(\"\\n\")) {\n+    const line = caseSensitive ? rawLine : rawLine.toLowerCase();\n+    const hit = matchFuzzyLine(line, needle);\n+\n+    if (hit) {\n+      const from = lineStart + hit.from;\n+      const to = lineStart + hit.to;\n+      matches.push({\n+        from,\n+        to,\n+        text: doc.slice(from, to),\n+        score: hit.score\n+      });\n+    }\n+\n+    // Advance past the line plus the \"\\n\" removed by split.\n+    lineStart += rawLine.length + 1;\n+  }\n+\n+  return matches;\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -259,6 +361,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy) {\n+    return findFuzzyMatches(doc, query, options);\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return [];"
+      },
+      {
+        "sha": "a43f476ce10d4e0bfb4e7dce7ff39d4f62b9e779",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 57,
+        "deletions": 0,
+        "changes": 57,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07",
+        "patch": "@@ -241,6 +241,63 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"matches a fuzzy subsequence that exact search would miss\", () => {\n+    expect(findSearchMatches(\"alpha\", \"apa\")).toEqual([]);\n+\n+    const matches = findSearchMatches(\"alpha\", \"apa\", { fuzzy: true });\n+    expect(matches).toHaveLength(1);\n+    expect(matches[0].from).toBe(0);\n+    expect(matches[0].to).toBe(5);\n+    expect(matches[0].text).toBe(\"alpha\");\n+    expect(typeof matches[0].score).toBe(\"number\");\n+  });\n+\n+  it(\"returns no fuzzy match when characters are out of order\", () => {\n+    expect(findSearchMatches(\"alpha\", \"pal\", { fuzzy: true })).toEqual([]);\n+  });\n+\n+  it(\"keeps fuzzy matches in document order across lines\", () => {\n+    const matches = findSearchMatches(\"alpha\\nbeta\\ngamma\", \"a\", { fuzzy: true });\n+\n+    expect(matches.map((match) => match.from)).toEqual([0, 9, 12]);\n+  });\n+\n+  it(\"respects case sensitivity in fuzzy mode\", () => {\n+    expect(findSearchMatches(\"Alpha\", \"alpha\", { fuzzy: true, caseSensitive: true })).toEqual([]);\n+\n+    const matches = findSearchMatches(\"Alpha\", \"alpha\", { fuzzy: true });\n+    expect(matches).toHaveLength(1);\n+    expect(matches[0].text).toBe(\"Alpha\");\n+  });\n+\n+  it(\"treats fuzzy query characters literally instead of as regex\", () => {\n+    const literal = findSearchMatches(\"a.c\", \"a.c\", { fuzzy: true });\n+    expect(literal).toHaveLength(1);\n+    expect(literal[0].text).toBe(\"a.c\");\n+\n+    expect(findSearchMatches(\"abc\", \".\", { fuzzy: true })).toEqual([]);\n+  });\n+\n+  it(\"returns an empty array for an empty fuzzy query\", () => {\n+    expect(findSearchMatches(\"alpha\", \"\", { fuzzy: true })).toEqual([]);\n+  });\n+\n+  it(\"scores a contiguous fuzzy match higher than a scattered one\", () => {\n+    const matches = findSearchMatches(\"abc\\naxbxc\", \"abc\", { fuzzy: true });\n+    expect(matches).toHaveLength(2);\n+\n+    const ranked = [...matches].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));\n+    expect(ranked[0].text).toBe(\"abc\");\n+    expect(ranked[1].text).toBe(\"axbxc\");\n+    expect(ranked[0].score ?? 0).toBeGreaterThan(ranked[1].score ?? 0);\n+  });\n+\n+  it(\"does not attach a score to exact matches\", () => {\n+    const matches = findSearchMatches(\"hello\", \"hello\");\n+    expect(matches).toHaveLength(1);\n+    expect(matches[0].score).toBeUndefined();\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=138",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

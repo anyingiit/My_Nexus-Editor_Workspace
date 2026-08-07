@@ -1,0 +1,33 @@
+{
+  "pr_number": 97,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR does not actually implement getSelectedText()"
+    },
+    {
+      "id": 2,
+      "summary": "Missing implementation, types, and tests closure"
+    },
+    {
+      "id": 3,
+      "summary": "Duplicate getSelectedText() declaration in EditorAPI"
+    },
+    {
+      "id": 4,
+      "summary": "Backup commit 'Pre-exec backup: editor.test.ts' in PR"
+    },
+    {
+      "id": 5,
+      "summary": "Tests duplicate existing getSelectedText coverage"
+    },
+    {
+      "id": 6,
+      "summary": "Low incremental value of test additions"
+    },
+    {
+      "id": 7,
+      "summary": "Recommend closing the PR"
+    }
+  ]
+}

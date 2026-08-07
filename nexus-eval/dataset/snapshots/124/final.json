@@ -1,0 +1,60 @@
+{
+  "pr_number": 124,
+  "title": "fix(electron-demo): 修复 Vault 保存路径边界校验",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "edef9c3cdde14275ddef1c7e950750cad7e5899d",
+  "merge_commit_sha": "373f56022e97e45f6910d65fd2e0144b36b3bf25",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "edef9c3cdde14275ddef1c7e950750cad7e5899d",
+      "message": "fix(electron-demo): validate vault save path boundaries",
+      "date": "2026-07-03T15:53:58Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 1,
+      "changes": 18
+    },
+    {
+      "filename": "apps/electron-demo/test/path-utils.test.ts",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 2,
+      "changes": 33
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=124",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

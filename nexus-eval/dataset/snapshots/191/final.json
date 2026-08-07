@@ -1,0 +1,137 @@
+{
+  "pr_number": 191,
+  "title": "feat(math): harden and demonstrate math rendering",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "78568077e4e3999062f147edc24c1c4f25d43b3c",
+  "merge_commit_sha": "664420a1e27c2c89952ccbccf49c867a80cc81f9",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "78568077e4e3999062f147edc24c1c4f25d43b3c",
+      "message": "feat(math): harden and demonstrate math rendering",
+      "date": "2026-07-27T15:31:51Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/README.md",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/index.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/math-demo.md",
+      "status": "added",
+      "additions": 31,
+      "deletions": 0,
+      "changes": 31
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/test/editor-shell.test.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 0,
+      "changes": 16
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/plugin-math/README.md",
+      "status": "added",
+      "additions": 85,
+      "deletions": 0,
+      "changes": 85
+    },
+    {
+      "filename": "packages/plugin-math/package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "packages/plugin-math/src/index.ts",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 3,
+      "changes": 25
+    },
+    {
+      "filename": "packages/plugin-math/test/plugin-math.test.ts",
+      "status": "added",
+      "additions": 150,
+      "deletions": 0,
+      "changes": 150
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=191",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

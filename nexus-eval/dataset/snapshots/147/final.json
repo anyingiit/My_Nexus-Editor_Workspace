@@ -1,0 +1,130 @@
+{
+  "pr_number": 147,
+  "title": "refactor(core): standardize Widget API with EditorWidget base class",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "ba364903bcd7055dcde4acc820f2b32158b20ed4",
+  "merge_commit_sha": null,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "ba364903bcd7055dcde4acc820f2b32158b20ed4",
+      "message": "refactor(core): standardize Widget API with EditorWidget base class\n\n- Add EditorWidget abstract base class (extends WidgetType) with:\n  editing lock management, lifecycle hooks, WidgetContext, estimatedHeight contract\n- Add WidgetInteractionState / isWidgetEditing() to replace bare tableEditingCount\n- Add WidgetContext interface for safe CM6 view access from widgets\n- Migrate EditableTableWidget to extend EditorWidget\n- Migrate NexusWidget to extend EditorWidget with lifecycle hook support\n- Add WidgetLifecycleHooks to WidgetDefinition (backward-compatible)\n- Deprecate WidgetDefinition.destroy in favor of lifecycle.willDestroy\n- Add 6 table clipboard/native-selection tests\n- Add OpenSpec proposal for widget-api standardization\n\nCloses: P1 roadmap item 'Widget API standardization'",
+      "date": "2026-07-10T06:09:04Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/add-widget-api-standardization/design.md",
+      "status": "added",
+      "additions": 178,
+      "deletions": 0,
+      "changes": 178
+    },
+    {
+      "filename": "openspec/changes/add-widget-api-standardization/proposal.md",
+      "status": "added",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "openspec/changes/add-widget-api-standardization/specs/widget-api/spec.md",
+      "status": "added",
+      "additions": 151,
+      "deletions": 0,
+      "changes": 151
+    },
+    {
+      "filename": "openspec/changes/add-widget-api-standardization/tasks.md",
+      "status": "added",
+      "additions": 99,
+      "deletions": 0,
+      "changes": 99
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 1,
+      "changes": 14
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 29,
+      "changes": 66
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 0,
+      "changes": 34
+    },
+    {
+      "filename": "packages/core/src/widget-base.ts",
+      "status": "added",
+      "additions": 255,
+      "deletions": 0,
+      "changes": 255
+    },
+    {
+      "filename": "packages/core/src/widget-context.ts",
+      "status": "added",
+      "additions": 47,
+      "deletions": 0,
+      "changes": 47
+    },
+    {
+      "filename": "packages/core/src/widget-extension.ts",
+      "status": "modified",
+      "additions": 58,
+      "deletions": 10,
+      "changes": 68
+    },
+    {
+      "filename": "packages/core/src/widget-state.ts",
+      "status": "added",
+      "additions": 88,
+      "deletions": 0,
+      "changes": 88
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 290,
+      "deletions": 0,
+      "changes": 290
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=147",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

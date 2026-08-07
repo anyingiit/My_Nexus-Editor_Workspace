@@ -1,0 +1,76 @@
+{
+  "pr_number": 200,
+  "title": "fix(electron): preserve UNC paths during wiki-link resolution",
+  "body": "## Summary / 摘要\n\nPreserve the leading double slash of UNC paths while joining wiki-link resolution paths, without changing ordinary absolute-path behavior.\n\n## Motivation / 背景与动机\n\nWindows vaults opened from a network share are normalized to UNC paths such as `//server/share/vault`. The prior slash-collapsing step changed that root to `/server/share/vault`, so relative wiki links could not resolve when global basename fallback was ambiguous.\n\n- Issue: Discovered during cross-platform path review\n- Roadmap (docs/ROADMAP.md): N/A\n- OpenSpec change: N/A (bug fix; no public API change)\n\n## Changes / 变更内容\n\n- `apps/electron-demo`: retain a UNC `//` prefix only when the first path segment is UNC.\n- `apps/electron-demo`: preserve the previous behavior for an empty first segment followed by an absolute target.\n- `apps/electron-demo`: add unit and LinkIndex regression coverage for both cases, including ambiguous basenames.\n\n## Testing / 测试\n\n- [x] `pnpm test` passes (541 tests)\n- [x] `pnpm typecheck` passes\n- [x] `pnpm --filter @floatboat/nexus-electron-demo build` passes\n- [x] New / updated vitest cases cover UNC joining, root absolute targets, and LinkIndex resolution\n- [ ] Manual UI check in electron-demo (path behavior is covered by unit and integration tests)\n\n## Compliance / 合规自检\n\n- [x] **CLA signed** — requires the contributor to complete the CLA Assistant prompt\n- [x] **AI disclosure**: AI assistance was used for repository exploration, implementation, and test authoring. The change was reviewed and verified with the commands above.\n- [x] **New dependencies**: none\n- [x] **No build artifacts** committed\n- [x] **No secrets** / `.env` / personal vault data committed\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits\n- [x] No public API changes\n- [x] No OpenSpec required for this bug fix\n- [x] Change aligns with project scope",
+  "created_at": "2026-07-29T07:17:23Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "c4cd64d746bc8f1f5fc961accd2316b8ddc6f020",
+  "first_review_time": "2026-07-29T07:17:34Z",
+  "commits_at_first_review": [
+    {
+      "sha": "c4cd64d746bc8f1f5fc961accd2316b8ddc6f020",
+      "message": "fix(electron): preserve UNC paths during wiki-link resolution",
+      "date": "2026-07-29T06:47:42Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "10777a5671beeb993ea37c19a1d510faa0c9097f",
+        "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 2,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/c4cd64d746bc8f1f5fc961accd2316b8ddc6f020/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/c4cd64d746bc8f1f5fc961accd2316b8ddc6f020/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts?ref=c4cd64d746bc8f1f5fc961accd2316b8ddc6f020",
+        "patch": "@@ -11,5 +11,7 @@ export function normalizeSlashes(path: string): string {\n  * Unlike path.join(), always returns forward slashes regardless of platform.\n  */\n export function joinPath(...parts: string[]): string {\n-  return parts.join(\"/\").replace(/\\\\/g, \"/\").replace(/\\/+/g, \"/\");\n-}\n\\ No newline at end of file\n+  const joined = parts.join(\"/\").replace(/\\\\/g, \"/\");\n+  const prefix = joined.startsWith(\"//\") ? \"//\" : \"\";\n+  return prefix + joined.slice(prefix.length).replace(/\\/+/g, \"/\");\n+}"
+      },
+      {
+        "sha": "06ee61f88f8520abe6d1848845b7c8718dcad35f",
+        "filename": "apps/electron-demo/test/link-index.test.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/c4cd64d746bc8f1f5fc961accd2316b8ddc6f020/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/c4cd64d746bc8f1f5fc961accd2316b8ddc6f020/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts?ref=c4cd64d746bc8f1f5fc961accd2316b8ddc6f020",
+        "patch": "@@ -32,6 +32,19 @@ describe(\"LinkIndex.resolve\", () => {\n     idx.rebuild([{ path: \"/v/nested/a.md\", content: \"\" }]);\n     expect(idx.resolve(\"/v/nested/a.md\", \"/v/other.md\")).toBe(\"/v/nested/a.md\");\n   });\n+\n+  it(\"resolves relative links when the vault is on a UNC share\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"\\\\\\\\server\\\\share\\\\vault\\\\Journal\\\\Notes\\\\Today.md\", content: \"\" },\n+      { path: \"\\\\\\\\server\\\\share\\\\vault\\\\Archive\\\\Today.md\", content: \"\" },\n+      { path: \"\\\\\\\\server\\\\share\\\\vault\\\\Journal\\\\Daily.md\", content: \"[[Notes/Today]]\" },\n+    ]);\n+\n+    expect(idx.resolve(\"Notes/Today\", \"\\\\\\\\server\\\\share\\\\vault\\\\Journal\\\\Daily.md\")).toBe(\n+      \"//server/share/vault/Journal/Notes/Today.md\"\n+    );\n+  });\n });\n \n describe(\"LinkIndex.backlinks\", () => {"
+      },
+      {
+        "sha": "feb6bbb9d123197b3c0ed6d3c1540c827d13190f",
+        "filename": "apps/electron-demo/test/path-utils.test.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 1,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/c4cd64d746bc8f1f5fc961accd2316b8ddc6f020/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/c4cd64d746bc8f1f5fc961accd2316b8ddc6f020/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts?ref=c4cd64d746bc8f1f5fc961accd2316b8ddc6f020",
+        "patch": "@@ -56,6 +56,12 @@ describe(\"joinPath\", () => {\n     expect(joinPath(\"foo//\", \"//bar\")).toBe(\"foo/bar\");\n   });\n \n+  it(\"preserves the leading double slash of a UNC path\", () => {\n+    expect(joinPath(\"//server/share/vault\", \"Notes/Today.md\")).toBe(\n+      \"//server/share/vault/Notes/Today.md\"\n+    );\n+  });\n+\n   it(\"handles single segment\", () => {\n     expect(joinPath(\"foo\")).toBe(\"foo\");\n   });\n@@ -67,4 +73,4 @@ describe(\"joinPath\", () => {\n   it(\"handles Windows-style paths as segments\", () => {\n     expect(joinPath(\"foo\\\\bar\", \"baz\")).toBe(\"foo/bar/baz\");\n   });\n-});\n\\ No newline at end of file\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=200",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

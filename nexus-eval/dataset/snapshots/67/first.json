@@ -1,0 +1,189 @@
+{
+  "pr_number": 67,
+  "title": "feat(react,vue): add onReady callback and container pass-through props",
+  "body": "## Summary / 摘要\n\n实现 ROADMAP #4（`<Editor />` 容器属性透传 + `onReady` 回调）。React 与 Vue 双端同步添加 `onReady` 回调（编辑器创建完成后回调 `EditorAPI`）和 `className` / `style` / `id`（Vue 端为 `class` / `style` / `id`）容器属性透传。`useEditor` hook / composable 同步支持 `onReady`。\n\n## Motivation / 背景与动机\n\n- Issue: N/A（开放命题面试 PR）\n- Roadmap (docs/ROADMAP.md): **#4 `<Editor />` 容器属性透传 + `onReady` 回调**（**P0**、planned），由本 PR 转为 done\n- OpenSpec change: N/A —— Roadmap 标注\"否\"（公共 API 增量，两端语义需一致）\n\nPR 之前的状态：\n- React 的 `<Editor />` 是 9 行裸壳（`packages/react/src/editor.tsx`），渲染 `<div ref={containerRef} />`，没有任何 props 透传通道，宿主想给容器加 `className` / `style` 必须用 `useEditor` hook 自己组装 DOM\n- Vue 同理（`packages/vue/src/editor.ts` 只声明 `initialValue` prop）\n- 两端都没有 `onReady` 通知机制 —— 宿主想在编辑器就绪后做\"focus、注入文档、注册命令\"等动作只能依赖 `useEffect` 上的 `editor` 状态，多一跳重渲染\n\n本 PR 把这两个高频痛点一次补完，且**保持 hook / composable 的纯粹性**：`useEditor` 仅接收 `EditorConfig + onReady`，DOM 容器属性只属于组件层（因为只有组件才渲染容器）。\n\n## Changes / 变更内容\n\n- `packages/react`:\n  - `src/types.ts`:\n    - `UseEditorConfig` 由 `Omit<EditorConfig, \"container\">` 改为 `interface` 并扩展 `onReady?: (editor: EditorAPI) => void`\n    - 新增 `EditorProps extends UseEditorConfig`，叠加 `className?: string` / `style?: CSSProperties` / `id?: string`\n  - `src/use-editor.ts`: 在 `createEditor` 之后立即调用 `onReady?.(instance)`，从 config 中剥离 `onReady` 不传给 core\n  - `src/editor.tsx`: 从 `EditorProps` 解构 `className` / `style` / `id` 透传到 `<div>`，其余字段透传给 `useEditor`\n  - `src/index.ts`: 导出 `EditorProps` 类型\n- `packages/vue`:\n  - `src/types.ts`: 同构变更，`EditorProps` 中字段名遵循 Vue 习惯（`class` / `style` / `id`），`style` 类型为 `string | Record<string, string>`\n  - `src/use-editor.ts`: `onMounted` 内 `createEditor` 之后调用 `onReady?.(instance)`\n  - `src/editor.ts`: `defineComponent` 的 `props` 声明加 `class` / `style` / `id`，setup 中 `h(\"div\", { ref: containerRef, class, style, id })`\n  - `src/index.ts`: 导出 `EditorProps`\n- `packages/core`: 无改动 —— 现有 `EditorAPI` 已是稳定返回\n- 其他：无文档 / 配置改动\n\n## Testing / 测试\n\n- [x] `pnpm test` passes / 全绿 —— **331 / 331 通过**\n- [x] Affected packages build (`pnpm build`) 通过：\n  - `@floatboat/nexus-react` —— JS / d.ts 均通过\n  - `@floatboat/nexus-vue` —— JS / d.ts 均通过\n- [x] New / updated vitest cases / 新增 vitest 用例：\n  - `packages/react/test/editor-react.test.tsx` 新增 **2 cases**：\n    - `calls onReady with the editor instance after creation` —— `vi.fn()` 断言被调用 1 次且收到的 EditorAPI 可执行 `getDocument()`\n    - `passes className, style, and id to the container div` —— 断言三个属性都落到 `firstElementChild` 上\n  - `packages/vue/test/editor-vue.test.ts` 新增 **2 cases**：\n    - 同上 onReady（`@vue/test-utils` + `nextTick`）\n    - 同上 class / style / id 透传\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证 —— **未做**：electron-demo 当前直接调用 `createEditor`，不经过 React / Vue SDK；React / Vue 单元测试已用真实 DOM 渲染验证\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits（`feat(react,vue): ...`）\n- [x] Public API changes update package README / types —— 类型已同步导出（`EditorProps` 加入 `packages/react/src/index.ts` 与 `packages/vue/src/index.ts`）；两个 SDK 包未提供独立 README\n- [x] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md —— **本 PR 未触及 `live-preview-table.ts`**\n- [x] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec —— N/A：Roadmap 标注\"否\"\n- [x] No secrets / personal vault data committed / 无敏感信息被提交\n\n## 设计说明（评审参考）\n\n**为什么把 `UseEditorConfig` 与 `EditorProps` 拆成两层？**\n\n`useEditor` 的 contract 是\"接收配置 → 返回 ref + editor 实例\"，**宿主自己决定容器 DOM**。若把 `className` / `style` 塞进 `UseEditorConfig`，hook 实际没办法消费这些字段（容器不在它手里），只是借类型让 IDE 不报错 —— 这是**伪装的 API**，会让用户疑惑\"我传了 className 为什么没生效\"。\n\n拆成 `UseEditorConfig`（hook 用）+ `EditorProps extends UseEditorConfig`（组件用）后：\n- 组件层用 `EditorProps`，类型上有 `className` 字段\n- hook 层用 `UseEditorConfig`，没有 DOM 字段，**编译期就阻止误用**\n- 二者通过 `extends` 关联，组件内 `useEditor(config)` 自然安全\n\n**为什么 `onReady` 放在 `UseEditorConfig` 而非 `EditorProps`？**\n\n`onReady` 与容器 DOM 无关，是\"编辑器实例就绪\"信号 —— 直接用 `useEditor` 的宿主也需要它。统一放在 `UseEditorConfig` 让两条消费路径共享同一钩子。\n\n**React / Vue 字段命名差异为何不强行对齐？**\n\nVue 的容器属性约定是 `class` / `style`（HTML 风格），React 是 `className` / `style` —— 强行统一会破坏每端的惯用法。我们对齐**语义**（`onReady` 同名）而非**字面**，符合 Roadmap 备注\"两端语义需一致\"的要求。\n\n## Out of scope（识别但本 PR 不做）\n\n- **完整的容器属性透传（如 `data-*` / `aria-*` / `role` / `tabIndex`）**：本 PR 只覆盖 Roadmap 备注里明确提及的 `className` / `style` / `id`，更全面的 attribute spread 涉及类型设计选择（是否 `extends HTMLAttributes<HTMLDivElement>`？SSR 兼容？），建议另开 issue 讨论\n- **React `forwardRef` 暴露 EditorAPI**：`onReady` 已足够 80% 场景；ref 暴露需要 `useImperativeHandle` 并讨论 `EditorAPI` 在父组件存活期内的稳定性\n- **Vue 用 emit (`@ready`) 替代 `onReady` prop**：当前 props 形式让 React / Vue 调用方式一致；若需 emit 风格可增量加，不破坏现状\n- **响应式 props（运行时变更 `initialValue` 重建编辑器）**：core 暂未提供\"完整重置文档同时保留 history\"的钩子，属于另一条独立工作\n\n## Screenshots / Recordings · 截图或录屏 (UI changes)\n\nN/A —— 行为类改动，无新 UI 元素。使用示例：\n\n```tsx\n// React\n<Editor\n  initialValue=\"# Hello\"\n  className=\"my-editor\"\n  style={{ height: 400 }}\n  id=\"doc-1\"\n  onReady={(editor) => editor.focus()}\n/>\n```\n\n```vue\n<!-- Vue -->\n<Editor\n  initial-value=\"# Hello\"\n  class=\"my-editor\"\n  style=\"height: 400px\"\n  id=\"doc-1\"\n  :on-ready=\"(editor) => editor.focus()\"\n/>\n```",
+  "created_at": "2026-06-17T08:19:05Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "1905df029a6b5a6795d8ea53ed12622647c12173",
+  "first_review_time": "2026-06-17T08:19:26Z",
+  "commits_at_first_review": [
+    {
+      "sha": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+      "message": "feat(search): add whole-word and regex matching to utility functions\n\nAdd `wholeWord` and `regexp` options to `SearchOptions`. Whole-word uses\n\\b boundaries; regex mode passes the query as a raw pattern with graceful\nhandling of invalid expressions (returns empty results).\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T05:37:10Z"
+    },
+    {
+      "sha": "1905df029a6b5a6795d8ea53ed12622647c12173",
+      "message": "feat(react,vue): add onReady callback and container pass-through props\n\nBoth `<Editor />` components now accept `onReady` (called with EditorAPI\nafter initialization), plus `className`/`style`/`id` (React) and\n`class`/`style`/`id` (Vue) forwarded to the container div.\n\nThe `useEditor` hook also supports `onReady` in its config object.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T06:00:40Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "9ba2cf56e606c24099fc17a3068ed8047833699c",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 4,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -25,6 +25,8 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  wholeWord?: boolean;\n+  regexp?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -79,6 +81,24 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp | null {\n+  const flags = options.caseSensitive ? \"g\" : \"gi\";\n+\n+  let pattern: string;\n+  if (options.regexp) {\n+    pattern = options.wholeWord ? `\\\\b(?:${query})\\\\b` : query;\n+  } else {\n+    const escaped = escapeRegExp(query);\n+    pattern = options.wholeWord ? `\\\\b${escaped}\\\\b` : escaped;\n+  }\n+\n+  try {\n+    return new RegExp(pattern, flags);\n+  } catch {\n+    return null;\n+  }\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,8 +108,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const pattern = buildSearchPattern(query, options);\n+  if (!pattern) {\n+    return [];\n+  }\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n@@ -116,8 +138,11 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n+  const pattern = buildSearchPattern(query, options);\n+  if (!pattern) {\n+    return doc;\n+  }\n+  return doc.replace(pattern, replacement);\n }\n \n function resolveLabel("
+      },
+      {
+        "sha": "0f89abc56ff3fb15680a04253ebc8d1ae9a91d89",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 56,
+        "deletions": 0,
+        "changes": 56,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -21,10 +21,66 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat cats catalog\", \"cat\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat Cat CAT\", \"Cat\", { wholeWord: true, caseSensitive: true })).toEqual([\n+      { from: 4, to: 7, text: \"Cat\" }\n+    ]);\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"replaces only whole-word matches\", () => {\n+    expect(replaceAllMatches(\"cat catalog cat concatenate\", \"cat\", \"dog\", { wholeWord: true })).toBe(\n+      \"dog catalog dog concatenate\"\n+    );\n+  });\n+\n+  it(\"supports regex search\", () => {\n+    expect(findSearchMatches(\"foo123 bar456 baz\", \"\\\\d+\", { regexp: true })).toEqual([\n+      { from: 3, to: 6, text: \"123\" },\n+      { from: 10, to: 13, text: \"456\" }\n+    ]);\n+  });\n+\n+  it(\"supports regex search with groups\", () => {\n+    expect(findSearchMatches(\"2024-01-15 and 2024-12-31\", \"\\\\d{4}-\\\\d{2}-\\\\d{2}\", { regexp: true })).toEqual([\n+      { from: 0, to: 10, text: \"2024-01-15\" },\n+      { from: 15, to: 25, text: \"2024-12-31\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive regex search\", () => {\n+    expect(findSearchMatches(\"Hello hello HELLO\", \"h.llo\", { regexp: true, caseSensitive: true })).toEqual([\n+      { from: 6, to: 11, text: \"hello\" }\n+    ]);\n+  });\n+\n+  it(\"returns empty results for invalid regex\", () => {\n+    expect(findSearchMatches(\"hello world\", \"[invalid(\", { regexp: true })).toEqual([]);\n+  });\n+\n+  it(\"replaces with regex capture groups\", () => {\n+    expect(replaceAllMatches(\"foo bar baz\", \"(\\\\w+)\", \"[$1]\", { regexp: true })).toBe(\"[foo] [bar] [baz]\");\n+  });\n+\n+  it(\"returns original doc for invalid regex in replace\", () => {\n+    expect(replaceAllMatches(\"hello world\", \"[bad(\", \"x\", { regexp: true })).toBe(\"hello world\");\n+  });\n+\n+  it(\"supports regex with whole-word combined\", () => {\n+    expect(findSearchMatches(\"cat cats concatenate\", \"cat|dog\", { regexp: true, wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" }\n+    ]);\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      },
+      {
+        "sha": "9a2feafb60544f26bfb66cdd2bd735cb2e13995d",
+        "filename": "packages/react/src/editor.tsx",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 4,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Feditor.tsx?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -1,9 +1,9 @@\n import { useEditor } from \"./use-editor\";\n \n-import type { UseEditorConfig } from \"./types\";\n+import type { EditorProps } from \"./types\";\n \n-export function Editor(props: UseEditorConfig) {\n-  const { containerRef } = useEditor(props);\n+export function Editor({ className, style, id, ...config }: EditorProps) {\n+  const { containerRef } = useEditor(config);\n \n-  return <div ref={containerRef} />;\n+  return <div ref={containerRef} className={className} style={style} id={id} />;\n }"
+      },
+      {
+        "sha": "65c1ca9f5e86783f6e78b2cdd93d78068f08cbcf",
+        "filename": "packages/react/src/index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Findex.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -1,3 +1,3 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type { EditorProps, UseEditorConfig, UseEditorResult } from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "8356c38033dbe8a25ef210c31a8fa538f9a8cac0",
+        "filename": "packages/react/src/types.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 2,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Ftypes.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -2,9 +2,17 @@ import type {\n   EditorAPI,\n   EditorConfig\n } from \"@floatboat/nexus-core\";\n-import type { RefObject } from \"react\";\n+import type { CSSProperties, RefObject } from \"react\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  onReady?: (editor: EditorAPI) => void;\n+}\n+\n+export interface EditorProps extends UseEditorConfig {\n+  className?: string;\n+  style?: CSSProperties;\n+  id?: string;\n+}\n \n export interface UseEditorResult {\n   containerRef: RefObject<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "0f2518a1ebf48263b39906ed96b018f5be2ea704",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 1,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -18,13 +18,16 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n+    const { onReady, ...editorConfig } = configRef.current;\n+\n     const instance = createEditor({\n       container,\n-      ...configRef.current\n+      ...editorConfig\n     });\n \n     editorRef.current = instance;\n     setEditor(instance);\n+    onReady?.(instance);\n \n     return () => {\n       instance.destroy();"
+      },
+      {
+        "sha": "75518abfa9e29bf70385f976fc22cee35eed0ae2",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 23,
+        "deletions": 1,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -1,7 +1,8 @@\n import { render } from \"@testing-library/react\";\n import { useEffect } from \"react\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n \n describe(\"@floatboat/nexus-react\", () => {\n   it(\"renders an editor into the provided container through the Editor component\", () => {\n@@ -37,4 +38,25 @@ describe(\"@floatboat/nexus-react\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady with the editor instance after creation\", () => {\n+    const onReady = vi.fn();\n+\n+    render(<Editor initialValue=\"# Ready\" onReady={onReady} />);\n+\n+    expect(onReady).toHaveBeenCalledTimes(1);\n+    const editor: EditorAPI = onReady.mock.calls[0][0];\n+    expect(editor.getDocument()).toBe(\"# Ready\");\n+  });\n+\n+  it(\"passes className, style, and id to the container div\", () => {\n+    const { container } = render(\n+      <Editor initialValue=\"\" className=\"my-editor\" style={{ border: \"1px solid red\" }} id=\"editor-1\" />\n+    );\n+\n+    const div = container.firstElementChild as HTMLElement;\n+    expect(div.className).toContain(\"my-editor\");\n+    expect(div.style.border).toBe(\"1px solid red\");\n+    expect(div.id).toBe(\"editor-1\");\n+  });\n });"
+      },
+      {
+        "sha": "fdac0d783a27bde5a9ac632b6e758559a7af83f0",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 16,
+        "deletions": 3,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -8,11 +8,24 @@ export const Editor = defineComponent({\n     initialValue: {\n       type: String,\n       required: false\n+    },\n+    class: {\n+      type: String,\n+      required: false\n+    },\n+    style: {\n+      type: [String, Object],\n+      required: false\n+    },\n+    id: {\n+      type: String,\n+      required: false\n     }\n   },\n-  setup(props) {\n-    const { containerRef } = useEditor(props);\n+  setup(props, { attrs }) {\n+    const { class: className, style, id, ...editorProps } = props;\n+    const { containerRef } = useEditor({ ...editorProps, ...attrs } as any);\n \n-    return () => h(\"div\", { ref: containerRef });\n+    return () => h(\"div\", { ref: containerRef, class: className, style, id });\n   }\n });"
+      },
+      {
+        "sha": "65c1ca9f5e86783f6e78b2cdd93d78068f08cbcf",
+        "filename": "packages/vue/src/index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Findex.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -1,3 +1,3 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type { EditorProps, UseEditorConfig, UseEditorResult } from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "293ec235778d8a9fa42d3ae3029e64dfa70187a5",
+        "filename": "packages/vue/src/types.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 1,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Ftypes.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -4,7 +4,15 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { Ref, ShallowRef } from \"vue\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  onReady?: (editor: EditorAPI) => void;\n+}\n+\n+export interface EditorProps extends UseEditorConfig {\n+  class?: string;\n+  style?: string | Record<string, string>;\n+  id?: string;\n+}\n \n export interface UseEditorResult {\n   containerRef: Ref<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "7d79e7f019e26095e43eef4c4134a206e7bb272c",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 2,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -12,10 +12,15 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n-    editor.value = createEditor({\n+    const { onReady, ...editorConfig } = config;\n+\n+    const instance = createEditor({\n       container: containerRef.value,\n-      ...config\n+      ...editorConfig\n     });\n+\n+    editor.value = instance;\n+    onReady?.(instance);\n   });\n \n   onBeforeUnmount(() => {"
+      },
+      {
+        "sha": "a84d294397b329bfe205011b90c6c75ec74d46c8",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 36,
+        "deletions": 1,
+        "changes": 37,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1905df029a6b5a6795d8ea53ed12622647c12173/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=1905df029a6b5a6795d8ea53ed12622647c12173",
+        "patch": "@@ -1,7 +1,8 @@\n import { mount } from \"@vue/test-utils\";\n import { defineComponent, h, nextTick, onMounted } from \"vue\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n \n describe(\"@floatboat/nexus-vue\", () => {\n   it(\"renders an editor into the provided container through the Editor component\", async () => {\n@@ -45,4 +46,38 @@ describe(\"@floatboat/nexus-vue\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady with the editor instance after creation\", async () => {\n+    const onReady = vi.fn();\n+\n+    mount(Editor, {\n+      props: {\n+        initialValue: \"# Ready\",\n+        onReady\n+      } as any\n+    });\n+\n+    await nextTick();\n+\n+    expect(onReady).toHaveBeenCalledTimes(1);\n+    const editor: EditorAPI = onReady.mock.calls[0][0];\n+    expect(editor.getDocument()).toBe(\"# Ready\");\n+  });\n+\n+  it(\"passes class, style, and id to the container div\", async () => {\n+    const wrapper = mount(Editor, {\n+      props: {\n+        initialValue: \"\",\n+        class: \"my-editor\",\n+        style: \"border: 1px solid red\",\n+        id: \"editor-1\"\n+      } as any\n+    });\n+\n+    await nextTick();\n+\n+    expect(wrapper.element.className).toContain(\"my-editor\");\n+    expect((wrapper.element as HTMLElement).style.border).toBe(\"1px solid red\");\n+    expect(wrapper.element.id).toBe(\"editor-1\");\n+  });\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=67",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

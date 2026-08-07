@@ -1,0 +1,50 @@
+{
+  "pr_number": 11,
+  "title": "fix(electron-demo): add nexus-plugin-slash tsconfig path mapping",
+  "state": "closed",
+  "merged": true,
+  "merged_at": "2026-05-13T09:38:24Z",
+  "closed_at": "2026-05-13T09:38:24Z",
+  "merged_by": "ketd",
+  "closed_by": "ketd",
+  "head_sha_final": "9bcd5610396ebb91c0f23a60d80df10e32321d93",
+  "merge_commit_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "base_sha": "40ff0d8392a2c92e25d5b5497e258044ca845be7",
+  "commits": [
+    {
+      "sha": "9bcd5610396ebb91c0f23a60d80df10e32321d93",
+      "message": "fix(electron-demo): add nexus-plugin-slash tsconfig path mapping\n\nPR #5 added the @floatboat/nexus-plugin-slash import and workspace dep\nbut missed the path entry in apps/electron-demo/tsconfig.json. The\ndemo's tsconfig redeclares paths (overriding, not extending the base),\nso tsc fails to resolve the module in CI where dist artifacts are\nabsent.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-05-13T09:32:51Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  }
+}

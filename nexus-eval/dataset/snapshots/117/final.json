@@ -1,0 +1,72 @@
+{
+  "pr_number": 117,
+  "title": "docs(openspec): propose customizable keymap UI",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "34add58d2169367af52e83e09ba0027d346253ad",
+  "merge_commit_sha": "73d22fd2074fe4439af90b5e4f9c1a1f2d7b90b7",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "1d6f55b5f74836548600c6212339aa368f04c481",
+      "message": "docs(openspec): propose customizable keymap UI",
+      "date": "2026-07-03T07:24:17Z"
+    },
+    {
+      "sha": "34add58d2169367af52e83e09ba0027d346253ad",
+      "message": "docs(openspec): propose customizable keymap UI",
+      "date": "2026-07-03T07:30:57Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/design.md",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/proposal.md",
+      "status": "added",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/tasks.md",
+      "status": "added",
+      "additions": 39,
+      "deletions": 0,
+      "changes": 39
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=117",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

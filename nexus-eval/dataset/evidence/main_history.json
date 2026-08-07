@@ -1,0 +1,3300 @@
+{
+  "generated_at_utc": "2026-08-05T21:48:53Z",
+  "source": "local git checkout of floatboatai/Nexus-Editor branch main (offline, deterministic)",
+  "method": "mechanical filter in AGENTS.md 2.2 order: merge(>=2 parents or 'Merge ...' prefix) -> bot -> PR-associated('(#NN)' squash trailer or any '#NN' mention of an existing PR) -> version/release -> lockfile/generated-only; survivors are direct-push WEAK evidence.",
+  "summary": {
+    "merge": 4,
+    "bot": 0,
+    "pr_associated": 16,
+    "version_release": 6,
+    "lockfile_gen_only": 1,
+    "direct_push": 112,
+    "total_main_commits": 139
+  },
+  "rows": {
+    "merge": [
+      {
+        "sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+        "short_sha": "7cd61f595abc",
+        "date": "2026-05-13T17:38:24+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "Merge pull request #11 from floatboatai/fix/electron-demo-slash-tsconfig-path",
+        "n_parents": 2
+      },
+      {
+        "sha": "40ff0d8392a2c92e25d5b5497e258044ca845be7",
+        "short_sha": "40ff0d8392a2",
+        "date": "2026-05-13T17:23:34+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "Merge pull request #10 from floatboatai/chore/roadmap-status-in-review",
+        "n_parents": 2
+      },
+      {
+        "sha": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2",
+        "short_sha": "372a9743ab28",
+        "date": "2026-05-13T17:11:01+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "Merge pull request #5 from 2391384896/feat/slash-floating-menu",
+        "n_parents": 2
+      },
+      {
+        "sha": "b569ba086ceff00f37b29e56ed7f795cd7f678ef",
+        "short_sha": "b569ba086cef",
+        "date": "2026-05-13T17:10:03+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "Merge pull request #3 from floatboatai/test/harden-sample-vault-fixtures",
+        "n_parents": 2
+      }
+    ],
+    "bot": [],
+    "pr_associated": [
+      {
+        "sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+        "short_sha": "e7c105c4e6eb",
+        "date": "2026-06-23T21:10:17+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "docs(roadmap): mark merged features done and fix duplicate item number",
+        "n_parents": 1,
+        "reason": "mentions-PR"
+      },
+      {
+        "sha": "b8e758b0daf27b23aa77571635e044c0e0544da7",
+        "short_sha": "b8e758b0daf2",
+        "date": "2026-06-23T20:36:37+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "chore: add governance doc and PR compliance template (#34)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "26de892b77f8b62484ceb830fe5f1b21e689b536",
+        "short_sha": "26de892b77f8",
+        "date": "2026-06-23T15:57:49+08:00",
+        "author_name": "songyipan",
+        "author_email": "3515164447@qq.com",
+        "login": "songyipan",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(react,vue): add controlled document mode to Editor (#30)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "c55d37d4bb7716d9e58bf2254d994239e2692199",
+        "short_sha": "c55d37d4bb77",
+        "date": "2026-06-23T15:39:36+08:00",
+        "author_name": "liuzhx",
+        "author_email": "minimilkfish@outlook.com",
+        "login": "MiniMilkfish",
+        "login_confidence": "medium",
+        "login_note": "PR #29 author login MiniMilkfish",
+        "subject": "feat(react,vue): add Editor component and useEditor hook with onReady callback (#29)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "6d5f58d41f9ea12bbda962c2193a533406b1e624",
+        "short_sha": "6d5f58d41f9e",
+        "date": "2026-06-23T15:37:17+08:00",
+        "author_name": "rM0on",
+        "author_email": "2099375169@qq.com",
+        "login": "rM0on",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(slash): add opt-in recent command ordering (#72)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "d52be4eb7be4889f3cfcb27922559284fb39169d",
+        "short_sha": "d52be4eb7be4",
+        "date": "2026-06-23T15:35:03+08:00",
+        "author_name": "rM0on",
+        "author_email": "2099375169@qq.com",
+        "login": "rM0on",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(search): add opt-in search query history (#71)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "8427e169fc238f1356ad2515d53443e97144f5eb",
+        "short_sha": "8427e169fc23",
+        "date": "2026-06-23T15:32:55+08:00",
+        "author_name": "麦当",
+        "author_email": "borisdunk@sina.com",
+        "login": "maidangzhu",
+        "login_confidence": "medium",
+        "login_note": "PR #68 author login maidangzhu",
+        "subject": "feat(search): add whole-word and regex matching to utility functions (#68)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "818155f089c6e9b1cdafd7751a5cddb8b223fc86",
+        "short_sha": "818155f089c6",
+        "date": "2026-06-23T15:31:01+08:00",
+        "author_name": "yhaosen31-dot",
+        "author_email": "yhaosen31@gmail.com",
+        "login": "yhaosen31-dot",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(core): add selection controls to setDocument (#60)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "ccbb25ff01131f67ac6ddab651adc4df199c16a9",
+        "short_sha": "ccbb25ff0113",
+        "date": "2026-06-23T15:23:30+08:00",
+        "author_name": "ehe123456",
+        "author_email": "caine211345@gmail.com",
+        "login": "caine-21",
+        "login_confidence": "medium",
+        "login_note": "PR #21 author login caine-21",
+        "subject": "feat(core): add getSelectedText() and atomic replaceRange(), multi-line list toggle (#21)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "fd09ff84c7124609a2886dc0a46d801a77465fab",
+        "short_sha": "fd09ff84c712",
+        "date": "2026-06-23T15:19:11+08:00",
+        "author_name": "imsai-sh",
+        "author_email": "14907300+imsai-sh@users.noreply.github.com",
+        "login": "imsai-sh",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "feat(core): add multi-cursor / multi-selection support (#57)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "d9a6c9a8dd41e04e07b8b3116e1bcbaeba16a3a6",
+        "short_sha": "d9a6c9a8dd41",
+        "date": "2026-06-23T15:16:56+08:00",
+        "author_name": "alacefield900-sudo",
+        "author_email": "alacefield900@gmail.com",
+        "login": "alacefield900-sudo",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(wordcount): add @floatboat/nexus-plugin-wordcount with markdown-aware stats (#65)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "bb83c3a3d5af25fa781e1762e1e616ee0f2cba34",
+        "short_sha": "bb83c3a3d5af",
+        "date": "2026-06-23T15:11:28+08:00",
+        "author_name": "Wangchangcheng",
+        "author_email": "1209974887@qq.com",
+        "login": "qq1209974887",
+        "login_confidence": "medium",
+        "login_note": "PR #50 author login qq1209974887",
+        "subject": "fix(electron): normalize file paths for Windows compatibility (#50)",
+        "n_parents": 1,
+        "reason": "squash-trailer"
+      },
+      {
+        "sha": "9bcd5610396ebb91c0f23a60d80df10e32321d93",
+        "short_sha": "9bcd5610396e",
+        "date": "2026-05-13T17:32:51+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(electron-demo): add nexus-plugin-slash tsconfig path mapping",
+        "n_parents": 1,
+        "reason": "mentions-PR"
+      },
+      {
+        "sha": "a593b47e104d16184f440e06ba00c418baafa28c",
+        "short_sha": "a593b47e104d",
+        "date": "2026-05-13T17:21:22+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "chore(roadmap): mark #5 getSelectedText and #15 regex search as in-progress",
+        "n_parents": 1,
+        "reason": "mentions-PR"
+      },
+      {
+        "sha": "c8723549300f69713a90aea6efbcdd87f254530d",
+        "short_sha": "c8723549300f",
+        "date": "2026-04-16T22:06:49+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "docs: add table widget rules #10-#12 for drag dispatch, rAF flags, StateField guard",
+        "n_parents": 1,
+        "reason": "mentions-PR"
+      },
+      {
+        "sha": "2448caf2eb31f7f1aea1efe7e1dac7e4ea44d82c",
+        "short_sha": "2448caf2eb31",
+        "date": "2026-04-16T21:41:12+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: table grip drag fails when cell was previously focused",
+        "n_parents": 1,
+        "reason": "mentions-PR"
+      }
+    ],
+    "version_release": [
+      {
+        "sha": "654433426e490069807442b970d5d6015bede5b4",
+        "short_sha": "654433426e49",
+        "date": "2026-06-01T21:31:33+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "feat(core): editor hook layer + task-list interaction, table nav, IME & render fixes (v0.0.12)",
+        "n_parents": 1
+      },
+      {
+        "sha": "78eabdfd105190d23178ca5d5be3840a4a15c23a",
+        "short_sha": "78eabdfd1051",
+        "date": "2026-05-27T14:12:02+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(table): forward editor shortcuts (Mod-F etc.) from focused cells (v0.0.6)",
+        "n_parents": 1
+      },
+      {
+        "sha": "e73a73f99d0da4e83fee6d6cb1a0d7a349466bf0",
+        "short_sha": "e73a73f99d0d",
+        "date": "2026-05-25T19:00:19+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "feat: live preview perf, html embed, alerts, math UX, table fixes (v0.0.5)",
+        "n_parents": 1
+      },
+      {
+        "sha": "68a9923bb813116fede73cd9881f92f0e75acd68",
+        "short_sha": "68a9923bb813",
+        "date": "2026-05-12T17:26:32+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "chore: release 0.0.4",
+        "n_parents": 1
+      },
+      {
+        "sha": "74ae1d47e6c8f3c937033e6105abc75fb5f54485",
+        "short_sha": "74ae1d47e6c8",
+        "date": "2026-05-09T16:52:13+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "feat: prepare Nexus 0.0.2 release",
+        "n_parents": 1
+      },
+      {
+        "sha": "613b32a84253c082dcc977032381da51faca6658",
+        "short_sha": "613b32a84253",
+        "date": "2026-05-08T17:48:31+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "chore: release 0.0.1",
+        "n_parents": 1
+      }
+    ],
+    "lockfile_gen_only": [
+      {
+        "sha": "92b8dd190739256a9b950518f25507c5c3a0448b",
+        "short_sha": "92b8dd190739",
+        "date": "2026-06-23T21:09:11+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "chore: stop tracking electron-demo build artifacts",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/dist-electron/main.js",
+          "apps/electron-demo/dist-electron/preload.js"
+        ],
+        "n_files": 2
+      }
+    ],
+    "direct_push": [
+      {
+        "sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+        "short_sha": "dfd466d657c5",
+        "date": "2026-07-13T10:44:07+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix(search): map rendered table highlights to source",
+        "n_parents": 1,
+        "files": [
+          "packages/plugin-search/src/index.ts",
+          "packages/plugin-search/test/plugin-search.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "a079d2f71c5d699cd873d63fdad5a9d13af41a34",
+        "short_sha": "a079d2f71c5d",
+        "date": "2026-07-13T10:43:56+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix(core): preserve pending table edits safely",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 4
+      },
+      {
+        "sha": "1fa52eca126d88ff1db29fb7a218470d91656fc6",
+        "short_sha": "1fa52eca126d",
+        "date": "2026-07-07T21:05:01+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix: restore table cell partial selections after selectionchange",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "5828439bf6e9b804d1f5bf7f4b735bace5cfaf57",
+        "short_sha": "5828439bf6e9",
+        "date": "2026-07-07T18:31:23+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix: preserve table cell partial text selections",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "1f01afee1cf48816fd3c18f922c5f9c8a89ea8ea",
+        "short_sha": "1f01afee1cf4",
+        "date": "2026-07-07T16:53:27+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix: stabilize table cell ime editing",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "a3c829cf19cb5f037cecbb0c60d9f38f50214c5c",
+        "short_sha": "a3c829cf19cb",
+        "date": "2026-07-07T12:28:35+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix: stabilize markdown table search and selection",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-search/src/index.ts",
+          "packages/plugin-search/test/plugin-search.test.ts"
+        ],
+        "n_files": 4
+      },
+      {
+        "sha": "cc2cf1f4d5fb79df0b8a5e88e46a35abccef6c7c",
+        "short_sha": "cc2cf1f4d5fb",
+        "date": "2026-07-06T22:51:52+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "fix: render strikethrough text inside markdown table cells",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/lezer-mdast-adapter.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+        "short_sha": "63667f7604ed",
+        "date": "2026-07-01T17:37:43+08:00",
+        "author_name": "zhenyuliu",
+        "author_email": "56373988+2391384896@users.noreply.github.com",
+        "login": "2391384896",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix: allow copying markdown table cell text",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/tsconfig.json",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 4
+      },
+      {
+        "sha": "49bd8ab6391f3573df82ef68d9ddc764625f1f8f",
+        "short_sha": "49bd8ab6391f",
+        "date": "2026-06-30T18:15:04+08:00",
+        "author_name": "aoe",
+        "author_email": "aoe@aoedeMac-mini.local",
+        "login": "aoe",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "docs(roadmap): update CI/CD pipeline status",
+        "n_parents": 1,
+        "files": [
+          "docs/ROADMAP.md",
+          "docs/ROADMAP.zh.md"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+        "short_sha": "a5b87a59dc92",
+        "date": "2026-06-03T17:58:54+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(live-preview): keep HTML comment blocks visible",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 13
+      },
+      {
+        "sha": "60c496f8c337d49fc36bc2abd2c9a35bd16cd473",
+        "short_sha": "60c496f8c337",
+        "date": "2026-05-29T16:14:32+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(core): stabilize markdown composition editing",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/editor.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/markdown-autopair.ts",
+          "packages/core/src/widget-extension.ts",
+          "packages/core/src/wikilinks.ts",
+          "packages/core/test/editor.test.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-toolbar/src/color-decoration.ts",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 20
+      },
+      {
+        "sha": "06ebeff8120c2dbde87ff9206a7f9fd921f70088",
+        "short_sha": "06ebeff8120c",
+        "date": "2026-05-27T22:23:36+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(core): release table editing locks on destroy",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/live-preview-table.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 13
+      },
+      {
+        "sha": "b67337f66366eda8708dd3a3df3ac1787dc5845c",
+        "short_sha": "b67337f66366",
+        "date": "2026-05-27T22:17:21+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(core): preserve table range selection",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 14
+      },
+      {
+        "sha": "9a887ecbe1bc6c7648a8e54c6b27fecf7385fab1",
+        "short_sha": "9a887ecbe1bc",
+        "date": "2026-05-27T20:39:00+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(editor): restore editing for styled table cells and links",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 15
+      },
+      {
+        "sha": "8423ed51dbf7a5c4af05463556dbc297ccc31b2e",
+        "short_sha": "8423ed51dbf7",
+        "date": "2026-05-27T19:53:12+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(table): preserve clicked caret position in cells",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 13
+      },
+      {
+        "sha": "141f0002748b84d924bbf58d92852f0e0078f3e8",
+        "short_sha": "141f0002748b",
+        "date": "2026-05-26T21:36:54+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(table): column resize, image scaling, cursor-leave re-render",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/lezer-mdast-adapter.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "2e504006bedaa2ec908c1881db9676de463f7686",
+        "short_sha": "2e504006beda",
+        "date": "2026-05-26T21:34:38+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "Revert(ci): roll back Trusted Publishing — npm signup UX is broken",
+        "n_parents": 1,
+        "files": [
+          ".github/workflows/ci.yml",
+          ".github/workflows/release.yml"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+        "short_sha": "c78cd5e2280d",
+        "date": "2026-05-26T15:32:15+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(table): render inline links / marks in cells; fix InlineCode value",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/lezer-mdast-adapter.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "aa09d026c91843f2baf0940d39df48f0a5fe5dfa",
+        "short_sha": "aa09d026c918",
+        "date": "2026-05-25T19:20:24+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "ci: switch to npm Trusted Publishing (OIDC) via release.yml",
+        "n_parents": 1,
+        "files": [
+          ".github/workflows/ci.yml",
+          ".github/workflows/release.yml"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "da66d7addcccb6e99a52512c89a197ca829a3534",
+        "short_sha": "da66d7addccc",
+        "date": "2026-05-12T23:48:40+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "docs: mark slash menu sorting/limit roadmap done",
+        "n_parents": 1,
+        "files": [
+          "README.md",
+          "README.zh.md",
+          "docs/ROADMAP.md",
+          "docs/ROADMAP.zh.md"
+        ],
+        "n_files": 4
+      },
+      {
+        "sha": "b5a1666f2ef3a74ced9e49f090818b0d2ca285f0",
+        "short_sha": "b5a1666f2ef3",
+        "date": "2026-05-12T23:48:34+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "feat(electron): mount slash menu and add demo content",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "apps/electron-demo/sample-vault/index.md",
+          "apps/electron-demo/sample-vault/slash-demo.md",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/style.css",
+          "apps/electron-demo/vite.config.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 7
+      },
+      {
+        "sha": "38679ab3754b9860420d015433946f73f5753969",
+        "short_sha": "38679ab3754b",
+        "date": "2026-05-12T23:48:27+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "feat(toolbar): register slash commands for formatting actions",
+        "n_parents": 1,
+        "files": [
+          "packages/plugin-toolbar/src/index.ts",
+          "packages/plugin-toolbar/test/plugin-toolbar.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "bffeac27db2565ab4a540518435e1048a8fa4666",
+        "short_sha": "bffeac27db25",
+        "date": "2026-05-12T23:48:21+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "feat(slash): floating menu UI with keyboard navigation and a11y",
+        "n_parents": 1,
+        "files": [
+          "packages/plugin-slash/README.md",
+          "packages/plugin-slash/src/index.ts",
+          "packages/plugin-slash/src/menu-ui.ts",
+          "packages/plugin-slash/test/menu-ui.test.ts",
+          "packages/plugin-slash/test/plugin-slash.test.ts"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "89c75c19230c11d126104b3cef8a84481aa1fa2b",
+        "short_sha": "89c75c19230c",
+        "date": "2026-05-12T23:48:15+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "feat(core): add run callback and ranking to slash commands",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/slash-state.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/events.test.ts",
+          "packages/core/test/slash-state.test.ts"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "51d566685a64e2658201ffee8b6d2a470d50dd12",
+        "short_sha": "51d566685a64",
+        "date": "2026-05-12T23:48:00+08:00",
+        "author_name": "振宇",
+        "author_email": "zhenyulius@163.com",
+        "login": "2391384896",
+        "login_confidence": "medium",
+        "login_note": "github user 2391384896 name 'zhenyuliu', bio zhenyulius@163.com",
+        "subject": "docs(openspec): scaffold add-slash-menu-ui proposal",
+        "n_parents": 1,
+        "files": [
+          "openspec/changes/add-slash-menu-ui/design.md",
+          "openspec/changes/add-slash-menu-ui/proposal.md",
+          "openspec/changes/add-slash-menu-ui/specs/editor-core/spec.md",
+          "openspec/changes/add-slash-menu-ui/specs/slash-menu/spec.md",
+          "openspec/changes/add-slash-menu-ui/tasks.md"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "78b7bdfd2f499f5cb570cbfeb9cd38aaacdc3364",
+        "short_sha": "78b7bdfd2f49",
+        "date": "2026-05-12T23:31:40+10:00",
+        "author_name": "remy",
+        "author_email": "redreamality@gmail.com",
+        "login": "redreamality",
+        "login_confidence": "medium",
+        "login_note": "github-user-id 3147776, name 'Redreamality'",
+        "subject": "docs: revamp Chinese README to mirror English version",
+        "n_parents": 1,
+        "files": [
+          "README.zh.md"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "0819ebccd2003e8efc30e974d9b227771568d272",
+        "short_sha": "0819ebccd200",
+        "date": "2026-05-12T23:24:44+10:00",
+        "author_name": "remy",
+        "author_email": "redreamality@gmail.com",
+        "login": "redreamality",
+        "login_confidence": "medium",
+        "login_note": "github-user-id 3147776, name 'Redreamality'",
+        "subject": "docs: revamp README with comparison matrix and onboarding",
+        "n_parents": 1,
+        "files": [
+          "README.md"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "217f935e23a23010bbf19b733ce179e4ca62216d",
+        "short_sha": "217f935e23a2",
+        "date": "2026-05-12T17:22:29+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix: style table context menu",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "929d3dfcfd93197c470495a49ccb3514f1a705cb",
+        "short_sha": "929d3dfcfd93",
+        "date": "2026-05-12T14:52:28+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix: render content after large table",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/lezer-mdast-adapter.ts",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview-ranges.test.ts",
+          "packages/plugin-history/package.json",
+          "packages/plugin-math/package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-vim/package.json",
+          "packages/preset-gfm/package.json",
+          "packages/react/package.json",
+          "packages/vue/package.json"
+        ],
+        "n_files": 15
+      },
+      {
+        "sha": "4c2514da34ae45a3febf8017b92b803e0c2dfc14",
+        "short_sha": "4c2514da34ae",
+        "date": "2026-05-12T11:07:10+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix(electron): align tsconfig paths with root baseUrl",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/tsconfig.json"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "b2a62b9c0dc5cbadd1d6cf4b2ed60ca19df75942",
+        "short_sha": "b2a62b9c0dc5",
+        "date": "2026-05-12T11:01:39+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "test: harden fixture checks and add typecheck",
+        "n_parents": 1,
+        "files": [
+          ".github/workflows/ci.yml",
+          ".gitignore",
+          "AGENTS.md",
+          "apps/electron-demo/test/sample-vault.test.ts",
+          "package.json",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/wikilinks.test.ts",
+          "vitest.config.ts"
+        ],
+        "n_files": 9
+      },
+      {
+        "sha": "37c230a902fd37f30a6adbe2127d2d0120761297",
+        "short_sha": "37c230a902fd",
+        "date": "2026-05-11T15:37:05+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "docs: add contributing guide, PR template, and roadmap (bilingual)",
+        "n_parents": 1,
+        "files": [
+          ".github/PULL_REQUEST_TEMPLATE.md",
+          "CONTRIBUTING.md",
+          "CONTRIBUTING.zh.md",
+          "README.md",
+          "README.zh.md",
+          "docs/ROADMAP.md",
+          "docs/ROADMAP.zh.md"
+        ],
+        "n_files": 7
+      },
+      {
+        "sha": "3e5c33306cf3a145830c9e097d0c0541445103d8",
+        "short_sha": "3e5c33306cf3",
+        "date": "2026-05-08T17:57:03+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "ci: fix npm publish auth",
+        "n_parents": 1,
+        "files": [
+          ".github/workflows/ci.yml"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "a8874f1e3f320fcacee4e2344f9da8ae83f36315",
+        "short_sha": "a8874f1e3f32",
+        "date": "2026-05-08T17:34:48+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "ci: publish nexus packages to npm",
+        "n_parents": 1,
+        "files": [
+          ".github/workflows/ci.yml",
+          ".npmignore",
+          ".npmrc",
+          "README.md",
+          "README.zh.md",
+          "apps/electron-demo/package.json",
+          "apps/electron-demo/sample-vault/mermaid-demo.md",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/link-index.ts",
+          "apps/electron-demo/src/renderer/outline-panel.ts",
+          "apps/electron-demo/src/renderer/search-bar.ts",
+          "apps/electron-demo/src/renderer/settings.ts",
+          "apps/electron-demo/tsconfig.json",
+          "apps/electron-demo/vite.config.ts",
+          "package.json",
+          "packages/core/package.json",
+          "packages/plugin-history/package.json",
+          "packages/plugin-history/src/index.ts",
+          "packages/plugin-history/test/plugin-history.test.ts",
+          "packages/plugin-math/package.json",
+          "packages/plugin-math/src/index.ts",
+          "packages/plugin-search/package.json",
+          "packages/plugin-search/src/index.ts",
+          "packages/plugin-search/test/plugin-search.test.ts",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-slash/src/index.ts",
+          "packages/plugin-slash/test/plugin-slash.test.ts",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-toolbar/src/formatting.ts",
+          "packages/plugin-toolbar/src/index.ts",
+          "packages/plugin-toolbar/src/toolbar-ui.ts",
+          "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+          "packages/plugin-vim/package.json",
+          "packages/plugin-vim/src/index.ts",
+          "packages/plugin-vim/test/plugin-vim.test.ts",
+          "packages/preset-gfm/package.json",
+          "packages/preset-gfm/src/index.ts",
+          "packages/preset-gfm/test/preset-gfm.test.ts",
+          "packages/react/package.json",
+          "packages/react/src/types.ts",
+          "packages/react/src/use-editor.ts",
+          "packages/react/test/editor-react.test.tsx",
+          "packages/vue/package.json",
+          "packages/vue/src/types.ts",
+          "packages/vue/src/use-editor.ts",
+          "packages/vue/test/editor-vue.test.ts",
+          "pnpm-lock.yaml",
+          "prd.md",
+          "tsconfig.base.json",
+          "vitest.config.ts"
+        ],
+        "n_files": 50
+      },
+      {
+        "sha": "861ff08e1b16fbbedf08ed6188e6a47356ee1ca8",
+        "short_sha": "861ff08e1b16",
+        "date": "2026-05-06T19:58:32+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix: keep blockquotes editable in live preview",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview-regressions.test.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "044494b70b2fd85efaf076c79537ca12b8ef882a",
+        "short_sha": "044494b70b2f",
+        "date": "2026-05-06T19:31:51+08:00",
+        "author_name": "ketd",
+        "author_email": "94940923+ketd@users.noreply.github.com",
+        "login": "ketd",
+        "login_confidence": "high",
+        "login_note": "noreply-email",
+        "subject": "fix: optimize packaged editor startup",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/.gitignore",
+          "apps/electron-demo/dist-electron/main.js",
+          "apps/electron-demo/electron/main.ts",
+          "apps/electron-demo/package.json",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/backlinks-panel.ts",
+          "apps/electron-demo/src/renderer/bridge.d.ts",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/index.html",
+          "apps/electron-demo/src/renderer/link-index.ts",
+          "apps/electron-demo/src/renderer/perf.ts",
+          "apps/electron-demo/src/renderer/style.css",
+          "apps/electron-demo/test/editor-shell.test.ts",
+          "apps/electron-demo/test/link-index.test.ts",
+          "apps/electron-demo/test/sample-vault.test.ts",
+          "apps/electron-demo/vite.config.ts",
+          "packages/core/package.json",
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/lezer-footnote-extension.ts",
+          "packages/core/src/lezer-helpers.ts",
+          "packages/core/src/lezer-markdown.ts",
+          "packages/core/src/lezer-mdast-adapter.ts",
+          "packages/core/src/live-preview-highlight.ts",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/wikilinks.test.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 30
+      },
+      {
+        "sha": "ca616dd5976d66eb729f7575d0c1a63975dd4e0f",
+        "short_sha": "ca616dd5976d",
+        "date": "2026-04-20T16:50:23+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(image): Obsidian-style image preview with |width syntax and drag-resize",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/dist-electron/main.js",
+          "apps/electron-demo/electron/main.ts",
+          "apps/electron-demo/sample-vault/image-demo.md",
+          "apps/electron-demo/sample-vault/img/1.png",
+          "apps/electron-demo/sample-vault/index.md",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/index.html",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/live-preview-regressions.test.ts"
+        ],
+        "n_files": 11
+      },
+      {
+        "sha": "866b93b692b77edd2b92e1b432ffddef34168cf8",
+        "short_sha": "866b93b692b7",
+        "date": "2026-04-20T16:00:23+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(wikilinks): scroll to #heading and ^block anchors on link click",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/sample-vault/Projects/Nexus-Editor.md",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/link-index.ts",
+          "apps/electron-demo/test/link-index.test.ts",
+          "apps/electron-demo/test/sample-vault.test.ts"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "af0f7b60cd1f213f6d9393ab4fcc56ee2c3cb493",
+        "short_sha": "af0f7b60cd1f",
+        "date": "2026-04-20T15:57:26+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(live-preview): add mermaid diagram rendering with cursor-driven edit toggle",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/sample-vault/index.md",
+          "apps/electron-demo/sample-vault/mermaid-demo.md",
+          "apps/electron-demo/src/renderer/style.css",
+          "packages/core/package.json",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/mermaid.test.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 7
+      },
+      {
+        "sha": "c227bdccdbe470e3e6cadea55c07ac999504bf4e",
+        "short_sha": "c227bdccdbe4",
+        "date": "2026-04-20T15:11:20+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add Obsidian-style wiki links with linked/unlinked backlinks",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/dist-electron/main.js",
+          "apps/electron-demo/dist-electron/preload.js",
+          "apps/electron-demo/electron/main.ts",
+          "apps/electron-demo/electron/preload.ts",
+          "apps/electron-demo/sample-vault/.gitignore",
+          "apps/electron-demo/sample-vault/Daily/2026-04-20.md",
+          "apps/electron-demo/sample-vault/People/Alice.md",
+          "apps/electron-demo/sample-vault/People/Bob.md",
+          "apps/electron-demo/sample-vault/Projects/Ideas.md",
+          "apps/electron-demo/sample-vault/Projects/Nexus-Editor.md",
+          "apps/electron-demo/sample-vault/README.md",
+          "apps/electron-demo/sample-vault/Topics/AI.md",
+          "apps/electron-demo/sample-vault/Topics/Testing.md",
+          "apps/electron-demo/sample-vault/ghost-demo.md",
+          "apps/electron-demo/sample-vault/index.md",
+          "apps/electron-demo/sample-vault/personal/Diary.md",
+          "apps/electron-demo/sample-vault/personal/Meeting.md",
+          "apps/electron-demo/sample-vault/work/Inbox.md",
+          "apps/electron-demo/sample-vault/work/Meeting.md",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/backlinks-panel.ts",
+          "apps/electron-demo/src/renderer/bridge.d.ts",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/link-index.ts",
+          "apps/electron-demo/src/renderer/state.ts",
+          "apps/electron-demo/test/link-index.test.ts",
+          "apps/electron-demo/test/sample-vault.test.ts",
+          "openspec/changes/add-wikilinks/design.md",
+          "openspec/changes/add-wikilinks/proposal.md",
+          "openspec/changes/add-wikilinks/specs/live-preview/spec.md",
+          "openspec/changes/add-wikilinks/specs/note-vault/spec.md",
+          "openspec/changes/add-wikilinks/tasks.md",
+          "packages/core/src/index.ts",
+          "packages/core/src/wikilinks.ts",
+          "packages/core/test/wikilinks.test.ts"
+        ],
+        "n_files": 35
+      },
+      {
+        "sha": "96076e2504b91e019f478215b45357680e11bf2f",
+        "short_sha": "96076e2504b9",
+        "date": "2026-04-20T14:36:42+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(electron): add note vault (repository) with full CRUD",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/dist-electron/main.js",
+          "apps/electron-demo/dist-electron/preload.js",
+          "apps/electron-demo/electron/main.ts",
+          "apps/electron-demo/electron/preload.ts",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/bridge.d.ts",
+          "apps/electron-demo/src/renderer/state.ts",
+          "apps/electron-demo/src/renderer/vault-panel.ts",
+          "openspec/changes/add-note-vault/design.md",
+          "openspec/changes/add-note-vault/proposal.md",
+          "openspec/changes/add-note-vault/specs/note-vault/spec.md",
+          "openspec/changes/add-note-vault/tasks.md"
+        ],
+        "n_files": 12
+      },
+      {
+        "sha": "f7c6599bfa073f6e9e5b6304ce166734ae6f5127",
+        "short_sha": "f7c6599bfa07",
+        "date": "2026-04-20T12:18:02+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "test(live-preview): update indented-code-block test for new mark structure",
+        "n_parents": 1,
+        "files": [
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "5ec8daff9e7568f906214f2e5a43568bfd4cb236",
+        "short_sha": "5ec8daff9e75",
+        "date": "2026-04-20T12:17:54+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "test(live-preview): regression tests for click-drift invariants",
+        "n_parents": 1,
+        "files": [
+          "packages/core/test/live-preview-regressions.test.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "3cf8c6b19670d9813ee01de87702ef0806a2fd82",
+        "short_sha": "3cf8c6b19670",
+        "date": "2026-04-20T12:17:42+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix(live-preview): height-neutral decorations + always-on block widgets",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-diag.ts",
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "92d399550a8fa831d2d6dd0fb217d25cb505ab95",
+        "short_sha": "92d399550a8f",
+        "date": "2026-04-20T12:17:01+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix(live-preview): block-widget renderers use padding, never margin",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-renderers.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "b73abef5e3e1487ad60bcf4ba28f1b9889f50c6a",
+        "short_sha": "b73abef5e3e1",
+        "date": "2026-04-20T12:16:46+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix(live-preview): table widget margin→padding for accurate CM6 heightmap",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "b2f1a3195a4c38136259ca941d5cb11746658e81",
+        "short_sha": "b2f1a3195a4c",
+        "date": "2026-04-17T19:56:03+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: remove CSS position:relative/::after on code block lines",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/theme.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "1b29f0df4d99b5243deb49c025ac547652eff5d5",
+        "short_sha": "1b29f0df4d99",
+        "date": "2026-04-17T19:45:49+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: upgrade @codemirror/view 6.36→6.41 + stabilize decoration strategy",
+        "n_parents": 1,
+        "files": [
+          "AGENTS.md",
+          "packages/core/package.json",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/theme.ts",
+          "packages/core/test/live-preview-ranges.test.ts",
+          "packages/core/test/live-preview.test.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 8
+      },
+      {
+        "sha": "d41ba460e1b23ceb549ae09546bec13c1c75f37a",
+        "short_sha": "d41ba460e1b2",
+        "date": "2026-04-17T19:27:19+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: fence lines use color:transparent — hidden, clickable, stable layout",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "cd1b705b584e5bc3f20f754c967a7449c491f0c7",
+        "short_sha": "cd1b705b584e",
+        "date": "2026-04-17T19:12:48+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: fence lines use visibility:hidden instead of replace — no layout shift",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "70ac382700b2c97737ce72926b496fcb967f494a",
+        "short_sha": "70ac382700b2",
+        "date": "2026-04-17T19:10:20+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: fence lines hidden in view mode, visible in edit mode",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "f76bb498115f12d7900ccb565e581361aa8e844d",
+        "short_sha": "f76bb498115f",
+        "date": "2026-04-17T19:04:55+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: remove mousedown/click preventDefault from language label widget",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "54cf21a49e7a0844abe577446d529eaabab3f31d",
+        "short_sha": "54cf21a49e7a",
+        "date": "2026-04-17T19:00:50+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: code block fence lines always use muted mark, never replace",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "7ef1272ef10088fed7463aff65f33c1cd6e62599",
+        "short_sha": "7ef1272ef100",
+        "date": "2026-04-17T18:56:17+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: code block fence lines use Decoration.replace instead of color:transparent",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "9e2a5ebeed303837ae837971ca4e1616321f4caa",
+        "short_sha": "9e2a5ebeed30",
+        "date": "2026-04-17T18:52:40+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: switch to line-level edit/preview mode — fixes scroll click desync",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview-ranges.test.ts",
+          "packages/core/test/live-preview-regressions.test.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "374ca9949306c8b52cf96f5753abe38de15d8704",
+        "short_sha": "374ca9949306",
+        "date": "2026-04-17T18:41:35+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: remove font-size:0 from hidden markers — fixes scroll click desync",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "a3b95b417a6444510947c5ee5cfbedf512222efb",
+        "short_sha": "a3b95b417a64",
+        "date": "2026-04-17T18:36:33+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: inline markers use transparent mark instead of replace decoration",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview-regressions.test.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "9c2ecb213cb69de0af8ebed46e017a808ae606f2",
+        "short_sha": "9c2ecb213cb6",
+        "date": "2026-04-17T18:31:15+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "revert: remove atomicRanges — cursor should step into markers, not skip",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "35d0e3971f7973cb1e8ec1c4d3b8b22d64a19773",
+        "short_sha": "35d0e3971f79",
+        "date": "2026-04-17T18:18:43+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: cursor skips hidden inline markers via atomicRanges",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "2873ee2c042bbaea4f7b5b6a2e7d0f4effd6d998",
+        "short_sha": "2873ee2c042b",
+        "date": "2026-04-17T18:09:54+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: code block language label positioned in top-right corner",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "739504fe8f5f4d2fad11773e472356274643e9ad",
+        "short_sha": "739504fe8f5f",
+        "date": "2026-04-17T17:57:10+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: code block fences use mark-only decorations, no replace",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "22c14e054f0885ce90642565b0df2a47fc8d54ba",
+        "short_sha": "22c14e054f08",
+        "date": "2026-04-17T17:45:18+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: code block language label uses absolute positioning instead of float",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "de147f37d68e3f386f0e2753e527d44386497331",
+        "short_sha": "de147f37d68e",
+        "date": "2026-04-17T17:42:58+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: closing fence mark uses only color:transparent, no layout-breaking styles",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "17e935665914de7cd543e4e72a1ea031357846c8",
+        "short_sha": "17e935665914",
+        "date": "2026-04-17T17:39:04+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: closing fence line allows cursor entry without jumping to next line",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "ed318613162370017f517053bbdcafd6dd50fb1a",
+        "short_sha": "ed3186131623",
+        "date": "2026-04-17T17:36:16+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: code block fence lines visible when cursor is at block boundary",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "7f42a9eb9a696fc351a58a6eddd3a73372b99a74",
+        "short_sha": "7f42a9eb9a69",
+        "date": "2026-04-17T17:30:44+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: setSelection now scrolls view to cursor position",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "540216b501b38893ddab907f08e6948a36421a69",
+        "short_sha": "540216b501b3",
+        "date": "2026-04-17T17:28:07+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat(electron): add outline sidebar and search bar",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/outline-panel.ts",
+          "apps/electron-demo/src/renderer/search-bar.ts",
+          "apps/electron-demo/src/renderer/style.css",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 7
+      },
+      {
+        "sha": "068d40b5777e5e53a74dd4916a6c161d0814a0bb",
+        "short_sha": "068d40b5777e",
+        "date": "2026-04-17T17:20:31+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add toolbar UI, editor settings, and 8 new editor capabilities",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/package.json",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/settings.ts",
+          "apps/electron-demo/test/editor-shell.test.ts",
+          "packages/core/package.json",
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/markdown-autopair.ts",
+          "packages/core/src/markdown-fold.ts",
+          "packages/core/src/theme.ts",
+          "packages/core/src/types.ts",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-toolbar/src/color-decoration.ts",
+          "packages/plugin-toolbar/src/formatting.ts",
+          "packages/plugin-toolbar/src/icons.ts",
+          "packages/plugin-toolbar/src/index.ts",
+          "packages/plugin-toolbar/src/toolbar-ui.ts",
+          "packages/plugin-vim/package.json",
+          "packages/plugin-vim/src/index.ts",
+          "packages/plugin-vim/test/plugin-vim.test.ts",
+          "packages/plugin-vim/tsconfig.json",
+          "pnpm-lock.yaml",
+          "tsconfig.base.json"
+        ],
+        "n_files": 25
+      },
+      {
+        "sha": "1d387997cc1e8fccedd53f5a0d8dc2d70ab7bd26",
+        "short_sha": "1d387997cc1e",
+        "date": "2026-04-17T15:25:51+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add missing features — live preview, theme, i18n, folding, keymap, a11y",
+        "n_parents": 1,
+        "files": [
+          "openspec/changes/add-missing-features/tasks.md",
+          "packages/core/package.json",
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/locale.ts",
+          "packages/core/src/markdown-fold.ts",
+          "packages/core/src/markdown-keymap.ts",
+          "packages/core/src/theme.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/accessibility.test.ts",
+          "packages/core/test/editor.test.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/core/test/locale.test.ts",
+          "packages/core/test/markdown-fold.test.ts",
+          "packages/core/test/markdown-keymap.test.ts",
+          "packages/core/test/theme.test.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 21
+      },
+      {
+        "sha": "c0ddccf48841a231cd6b13e52fd3cfa7caf812c2",
+        "short_sha": "c0ddccf48841",
+        "date": "2026-04-16T22:04:15+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: table range selection cleared immediately after mouseup by rAF loop",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "7238c5926dd456510340f4e649fa73b2902b55ec",
+        "short_sha": "7238c5926dd4",
+        "date": "2026-04-16T21:57:53+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: table drag reorder not updating visual - release editing lock before dispatch",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "2cc861fb47796bd0802fa3f2ba217a1136ca9a8d",
+        "short_sha": "2cc861fb4779",
+        "date": "2026-04-16T21:35:47+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "spec: add OpenSpec change proposal for missing features",
+        "n_parents": 1,
+        "files": [
+          ".claude/commands/openspec/apply.md",
+          ".claude/commands/openspec/archive.md",
+          ".claude/commands/openspec/proposal.md",
+          "AGENTS.md",
+          "CLAUDE.md",
+          "openspec/AGENTS.md",
+          "openspec/changes/add-missing-features/design.md",
+          "openspec/changes/add-missing-features/proposal.md",
+          "openspec/changes/add-missing-features/specs/editor-core/spec.md",
+          "openspec/changes/add-missing-features/specs/live-preview/spec.md",
+          "openspec/changes/add-missing-features/specs/plugins/spec.md",
+          "openspec/changes/add-missing-features/specs/theming/spec.md",
+          "openspec/changes/add-missing-features/tasks.md",
+          "openspec/project.md"
+        ],
+        "n_files": 14
+      },
+      {
+        "sha": "3c4298c66d6a3501ce43973769bcae4cb2161783",
+        "short_sha": "3c4298c66d6a",
+        "date": "2026-04-16T21:16:11+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: fix code block first-line background, add comprehensive tests",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "33243f5f8b499bcecc36613b67126190bed6701f",
+        "short_sha": "33243f5f8b49",
+        "date": "2026-04-16T21:00:19+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: Obsidian-style code blocks and mark-based inline formatting",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview-regressions.test.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/core/test/widgets.test.ts"
+        ],
+        "n_files": 4
+      },
+      {
+        "sha": "cdbd2690344c1019e8d5c15e759a16bafb4a8b2a",
+        "short_sha": "cdbd2690344c",
+        "date": "2026-04-16T20:23:55+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: Excel-style range selection, mark-based code blocks, scroll fixes",
+        "n_parents": 1,
+        "files": [
+          "CLAUDE.md",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "f7ab23a804dd5f5a5b15cb324b44e02329a5a169",
+        "short_sha": "f7ab23a804dd",
+        "date": "2026-04-16T17:59:36+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: Obsidian-style table widget with custom drag, selection overlay, and grip pills",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "9ecfb366ef0a071c31262fb0160fe648d0988cc9",
+        "short_sha": "9ecfb366ef0a",
+        "date": "2026-04-16T15:25:21+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: Obsidian-style table interaction overhaul",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "d86ac7ba3bc784e22b48a5e9b923f0ff9d7fde64",
+        "short_sha": "d86ac7ba3bc7",
+        "date": "2026-04-16T15:15:28+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add line numbers and editor padding",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "0379a1a92618d1bb3c9f7a0108de9099dc7141f1",
+        "short_sha": "0379a1a92618",
+        "date": "2026-04-16T15:08:43+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: constrain table drag to grip handles + add row grip column",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "ecf65a477289533bcc7b3de35f38bcdd1d4604e2",
+        "short_sha": "ecf65a477289",
+        "date": "2026-04-16T15:03:39+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: table drag reorder columns/rows + right-click delete",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-table.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "f855ba6ba2c8904244ed3a69dc6cbc0fa95f4906",
+        "short_sha": "f855ba6ba2c8",
+        "date": "2026-04-16T14:52:26+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: table buttons hover-only + English defaults + customizable labels",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/index.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "ddef5dbbb148cf02ed631a82459136a89b9f187b",
+        "short_sha": "ddef5dbbb148",
+        "date": "2026-04-16T14:41:00+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: 表格新增列/行按钮 + 自适应宽度",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "305514e188f343d21da15105c6022428e1e4a02a",
+        "short_sha": "305514e188f3",
+        "date": "2026-04-16T14:28:21+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: 表格编辑不再丢焦点 — decos.map 替代重建",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "80b7e4a9225faacc73425911edc693e75ca86a4b",
+        "short_sha": "80b7e4a9225f",
+        "date": "2026-04-16T13:04:50+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: 表格编辑时保持焦点 — eq() 阻止 DOM 重建",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "e4527941bb8f71117dc5be106956d847b6bd4c2f",
+        "short_sha": "e4527941bb8f",
+        "date": "2026-04-16T12:59:51+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: ContentEditable 可编辑表格 — 渲染 + 原地编辑",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "122bd513731f1186c251d8b7a6e9ceb977a64ebb",
+        "short_sha": "122bd513731f",
+        "date": "2026-04-16T12:52:50+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: 代码块语法高亮、可点击复选框、数学公式渲染",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/plugin-math/package.json",
+          "packages/plugin-math/src/index.ts",
+          "packages/plugin-math/tsconfig.json",
+          "pnpm-lock.yaml",
+          "tsconfig.base.json",
+          "vitest.config.ts"
+        ],
+        "n_files": 10
+      },
+      {
+        "sha": "c7fbdec7c9bbacb5c6b249b58f691d5c539759ef",
+        "short_sha": "c7fbdec7c9bb",
+        "date": "2026-04-16T12:43:35+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add list and task list live preview rendering",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "c0c83fd12d7c8cd950c862eb669a34e0a9e5b89e",
+        "short_sha": "c0c83fd12d7c",
+        "date": "2026-04-16T12:07:38+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: block widgets swallow events to prevent cursor positioning issues",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "b321cccb3b913339834c20d96c635c00e2e0904b",
+        "short_sha": "b321cccb3b91",
+        "date": "2026-04-16T12:02:51+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: table header rendering and click-to-edit behavior",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "f5909e69857eaa0d1a8d7e7c071dd5acbd521088",
+        "short_sha": "f5909e69857e",
+        "date": "2026-04-16T11:58:31+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "fix: hybrid table rendering — widget when viewing, marks when editing",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview.ts"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "ca20be72098f365f00df8b158ffe6f1732e0d03b",
+        "short_sha": "ca20be72098f",
+        "date": "2026-04-16T11:54:18+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: Obsidian-style table and image live preview",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/src/renderer/index.html",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "995d1ed48555405fda8fb3b5fbebd8bb6ed5d19c",
+        "short_sha": "995d1ed48555",
+        "date": "2026-04-16T11:22:42+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add table and code block live preview rendering",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/core/test/widgets.test.ts"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "9fb1114eacc317d0e8f2f1f40f6249ef48ac026f",
+        "short_sha": "9fb1114eacc3",
+        "date": "2026-04-16T11:13:28+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add toolbar plugin, extend live preview, and improve core editing",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/editor.ts",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/live-preview.test.ts",
+          "packages/plugin-toolbar/package.json",
+          "packages/plugin-toolbar/src/index.ts",
+          "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+          "packages/plugin-toolbar/tsconfig.json",
+          "pnpm-lock.yaml",
+          "tsconfig.base.json",
+          "vitest.config.ts"
+        ],
+        "n_files": 14
+      },
+      {
+        "sha": "37a0635e92e3a9c7da1620c5963d5549dd33dfa0",
+        "short_sha": "37a0635e92e3",
+        "date": "2026-04-15T22:23:14+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add event system, slash menu coordinates, widget API, and README",
+        "n_parents": 1,
+        "files": [
+          "README.md",
+          "README.zh.md",
+          "packages/core/src/editor.ts",
+          "packages/core/src/event-emitter.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/slash-state.ts",
+          "packages/core/src/types.ts",
+          "packages/core/src/widget-extension.ts",
+          "packages/core/test/events.test.ts",
+          "packages/core/test/widgets.test.ts"
+        ],
+        "n_files": 10
+      },
+      {
+        "sha": "cacbe95d767af973d986e4345ea4ebf67e426e7f",
+        "short_sha": "cacbe95d767a",
+        "date": "2026-04-15T21:47:02+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add electron demo app and improve heading live preview",
+        "n_parents": 1,
+        "files": [
+          "apps/electron-demo/dist-electron/main.js",
+          "apps/electron-demo/dist-electron/preload.js",
+          "apps/electron-demo/electron/main.ts",
+          "apps/electron-demo/electron/preload.ts",
+          "apps/electron-demo/package.json",
+          "apps/electron-demo/scripts/dev-electron.mjs",
+          "apps/electron-demo/src/renderer/app.ts",
+          "apps/electron-demo/src/renderer/bridge.d.ts",
+          "apps/electron-demo/src/renderer/editor-shell.ts",
+          "apps/electron-demo/src/renderer/index.html",
+          "apps/electron-demo/src/renderer/state.ts",
+          "apps/electron-demo/src/renderer/style.css",
+          "apps/electron-demo/test/app-handlers.test.ts",
+          "apps/electron-demo/test/editor-shell.test.ts",
+          "apps/electron-demo/test/state.test.ts",
+          "apps/electron-demo/tsconfig.json",
+          "apps/electron-demo/vite.config.ts",
+          "package.json",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview.test.ts",
+          "pnpm-lock.yaml",
+          "pnpm-workspace.yaml"
+        ],
+        "n_files": 24
+      },
+      {
+        "sha": "1de5af476e4952bd993144ba099b224e7ae07d72",
+        "short_sha": "1de5af476e49",
+        "date": "2026-04-15T20:03:53+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "docs: add electron demo design",
+        "n_parents": 1,
+        "files": [
+          "docs/superpowers/specs/2026-04-15-electron-demo-design.md"
+        ],
+        "n_files": 1
+      },
+      {
+        "sha": "0b7937e32f53ea45a59bbc92efcae446dc641029",
+        "short_sha": "0b7937e32f53",
+        "date": "2026-04-15T19:49:49+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: stabilize live preview phase 1",
+        "n_parents": 1,
+        "files": [
+          "docs/superpowers/plans/2026-04-15-live-preview-phase-1.md",
+          "packages/core/src/live-preview-ranges.ts",
+          "packages/core/src/live-preview-renderers.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/test/live-preview-ranges.test.ts",
+          "packages/core/test/live-preview-regressions.test.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 7
+      },
+      {
+        "sha": "7cf9dc837a7896d85f08cff52394f0e31f3a2a9b",
+        "short_sha": "7cf9dc837a78",
+        "date": "2026-04-15T18:46:15+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add live preview rendering",
+        "n_parents": 1,
+        "files": [
+          "docs/superpowers/plans/2026-04-15-core-ast-pipeline.md",
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/live-preview.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/live-preview.test.ts"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "23e68e54630e50572dc7e7a0b9aed95af8a04c42",
+        "short_sha": "23e68e54630e",
+        "date": "2026-04-15T18:22:39+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add asset upload hook",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/editor.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "cf774ada6c307f6829a08e1c608fe067f4df36e0",
+        "short_sha": "cf774ada6c30",
+        "date": "2026-04-15T18:19:55+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add search plugin package",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/plugin-search/package.json",
+          "packages/plugin-search/src/index.ts",
+          "packages/plugin-search/test/plugin-search.test.ts",
+          "packages/plugin-search/tsconfig.json",
+          "pnpm-lock.yaml",
+          "tsconfig.base.json",
+          "vitest.config.ts"
+        ],
+        "n_files": 8
+      },
+      {
+        "sha": "6116cb01939d87954cb643f22aabe149c287da9e",
+        "short_sha": "6116cb01939d",
+        "date": "2026-04-15T18:12:48+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add slash state helpers",
+        "n_parents": 1,
+        "files": [
+          "packages/plugin-slash/src/index.ts",
+          "packages/plugin-slash/test/plugin-slash.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "5f761a082dcc32d4226a6bfa1bf5e53975e9e743",
+        "short_sha": "5f761a082dcc",
+        "date": "2026-04-15T18:10:18+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: expose slash commands in core api",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/editor.test.ts",
+          "packages/core/tsconfig.json",
+          "packages/plugin-history/tsconfig.json",
+          "packages/plugin-slash/src/index.ts",
+          "packages/plugin-slash/tsconfig.json",
+          "packages/preset-gfm/tsconfig.json",
+          "packages/react/tsconfig.json",
+          "packages/vue/tsconfig.json",
+          "tsconfig.base.json"
+        ],
+        "n_files": 12
+      },
+      {
+        "sha": "ee6753b4841b3e4a8a8596dab33dd075c2970a8c",
+        "short_sha": "ee6753b4841b",
+        "date": "2026-04-15T18:02:54+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add history plugin package",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/plugin-history/package.json",
+          "packages/plugin-history/src/index.ts",
+          "packages/plugin-history/test/plugin-history.test.ts",
+          "packages/plugin-history/tsconfig.json",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "5007d329dd5cd3b866de289c776ed2efab1780a8",
+        "short_sha": "5007d329dd5c",
+        "date": "2026-04-15T17:57:06+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add slash command logic package",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/plugin-slash/package.json",
+          "packages/plugin-slash/src/index.ts",
+          "packages/plugin-slash/test/plugin-slash.test.ts",
+          "packages/plugin-slash/tsconfig.json",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "bd0a4242d8bfde01dd14e0174fc7a582343af682",
+        "short_sha": "bd0a4242d8bf",
+        "date": "2026-04-15T17:51:52+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add gfm preset package",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/preset-gfm/package.json",
+          "packages/preset-gfm/src/index.ts",
+          "packages/preset-gfm/test/preset-gfm.test.ts",
+          "packages/preset-gfm/tsconfig.json",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 6
+      },
+      {
+        "sha": "6c06853a9aceff7d6b704c30a5599809c14810b8",
+        "short_sha": "6c06853a9ace",
+        "date": "2026-04-15T17:46:05+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add vue editor bindings",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/vue/package.json",
+          "packages/vue/src/editor.ts",
+          "packages/vue/src/index.ts",
+          "packages/vue/src/types.ts",
+          "packages/vue/src/use-editor.ts",
+          "packages/vue/test/editor-vue.test.ts",
+          "packages/vue/tsconfig.json",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 9
+      },
+      {
+        "sha": "d19578fb02210773c8b134734fcdcbb65274c69b",
+        "short_sha": "d19578fb0221",
+        "date": "2026-04-15T17:42:07+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add react editor bindings",
+        "n_parents": 1,
+        "files": [
+          "package.json",
+          "packages/react/package.json",
+          "packages/react/src/editor.tsx",
+          "packages/react/src/index.ts",
+          "packages/react/src/types.ts",
+          "packages/react/src/use-editor.ts",
+          "packages/react/test/editor-react.test.tsx",
+          "packages/react/tsconfig.json",
+          "pnpm-lock.yaml",
+          "tsconfig.base.json",
+          "vitest.config.ts"
+        ],
+        "n_files": 11
+      },
+      {
+        "sha": "2ea44c8abb4613600012e72db293dfa29bcf2312",
+        "short_sha": "2ea44c8abb46",
+        "date": "2026-04-15T17:35:44+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: persist editor ast state",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/editor.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "b9b6aad61b42b8ffaac86a77a8f6d5a61d876818",
+        "short_sha": "b9b6aad61b42",
+        "date": "2026-04-15T17:30:17+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: add package build pipeline",
+        "n_parents": 1,
+        "files": [
+          "AGENTS.md",
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/test/editor.test.ts",
+          "pnpm-lock.yaml"
+        ],
+        "n_files": 5
+      },
+      {
+        "sha": "cd26df16a96adb0276991fe293fa2ed7e6eb4df5",
+        "short_sha": "cd26df16a96a",
+        "date": "2026-04-15T17:24:04+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: harden editor lifecycle semantics",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/test/editor.test.ts"
+        ],
+        "n_files": 2
+      },
+      {
+        "sha": "f94856895d31ae729ae6891cbc1e2c0f5d2f0d4c",
+        "short_sha": "f94856895d31",
+        "date": "2026-04-15T17:21:51+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: wire codemirror event handling",
+        "n_parents": 1,
+        "files": [
+          "packages/core/src/editor.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/editor.test.ts"
+        ],
+        "n_files": 3
+      },
+      {
+        "sha": "3b706ae5cf4892c609d63178534463dc2050892c",
+        "short_sha": "3b706ae5cf48",
+        "date": "2026-04-15T17:13:06+08:00",
+        "author_name": "ketd",
+        "author_email": "",
+        "login": "ketd",
+        "login_confidence": "low",
+        "login_note": "author-name-fallback",
+        "subject": "feat: bootstrap core editor engine",
+        "n_parents": 0,
+        "files": [
+          ".gitignore",
+          "AGENTS.md",
+          "CLAUDE.md",
+          "docs/superpowers/plans/2026-04-15-core-ast-pipeline.md",
+          "package.json",
+          "packages/core/package.json",
+          "packages/core/src/editor.ts",
+          "packages/core/src/index.ts",
+          "packages/core/src/types.ts",
+          "packages/core/test/editor.test.ts",
+          "packages/core/tsconfig.json",
+          "pnpm-lock.yaml",
+          "pnpm-workspace.yaml",
+          "prd.md",
+          "tsconfig.base.json",
+          "vitest.config.ts"
+        ],
+        "n_files": 16
+      }
+    ]
+  },
+  "weak_maintainer_actor_evidence": {
+    "ketd": {
+      "total_surviving_direct_pushes": 95,
+      "commits": [
+        {
+          "sha": "a5b87a59dc92",
+          "date": "2026-06-03T17:58:54+08:00",
+          "subject": "fix(live-preview): keep HTML comment blocks visible"
+        },
+        {
+          "sha": "60c496f8c337",
+          "date": "2026-05-29T16:14:32+08:00",
+          "subject": "fix(core): stabilize markdown composition editing"
+        },
+        {
+          "sha": "06ebeff8120c",
+          "date": "2026-05-27T22:23:36+08:00",
+          "subject": "fix(core): release table editing locks on destroy"
+        },
+        {
+          "sha": "b67337f66366",
+          "date": "2026-05-27T22:17:21+08:00",
+          "subject": "fix(core): preserve table range selection"
+        },
+        {
+          "sha": "9a887ecbe1bc",
+          "date": "2026-05-27T20:39:00+08:00",
+          "subject": "fix(editor): restore editing for styled table cells and links"
+        },
+        {
+          "sha": "8423ed51dbf7",
+          "date": "2026-05-27T19:53:12+08:00",
+          "subject": "fix(table): preserve clicked caret position in cells"
+        },
+        {
+          "sha": "141f0002748b",
+          "date": "2026-05-26T21:36:54+08:00",
+          "subject": "fix(table): column resize, image scaling, cursor-leave re-render"
+        },
+        {
+          "sha": "2e504006beda",
+          "date": "2026-05-26T21:34:38+08:00",
+          "subject": "Revert(ci): roll back Trusted Publishing — npm signup UX is broken"
+        },
+        {
+          "sha": "c78cd5e2280d",
+          "date": "2026-05-26T15:32:15+08:00",
+          "subject": "fix(table): render inline links / marks in cells; fix InlineCode value"
+        },
+        {
+          "sha": "aa09d026c918",
+          "date": "2026-05-25T19:20:24+08:00",
+          "subject": "ci: switch to npm Trusted Publishing (OIDC) via release.yml"
+        },
+        {
+          "sha": "217f935e23a2",
+          "date": "2026-05-12T17:22:29+08:00",
+          "subject": "fix: style table context menu"
+        },
+        {
+          "sha": "929d3dfcfd93",
+          "date": "2026-05-12T14:52:28+08:00",
+          "subject": "fix: render content after large table"
+        },
+        {
+          "sha": "4c2514da34ae",
+          "date": "2026-05-12T11:07:10+08:00",
+          "subject": "fix(electron): align tsconfig paths with root baseUrl"
+        },
+        {
+          "sha": "b2a62b9c0dc5",
+          "date": "2026-05-12T11:01:39+08:00",
+          "subject": "test: harden fixture checks and add typecheck"
+        },
+        {
+          "sha": "37c230a902fd",
+          "date": "2026-05-11T15:37:05+08:00",
+          "subject": "docs: add contributing guide, PR template, and roadmap (bilingual)"
+        },
+        {
+          "sha": "3e5c33306cf3",
+          "date": "2026-05-08T17:57:03+08:00",
+          "subject": "ci: fix npm publish auth"
+        },
+        {
+          "sha": "a8874f1e3f32",
+          "date": "2026-05-08T17:34:48+08:00",
+          "subject": "ci: publish nexus packages to npm"
+        },
+        {
+          "sha": "861ff08e1b16",
+          "date": "2026-05-06T19:58:32+08:00",
+          "subject": "fix: keep blockquotes editable in live preview"
+        },
+        {
+          "sha": "044494b70b2f",
+          "date": "2026-05-06T19:31:51+08:00",
+          "subject": "fix: optimize packaged editor startup"
+        },
+        {
+          "sha": "ca616dd5976d",
+          "date": "2026-04-20T16:50:23+08:00",
+          "subject": "feat(image): Obsidian-style image preview with |width syntax and drag-resize"
+        },
+        {
+          "sha": "866b93b692b7",
+          "date": "2026-04-20T16:00:23+08:00",
+          "subject": "feat(wikilinks): scroll to #heading and ^block anchors on link click"
+        },
+        {
+          "sha": "af0f7b60cd1f",
+          "date": "2026-04-20T15:57:26+08:00",
+          "subject": "feat(live-preview): add mermaid diagram rendering with cursor-driven edit toggle"
+        },
+        {
+          "sha": "c227bdccdbe4",
+          "date": "2026-04-20T15:11:20+08:00",
+          "subject": "feat: add Obsidian-style wiki links with linked/unlinked backlinks"
+        },
+        {
+          "sha": "96076e2504b9",
+          "date": "2026-04-20T14:36:42+08:00",
+          "subject": "feat(electron): add note vault (repository) with full CRUD"
+        },
+        {
+          "sha": "f7c6599bfa07",
+          "date": "2026-04-20T12:18:02+08:00",
+          "subject": "test(live-preview): update indented-code-block test for new mark structure"
+        },
+        {
+          "sha": "5ec8daff9e75",
+          "date": "2026-04-20T12:17:54+08:00",
+          "subject": "test(live-preview): regression tests for click-drift invariants"
+        },
+        {
+          "sha": "3cf8c6b19670",
+          "date": "2026-04-20T12:17:42+08:00",
+          "subject": "fix(live-preview): height-neutral decorations + always-on block widgets"
+        },
+        {
+          "sha": "92d399550a8f",
+          "date": "2026-04-20T12:17:01+08:00",
+          "subject": "fix(live-preview): block-widget renderers use padding, never margin"
+        },
+        {
+          "sha": "b73abef5e3e1",
+          "date": "2026-04-20T12:16:46+08:00",
+          "subject": "fix(live-preview): table widget margin→padding for accurate CM6 heightmap"
+        },
+        {
+          "sha": "b2f1a3195a4c",
+          "date": "2026-04-17T19:56:03+08:00",
+          "subject": "fix: remove CSS position:relative/::after on code block lines"
+        },
+        {
+          "sha": "1b29f0df4d99",
+          "date": "2026-04-17T19:45:49+08:00",
+          "subject": "fix: upgrade @codemirror/view 6.36→6.41 + stabilize decoration strategy"
+        },
+        {
+          "sha": "d41ba460e1b2",
+          "date": "2026-04-17T19:27:19+08:00",
+          "subject": "fix: fence lines use color:transparent — hidden, clickable, stable layout"
+        },
+        {
+          "sha": "cd1b705b584e",
+          "date": "2026-04-17T19:12:48+08:00",
+          "subject": "fix: fence lines use visibility:hidden instead of replace — no layout shift"
+        },
+        {
+          "sha": "70ac382700b2",
+          "date": "2026-04-17T19:10:20+08:00",
+          "subject": "fix: fence lines hidden in view mode, visible in edit mode"
+        },
+        {
+          "sha": "f76bb498115f",
+          "date": "2026-04-17T19:04:55+08:00",
+          "subject": "fix: remove mousedown/click preventDefault from language label widget"
+        },
+        {
+          "sha": "54cf21a49e7a",
+          "date": "2026-04-17T19:00:50+08:00",
+          "subject": "fix: code block fence lines always use muted mark, never replace"
+        },
+        {
+          "sha": "7ef1272ef100",
+          "date": "2026-04-17T18:56:17+08:00",
+          "subject": "fix: code block fence lines use Decoration.replace instead of color:transparent"
+        },
+        {
+          "sha": "9e2a5ebeed30",
+          "date": "2026-04-17T18:52:40+08:00",
+          "subject": "fix: switch to line-level edit/preview mode — fixes scroll click desync"
+        },
+        {
+          "sha": "374ca9949306",
+          "date": "2026-04-17T18:41:35+08:00",
+          "subject": "fix: remove font-size:0 from hidden markers — fixes scroll click desync"
+        },
+        {
+          "sha": "a3b95b417a64",
+          "date": "2026-04-17T18:36:33+08:00",
+          "subject": "feat: inline markers use transparent mark instead of replace decoration"
+        },
+        {
+          "sha": "9c2ecb213cb6",
+          "date": "2026-04-17T18:31:15+08:00",
+          "subject": "revert: remove atomicRanges — cursor should step into markers, not skip"
+        },
+        {
+          "sha": "35d0e3971f79",
+          "date": "2026-04-17T18:18:43+08:00",
+          "subject": "feat: cursor skips hidden inline markers via atomicRanges"
+        },
+        {
+          "sha": "2873ee2c042b",
+          "date": "2026-04-17T18:09:54+08:00",
+          "subject": "fix: code block language label positioned in top-right corner"
+        },
+        {
+          "sha": "739504fe8f5f",
+          "date": "2026-04-17T17:57:10+08:00",
+          "subject": "fix: code block fences use mark-only decorations, no replace"
+        },
+        {
+          "sha": "22c14e054f08",
+          "date": "2026-04-17T17:45:18+08:00",
+          "subject": "fix: code block language label uses absolute positioning instead of float"
+        },
+        {
+          "sha": "de147f37d68e",
+          "date": "2026-04-17T17:42:58+08:00",
+          "subject": "fix: closing fence mark uses only color:transparent, no layout-breaking styles"
+        },
+        {
+          "sha": "17e935665914",
+          "date": "2026-04-17T17:39:04+08:00",
+          "subject": "fix: closing fence line allows cursor entry without jumping to next line"
+        },
+        {
+          "sha": "ed3186131623",
+          "date": "2026-04-17T17:36:16+08:00",
+          "subject": "fix: code block fence lines visible when cursor is at block boundary"
+        },
+        {
+          "sha": "7f42a9eb9a69",
+          "date": "2026-04-17T17:30:44+08:00",
+          "subject": "fix: setSelection now scrolls view to cursor position"
+        },
+        {
+          "sha": "540216b501b3",
+          "date": "2026-04-17T17:28:07+08:00",
+          "subject": "feat(electron): add outline sidebar and search bar"
+        },
+        {
+          "sha": "068d40b5777e",
+          "date": "2026-04-17T17:20:31+08:00",
+          "subject": "feat: add toolbar UI, editor settings, and 8 new editor capabilities"
+        },
+        {
+          "sha": "1d387997cc1e",
+          "date": "2026-04-17T15:25:51+08:00",
+          "subject": "feat: add missing features — live preview, theme, i18n, folding, keymap, a11y"
+        },
+        {
+          "sha": "c0ddccf48841",
+          "date": "2026-04-16T22:04:15+08:00",
+          "subject": "fix: table range selection cleared immediately after mouseup by rAF loop"
+        },
+        {
+          "sha": "7238c5926dd4",
+          "date": "2026-04-16T21:57:53+08:00",
+          "subject": "fix: table drag reorder not updating visual - release editing lock before dispatch"
+        },
+        {
+          "sha": "2cc861fb4779",
+          "date": "2026-04-16T21:35:47+08:00",
+          "subject": "spec: add OpenSpec change proposal for missing features"
+        },
+        {
+          "sha": "3c4298c66d6a",
+          "date": "2026-04-16T21:16:11+08:00",
+          "subject": "feat: fix code block first-line background, add comprehensive tests"
+        },
+        {
+          "sha": "33243f5f8b49",
+          "date": "2026-04-16T21:00:19+08:00",
+          "subject": "feat: Obsidian-style code blocks and mark-based inline formatting"
+        },
+        {
+          "sha": "cdbd2690344c",
+          "date": "2026-04-16T20:23:55+08:00",
+          "subject": "feat: Excel-style range selection, mark-based code blocks, scroll fixes"
+        },
+        {
+          "sha": "f7ab23a804dd",
+          "date": "2026-04-16T17:59:36+08:00",
+          "subject": "feat: Obsidian-style table widget with custom drag, selection overlay, and grip pills"
+        },
+        {
+          "sha": "9ecfb366ef0a",
+          "date": "2026-04-16T15:25:21+08:00",
+          "subject": "feat: Obsidian-style table interaction overhaul"
+        },
+        {
+          "sha": "d86ac7ba3bc7",
+          "date": "2026-04-16T15:15:28+08:00",
+          "subject": "feat: add line numbers and editor padding"
+        },
+        {
+          "sha": "0379a1a92618",
+          "date": "2026-04-16T15:08:43+08:00",
+          "subject": "fix: constrain table drag to grip handles + add row grip column"
+        },
+        {
+          "sha": "ecf65a477289",
+          "date": "2026-04-16T15:03:39+08:00",
+          "subject": "feat: table drag reorder columns/rows + right-click delete"
+        },
+        {
+          "sha": "f855ba6ba2c8",
+          "date": "2026-04-16T14:52:26+08:00",
+          "subject": "feat: table buttons hover-only + English defaults + customizable labels"
+        },
+        {
+          "sha": "ddef5dbbb148",
+          "date": "2026-04-16T14:41:00+08:00",
+          "subject": "feat: 表格新增列/行按钮 + 自适应宽度"
+        },
+        {
+          "sha": "305514e188f3",
+          "date": "2026-04-16T14:28:21+08:00",
+          "subject": "fix: 表格编辑不再丢焦点 — decos.map 替代重建"
+        },
+        {
+          "sha": "80b7e4a9225f",
+          "date": "2026-04-16T13:04:50+08:00",
+          "subject": "fix: 表格编辑时保持焦点 — eq() 阻止 DOM 重建"
+        },
+        {
+          "sha": "e4527941bb8f",
+          "date": "2026-04-16T12:59:51+08:00",
+          "subject": "feat: ContentEditable 可编辑表格 — 渲染 + 原地编辑"
+        },
+        {
+          "sha": "122bd513731f",
+          "date": "2026-04-16T12:52:50+08:00",
+          "subject": "feat: 代码块语法高亮、可点击复选框、数学公式渲染"
+        },
+        {
+          "sha": "c7fbdec7c9bb",
+          "date": "2026-04-16T12:43:35+08:00",
+          "subject": "feat: add list and task list live preview rendering"
+        },
+        {
+          "sha": "c0c83fd12d7c",
+          "date": "2026-04-16T12:07:38+08:00",
+          "subject": "fix: block widgets swallow events to prevent cursor positioning issues"
+        },
+        {
+          "sha": "b321cccb3b91",
+          "date": "2026-04-16T12:02:51+08:00",
+          "subject": "fix: table header rendering and click-to-edit behavior"
+        },
+        {
+          "sha": "f5909e69857e",
+          "date": "2026-04-16T11:58:31+08:00",
+          "subject": "fix: hybrid table rendering — widget when viewing, marks when editing"
+        },
+        {
+          "sha": "ca20be72098f",
+          "date": "2026-04-16T11:54:18+08:00",
+          "subject": "feat: Obsidian-style table and image live preview"
+        },
+        {
+          "sha": "995d1ed48555",
+          "date": "2026-04-16T11:22:42+08:00",
+          "subject": "feat: add table and code block live preview rendering"
+        },
+        {
+          "sha": "9fb1114eacc3",
+          "date": "2026-04-16T11:13:28+08:00",
+          "subject": "feat: add toolbar plugin, extend live preview, and improve core editing"
+        },
+        {
+          "sha": "37a0635e92e3",
+          "date": "2026-04-15T22:23:14+08:00",
+          "subject": "feat: add event system, slash menu coordinates, widget API, and README"
+        },
+        {
+          "sha": "cacbe95d767a",
+          "date": "2026-04-15T21:47:02+08:00",
+          "subject": "feat: add electron demo app and improve heading live preview"
+        },
+        {
+          "sha": "1de5af476e49",
+          "date": "2026-04-15T20:03:53+08:00",
+          "subject": "docs: add electron demo design"
+        },
+        {
+          "sha": "0b7937e32f53",
+          "date": "2026-04-15T19:49:49+08:00",
+          "subject": "feat: stabilize live preview phase 1"
+        },
+        {
+          "sha": "7cf9dc837a78",
+          "date": "2026-04-15T18:46:15+08:00",
+          "subject": "feat: add live preview rendering"
+        },
+        {
+          "sha": "23e68e54630e",
+          "date": "2026-04-15T18:22:39+08:00",
+          "subject": "feat: add asset upload hook"
+        },
+        {
+          "sha": "cf774ada6c30",
+          "date": "2026-04-15T18:19:55+08:00",
+          "subject": "feat: add search plugin package"
+        },
+        {
+          "sha": "6116cb01939d",
+          "date": "2026-04-15T18:12:48+08:00",
+          "subject": "feat: add slash state helpers"
+        },
+        {
+          "sha": "5f761a082dcc",
+          "date": "2026-04-15T18:10:18+08:00",
+          "subject": "feat: expose slash commands in core api"
+        },
+        {
+          "sha": "ee6753b4841b",
+          "date": "2026-04-15T18:02:54+08:00",
+          "subject": "feat: add history plugin package"
+        },
+        {
+          "sha": "5007d329dd5c",
+          "date": "2026-04-15T17:57:06+08:00",
+          "subject": "feat: add slash command logic package"
+        },
+        {
+          "sha": "bd0a4242d8bf",
+          "date": "2026-04-15T17:51:52+08:00",
+          "subject": "feat: add gfm preset package"
+        },
+        {
+          "sha": "6c06853a9ace",
+          "date": "2026-04-15T17:46:05+08:00",
+          "subject": "feat: add vue editor bindings"
+        },
+        {
+          "sha": "d19578fb0221",
+          "date": "2026-04-15T17:42:07+08:00",
+          "subject": "feat: add react editor bindings"
+        },
+        {
+          "sha": "2ea44c8abb46",
+          "date": "2026-04-15T17:35:44+08:00",
+          "subject": "feat: persist editor ast state"
+        },
+        {
+          "sha": "b9b6aad61b42",
+          "date": "2026-04-15T17:30:17+08:00",
+          "subject": "feat: add package build pipeline"
+        },
+        {
+          "sha": "cd26df16a96a",
+          "date": "2026-04-15T17:24:04+08:00",
+          "subject": "feat: harden editor lifecycle semantics"
+        },
+        {
+          "sha": "f94856895d31",
+          "date": "2026-04-15T17:21:51+08:00",
+          "subject": "feat: wire codemirror event handling"
+        },
+        {
+          "sha": "3b706ae5cf48",
+          "date": "2026-04-15T17:13:06+08:00",
+          "subject": "feat: bootstrap core editor engine"
+        }
+      ]
+    },
+    "2391384896": {
+      "total_surviving_direct_pushes": 14,
+      "commits": [
+        {
+          "sha": "dfd466d657c5",
+          "date": "2026-07-13T10:44:07+08:00",
+          "subject": "fix(search): map rendered table highlights to source"
+        },
+        {
+          "sha": "a079d2f71c5d",
+          "date": "2026-07-13T10:43:56+08:00",
+          "subject": "fix(core): preserve pending table edits safely"
+        },
+        {
+          "sha": "1fa52eca126d",
+          "date": "2026-07-07T21:05:01+08:00",
+          "subject": "fix: restore table cell partial selections after selectionchange"
+        },
+        {
+          "sha": "5828439bf6e9",
+          "date": "2026-07-07T18:31:23+08:00",
+          "subject": "fix: preserve table cell partial text selections"
+        },
+        {
+          "sha": "1f01afee1cf4",
+          "date": "2026-07-07T16:53:27+08:00",
+          "subject": "fix: stabilize table cell ime editing"
+        },
+        {
+          "sha": "a3c829cf19cb",
+          "date": "2026-07-07T12:28:35+08:00",
+          "subject": "fix: stabilize markdown table search and selection"
+        },
+        {
+          "sha": "cc2cf1f4d5fb",
+          "date": "2026-07-06T22:51:52+08:00",
+          "subject": "fix: render strikethrough text inside markdown table cells"
+        },
+        {
+          "sha": "63667f7604ed",
+          "date": "2026-07-01T17:37:43+08:00",
+          "subject": "fix: allow copying markdown table cell text"
+        },
+        {
+          "sha": "da66d7addccc",
+          "date": "2026-05-12T23:48:40+08:00",
+          "subject": "docs: mark slash menu sorting/limit roadmap done"
+        },
+        {
+          "sha": "b5a1666f2ef3",
+          "date": "2026-05-12T23:48:34+08:00",
+          "subject": "feat(electron): mount slash menu and add demo content"
+        },
+        {
+          "sha": "38679ab3754b",
+          "date": "2026-05-12T23:48:27+08:00",
+          "subject": "feat(toolbar): register slash commands for formatting actions"
+        },
+        {
+          "sha": "bffeac27db25",
+          "date": "2026-05-12T23:48:21+08:00",
+          "subject": "feat(slash): floating menu UI with keyboard navigation and a11y"
+        },
+        {
+          "sha": "89c75c19230c",
+          "date": "2026-05-12T23:48:15+08:00",
+          "subject": "feat(core): add run callback and ranking to slash commands"
+        },
+        {
+          "sha": "51d566685a64",
+          "date": "2026-05-12T23:48:00+08:00",
+          "subject": "docs(openspec): scaffold add-slash-menu-ui proposal"
+        }
+      ]
+    },
+    "redreamality": {
+      "total_surviving_direct_pushes": 2,
+      "commits": [
+        {
+          "sha": "78b7bdfd2f49",
+          "date": "2026-05-12T23:31:40+10:00",
+          "subject": "docs: revamp Chinese README to mirror English version"
+        },
+        {
+          "sha": "0819ebccd200",
+          "date": "2026-05-12T23:24:44+10:00",
+          "subject": "docs: revamp README with comparison matrix and onboarding"
+        }
+      ]
+    },
+    "aoe": {
+      "total_surviving_direct_pushes": 1,
+      "commits": [
+        {
+          "sha": "49bd8ab6391f",
+          "date": "2026-06-30T18:15:04+08:00",
+          "subject": "docs(roadmap): update CI/CD pipeline status"
+        }
+      ]
+    }
+  }
+}

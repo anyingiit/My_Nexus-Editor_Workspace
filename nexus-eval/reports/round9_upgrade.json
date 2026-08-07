@@ -1,0 +1,77 @@
+{
+  "round": "round9-max-judge",
+  "reason": "Round 8 formal test missed the 85% accuracy and baseline-separation gates despite dev success and C=1.00; the judge capability was the only permitted upgrade target.",
+  "data_binding": {
+    "agents_sha256": "59ba29a035e0b45b9e1f53cc252b88d3b27f2224f2d14c389d478362ba345d66",
+    "split_sha256": "27fc32236cb35e3fa4369d9f7f67a733241918b5a0089b413308c89de6f9f7e5",
+    "n_candidates": 79,
+    "counts": {"train": 47, "dev": 15, "test": 17},
+    "labels_and_scorer_changed": false,
+    "test_used_for_rule_or_prompt_iteration": false
+  },
+  "upgrade": {
+    "catalog_model_id": "gpt-5.6-luna",
+    "catalog_variant": "max",
+    "judge_model": "gpt-5.6-luna",
+    "judge_provider": "opencode-go",
+    "judge_reasoning": "max",
+    "fallback_enabled": false,
+    "provider_selection": "opencode-go was active and exposed gpt-5.6-luna/max; openrouter was not used because the preferred provider was available",
+    "non_judge_model": "deepseek-v4-flash (unchanged; no rule/rubric/mining calls were made in this round)"
+  },
+  "before_upgrade": {
+    "judge_model": "gpt-5.6-luna",
+    "judge_provider": "opencode-go",
+    "judge_reasoning": "none",
+    "C": 1.0,
+    "dev": {"empty": 0.7333, "baseline": 0.8667, "ours": 0.9333},
+    "test": {"empty": 0.8235, "baseline": 0.8235, "ours": 0.7647},
+    "paid_calls": 1871,
+    "cumulative_cost_usd": 1.0150,
+    "provider_downgrades": 14
+  },
+  "dev_gate_after_upgrade": {
+    "tag": "r9_max_luna_dev",
+    "empty": {"accuracy": 0.7333, "reject_recall": 0.7857, "ci_match": 1.0, "per_pr_pass": 0.0667, "coverage_mean": 0.3414, "precision_mean": 0.4833},
+    "baseline": {"accuracy": 0.8667, "reject_recall": 0.9286, "ci_match": 1.0, "per_pr_pass": 0.2, "coverage_mean": 0.3897, "precision_mean": 0.3055},
+    "ours": {"accuracy": 0.9333, "reject_recall": 0.9286, "ci_match": 1.0, "per_pr_pass": 0.4, "coverage_mean": 0.4073, "precision_mean": 0.3267},
+    "ours_minus_baseline_accuracy": 0.0667,
+    "ours_minus_empty_accuracy": 0.2,
+    "bootstrap": {"ours_vs_baseline_p": 0.3545, "ours_vs_empty_p": 0.0355},
+    "C": 1.0,
+    "consistency": {"tag": "r9_max_luna_consistency", "sample_prs": 5, "runs_per_pr": 5},
+    "gates_met": {"C_at_least_85_percent": true, "ours_accuracy_at_least_85_percent": true, "ours_reject_recall_at_least_70_percent": true, "dev_separation_signal": true}
+  },
+  "freeze": {
+    "judge_model": "gpt-5.6-luna",
+    "judge_provider": "opencode-go",
+    "judge_reasoning": "max",
+    "fallback_enabled": false,
+    "test_tag": "r9_max_luna_final"
+  },
+  "formal_test_after_freeze": {
+    "runs_after_freeze": 1,
+    "tag": "r9_max_luna_final",
+    "empty": {"accuracy": 0.8235, "reject_recall": 1.0, "ci_match": 1.0, "per_pr_pass": 0.1176, "coverage_mean": 0.3134, "precision_mean": 0.4804},
+    "baseline": {"accuracy": 0.8235, "reject_recall": 1.0, "ci_match": 1.0, "per_pr_pass": 0.3529, "coverage_mean": 0.4446, "precision_mean": 0.4529},
+    "ours": {"accuracy": 0.8235, "reject_recall": 1.0, "ci_match": 1.0, "per_pr_pass": 0.2353, "coverage_mean": 0.3309, "precision_mean": 0.2353},
+    "bootstrap": {"ours_vs_baseline_delta": 0.0, "ours_vs_baseline_p": 1.0, "ours_vs_empty_delta": 0.0, "ours_vs_empty_p": 1.0},
+    "status": {"accuracy_at_least_85_percent": false, "reject_recall_at_least_70_percent": true, "beats_empty": false, "beats_baseline": false}
+  },
+  "cost_after": {
+    "paid_calls": 1992,
+    "cumulative_cost_usd": 1.0150,
+    "round_calls": 121,
+    "round_cost_usd": 0.0,
+    "round_prompt_tokens": 2027199,
+    "round_completion_tokens": 91452,
+    "round_provider_downgrades": 0,
+    "round_model": "gpt-5.6-luna",
+    "round_provider": "opencode-go"
+  },
+  "limitations": {
+    "permission_probe": "403 /collaborators and all actor permission endpoints; administrative permission is not provable",
+    "first_review": "26/79 literal formal-review snapshots (32.9%); 53 explicit first-activity proxies",
+    "status": "MISS: formal accuracy and both test baseline comparisons; PASS: C, reject recall, CI replay, freeze/hash and isolation checks"
+  }
+}

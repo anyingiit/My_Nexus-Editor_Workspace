@@ -1,0 +1,112 @@
+{
+  "pr_number": 95,
+  "title": "feat(search): add fzf-style fuzzy matching (matcher, filter, quick-open demo)",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "d5f22b2a00c761528d16cda3be8d77cd2b08f265",
+  "merge_commit_sha": "aa317e53335247d609747e677ff732507c2db45b",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "c11276a3c1676b4c416780e76386d98b232e5bf4",
+      "message": "feat(search): add fzf-style fuzzy matching utilities\n\nImplements roadmap item #17. Fuzzy matching answers a different question\nthan exact/regex search: does the query appear as an in-order subsequence,\nallowing gaps? This is the model behind quick-open, symbol pickers, and\ncommand palettes.\n\nBuilt in-house (no new dependency) following fzf's FuzzyMatchV1: a\nforward + backward scan narrows each candidate to the shortest window that\nstill contains the query, then a single linear pass scores it. Ranking\nrewards contiguous runs, word/camelCase boundaries, and the first\ncharacter, and penalizes gaps.\n\n- `fuzzyMatch(text, query, options?)` scores one candidate, returning the\n  matched character positions (or null when there is no subsequence match).\n- `findFuzzyMatches(doc, query, options?)` fuzzy-searches a document line\n  by line and returns matches ranked best-first, with absolute document\n  offsets ready to drive a highlight or \"jump to match\".\n\nShipped as pure utilities (like the existing findSearchMatches /\nreplaceAllMatches) rather than wired into the Cmd/Ctrl-F panel, since\n@codemirror/search has no fuzzy mode and grafting one in is a separate\nconcern. Adds the package's first README documenting the search plugin\nand the fuzzy API.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>",
+      "date": "2026-07-02T03:43:01Z"
+    },
+    {
+      "sha": "17e3ffac58456706eec2c1c71a8963cf0db6b270",
+      "message": "feat(search): add fuzzyFilter for ranked candidate lists\n\nLayer a generic list filter on top of fuzzyMatch — the building block for a\nquick-open dialog, command palette, or symbol picker. Non-matching items are\ndropped; the rest are ranked best-first, ties broken by original order.\n\n- `key` extracts the string to match from object items.\n- `limit` caps the result count after ranking.\n- Unlike findFuzzyMatches, an empty query returns every item (input order,\n  score 0) so a picker can show the full list before the user types.\n\nEach result carries the original item plus the match positions (into the\nitem's own text) for highlighting. Documented in the package README.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>",
+      "date": "2026-07-02T04:46:16Z"
+    },
+    {
+      "sha": "d5f22b2a00c761528d16cda3be8d77cd2b08f265",
+      "message": "feat(electron): add fuzzy quick-open (Ctrl+P) to the demo\n\nA floating file picker that fuzzy-filters the vault by relative path, ranks\nmatches best-first, highlights the matched characters, and jumps to the chosen\nfile. Opens with Ctrl/Cmd+P or the toolbar button; ArrowUp/Down to navigate,\nEnter to open, Esc to close.\n\nBuilt entirely on the plugin-search fuzzy API (`fuzzyFilter`), demonstrating\nthe engine capability end-to-end. Files come from the existing in-memory\nLinkIndex and open through the same path as wiki-link navigation, so no extra\nIO or IPC is added.\n\nThe picker is a self-contained renderer module with an ARIA listbox and a\njsdom-driven test covering filter/highlight/keyboard-nav/select/empty states.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>",
+      "date": "2026-07-02T04:46:54Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/quick-open.ts",
+      "status": "added",
+      "additions": 278,
+      "deletions": 0,
+      "changes": 278
+    },
+    {
+      "filename": "apps/electron-demo/test/quick-open.test.ts",
+      "status": "added",
+      "additions": 135,
+      "deletions": 0,
+      "changes": 135
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 190,
+      "deletions": 0,
+      "changes": 190
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy.ts",
+      "status": "added",
+      "additions": 298,
+      "deletions": 0,
+      "changes": 298
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy.test.ts",
+      "status": "added",
+      "additions": 202,
+      "deletions": 0,
+      "changes": 202
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=95",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

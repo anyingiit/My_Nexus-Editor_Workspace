@@ -1,0 +1,53 @@
+{
+  "pr_number": 6,
+  "title": "feat(core): add getSelectedText API",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-13T09:19:20Z",
+  "merged_by": null,
+  "closed_by": "ChainCoinLab",
+  "head_sha_final": "1d9d551f1ad89be34122f24f0acceab58070123b",
+  "merge_commit_sha": "e690c7701a7d142a86bc993cf353dc631944dd7f",
+  "base_sha": "78b7bdfd2f499f5cb570cbfeb9cd38aaacdc3364",
+  "commits": [
+    {
+      "sha": "1d9d551f1ad89be34122f24f0acceab58070123b",
+      "message": "feat(core): add getSelectedText API",
+      "date": "2026-05-13T07:26:49Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

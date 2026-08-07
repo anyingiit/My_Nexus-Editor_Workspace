@@ -1,0 +1,163 @@
+{
+  "pr_number": 151,
+  "title": "feat(search): add fuzzy search support",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-23T02:39:13Z",
+  "merged_by": null,
+  "closed_by": "kylinstar2019",
+  "head_sha_final": "ced3c52ffa24d9b120672ed059dfb0b26e598d53",
+  "merge_commit_sha": "ca74d1055c988b95d0383aebdfc5a5b63f29f6e4",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "f39b29caf242813b66aaae246e3d73fac4c7bb48",
+      "message": "docs(search): add fuzzy search development plan and progress workflow",
+      "date": "2026-07-13T10:07:07Z"
+    },
+    {
+      "sha": "7b19184a0c0e724512880fe1efd8772130cfc920",
+      "message": "feat(search): add fuzzy match algorithm with per-line DP scoring",
+      "date": "2026-07-13T10:19:00Z"
+    },
+    {
+      "sha": "6e80fe2304984d565cba24ea4e85e5bae7b1356b",
+      "message": "docs(search): mark P0 and P1 complete in fuzzy search plan",
+      "date": "2026-07-13T10:20:05Z"
+    },
+    {
+      "sha": "976431e208d97f31304fc6091e383f5ab81420af",
+      "message": "feat(search): integrate fuzzy option into findSearchMatches and replaceAllMatches",
+      "date": "2026-07-13T10:28:40Z"
+    },
+    {
+      "sha": "3a4e5dc1b900435030c19fc28a80d7a60f75689e",
+      "message": "docs(search): mark P2 complete in fuzzy search plan",
+      "date": "2026-07-13T10:29:11Z"
+    },
+    {
+      "sha": "c55a0acb990def56eea7581abcc0cdc9bf8360af",
+      "message": "docs(search): add plugin-search README and mark fuzzy search as in-progress",
+      "date": "2026-07-13T10:31:07Z"
+    },
+    {
+      "sha": "7471f2bc8815ad03208ab69e1aafb67164ccd4a5",
+      "message": "chore(search): finalize fuzzy search and add PR description draft",
+      "date": "2026-07-13T10:33:33Z"
+    },
+    {
+      "sha": "3bfebad34fea680d71b944931f81d31a03b2855c",
+      "message": "docs(search): mark P4 complete in fuzzy search plan",
+      "date": "2026-07-13T10:34:09Z"
+    },
+    {
+      "sha": "ced3c52ffa24d9b120672ed059dfb0b26e598d53",
+      "message": "docs(search): add manual verification section to PR description",
+      "date": "2026-07-13T10:41:22Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ai-dev-docs/Nexus-Editor-全面分析报告-2026-07-13.md",
+      "status": "added",
+      "additions": 359,
+      "deletions": 0,
+      "changes": 359
+    },
+    {
+      "filename": "docs/ai-dev-docs/PR-DESCRIPTION.md",
+      "status": "added",
+      "additions": 117,
+      "deletions": 0,
+      "changes": 117
+    },
+    {
+      "filename": "docs/ai-dev-docs/模糊搜索开发计划.md",
+      "status": "added",
+      "additions": 209,
+      "deletions": 0,
+      "changes": 209
+    },
+    {
+      "filename": "docs/ai-dev-docs/面试PR方向选择.md",
+      "status": "added",
+      "additions": 162,
+      "deletions": 0,
+      "changes": 162
+    },
+    {
+      "filename": "docs/递进式开发工作流.md",
+      "status": "added",
+      "additions": 141,
+      "deletions": 0,
+      "changes": 141
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 150,
+      "deletions": 0,
+      "changes": 150
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy.ts",
+      "status": "added",
+      "additions": 253,
+      "deletions": 0,
+      "changes": 253
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 1,
+      "changes": 23
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy.test.ts",
+      "status": "added",
+      "additions": 155,
+      "deletions": 0,
+      "changes": 155
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 65,
+      "deletions": 0,
+      "changes": 65
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=151",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "pr_number": 91,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Forcing 'u' flag breaks existing regexp+wholeWord usage"
+    },
+    {
+      "id": 2,
+      "summary": "Missing tests for regexp+wholeWord compatibility boundary"
+    },
+    {
+      "id": 3,
+      "summary": "CJK whole-word degrades to substring matching; clarify semantics"
+    },
+    {
+      "id": 4,
+      "summary": "Avoid unconditionally adding 'u' flag to user regexp"
+    },
+    {
+      "id": 5,
+      "summary": "Add regression tests for regex+wholeWord before resubmission"
+    }
+  ]
+}

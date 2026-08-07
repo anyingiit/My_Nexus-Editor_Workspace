@@ -1,0 +1,324 @@
+{
+  "pr_number": 58,
+  "title": "Feat/ai summary",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "63bbe6943274802dfdb6dea06c8ade20524f4c8c",
+  "merge_commit_sha": "d4a6f08cfc80b7cfe8faecf2e9dc1586f538f9dd",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "6ba4df482d10a8ccb0cca6d8ec9042783b91c837",
+      "message": "feat(ai-summary): add plugin skeleton and UI modal",
+      "date": "2026-06-10T09:09:47Z"
+    },
+    {
+      "sha": "bb631f5f969445ff176d68f5f2100c23de5f9ed8",
+      "message": "feat(ai-summary): integrate AISummaryModal into electron-demo toolbar",
+      "date": "2026-06-10T09:14:22Z"
+    },
+    {
+      "sha": "4e016fd1d63c8e3ebe5235f4e59a68a47d848f4f",
+      "message": "test(ai-summary): add unit tests for parser, image generator, createNote",
+      "date": "2026-06-10T09:16:33Z"
+    },
+    {
+      "sha": "77b9a10f0a251f8135d71f1bd72a809d51e4c01c",
+      "message": "debug(ai-summary): add logging and error handling for modal mount",
+      "date": "2026-06-10T09:21:48Z"
+    },
+    {
+      "sha": "e8714c51b55c76d7acb03c0915228473b1771cac",
+      "message": "fix(ai-summary): import plugin by package name and expose src via exports",
+      "date": "2026-06-10T09:26:12Z"
+    },
+    {
+      "sha": "2ca0489b1a01279294dcc392c7ea64d197e222a5",
+      "message": "fix(ai-summary): import named `AISummaryModal` instead of default",
+      "date": "2026-06-10T09:28:14Z"
+    },
+    {
+      "sha": "b5a80fad785866db1827007f8a50203fbc258da0",
+      "message": "chore(ai-summary): align peerDependencies to React 19 and add runtime diagnostics",
+      "date": "2026-06-10T09:46:33Z"
+    },
+    {
+      "sha": "5b681d27bd750b942b4b5b0499e6fca2e905676c",
+      "message": "feat(ai-summary): make image generator and createNote work in renderer and Node",
+      "date": "2026-06-10T09:50:42Z"
+    },
+    {
+      "sha": "f14769b6008bc84ea76a76ba4c9a65bb0244a615",
+      "message": "feat(ai-summary): render tree-structured SVG from markdown headings",
+      "date": "2026-06-10T09:54:13Z"
+    },
+    {
+      "sha": "454c90e9d4ca739ae465c60da376e7081679b766",
+      "message": "feat(ai-summary): parse list items as branches; use deeper Electron-like SVG background",
+      "date": "2026-06-10T10:03:07Z"
+    },
+    {
+      "sha": "a5e724f502d708562360f67be949612d80e14d20",
+      "message": "fix(ai-summary): correct AIImageGenerator implementation and syntax",
+      "date": "2026-06-10T10:05:37Z"
+    },
+    {
+      "sha": "5165d0ee84dda7e3727f5a8b5fd8bdecf2f95ba1",
+      "message": "feat(ai-summary): improve SVG visuals — dashed vertical guides, horizontal connectors, wrapped foreignObject boxes with level colors",
+      "date": "2026-06-10T10:09:18Z"
+    },
+    {
+      "sha": "7e1d1169c113cc0cde63a205ef3d8de58af9af25",
+      "message": "feat(ai-summary): layout nodes by level (same-level alignment) and support up to 3 levels",
+      "date": "2026-06-10T10:11:32Z"
+    },
+    {
+      "sha": "975003efe2b13e60eac7540075f06ca803d5ae9d",
+      "message": "fix(ai-summary): don't push list items onto heading stack (preserve heading hierarchy)",
+      "date": "2026-06-10T10:13:25Z"
+    },
+    {
+      "sha": "807820f3d1ac89f2b2bee8c01e15b4b2ca121a51",
+      "message": "feat(ai-summary): draw connectors from parents to children with adaptive box sizes",
+      "date": "2026-06-10T10:22:20Z"
+    },
+    {
+      "sha": "bd8788de127c84d66e90c464d92f6386e2f27572",
+      "message": "chore(ai-summary): clean up test files and prepare for manual UI testing",
+      "date": "2026-06-10T10:25:36Z"
+    },
+    {
+      "sha": "d8e5b46669febb51b5400e418b54f556470ffed5",
+      "message": "feat(ui): toggle AI Summary modal on toolbar button click (mount/unmount)",
+      "date": "2026-06-10T10:33:27Z"
+    },
+    {
+      "sha": "b9534c2e4867587e53f51b628add0efb5f3d191b",
+      "message": "feat(ai-summary): modal supports onClose and host unmounts on close; remove internal trigger",
+      "date": "2026-06-10T10:36:06Z"
+    },
+    {
+      "sha": "6991baf1318d7be62cf78e0a2db3f337da182c08",
+      "message": "style(ai-summary): buttons use common size/colors; center drag area text",
+      "date": "2026-06-10T10:40:09Z"
+    },
+    {
+      "sha": "5f2917cd13285f69a725af4bdfd3a714cca9d789",
+      "message": "feat(ai-summary): add reusable Modal wrapper and center footer buttons",
+      "date": "2026-06-10T10:41:55Z"
+    },
+    {
+      "sha": "301effced790cef1d8fb4311853144b3b9b284fd",
+      "message": "ui(ai-summary): icon file picker above gray hint text; hidden input via ref",
+      "date": "2026-06-10T10:44:16Z"
+    },
+    {
+      "sha": "82ae278a327d9c636fed0f1ff63ece73384e4667",
+      "message": "feat(ai-summary): tweak connector axis/stub spacing; add modal fade animation and external close event",
+      "date": "2026-06-10T10:48:45Z"
+    },
+    {
+      "sha": "63bbe6943274802dfdb6dea06c8ade20524f4c8c",
+      "message": "feat(ai-summary): 实现文章内容智能摘要生成核心功能",
+      "date": "2026-06-11T03:50:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 382,
+      "changes": 382
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 74,
+      "changes": 74
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 73,
+      "deletions": 1,
+      "changes": 74
+    },
+    {
+      "filename": "docs/personal/AI____2026-06-11T03-41-47.md",
+      "status": "added",
+      "additions": 318,
+      "deletions": 0,
+      "changes": 318
+    },
+    {
+      "filename": "docs/personal/AI____2026-06-11T03-41-53.md",
+      "status": "added",
+      "additions": 318,
+      "deletions": 0,
+      "changes": 318
+    },
+    {
+      "filename": "docs/personal/AI____2026-06-11T03-43-19.md",
+      "status": "added",
+      "additions": 318,
+      "deletions": 0,
+      "changes": 318
+    },
+    {
+      "filename": "docs/personal/ai-summary-2026-06-11T03-41-57.svg.md",
+      "status": "added",
+      "additions": 522,
+      "deletions": 0,
+      "changes": 522
+    },
+    {
+      "filename": "docs/superpowers/plans/2026-04-15-core-ast-pipeline.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 349,
+      "changes": 349
+    },
+    {
+      "filename": "docs/superpowers/plans/2026-04-15-live-preview-phase-1.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 375,
+      "changes": 375
+    },
+    {
+      "filename": "docs/superpowers/specs/2026-04-15-electron-demo-design.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 179,
+      "changes": 179
+    },
+    {
+      "filename": "file:/Users/mac/Desktop/Estella/%E9%9D%A2%E8%AF%95%E9%A2%98%E5%87%86%E5%A4%87/Floatboat-zyj/Nexus-Editor/packages/plugin-ai-summary/dist-test/test-output.svg",
+      "status": "added",
+      "additions": 38,
+      "deletions": 0,
+      "changes": 38
+    },
+    {
+      "filename": "packages/plugin-ai-summary/README.md",
+      "status": "added",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "packages/plugin-ai-summary/dist-test/test-output.svg",
+      "status": "added",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    },
+    {
+      "filename": "packages/plugin-ai-summary/package.json",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "packages/plugin-ai-summary/src/AIImageGenerator.ts",
+      "status": "added",
+      "additions": 346,
+      "deletions": 0,
+      "changes": 346
+    },
+    {
+      "filename": "packages/plugin-ai-summary/src/createNote.ts",
+      "status": "added",
+      "additions": 68,
+      "deletions": 0,
+      "changes": 68
+    },
+    {
+      "filename": "packages/plugin-ai-summary/src/index.ts",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/plugin-ai-summary/src/parser.ts",
+      "status": "added",
+      "additions": 192,
+      "deletions": 0,
+      "changes": 192
+    },
+    {
+      "filename": "packages/plugin-ai-summary/src/ui/AISummaryModal.tsx",
+      "status": "added",
+      "additions": 399,
+      "deletions": 0,
+      "changes": 399
+    },
+    {
+      "filename": "packages/plugin-ai-summary/test/createNote.test.ts",
+      "status": "added",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "packages/plugin-ai-summary/test/image.test.ts",
+      "status": "added",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/plugin-ai-summary/test/parser.test.ts",
+      "status": "added",
+      "additions": 17,
+      "deletions": 0,
+      "changes": 17
+    },
+    {
+      "filename": "packages/plugin-ai-summary/test/preview.test.ts",
+      "status": "added",
+      "additions": 32,
+      "deletions": 0,
+      "changes": 32
+    },
+    {
+      "filename": "packages/plugin-ai-summary/tsconfig.json",
+      "status": "added",
+      "additions": 14,
+      "deletions": 0,
+      "changes": 14
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 6,
+      "changes": 21
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=58",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "pr_number": 173,
+  "title": "fix(live-preview): anchor column grips to header cells",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "1b5929b7cfaad35324a203466fa19e47d927c42c",
+  "merge_commit_sha": "6d5cbb4490184520f9273f3a85cb786740f58cbf",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "b1d2ef58096ec81b2964e6110ed7bb0f11c4b615",
+      "message": "fix(live-preview): anchor column grips to headers\n\n- Move column drag/selection grips from separate <tr> row into each\n  header <th> cell (absolutely positioned overlay)\n- Fix column width misalignment issue when column widths change\n- Separate grip click from drag with a 'maybe-drag' pending phase:\n  only enter full drag when mouse moves beyond 5px threshold, letting\n  simple clicks select columns without triggering editing lock or\n  cell blur. This fixes the Delete key focus race where grip mousedown\n  caused cell blur → CM6 dispatch stole focus from wrapper.\n- Add missing test cases: click-outside-to-deselect,\n  selection-change-during-editing-no-rebuild\n- Unify header row access using getContentRows()[0] instead of\n  hardcoded table.rows[0]\n- Adjust column grip position to be visible near top border of header\n  cells\n- Increase column resize handle size for better usability",
+      "date": "2026-07-21T08:28:32Z"
+    },
+    {
+      "sha": "1b5929b7cfaad35324a203466fa19e47d927c42c",
+      "message": "fix(live-preview): clean up table keydown listener",
+      "date": "2026-07-22T05:49:23Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "openspec/changes/fix-table-header-grips/design.md",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "openspec/changes/fix-table-header-grips/proposal.md",
+      "status": "added",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "openspec/changes/fix-table-header-grips/specs/live-preview/spec.md",
+      "status": "added",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "openspec/changes/fix-table-header-grips/tasks.md",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 190,
+      "deletions": 78,
+      "changes": 268
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 202,
+      "deletions": 37,
+      "changes": 239
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=173",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

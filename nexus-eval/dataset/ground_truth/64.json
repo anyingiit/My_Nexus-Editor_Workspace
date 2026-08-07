@@ -1,0 +1,26 @@
+{
+  "pr_number": 64,
+  "title": "feat: support default text color configuration for newly input content",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T03:36:36Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "tinyChanges2027",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-12T14:05:23Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=64) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=64) before we can accept your contribution.<br/><hr/>**Alice** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=64) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-06-23T03:36:36Z",
+      "body": "Closing this PR after internal review. The change is not suitable to continue as-is for this interview evaluation; please resubmit a clean, focused PR if needed."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

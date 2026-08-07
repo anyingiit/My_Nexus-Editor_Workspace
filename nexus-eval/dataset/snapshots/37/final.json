@@ -1,0 +1,68 @@
+{
+  "pr_number": 37,
+  "title": "feat(toolbar): multi-line list toggle for ordered/unordered lists",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-29T07:16:54Z",
+  "merged_by": null,
+  "closed_by": "1005487835",
+  "head_sha_final": "8e75623d4280af29c714065680db8727dc7be3fc",
+  "merge_commit_sha": "fa847f76e17dab983241f03579f914d0071ecc95",
+  "base_sha": "06ebeff8120c2dbde87ff9206a7f9fd921f70088",
+  "commits": [
+    {
+      "sha": "3d63afff9d37a94fe384d0be0e485492189f95ee",
+      "message": "feat(toolbar): multi-line list toggle for ordered/unordered lists\n\nExtend toggleOrderedList and toggleUnorderedList to support multi-line\nselections. When multiple lines are selected:\n- If all lines already have the target list prefix, remove it from all.\n- Otherwise, add the prefix to every line (replacing any existing list marker).\n\nSingle-line (cursor-only) behaviour is preserved unchanged.\n\nCloses ROADMAP #1",
+      "date": "2026-05-29T06:55:53Z"
+    },
+    {
+      "sha": "4d947691663aee7c525bbde23818f0f43d797866",
+      "message": "test(toolbar): add multi-line list toggle tests\n\nCovers: add/remove OL/UL markers on multi-line selections, UL-to-OL\nconversion, OL-to-UL conversion, and single-line fallback.",
+      "date": "2026-05-29T06:55:54Z"
+    },
+    {
+      "sha": "0dc12e9dc4523e3e23095144e3a4fa896a40ab79",
+      "message": "refactor(toolbar): extract shared toggleList helper, add multi-line blockquote\n\n- Extract toggleList() to eliminate duplication between OL/UL toggle\n- getSelectedLines() now starts from selection instead of pos 0\n- toggleBlockquote() now supports multi-line selections\n- All 311 tests pass",
+      "date": "2026-05-29T07:01:54Z"
+    },
+    {
+      "sha": "8e75623d4280af29c714065680db8727dc7be3fc",
+      "message": "test(toolbar): add edge-case tests for multi-line toggle\n\n- Mixed OL/UL/plain lines\n- Selection starting mid-line\n- Multi-line blockquote add/remove\n- Fix off-by-one in selection range",
+      "date": "2026-05-29T07:01:56Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 161,
+      "deletions": 35,
+      "changes": 196
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 183,
+      "deletions": 3,
+      "changes": 186
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=37",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

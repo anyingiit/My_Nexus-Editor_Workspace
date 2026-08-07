@@ -1,0 +1,58 @@
+{
+  "pr_number": 187,
+  "title": "feat(live-preview): show raw thematicBreak markdown when cursor is on the line",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "9a117e0be299d198c4921508b4b0f3908eb38be4",
+  "merge_commit_sha": "e94d2ee4b61802e84438715df53f05a548b68498",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "8eadfd693ae9de0c3be4690e6c1d501c1077493f",
+      "message": "fix(live-preview): show raw thematicBreak markdown when cursor is on the line",
+      "date": "2026-07-26T02:34:10Z"
+    },
+    {
+      "sha": "9a117e0be299d198c4921508b4b0f3908eb38be4",
+      "message": "test(live-preview): add asterisk variant tests for thematicBreak editable",
+      "date": "2026-07-26T02:43:58Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 15,
+      "changes": 36
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 168,
+      "deletions": 1,
+      "changes": 169
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=187",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

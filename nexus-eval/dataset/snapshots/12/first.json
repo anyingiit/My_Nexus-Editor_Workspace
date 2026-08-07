@@ -1,0 +1,106 @@
+{
+  "pr_number": 12,
+  "title": "feat(search): add fuzzy search helpers",
+  "body": "## Summary\n- Add fuzzy ordered-subsequence matching to plugin-search helpers\n- Support fuzzy replacement over matched text windows\n- Document the fuzzy helper behavior and mark Roadmap #17 in progress\n\n## Changes\n\n| Package | File | Change |\n|---|---|---|\n| plugin-search | `src/index.ts` | Add `fuzzy?: boolean` to `SearchOptions` |\n| plugin-search | `src/index.ts` | Add line-local ordered-subsequence matcher for `findSearchMatches` |\n| plugin-search | `src/index.ts` | Add fuzzy replacement window support to `replaceAllMatches` |\n| plugin-search | `test/plugin-search.test.ts` | Add fuzzy default, match, case-sensitive, line-boundary, and replace tests |\n| plugin-search | `README.md` | Document fuzzy helper behavior and examples |\n| docs | `ROADMAP.md`, `ROADMAP.zh.md` | Mark Roadmap #17 as `in-progress` |\n\n## Tasks\n- [x] Add fuzzy option to `SearchOptions`\n- [x] Implement line-local ordered-subsequence matching\n- [x] Preserve literal search as the default behavior\n- [x] Support case-sensitive fuzzy search\n- [x] Support fuzzy replacement windows\n- [x] Add focused unit tests\n- [x] Add `packages/plugin-search/README.md` docs\n- [x] Mark Roadmap #17 in progress\n- [ ] Reviewer approval\n- [ ] Merge after checks pass\n\n## Tests\n- [x] pnpm test -- packages/plugin-search/test/plugin-search.test.ts\n- [x] pnpm --filter @floatboat/nexus-plugin-search build\n\nRoadmap: #17 Fuzzy search",
+  "created_at": "2026-05-13T10:28:58Z",
+  "draft": false,
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "head_sha_at_first_review": "ff33917f7b58883414d0460d2afcddb82079b5a9",
+  "first_review_time": "2026-05-13T11:22:28Z",
+  "commits_at_first_review": [
+    {
+      "sha": "8da5ce3079158ab2bca52817587e3f4b780b369a",
+      "message": "feat(search): add fuzzy search helpers",
+      "date": "2026-05-13T10:30:54Z"
+    },
+    {
+      "sha": "40ae2f3524de64e6d5bc6286f30c129a3fcd0dfd",
+      "message": "docs(search): document fuzzy search helpers",
+      "date": "2026-05-13T10:30:54Z"
+    },
+    {
+      "sha": "ff33917f7b58883414d0460d2afcddb82079b5a9",
+      "message": "docs: mark fuzzy search in progress",
+      "date": "2026-05-13T10:32:09Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 3,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "7014896c0930d81d637445432330abf6f6e25177",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ff33917f7b58883414d0460d2afcddb82079b5a9/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ff33917f7b58883414d0460d2afcddb82079b5a9/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=ff33917f7b58883414d0460d2afcddb82079b5a9",
+        "patch": "@@ -25,7 +25,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | 2  | Whole-word matching | `plugin-search` | P1 | planned | No | Extension of existing search options |\n | 15 | Regex search | `plugin-search` | P1 | in-progress | No | Watch escape edge cases — PR #9 in review |\n | 16 | Command / search history | `plugin-search` + `plugin-slash` | P2 | planned | Yes | Needs persistence (localStorage or host-injected) |\n-| 17 | Fuzzy search | `plugin-search` | P2 | planned | No | Evaluate fzf-like algorithm vs. third-party lib |\n+| 17 | Fuzzy search | `plugin-search` | P2 | in-progress | No | Evaluate fzf-like algorithm vs. third-party lib |\n | 3  | Slash command sorting + limit | `plugin-slash` | P0 | done | Yes | Landed alongside the floating menu UI — see `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash command floating menu UI | `plugin-slash` + `electron-demo` | P0 | done | Yes | `createSlashMenuUI(editor, options)` — see `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "ac70f72c60ff4bd52da4e26114846793704adad2",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ff33917f7b58883414d0460d2afcddb82079b5a9/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ff33917f7b58883414d0460d2afcddb82079b5a9/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=ff33917f7b58883414d0460d2afcddb82079b5a9",
+        "patch": "@@ -25,7 +25,7 @@\n | 2  | whole-word 匹配 | `plugin-search` | P1 | planned | 否 | 现有 search 选项扩展 |\n | 15 | 正则搜索 | `plugin-search` | P1 | in-progress | 否 | 注意转义边界用例 —— PR #9 review 中 |\n | 16 | 历史命令 / 搜索记忆 | `plugin-search` + `plugin-slash` | P2 | planned | 是 | 需要持久化层（localStorage 或宿主注入） |\n-| 17 | 模糊搜索 | `plugin-search` | P2 | planned | 否 | 评估 fzf-like 算法 vs. 第三方 lib |\n+| 17 | 模糊搜索 | `plugin-search` | P2 | in-progress | 否 | 评估 fzf-like 算法 vs. 第三方 lib |\n | 3  | Slash 命令排序与 limit | `plugin-slash` | P0 | done | 是 | 与浮层菜单 UI 一并落地 —— 见 `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash 命令浮层菜单 UI | `plugin-slash` + `electron-demo` | P0 | done | 是 | `createSlashMenuUI(editor, options)` —— 见 `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "387fa25f1b4f6b128ca1b6a6f8857ee9c3ca757d",
+        "filename": "packages/plugin-search/README.md",
+        "status": "added",
+        "additions": 52,
+        "deletions": 0,
+        "changes": 52,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ff33917f7b58883414d0460d2afcddb82079b5a9/packages%2Fplugin-search%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ff33917f7b58883414d0460d2afcddb82079b5a9/packages%2Fplugin-search%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2FREADME.md?ref=ff33917f7b58883414d0460d2afcddb82079b5a9",
+        "patch": "@@ -0,0 +1,52 @@\n+# @floatboat/nexus-plugin-search\n+\n+Search panel and programmatic search/replace helpers for Nexus Editor.\n+\n+## Usage\n+\n+```ts\n+import {\n+  createSearchPlugin,\n+  findSearchMatches,\n+  replaceAllMatches\n+} from \"@floatboat/nexus-plugin-search\";\n+\n+const searchPlugin = createSearchPlugin({\n+  caseSensitive: true\n+});\n+```\n+\n+## Options\n+\n+### `createSearchPlugin(options)`\n+\n+| Option | Type | Default | Description |\n+|---|---|---|---|\n+| `top` | `boolean` | `true` | Render the search panel above the editor content. |\n+| `caseSensitive` | `boolean` | `false` | Enable case-sensitive search by default. |\n+| `highlightSelectionMatches` | `boolean` | `true` | Highlight viewport matches for the current selection. |\n+| `labels` | `Partial<SearchPluginLabels>` | `undefined` | Override search panel labels. |\n+\n+### `findSearchMatches(doc, query, options)`\n+\n+Returns all matches for `query`. Searches are case-insensitive and literal by default.\n+\n+Pass `{ fuzzy: true }` to interpret `query` as an ordered subsequence. Fuzzy search returns the smallest contiguous, line-local text window containing the query characters in order:\n+\n+```ts\n+findSearchMatches(\"Nexus Editor\", \"nxed\", { fuzzy: true });\n+// [{ from: 0, to: 8, text: \"Nexus Ed\" }]\n+```\n+\n+Fuzzy search does not match across line breaks. Combine with `{ caseSensitive: true }` to require exact character casing.\n+\n+### `replaceAllMatches(doc, query, replacement, options)`\n+\n+Replaces every match in `doc`. Literal replacement is used by default.\n+\n+With `{ fuzzy: true }`, replacement applies to each fuzzy match window:\n+\n+```ts\n+replaceAllMatches(\"Nexus Ed note\", \"nxed\", \"Match\", { fuzzy: true });\n+// \"Match note\"\n+```"
+      },
+      {
+        "sha": "2cd8e4981d20323b7a51a2f9f4e5752980393386",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 106,
+        "deletions": 0,
+        "changes": 106,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ff33917f7b58883414d0460d2afcddb82079b5a9/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ff33917f7b58883414d0460d2afcddb82079b5a9/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=ff33917f7b58883414d0460d2afcddb82079b5a9",
+        "patch": "@@ -25,6 +25,11 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  /**\n+   * Treat the query as an ordered subsequence and return the smallest\n+   * line-local text window containing those characters.\n+   */\n+  fuzzy?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -79,6 +84,87 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function normalizeSearchText(value: string, options: SearchOptions): string {\n+  return options.caseSensitive ? value : value.toLowerCase();\n+}\n+\n+function findFuzzyWindow(\n+  text: string,\n+  query: string,\n+  options: SearchOptions,\n+  fromIndex: number\n+): { from: number; to: number } | null {\n+  const haystack = normalizeSearchText(text, options);\n+  const needle = normalizeSearchText(query, options);\n+  let queryIndex = 0;\n+  let end = -1;\n+\n+  for (let index = fromIndex; index < haystack.length; index += 1) {\n+    if (haystack[index] !== needle[queryIndex]) {\n+      continue;\n+    }\n+\n+    queryIndex += 1;\n+    if (queryIndex === needle.length) {\n+      end = index;\n+      break;\n+    }\n+  }\n+\n+  if (end < 0) {\n+    return null;\n+  }\n+\n+  queryIndex = needle.length - 1;\n+  let start = end;\n+\n+  for (let index = end; index >= fromIndex; index -= 1) {\n+    if (haystack[index] !== needle[queryIndex]) {\n+      continue;\n+    }\n+\n+    start = index;\n+    queryIndex -= 1;\n+    if (queryIndex < 0) {\n+      break;\n+    }\n+  }\n+\n+  return { from: start, to: end + 1 };\n+}\n+\n+function findFuzzySearchMatches(doc: string, query: string, options: SearchOptions): SearchMatch[] {\n+  const matches: SearchMatch[] = [];\n+  let lineStart = 0;\n+\n+  for (let index = 0; index <= doc.length; index += 1) {\n+    if (index !== doc.length && doc[index] !== \"\\n\") {\n+      continue;\n+    }\n+\n+    const line = doc.slice(lineStart, index);\n+    let cursor = 0;\n+\n+    while (cursor < line.length) {\n+      const window = findFuzzyWindow(line, query, options, cursor);\n+      if (!window) {\n+        break;\n+      }\n+\n+      matches.push({\n+        from: lineStart + window.from,\n+        to: lineStart + window.to,\n+        text: line.slice(window.from, window.to)\n+      });\n+      cursor = window.to;\n+    }\n+\n+    lineStart = index + 1;\n+  }\n+\n+  return matches;\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,6 +174,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy) {\n+    return findFuzzySearchMatches(doc, query, options);\n+  }\n+\n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n   const pattern = new RegExp(escapeRegExp(query), flags);\n   const matches: SearchMatch[] = [];\n@@ -116,6 +206,22 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n+  if (options.fuzzy) {\n+    const matches = findFuzzySearchMatches(doc, query, options);\n+    if (matches.length === 0) {\n+      return doc;\n+    }\n+\n+    let next = \"\";\n+    let cursor = 0;\n+    for (const match of matches) {\n+      next += doc.slice(cursor, match.from);\n+      next += replacement;\n+      cursor = match.to;\n+    }\n+    return next + doc.slice(cursor);\n+  }\n+\n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n   return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n }"
+      },
+      {
+        "sha": "0920c1b1f198ccc94d0e31b0d18eea724f1dfb13",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 25,
+        "deletions": 0,
+        "changes": 25,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ff33917f7b58883414d0460d2afcddb82079b5a9/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ff33917f7b58883414d0460d2afcddb82079b5a9/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=ff33917f7b58883414d0460d2afcddb82079b5a9",
+        "patch": "@@ -21,10 +21,35 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"keeps searches literal by default instead of fuzzy\", () => {\n+    expect(findSearchMatches(\"Nexus Editor\", \"nxed\")).toEqual([]);\n+  });\n+\n+  it(\"supports fuzzy ordered-subsequence search\", () => {\n+    expect(findSearchMatches(\"Nexus Editor\\nMarkdown Guide\", \"nxed\", { fuzzy: true })).toEqual([\n+      { from: 0, to: 8, text: \"Nexus Ed\" }\n+    ]);\n+  });\n+\n+  it(\"keeps fuzzy search within a single line\", () => {\n+    expect(findSearchMatches(\"ne\\nxd\", \"nxd\", { fuzzy: true })).toEqual([]);\n+  });\n+\n+  it(\"supports case-sensitive fuzzy search\", () => {\n+    expect(findSearchMatches(\"Nexus Editor\", \"ne\", { fuzzy: true, caseSensitive: true })).toEqual([]);\n+    expect(findSearchMatches(\"Nexus Editor\", \"NE\", { fuzzy: true, caseSensitive: true })).toEqual([\n+      { from: 0, to: 7, text: \"Nexus E\" }\n+    ]);\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"replaces fuzzy match windows in a document\", () => {\n+    expect(replaceAllMatches(\"Nexus Ed note\", \"nxed\", \"Match\", { fuzzy: true })).toBe(\"Match note\");\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

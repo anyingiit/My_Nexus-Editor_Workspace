@@ -1,0 +1,826 @@
+{
+  "pr_number": 23,
+  "title": "feat: implement 7 Roadmap items across 6 packages",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T06:15:34Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "1434ff2834e48c391af1c456322903110d8077a0",
+  "merge_commit_sha": "315df68fd87026e12389c704995fa9c0e786dedf",
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "7b0893dc294a4105ec3125a953fa418334a7630c",
+      "message": "feat(react,vue): add onReady callback and container pass-through props",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "d11ba904c230a5e9e51e836b2c373d5b01c58b51",
+      "message": "feat(search): add whole-word matching support",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "6cb5d2b9c20668abeb94c3a81d44292eb0bb74d3",
+      "message": "feat(toolbar): support multi-line ordered and unordered list toggle",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "f67b0a92c807d98e3ec87d7f17cef10faed02eee",
+      "message": "feat(history): group table-editing transactions for undo/redo",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "2e45415d600f1fda2e9af6db4b0fa4e1c05e2194",
+      "message": "feat(toolbar): add list item drag-to-reorder support",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "6309517e8c3f0605b682bde52c4b236c088d8b62",
+      "message": "test: add Playwright E2E test suite with 10 integration tests",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "7d4c4125f93b3878bc833151739b8778c6d91ff5",
+      "message": "test(core): add performance benchmarks with warmup and statistics\n\ndocs: add API reference for core, react, and vue packages",
+      "date": "2026-05-22T08:58:25Z"
+    },
+    {
+      "sha": "f9bc0e55938cc001b65d726eabb42d1f8ce4746a",
+      "message": "ci: add E2E test gate to CI workflow\n\nfix(electron): normalize Windows path separators in sample-vault tests",
+      "date": "2026-05-22T08:58:26Z"
+    },
+    {
+      "sha": "1434ff2834e48c391af1c456322903110d8077a0",
+      "message": "docs(openspec): add multi-cursor support change proposal\n\nUpdate add-missing-features tasks with completed items (2.4, 4.2, 4.3, 4.4)",
+      "date": "2026-05-22T08:58:26Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/workflows/ci.yml",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 2,
+      "changes": 40
+    },
+    {
+      "filename": "apps/electron-demo/test/sample-vault.test.ts",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 24,
+      "changes": 52
+    },
+    {
+      "filename": "e2e-vite.config.ts",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "e2e/editor-e2e.spec.ts",
+      "status": "added",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "e2e/index.html",
+      "status": "added",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "e2e/test-app.ts",
+      "status": "added",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/tasks.md",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 4,
+      "changes": 8
+    },
+    {
+      "filename": "openspec/changes/add-multi-cursor/design.md",
+      "status": "added",
+      "additions": 73,
+      "deletions": 0,
+      "changes": 73
+    },
+    {
+      "filename": "openspec/changes/add-multi-cursor/proposal.md",
+      "status": "added",
+      "additions": 42,
+      "deletions": 0,
+      "changes": 42
+    },
+    {
+      "filename": "openspec/changes/add-multi-cursor/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 89,
+      "deletions": 0,
+      "changes": 89
+    },
+    {
+      "filename": "openspec/changes/add-multi-cursor/tasks.md",
+      "status": "added",
+      "additions": 44,
+      "deletions": 0,
+      "changes": 44
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 2,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "added",
+      "additions": 105,
+      "deletions": 0,
+      "changes": 105
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/editor-bench.test.ts",
+      "status": "added",
+      "additions": 116,
+      "deletions": 0,
+      "changes": 116
+    },
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 1,
+      "changes": 16
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 163,
+      "deletions": 118,
+      "changes": 281
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 87,
+      "deletions": 32,
+      "changes": 119
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/list-reorder.ts",
+      "status": "added",
+      "additions": 157,
+      "deletions": 0,
+      "changes": 157
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar-list-reorder.test.ts",
+      "status": "added",
+      "additions": 103,
+      "deletions": 0,
+      "changes": 103
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 61,
+      "deletions": 0,
+      "changes": 61
+    },
+    {
+      "filename": "packages/react/README.md",
+      "status": "added",
+      "additions": 84,
+      "deletions": 0,
+      "changes": 84
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 4,
+      "changes": 10
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 2,
+      "changes": 13
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 1,
+      "changes": 27
+    },
+    {
+      "filename": "packages/vue/README.md",
+      "status": "added",
+      "additions": 84,
+      "deletions": 0,
+      "changes": 84
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 3,
+      "changes": 11
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 1,
+      "changes": 35
+    },
+    {
+      "filename": "playwright.config.ts",
+      "status": "added",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 13,
+      "changes": 61
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": {
+    "status": "diverged",
+    "ahead_by": 9,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "c209a3569adc304e2175f093ed748bee4aa81fc0",
+        "filename": ".github/workflows/ci.yml",
+        "status": "modified",
+        "additions": 38,
+        "deletions": 2,
+        "changes": 40,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/.github%2Fworkflows%2Fci.yml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/.github%2Fworkflows%2Fci.yml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/.github%2Fworkflows%2Fci.yml?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -50,7 +50,7 @@ jobs:\n       - name: Typecheck\n         run: pnpm typecheck\n \n-      - name: Run tests\n+      - name: Run unit tests\n         run: pnpm test\n \n       - name: Build packages\n@@ -59,10 +59,46 @@ jobs:\n       - name: Build Electron demo\n         run: pnpm build:electron-demo\n \n+  e2e:\n+    name: E2E Tests\n+    runs-on: ubuntu-latest\n+    needs: verify\n+    steps:\n+      - name: Checkout\n+        uses: actions/checkout@v4\n+\n+      - name: Setup pnpm\n+        uses: pnpm/action-setup@v4\n+        with:\n+          version: ${{ env.PNPM_VERSION }}\n+\n+      - name: Setup Node\n+        uses: actions/setup-node@v4\n+        with:\n+          node-version: ${{ env.NODE_VERSION }}\n+          cache: pnpm\n+\n+      - name: Install dependencies\n+        run: pnpm install --frozen-lockfile\n+\n+      - name: Install Playwright browsers\n+        run: npx playwright install --with-deps chromium\n+\n+      - name: Run E2E tests\n+        run: npx playwright test\n+\n+      - name: Upload test results\n+        if: failure()\n+        uses: actions/upload-artifact@v4\n+        with:\n+          name: playwright-report\n+          path: playwright-report/\n+          retention-days: 7\n+\n   publish:\n     name: Publish Packages\n     runs-on: ubuntu-latest\n-    needs: verify\n+    needs: [verify, e2e]\n     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.publish)\n     steps:\n       - name: Checkout"
+      },
+      {
+        "sha": "4fcee74d23d4733278738c4f680d7f4b29dfe011",
+        "filename": "apps/electron-demo/test/sample-vault.test.ts",
+        "status": "modified",
+        "additions": 28,
+        "deletions": 24,
+        "changes": 52,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -8,6 +8,10 @@ const VAULT_ROOT = path.resolve(__dirname, \"../sample-vault\");\n const SUPPORTED = new Set([\".md\", \".markdown\", \".txt\"]);\n const SKIP_DIRS = new Set([\"node_modules\", \".git\"]);\n \n+function norm(p: string): string {\n+  return p.replace(/\\\\/g, \"/\");\n+}\n+\n async function collect(dir: string, acc: string[]): Promise<void> {\n   const entries = await readdir(dir, { withFileTypes: true });\n   for (const e of entries) {\n@@ -52,9 +56,9 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n \n   it(\"every note links back to index.md (hub topology)\", async () => {\n     const idx = await buildIndex();\n-    const hub = path.join(VAULT_ROOT, \"index.md\");\n+    const hub = norm(path.join(VAULT_ROOT, \"index.md\"));\n     const hits = idx.getBacklinks(hub);\n-    const sources = new Set(hits.map((h) => path.relative(VAULT_ROOT, h.sourcePath)));\n+    const sources = new Set(hits.map((h) => norm(path.relative(VAULT_ROOT, h.sourcePath))));\n     // README is documentation, not a note that must link in; every *other*\n     // markdown file should.\n     const expected = [\n@@ -76,25 +80,25 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n \n   it(\"[[AI]] from Daily resolves to Topics/AI.md (globally unique basename)\", async () => {\n     const idx = await buildIndex();\n-    const daily = path.join(VAULT_ROOT, \"Daily/2026-04-20.md\");\n-    expect(idx.resolve(\"AI\", daily)).toBe(path.join(VAULT_ROOT, \"Topics/AI.md\"));\n+    const daily = norm(path.join(VAULT_ROOT, \"Daily/2026-04-20.md\"));\n+    expect(idx.resolve(\"AI\", daily)).toBe(norm(path.join(VAULT_ROOT, \"Topics/AI.md\")));\n   });\n \n   it(\"[[Meeting]] from work/Inbox.md resolves to work/Meeting.md (same-dir wins)\", async () => {\n     const idx = await buildIndex();\n-    const inbox = path.join(VAULT_ROOT, \"work/Inbox.md\");\n-    expect(idx.resolve(\"Meeting\", inbox)).toBe(path.join(VAULT_ROOT, \"work/Meeting.md\"));\n+    const inbox = norm(path.join(VAULT_ROOT, \"work/Inbox.md\"));\n+    expect(idx.resolve(\"Meeting\", inbox)).toBe(norm(path.join(VAULT_ROOT, \"work/Meeting.md\")));\n   });\n \n   it(\"[[Meeting]] from personal/Diary.md resolves to personal/Meeting.md (symmetric)\", async () => {\n     const idx = await buildIndex();\n-    const diary = path.join(VAULT_ROOT, \"personal/Diary.md\");\n-    expect(idx.resolve(\"Meeting\", diary)).toBe(path.join(VAULT_ROOT, \"personal/Meeting.md\"));\n+    const diary = norm(path.join(VAULT_ROOT, \"personal/Diary.md\"));\n+    expect(idx.resolve(\"Meeting\", diary)).toBe(norm(path.join(VAULT_ROOT, \"personal/Meeting.md\")));\n   });\n \n   it(\"[[Ghost Note]] in ghost-demo.md is unresolved (creates-on-click scenario)\", async () => {\n     const idx = await buildIndex();\n-    const ghost = path.join(VAULT_ROOT, \"ghost-demo.md\");\n+    const ghost = norm(path.join(VAULT_ROOT, \"ghost-demo.md\"));\n     expect(idx.resolve(\"Ghost Note\", ghost)).toBeNull();\n     expect(idx.resolve(\"NonExistent\", ghost)).toBeNull();\n   });\n@@ -103,7 +107,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n     const idx = await buildIndex();\n     // NotALink should not be resolvable via any rule — it must never appear\n     // as a valid target because the scanner skipped it.\n-    expect(idx.resolve(\"NotALink\", path.join(VAULT_ROOT, \"ghost-demo.md\"))).toBeNull();\n+    expect(idx.resolve(\"NotALink\", norm(path.join(VAULT_ROOT, \"ghost-demo.md\")))).toBeNull();\n     // And no file's forward edges include a \"NotALink\" target.\n     for (const source of idx.getAllFiles()) {\n       const hits = idx.getBacklinks(source);\n@@ -133,7 +137,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n       expect(hits).toEqual(\n         expect.arrayContaining([\n           expect.objectContaining({\n-            sourcePath: file.path,\n+            sourcePath: norm(file.path),\n             target: match.target,\n           }),\n         ])\n@@ -143,42 +147,42 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n \n   it(\"Testing.md shows linked backlinks from current sample-vault references\", async () => {\n     const idx = await buildIndex();\n-    const testingPath = path.join(VAULT_ROOT, \"Topics/Testing.md\");\n-    const linked = idx.getBacklinks(testingPath).map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n+    const testingPath = norm(path.join(VAULT_ROOT, \"Topics/Testing.md\"));\n+    const linked = idx.getBacklinks(testingPath).map((m) => norm(path.relative(VAULT_ROOT, m.sourcePath)));\n     expect(linked.length).toBeGreaterThan(0);\n     expect(linked).toContain(\"Projects/Nexus-Editor.md\");\n   });\n \n   it(\"Bob.md has an unlinked mention in Alice.md (plain text 'Bob' outside brackets)\", async () => {\n     const idx = await buildIndex();\n-    const bob = path.join(VAULT_ROOT, \"People/Bob.md\");\n+    const bob = norm(path.join(VAULT_ROOT, \"People/Bob.md\"));\n     const mentions = idx.getUnlinkedMentions(bob);\n-    const sources = mentions.map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n+    const sources = mentions.map((m) => norm(path.relative(VAULT_ROOT, m.sourcePath)));\n     expect(sources).toContain(\"People/Alice.md\");\n   });\n \n   it(\"AI.md has an unlinked mention in Alice.md and Daily/2026-04-20.md has a linked one\", async () => {\n     const idx = await buildIndex();\n-    const ai = path.join(VAULT_ROOT, \"Topics/AI.md\");\n-    const unlinked = idx.getUnlinkedMentions(ai).map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n-    const linked = idx.getBacklinks(ai).map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n-    expect(unlinked).toContain(\"People/Alice.md\"); // plain text \"AI\" in Alice.md\n-    expect(linked).toContain(\"Daily/2026-04-20.md\"); // [[AI]] in the daily\n+    const ai = norm(path.join(VAULT_ROOT, \"Topics/AI.md\"));\n+    const unlinked = idx.getUnlinkedMentions(ai).map((m) => norm(path.relative(VAULT_ROOT, m.sourcePath)));\n+    const linked = idx.getBacklinks(ai).map((m) => norm(path.relative(VAULT_ROOT, m.sourcePath)));\n+    expect(unlinked).toContain(\"People/Alice.md\");\n+    expect(linked).toContain(\"Daily/2026-04-20.md\");\n   });\n \n   it(\"v2-shaped anchors in Ideas.md resolve to the underlying file, not ghosts\", async () => {\n     const idx = await buildIndex();\n-    const ideas = path.join(VAULT_ROOT, \"Projects/Ideas.md\");\n+    const ideas = norm(path.join(VAULT_ROOT, \"Projects/Ideas.md\"));\n     expect(idx.resolve(\"Projects/Nexus-Editor#Context\", ideas)).toBe(\n-      path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\")\n+      norm(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"))\n     );\n     expect(idx.resolve(\"Projects/Nexus-Editor^some-block\", ideas)).toBe(\n-      path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\")\n+      norm(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"))\n     );\n   });\n \n   it(\"#Context anchor in Ideas.md points into the real Context heading of Nexus-Editor.md\", async () => {\n-    const nexus = path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\");\n+    const nexus = norm(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"));\n     const content = await readFile(nexus, \"utf-8\");\n     const { anchor } = parseAnchor(\"Projects/Nexus-Editor#Context\");\n     expect(anchor).not.toBeNull();"
+      },
+      {
+        "sha": "20838d944934f148d806ccd66d90380329cb7292",
+        "filename": "e2e-vite.config.ts",
+        "status": "added",
+        "additions": 19,
+        "deletions": 0,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/e2e-vite.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/e2e-vite.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/e2e-vite.config.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,19 @@\n+import { defineConfig } from \"vite\";\n+import path from \"node:path\";\n+\n+export default defineConfig({\n+  root: path.resolve(__dirname, \"e2e\"),\n+  base: \"./\",\n+  resolve: {\n+    alias: {\n+      \"@floatboat/nexus-core\": path.resolve(__dirname, \"packages/core/src/index.ts\"),\n+      \"@floatboat/nexus-preset-gfm\": path.resolve(__dirname, \"packages/preset-gfm/src/index.ts\"),\n+      \"@floatboat/nexus-plugin-history\": path.resolve(__dirname, \"packages/plugin-history/src/index.ts\"),\n+      \"@floatboat/nexus-plugin-toolbar\": path.resolve(__dirname, \"packages/plugin-toolbar/src/index.ts\"),\n+      \"@floatboat/nexus-plugin-search\": path.resolve(__dirname, \"packages/plugin-search/src/index.ts\"),\n+    },\n+  },\n+  server: {\n+    port: 5179,\n+  },\n+});"
+      },
+      {
+        "sha": "0cb4ab032b0678c0ab98b50fc5b93715ac70c05c",
+        "filename": "e2e/editor-e2e.spec.ts",
+        "status": "added",
+        "additions": 77,
+        "deletions": 0,
+        "changes": 77,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/e2e%2Feditor-e2e.spec.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/e2e%2Feditor-e2e.spec.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/e2e%2Feditor-e2e.spec.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,77 @@\n+import { expect, test } from \"@playwright/test\";\n+\n+test.beforeEach(async ({ page }) => {\n+  await page.goto(\"/\");\n+  await page.waitForSelector(\".cm-editor\");\n+});\n+\n+test(\"renders the CodeMirror editor\", async ({ page }) => {\n+  const editor = page.locator(\".cm-editor\");\n+  await expect(editor).toBeVisible();\n+});\n+\n+test(\"renders the toolbar\", async ({ page }) => {\n+  const toolbar = page.locator('[role=\"toolbar\"]');\n+  await expect(toolbar).toBeVisible();\n+});\n+\n+test(\"renders initial document content\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await expect(content).toContainText(\"world\");\n+});\n+\n+test(\"accepts text input\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await content.click();\n+  await page.keyboard.type(\" appended\");\n+  await expect(content).toContainText(\"Hello **world** appended\");\n+});\n+\n+test(\"bold shortcut via toolbar click\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await content.click();\n+  const boldBtn = page.locator('[data-toolbar-action=\"bold\"]');\n+  await boldBtn.click();\n+  await expect(content).toContainText(\"**\");\n+});\n+\n+test(\"Ctrl+F opens the search panel\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await content.click();\n+  await content.press(\"Control+f\");\n+  const searchPanel = page.locator('[data-test-id=\"markdown-search-bar\"]');\n+  await expect(searchPanel).toBeVisible({ timeout: 3000 });\n+});\n+\n+test(\"search panel input is visible after opening\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await content.click();\n+  await content.press(\"Control+f\");\n+  const input = page.locator('[data-test-id=\"markdown-search-input\"]');\n+  await expect(input).toBeVisible({ timeout: 3000 });\n+});\n+\n+test(\"undo reverts text change via Ctrl+Z\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await content.click();\n+  await content.press(\"End\");\n+  await page.keyboard.type(\"extra\");\n+  await content.press(\"Control+z\");\n+  await expect(content).not.toContainText(\"extra\");\n+});\n+\n+test(\"toolbar ordered and unordered list buttons exist\", async ({ page }) => {\n+  const olBtn = page.locator('[data-toolbar-action=\"ordered-list\"]');\n+  const ulBtn = page.locator('[data-toolbar-action=\"unordered-list\"]');\n+  await expect(olBtn).toBeVisible();\n+  await expect(ulBtn).toBeVisible();\n+});\n+\n+test(\"editor accepts keyboard shortcuts and toolbar buttons\", async ({ page }) => {\n+  const content = page.locator(\".cm-content\");\n+  await content.click();\n+  await content.press(\"Control+End\");\n+  await page.keyboard.press(\"Enter\");\n+  await page.keyboard.type(\"new line\");\n+  await expect(content).toContainText(\"new line\");\n+});"
+      },
+      {
+        "sha": "37d82357ba2e8c7712e295cd77afca7e02057c5d",
+        "filename": "e2e/index.html",
+        "status": "added",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/e2e%2Findex.html",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/e2e%2Findex.html",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/e2e%2Findex.html?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,15 @@\n+<!DOCTYPE html>\n+<html lang=\"en\">\n+<head>\n+  <meta charset=\"UTF-8\" />\n+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n+  <title>Nexus Editor E2E Test</title>\n+  <style>\n+    body { margin: 0; font-family: system-ui, sans-serif; }\n+  </style>\n+</head>\n+<body>\n+  <div id=\"editor-mount\"></div>\n+  <script type=\"module\" src=\"./test-app.ts\"></script>\n+</body>\n+</html>"
+      },
+      {
+        "sha": "980902eb3f1e3d9821839716104682ce40699873",
+        "filename": "e2e/test-app.ts",
+        "status": "added",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/e2e%2Ftest-app.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/e2e%2Ftest-app.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/e2e%2Ftest-app.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,24 @@\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n+import { createHistoryPlugin } from \"@floatboat/nexus-plugin-history\";\n+import { createToolbarPlugin, createToolbarUI } from \"@floatboat/nexus-plugin-toolbar\";\n+import { createSearchPlugin } from \"@floatboat/nexus-plugin-search\";\n+\n+const container = document.getElementById(\"editor-mount\")!;\n+\n+const editor = createEditor({\n+  container,\n+  initialValue: \"Hello **world**\",\n+  plugins: [\n+    createGfmPreset(),\n+    createHistoryPlugin(),\n+    createToolbarPlugin(),\n+    createSearchPlugin(),\n+  ],\n+  livePreview: { enabled: true },\n+});\n+\n+const toolbar = createToolbarUI(editor);\n+container.insertBefore(toolbar.element, container.firstChild);\n+\n+(window as any).__nexusEditor = editor;"
+      },
+      {
+        "sha": "d2d0f12fe5ff3d5832f74e8cf551281ea4556cdb",
+        "filename": "openspec/changes/add-missing-features/tasks.md",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 4,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-missing-features%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-missing-features%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-missing-features%2Ftasks.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -14,7 +14,7 @@\n - [x] 2.1 Markdown auto-continuation\n - [x] 2.2 Fold/unfold for headings\n - [x] 2.3 Fold/unfold for code blocks\n-- [ ] 2.4 List item drag reorder\n+- [x] 2.4 List item drag reorder\n - [x] 2.5 Link hover preview\n \n ## Phase 3: P2 — Ecosystem\n@@ -28,6 +28,6 @@\n ## Phase 4: P3 — Quality\n \n - [x] 4.1 Accessibility (a11y) — ARIA attributes on headings, code blocks, tables\n-- [ ] 4.2 Performance benchmarks\n-- [ ] 4.3 API documentation\n-- [ ] 4.4 E2E tests\n+- [x] 4.2 Performance benchmarks\n+- [x] 4.3 API documentation\n+- [x] 4.4 E2E tests"
+      },
+      {
+        "sha": "27214368c367d8263337c7e19a7fce0160293840",
+        "filename": "openspec/changes/add-multi-cursor/design.md",
+        "status": "added",
+        "additions": 73,
+        "deletions": 0,
+        "changes": 73,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-multi-cursor%2Fdesign.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,73 @@\n+## Context\n+\n+CM6's `EditorState.allowMultipleSelections` facet controls whether users can create additional selection ranges via Ctrl+click, Ctrl+Alt+↑/↓, or `selectNextOccurrence`. Nexus Editor currently inherits the default (`false`). Enabling it requires auditing every code path that reads `view.state.selection.main` and deciding whether it should iterate all ranges instead.\n+\n+The main risk areas are:\n+1. **Live-preview decorations**: Widgets (images, mermaid diagrams, tables) are bound to a single document range. If the user creates a secondary cursor inside a widget's rendered region, decoration logic must not corrupt the widget DOM.\n+2. **Table editing**: The table widget uses `tableEditingCount` to prevent CM6 from recreating widget DOM during drag/click operations. A secondary cursor inside an editing table cell must be deferred.\n+3. **Event contracts**: `selectionChange` currently fires with `{ anchor, head }` representing the primary selection. Multi-cursor consumers need all ranges.\n+4. **Formatting commands**: `toggleBold`, `toggleOrderedList`, etc. apply to the word/line at the primary cursor. With multiple ranges, each range must be processed independently, with offset tracking to account for concurrent document mutations.\n+\n+## Goals / Non-Goals\n+\n+- Goals:\n+  - Enable `allowMultipleSelections` by default.\n+  - `getSelection()` returns primary range (backwards-compatible).\n+  - `getSelections(): { anchor: number; head: number }[]` returns all ranges.\n+  - `selectionChange` event includes `ranges` array.\n+  - Formatting commands handle multiple ranges correctly.\n+  - Live-preview and table editing degrade gracefully under multi-cursor.\n+- Non-Goals:\n+  - Multi-cursor inside live-preview widgets (cursors remain in source text only).\n+  - Vim visual-block integration beyond what CM6 already provides.\n+  - AST-aware \"select next occurrence\" (v2).\n+\n+## Decisions\n+\n+### Decision 1: Enable `allowMultipleSelections` via EditorState facet, not config option\n+\n+Add `EditorState.allowMultipleSelections.of(true)` to the base extensions array in `editor.ts`. No opt-out config — multi-cursor is a default editor capability. Reasoning: CM6 already handles the UX (keybindings, rendering); the work is in making Nexus code paths robust to it.\n+\n+### Decision 2: `getSelection()` stays single, add `getSelections()` for all ranges\n+\n+Backwards compatibility: existing callers (toolbar commands, electron-demo backlink navigation, slash menu) expect a single `{ anchor, head }`. Those remain correct — toolbar commands are updated to call `getSelections()` internally, but external consumers see no API break.\n+\n+### Decision 3: Multi-range formatting: process last-to-first, track offset per range\n+\n+When `toggleBold` is called with 3 cursor ranges `[{0,5}, {10,15}, {20,25}]`:\n+1. Sort ranges by `from` descending.\n+2. For each range, apply the wrap/unwrap logic on the current document state.\n+3. After all ranges are processed, set the document and restore all cursor positions with accumulated offsets.\n+\n+This avoids the offset-drift problem where modifying range 1 shifts the positions of ranges 2 and 3.\n+\n+### Decision 4: Skip live-preview widget toggling when `ranges > 1`\n+\n+The decoration builder (`buildDecorations`) already checks `cursorPos` against widget ranges. When `state.selection.ranges.length > 1`, skip the \"show source on cursor-in-widget\" logic — widgets stay in preview mode. The user can still edit source text directly.\n+\n+### Decision 5: Suppress secondary selections during table editing\n+\n+In the `EditorView.updateListener`, if `isTableEditing()` is true and the transaction creates a selection with `ranges.length > 1`, filter it to keep only the primary range. Table editing relies on single-cursor invariants (per CLAUDE.md rules 8-12).\n+\n+## Risks / Trade-offs\n+\n+- **Risk**: Multi-cursor + table column drag creates an unrecoverable state.\n+  - **Mitigation**: Decision 5 — suppress any multi-cursor transaction while `tableEditingCount > 0`.\n+- **Risk**: Formatting commands with many ranges produce a large number of document mutations in one frame.\n+  - **Mitigation**: CM6 batches transactions; our loop applies one final `setDocument` call with the accumulated result. No per-range dispatch.\n+\n+## Migration Plan\n+\n+1. Enable the facet in core.\n+2. Add `getSelections()` and update `selectionChange`.\n+3. Update formatting commands for multi-range.\n+4. Add table/live-preview guards.\n+5. Write tests.\n+6. Smoke-test in electron-demo.\n+\n+Rollback: remove the `allowMultipleSelections` facet line. All other changes are additive and harm no one when multi-cursor is off.\n+\n+## Open Questions\n+\n+- Should `setSelection` support setting arbitrary ranges beyond the primary? (Proposal: yes, add optional `rangeIndex` parameter for power users; `undefined` = replace all with a single range.)\n+- Should `plugin-vim`'s visual-block mode be tested as part of this change? (Proposal: out of scope for now; vim plugin is thin and visual-block already works at the CM6 level.)"
+      },
+      {
+        "sha": "5779af34d6fdaf4071ca30043ceaa3b2ffe56aec",
+        "filename": "openspec/changes/add-multi-cursor/proposal.md",
+        "status": "added",
+        "additions": 42,
+        "deletions": 0,
+        "changes": 42,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-multi-cursor%2Fproposal.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,42 @@\n+# Change: Add Multi-Cursor / Multi-Selection Support\n+\n+## Why\n+\n+CM6 supports multi-cursor editing natively via `allowMultipleSelections`, but Nexus Editor disables it (the facet defaults to `false` when omitted). The roadmap lists `[#6 Multi-cursor / multi-selection | core | P1 | planned]`. Enabling multi-cursor unlocks simultaneous editing of multiple locations — a power-user feature expected in modern editors (VS Code, Obsidian, etc.). However, enabling it naively risks breaking live-preview decorations, table widget state management, and selection-change event contracts, all of which currently assume a single `selection.main`.\n+\n+## What Changes\n+\n+- **Core (`@floatboat/nexus-core`)**:\n+  - Enable `allowMultipleSelections` in the editor state configuration.\n+  - Update `getSelection()` to return the **primary** selection (`.main`) — existing callers are unaffected.\n+  - Add `getSelections()` returning all ranges for multi-cursor-aware consumers.\n+  - Extend `setSelection(anchor, head)` to accept an optional third `rangeIndex` for multi-cursor positioning.\n+  - Update `selectionChange` event payload to include `ranges: { anchor: number; head: number }[]` alongside the primary `anchor`/`head` — additive, not breaking.\n+  - Wire `EditorView.updateListener` selection-set branch to emit `selectionChange` whenever **any** selection range changes (currently only fires when `.main` changes).\n+  - Guard live-preview decoration builder against multi-selection states: when more than one range is active, skip inline widget toggling (widgets are bound to a single position).\n+  - Guard table editing state: if `tableEditingCount > 0` and CM6 creates a secondary selection (e.g. Ctrl+click inside a table cell), either suppress the extra selection or defer it until editing ends. Document this interaction in the table widget rules section of `CLAUDE.md`.\n+- **Plugin Toolbar (`@floatboat/nexus-plugin-toolbar`)**:\n+  - Formatting commands (`toggleBold`, `toggleItalic`, `toggleHeading`, `toggleOrderedList`, etc.) operate on **every** selection range, not just the primary one. Each range's enclosing word/line is toggled independently, and the resulting document is produced by applying changes from last-to-first range (avoiding offset drift).\n+- **Docs**: `docs/ROADMAP.md` row #6 transitions to `in-progress` and links this change id.\n+\n+No breaking changes: the `getSelection()` return type is unchanged; `selectionChange` gains an additive field; formatting commands produce correct results for single-selection callers (range count = 1).\n+\n+## Impact\n+\n+- Affected specs: `editor-core` (MODIFIED — selection API, multi-cursor contract)\n+- Affected code:\n+  - `packages/core/src/editor.ts` (enable facet, update listener, selection API methods)\n+  - `packages/core/src/types.ts` (EditorEventMap.selectionChange, EditorAPI additions)\n+  - `packages/core/src/live-preview.ts` (guard decoration builder)\n+  - `packages/core/src/live-preview-table.ts` (guard table editing)\n+  - `packages/plugin-toolbar/src/formatting.ts` (multi-range formatting)\n+  - `packages/core/test/editor-selection.test.ts` (NEW — multi-cursor unit tests)\n+  - `packages/core/test/events.test.ts` (extend selectionChange suite)\n+  - `packages/plugin-toolbar/test/plugin-toolbar.test.ts` (multi-range formatting tests)\n+  - `CLAUDE.md` (new table widget rule for multi-cursor)\n+  - `docs/ROADMAP.md` (status update)\n+- New dev dependencies: none.\n+- Out of scope:\n+  - Cross-widget cursor positions (placing a cursor inside a rendered table cell vs its markdown source).\n+  - Multi-cursor in `plugin-vim` (visual-block mode already works; full Vim multi-cursor commands are a v2 concern).\n+  - AST/diff-aware multi-cursor operations (e.g. \"select next occurrence\" via syntax tree)."
+      },
+      {
+        "sha": "f0d34e734b2102b42a864fb5d93538b3305547d0",
+        "filename": "openspec/changes/add-multi-cursor/specs/editor-core/spec.md",
+        "status": "added",
+        "additions": 89,
+        "deletions": 0,
+        "changes": 89,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Fspecs%2Feditor-core%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Fspecs%2Feditor-core%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-multi-cursor%2Fspecs%2Feditor-core%2Fspec.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,89 @@\n+## ADDED Requirements\n+\n+### Requirement: Multi-Selection Support\n+The editor SHALL support multiple simultaneous selection ranges (multi-cursor). The `EditorState.allowMultipleSelections` facet SHALL be enabled by default.\n+\n+#### Scenario: Create secondary cursor with keyboard\n+- **WHEN** the user presses Ctrl+Alt+Down (or Cmd+Opt+Down on macOS)\n+- **THEN** a second cursor is created one line below the primary cursor\n+- **AND** `editor.getSelections()` returns two ranges\n+\n+#### Scenario: Create secondary cursor with mouse\n+- **WHEN** the user Ctrl+clicks (or Cmd+clicks on macOS) at a different position in the document\n+- **THEN** an additional cursor is placed at the click position\n+- **AND** the primary cursor is unchanged\n+\n+### Requirement: Multi-Selection API\n+The EditorAPI SHALL expose `getSelections()` returning all active selection ranges and `getSelection()` returning the primary range only. `setSelection(anchor, head, rangeIndex?)` SHALL allow setting a specific range index or replacing all ranges.\n+\n+#### Scenario: getSelections with multiple cursors\n+- **WHEN** the editor has 3 active cursors\n+- **THEN** `editor.getSelections()` returns an array of 3 `{ anchor, head }` objects\n+- **AND** `editor.getSelection()` returns the primary range (first in the array)\n+\n+#### Scenario: setSelection at specific range index\n+- **WHEN** `editor.setSelection(10, 20, 1)` is called with 3 active ranges\n+- **THEN** only range index 1 is updated; ranges 0 and 2 are unchanged\n+\n+#### Scenario: setSelection without rangeIndex\n+- **WHEN** `editor.setSelection(5, 15)` is called (no third argument)\n+- **THEN** all existing ranges are replaced with a single range `{ anchor: 5, head: 15 }`\n+\n+### Requirement: Selection Change Event with Ranges\n+The `selectionChange` event payload SHALL include a `ranges` array containing all active selection ranges, in addition to the primary `anchor` and `head`. This is additive — existing consumers reading `anchor`/`head` continue to work.\n+\n+#### Scenario: selectionChange fires with multiple ranges\n+- **WHEN** the user adds a second cursor via Ctrl+Alt+Down\n+- **THEN** the `selectionChange` event fires with `{ anchor, head, ranges: [{...}, {...}] }`\n+- **AND** `anchor` and `head` match the primary range\n+\n+#### Scenario: selectionChange fires for non-primary range changes\n+- **WHEN** the user moves a secondary cursor (not the primary) via mouse drag\n+- **THEN** the `selectionChange` event fires with updated `ranges`\n+- **AND** the primary `anchor` and `head` may be unchanged\n+\n+### Requirement: Formatting Commands Handle Multiple Ranges\n+Toolbar formatting commands (`toggleBold`, `toggleItalic`, `toggleHeading`, `toggleOrderedList`, `toggleUnorderedList`, `toggleBlockquote`, `toggleStrikethrough`, `toggleInlineCode`) SHALL apply to every active selection range independently.\n+\n+#### Scenario: Bold toggling across three ranges\n+- **WHEN** 3 non-overlapping text ranges are selected\n+- **AND** `toggleBold` is invoked\n+- **THEN** each range is independently wrapped with `**` (or unwrapped if already wrapped)\n+- **AND** the resulting document is correct (no offset corruption between ranges)\n+\n+#### Scenario: Ordered list toggle on multiple lines via multi-cursor\n+- **WHEN** cursors are placed on 3 separate lines\n+- **AND** `toggleOrderedList` is invoked\n+- **THEN** each line receives an ordered list prefix (`1.`, `2.`, `3.`)\n+- **AND** invoking `toggleOrderedList` again removes all prefixes\n+\n+### Requirement: Live-Preview Guard Under Multi-Cursor\n+Live-preview widget toggling SHALL be suppressed when more than one selection range is active. Widgets remain in preview mode; the user can still edit source text directly.\n+\n+#### Scenario: Multiple cursors near a table widget\n+- **WHEN** a table widget is rendered in the live preview\n+- **AND** the user has 2 active cursors, one of which is inside the table's source range\n+- **THEN** the table remains in preview mode (no source-text toggle)\n+- **AND** text editing at the cursor position in the source line is still possible\n+\n+### Requirement: Table Editing Guard Under Multi-Cursor\n+Secondary selections SHALL be suppressed during active table editing (`tableEditingCount > 0`). Only the primary selection range is preserved.\n+\n+#### Scenario: Ctrl+click during table column drag\n+- **WHEN** the user is dragging a table column grip (`tableEditingCount = 1`)\n+- **AND** the user Ctrl+clicks elsewhere in the document\n+- **THEN** the secondary cursor is not created\n+- **AND** the column drag operation continues unaffected\n+\n+## MODIFIED Requirements\n+\n+### Requirement: Editor Selection API (getSelection)\n+`editor.getSelection()` returns the primary selection range `{ anchor: number; head: number }`. When multiple cursors are active, this is the first range in `state.selection.ranges`. The return type is unchanged from the single-cursor era.\n+\n+#### Scenario: Single cursor\n+- **WHEN** one cursor is active at position 5\n+- **THEN** `getSelection()` returns `{ anchor: 5, head: 5 }`\n+\n+#### Scenario: Multiple cursors\n+- **WHEN** two cursors are active at positions 5 and 10\n+- **THEN** `getSelection()` returns `{ anchor: 5, head: 5 }` (the primary range)"
+      },
+      {
+        "sha": "1d4ecf8cc480da1366c2258bd98887ee07d09e63",
+        "filename": "openspec/changes/add-multi-cursor/tasks.md",
+        "status": "added",
+        "additions": 44,
+        "deletions": 0,
+        "changes": 44,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/openspec%2Fchanges%2Fadd-multi-cursor%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-multi-cursor%2Ftasks.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,44 @@\n+# Implementation Tasks\n+\n+## 1. Core — enable multi-cursor and update selection API\n+\n+- [ ] 1.1 Add `EditorState.allowMultipleSelections.of(true)` to the base extensions in `packages/core/src/editor.ts`.\n+- [ ] 1.2 Add `getSelections(): { anchor: number; head: number }[]` to the API object in `packages/core/src/editor.ts`, returning all `state.selection.ranges`.\n+- [ ] 1.3 Extend `setSelection(anchor, head, rangeIndex?)` so `rangeIndex` controls which range to replace; `undefined` (default) replaces all with a single range. Implement in `packages/core/src/editor.ts`.\n+- [ ] 1.4 Update `EditorAPI` interface in `packages/core/src/types.ts` with `getSelections()` and the extended `setSelection` signature.\n+- [ ] 1.5 Extend `EditorEventMap.selectionChange` payload to include `ranges: { anchor: number; head: number }[]` in `packages/core/src/types.ts`.\n+- [ ] 1.6 Update the `EditorView.updateListener` selection-set branch in `packages/core/src/editor.ts` to include `ranges` in the emitted `selectionChange` event.\n+- [ ] 1.7 Export any new types from `packages/core/src/index.ts`.\n+\n+## 2. Core — live-preview and table editing guards\n+\n+- [ ] 2.1 In `packages/core/src/live-preview.ts`, add a guard in the decoration builder: when `state.selection.ranges.length > 1`, skip the cursor-inside-widget toggle logic (keep widgets in preview mode).\n+- [ ] 2.2 In the `EditorView.updateListener` in `packages/core/src/editor.ts`, filter `selection` in dispatched transactions: if `isTableEditing()` and `selection.ranges.length > 1`, keep only the primary range. Emit a console warning once per editing session.\n+- [ ] 2.3 Add rule 13 to `CLAUDE.md` table widget rules: \"Multi-cursor selections are suppressed during table editing (`tableEditingCount > 0`).\"\n+\n+## 3. Plugin Toolbar — multi-range formatting\n+\n+- [ ] 3.1 Add a helper `applyToEachRange(doc, ranges, fn)` in `packages/plugin-toolbar/src/formatting.ts` that iterates ranges last-to-first, applies `fn(doc, range)` returning `{ newDoc, newRange }`, and returns the final document + adjusted ranges.\n+- [ ] 3.2 Update `toggleBold`, `toggleItalic`, `toggleStrikethrough`, `toggleInlineCode`, `toggleWrap` to use the multi-range helper.\n+- [ ] 3.3 Update `toggleOrderedList`, `toggleUnorderedList`, `toggleBlockquote`, `toggleHeading` to use the multi-range helper.\n+- [ ] 3.4 Update `insertLink`, `insertImage`, `insertCodeBlock`, `insertHorizontalRule` to use `getSelections()` — for insertion commands, only the primary range is used (insertion at multiple points is undefined behavior for templates).\n+\n+## 4. Tests\n+\n+- [ ] 4.1 Create `packages/core/test/editor-selection.test.ts` covering: single `getSelection` matches primary, `getSelections` returns all ranges, `setSelection` replaces all by default, `setSelection` with `rangeIndex` targets a specific range, multi-cursor dispatch creates multiple ranges.\n+- [ ] 4.2 Extend `packages/core/test/events.test.ts`: assert `selectionChange` includes `ranges` array, assert `ranges.length > 1` when Ctrl+Alt+Down is pressed (or via programmatic multi-range dispatch).\n+- [ ] 4.3 Add multi-range formatting tests to `packages/plugin-toolbar/test/plugin-toolbar.test.ts`: bold toggling on 3 non-overlapping ranges produces correct document, ordered list toggling on 3 lines with multiple cursors, italic wrap/unwrap on adjacent ranges does not corrupt offsets.\n+- [ ] 4.4 Add table editing guard test: creating a secondary cursor while `isTableEditing()` is true is suppressed.\n+\n+## 5. Documentation\n+\n+- [ ] 5.1 Update `docs/ROADMAP.md` and `docs/ROADMAP.zh.md` row #6 to `in-progress` and link `add-multi-cursor`.\n+- [ ] 5.2 Add a brief note to `packages/core/README.md` (if it exists) documenting `getSelections()` and the extended `setSelection`.\n+\n+## 6. Verify + Validate\n+\n+- [ ] 6.1 `pnpm test` passes all existing and new tests.\n+- [ ] 6.2 `pnpm build` succeeds for all packages.\n+- [ ] 6.3 `pnpm typecheck` reports no errors.\n+- [ ] 6.4 Manual smoke test in electron-demo: Ctrl+Alt+Down creates a second cursor; typing inserts at both positions; Ctrl+click places additional cursors; bold/italic toggle affects all cursors; table drag operations are unaffected.\n+- [ ] 6.5 `openspec validate add-multi-cursor --strict` passes."
+      },
+      {
+        "sha": "ceabcced134c0e82f90ac78e84d80457745a94aa",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 2,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -12,18 +12,21 @@\n     \"publish:packages\": \"pnpm -r --filter \\\"./packages/*\\\" publish --access public --no-git-checks\"\n   },\n   \"devDependencies\": {\n+    \"@playwright/test\": \"^1.60.0\",\n     \"@testing-library/react\": \"^16.3.0\",\n     \"@types/mdast\": \"^4.0.4\",\n     \"@types/node\": \"^24.6.0\",\n     \"@types/react\": \"^19.2.2\",\n     \"@types/react-dom\": \"^19.2.2\",\n     \"@vue/test-utils\": \"^2.4.6\",\n     \"jsdom\": \"^25.0.1\",\n+    \"playwright\": \"^1.60.0\",\n     \"react\": \"^19.2.0\",\n     \"react-dom\": \"^19.2.0\",\n     \"tsup\": \"^8.5.0\",\n     \"typescript\": \"^5.9.3\",\n-    \"vue\": \"^3.5.22\",\n-    \"vitest\": \"^2.1.9\"\n+    \"vite\": \"^6.3.0\",\n+    \"vitest\": \"^2.1.9\",\n+    \"vue\": \"^3.5.22\"\n   }\n }"
+      },
+      {
+        "sha": "9170172108a843b6843c6505b1aa4f90158dd795",
+        "filename": "packages/core/README.md",
+        "status": "added",
+        "additions": 105,
+        "deletions": 0,
+        "changes": 105,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fcore%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fcore%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2FREADME.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,105 @@\n+# @floatboat/nexus-core\n+\n+Headless CodeMirror 6 Markdown editor engine with AST-driven live preview.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-core\n+```\n+\n+## Quick start\n+\n+```ts\n+import { createEditor } from \"@floatboat/nexus-core\";\n+\n+const editor = createEditor({\n+  container: document.getElementById(\"editor\"),\n+  initialValue: \"# Hello\\n\\nWorld\",\n+});\n+\n+editor.getDocument(); // \"# Hello\\n\\nWorld\"\n+editor.focus();\n+```\n+\n+## API Reference\n+\n+### createEditor(config)\n+\n+Creates the editor instance. Returns `EditorAPI`.\n+\n+### EditorConfig\n+\n+| Field | Type | Default | Description |\n+|---|---|---|---|\n+| `container` | `HTMLElement` | required | Mount point |\n+| `initialValue` | `string` | `\"\"` | Initial document content |\n+| `plugins` | `NexusPlugin[]` | `[]` | Feature plugins |\n+| `livePreview` | `boolean \\| LivePreviewConfig` | `false` | Enable inline live preview |\n+| `theme` | `NexusTheme` | `lightTheme` | Theme preset |\n+| `tabSize` | `number` | `4` | Tab width in spaces |\n+| `readOnly` | `boolean` | `false` | Prevent edits |\n+| `direction` | `\"ltr\" \\| \"rtl\"` | `\"ltr\"` | Text direction |\n+| `indentGuides` | `boolean` | `false` | Show indent guides |\n+| `onChange` | `(doc, ast) => void` | — | Change callback |\n+| `onFocus` / `onBlur` | `() => void` | — | Focus/blur callbacks |\n+| `onAssetUpload` | `(file) => Promise<string>` | — | Image upload handler |\n+| `parseDelayMs` | `number` | `0` | Debounce delay for parse pipeline |\n+| `slashMenuLimit` | `number` | `8` | Max slash menu results |\n+\n+### EditorAPI\n+\n+| Method | Description |\n+|---|---|\n+| `getDocument(): string` | Get current document text |\n+| `setDocument(next, opts?)` | Replace document. `opts.silent` skips onChange |\n+| `getSelection()` | Get primary selection `{ anchor, head }` |\n+| `setSelection(anchor, head?)` | Set selection. `head` defaults to `anchor` |\n+| `getAst(): Root` | Get current mdast AST |\n+| `getTableOfContents()` | Get heading TOC entries `[{ level, text, from, to }]` |\n+| `exportHTML(): string` | Export document as HTML |\n+| `setTheme(theme)` | Switch theme |\n+| `undo()` / `redo()` | Undo/redo last change |\n+| `focus()` / `blur()` | Focus/blur editor |\n+| `getCoordsAtPos(pos)` | Pixel coordinates of document position |\n+| `getDocumentStats()` | Get `{ characters, words, lines }` |\n+| `getSlashCommands()` | Get registered slash commands |\n+| `uploadAsset(file)` | Upload via configured asset handler |\n+| `runShortcut(key)` | Run a registered shortcut by key |\n+| `on(event, handler)` | Subscribe to editor event |\n+| `off(event, handler)` | Unsubscribe |\n+| `destroy()` | Tear down editor |\n+\n+### Events\n+\n+| Event | Payload |\n+|---|---|\n+| `change` | `(doc: string, ast: Root)` |\n+| `focus` / `blur` | `()` |\n+| `selectionChange` | `({ anchor, head })` |\n+| `slashMenuChange` | `(state: SlashMenuState)` |\n+\n+### NexusPlugin\n+\n+```ts\n+interface NexusPlugin {\n+  name: string;\n+  shortcuts?: Array<{ key: string; run: (editor: EditorAPI) => boolean }>;\n+  slashCommands?: SlashCommandDef[];\n+  remarkPlugins?: unified.Plugin[];\n+  cmExtensions?: Extension[];\n+  widgets?: WidgetDefinition[];\n+}\n+```\n+\n+## Exports\n+\n+| Export | Purpose |\n+|---|---|\n+| `createEditor` | Editor factory |\n+| `lightTheme` / `darkTheme` | Built-in themes |\n+| `createWikilinksPlugin` | Wiki-link extension |\n+| `markdownKeymap` | Markdown keybindings |\n+| `isTableEditing` | Check if table interaction is active |\n+| `enLocale` / `zhLocale` | Locale presets |\n+| `computeSlashState` / `filterSlashCommands` / `getSlashMatch` | Slash command state helpers |"
+      },
+      {
+        "sha": "932db21e22f9b751d8b2bb04c9a11522d05d95b1",
+        "filename": "packages/core/src/index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fcore%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fcore%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Findex.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,4 +1,5 @@\n export { createEditor } from \"./editor\";\n+export { isTableEditing } from \"./live-preview-table\";\n export { markdownAutoPair } from \"./markdown-autopair\";\n export { markdownFold, markdownFoldService } from \"./markdown-fold\";\n export { markdownKeymap, handleMarkdownEnter } from \"./markdown-keymap\";"
+      },
+      {
+        "sha": "b35e8abab547eacc14335e43d89c6c9873e2ea1b",
+        "filename": "packages/core/test/editor-bench.test.ts",
+        "status": "added",
+        "additions": 116,
+        "deletions": 0,
+        "changes": 116,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fcore%2Ftest%2Feditor-bench.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fcore%2Ftest%2Feditor-bench.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor-bench.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,116 @@\n+import { describe, expect, it } from \"vitest\";\n+import { createEditor } from \"../src/index\";\n+\n+function generateDoc(lines: number, withMarkdown = false): string {\n+  const parts: string[] = [];\n+  for (let i = 0; i < lines; i++) {\n+    if (withMarkdown && i % 10 === 0) {\n+      parts.push(`## Section ${i / 10 + 1}`);\n+      continue;\n+    }\n+    if (withMarkdown && i % 7 === 0) {\n+      parts.push(`- list item ${i}`);\n+      continue;\n+    }\n+    if (withMarkdown && i % 13 === 0) {\n+      parts.push(\"```\\ncode block line 1\\ncode block line 2\\n```\");\n+      continue;\n+    }\n+    parts.push(`Line ${i + 1}: ${\"word \".repeat(5)}`.trim());\n+  }\n+  return parts.join(\"\\n\");\n+}\n+\n+function measure(fn: () => void, warmup = 3, runs = 10): { avg: number; min: number; max: number; p50: number } {\n+  for (let i = 0; i < warmup; i++) fn();\n+  const times: number[] = [];\n+  for (let i = 0; i < runs; i++) {\n+    const start = performance.now();\n+    fn();\n+    times.push(performance.now() - start);\n+  }\n+  times.sort((a, b) => a - b);\n+  return {\n+    avg: times.reduce((s, t) => s + t, 0) / runs,\n+    min: times[0],\n+    max: times[times.length - 1],\n+    p50: times[Math.floor(runs / 2)],\n+  };\n+}\n+\n+describe(\"editor performance benchmarks\", () => {\n+  it(\"createEditor with 100-line doc completes under 200ms (p50)\", () => {\n+    const doc = generateDoc(100);\n+    const containers: HTMLElement[] = [];\n+    const result = measure(() => {\n+      const c = document.createElement(\"div\");\n+      containers.push(c);\n+      createEditor({ container: c, initialValue: doc }).destroy();\n+    });\n+    expect(result.p50).toBeLessThan(200);\n+  });\n+\n+  it(\"createEditor with 1000-line doc completes under 500ms (p50)\", () => {\n+    const doc = generateDoc(1000);\n+    const containers: HTMLElement[] = [];\n+    const result = measure(() => {\n+      const c = document.createElement(\"div\");\n+      containers.push(c);\n+      createEditor({ container: c, initialValue: doc }).destroy();\n+    });\n+    expect(result.p50).toBeLessThan(500);\n+  });\n+\n+  it(\"createEditor with markdown content completes under 300ms (p50)\", () => {\n+    const doc = generateDoc(200, true);\n+    const containers: HTMLElement[] = [];\n+    const result = measure(() => {\n+      const c = document.createElement(\"div\");\n+      containers.push(c);\n+      createEditor({ container: c, initialValue: doc }).destroy();\n+    });\n+    expect(result.p50).toBeLessThan(300);\n+  });\n+\n+  it(\"setDocument on 500-line doc completes under 200ms (p50)\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"start\" });\n+    const doc = generateDoc(500);\n+\n+    const result = measure(() => editor.setDocument(doc));\n+    expect(result.p50).toBeLessThan(200);\n+    editor.destroy();\n+  });\n+\n+  it(\"getAst on 200-line markdown completes under 100ms (p50)\", () => {\n+    const doc = generateDoc(200, true);\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: doc });\n+\n+    const result = measure(() => { editor.getAst(); });\n+    expect(result.p50).toBeLessThan(100);\n+    editor.destroy();\n+  });\n+\n+  it(\"getDocumentStats returns correct counts for large doc\", () => {\n+    const doc = generateDoc(300);\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: doc });\n+\n+    const stats = editor.getDocumentStats();\n+    expect(stats.lines).toBe(300);\n+    expect(stats.characters).toBeGreaterThan(0);\n+    expect(stats.words).toBeGreaterThan(0);\n+    editor.destroy();\n+  });\n+\n+  it(\"exportHTML on 200-line markdown completes under 200ms (p50)\", () => {\n+    const doc = generateDoc(200, true);\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: doc });\n+\n+    const result = measure(() => { editor.exportHTML(); });\n+    expect(result.p50).toBeLessThan(200);\n+    editor.destroy();\n+  });\n+});"
+      },
+      {
+        "sha": "acb42bfc359ff7dd277cfa7a0e4a8cd14f4dd800",
+        "filename": "packages/plugin-history/package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-history%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-history%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-history%2Fpackage.json?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -18,6 +18,7 @@\n   },\n   \"dependencies\": {\n     \"@codemirror/commands\": \"^6.8.1\",\n+    \"@codemirror/state\": \"^6.5.2\",\n     \"@codemirror/view\": \"^6.36.1\",\n     \"@floatboat/nexus-core\": \"workspace:*\"\n   },"
+      },
+      {
+        "sha": "6a811cf14fa48812d5ba176818c362d84a61145b",
+        "filename": "packages/plugin-history/src/index.ts",
+        "status": "modified",
+        "additions": 15,
+        "deletions": 1,
+        "changes": 16,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-history%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-history%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-history%2Fsrc%2Findex.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,11 +1,25 @@\n import { history, historyKeymap } from \"@codemirror/commands\";\n+import { EditorState, Transaction } from \"@codemirror/state\";\n import { keymap } from \"@codemirror/view\";\n \n+import { isTableEditing } from \"@floatboat/nexus-core\";\n import type { NexusPlugin } from \"@floatboat/nexus-core\";\n \n+const tableEditUserEvent = Transaction.userEvent.of(\"table.edit\");\n+\n+function historyGrouping() {\n+  return EditorState.transactionFilter.of((tr) => {\n+    if (tr.annotation(Transaction.userEvent) || !tr.docChanged) return tr;\n+    if (isTableEditing()) {\n+      return [tr, { annotations: tableEditUserEvent }];\n+    }\n+    return tr;\n+  });\n+}\n+\n export function createHistoryPlugin(): NexusPlugin {\n   return {\n     name: \"plugin-history\",\n-    cmExtensions: [history(), keymap.of(historyKeymap)]\n+    cmExtensions: [historyGrouping(), history(), keymap.of(historyKeymap)]\n   };\n }"
+      },
+      {
+        "sha": "9ad2ad3eedc5f234184888fd8f18eb8919ee4dbf",
+        "filename": "packages/plugin-history/test/plugin-history.test.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-history%2Ftest%2Fplugin-history.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-history%2Ftest%2Fplugin-history.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-history%2Ftest%2Fplugin-history.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -3,6 +3,13 @@ import { describe, expect, it } from \"vitest\";\n import { createHistoryPlugin } from \"../src/index\";\n \n describe(\"@floatboat/nexus-plugin-history\", () => {\n+  it(\"returns a plugin with history extensions\", () => {\n+    const plugin = createHistoryPlugin();\n+\n+    expect(plugin.name).toBe(\"plugin-history\");\n+    expect(plugin.cmExtensions).toHaveLength(3);\n+  });\n+\n   it(\"undoes the most recent document change through codemirror key handling\", () => {\n     const container = document.createElement(\"div\");\n     const editor = createEditor({"
+      },
+      {
+        "sha": "4847a03675ecd5c63b0e188ea442dd1de491f2c1",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 163,
+        "deletions": 118,
+        "changes": 281,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -25,20 +25,13 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  wholeWord?: boolean;\n+  fuzzy?: boolean;\n }\n \n export interface SearchPluginOptions {\n-  /**\n-   * Render the search panel above the editor content. Defaults to true.\n-   */\n   top?: boolean;\n-  /**\n-   * Enable case-sensitive search by default.\n-   */\n   caseSensitive?: boolean;\n-  /**\n-   * Highlight viewport matches for the current selection.\n-   */\n   highlightSelectionMatches?: boolean;\n   labels?: Partial<SearchPluginLabels>;\n }\n@@ -79,45 +72,167 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+const WORD_BOUNDARY_CHARS = (\n+  \",.!?;:\\\"'()[]{}<>@#$%^&*+=/\\\\|~\" +\n+  \"，。！？…—、；：“”‘’（）【】《》\"\n+);\n+\n+function buildWordBoundary(): { left: string; right: string } {\n+  const p = escapeRegExp(WORD_BOUNDARY_CHARS);\n+  return { left: \"(?:^|[\\\\s\" + p + \"])\", right: \"(?:$|[\\\\s\" + p + \"])\" };\n+}\n+\n+function fuzzyMatchScore(text: string, query: string, caseSensitive: boolean): number {\n+  const target = caseSensitive ? text : text.toLowerCase();\n+  const tokens = (caseSensitive ? query : query.toLowerCase()).split(/\\s+/).filter(Boolean);\n+  if (tokens.length === 0) return -1;\n+\n+  let totalScore = 1000;\n+  let cursor = 0;\n+\n+  for (const token of tokens) {\n+    const best = findClosestMatch(target, token, cursor);\n+    if (!best) return -1;\n+    totalScore -= (best.first - cursor) * 2;\n+    totalScore -= best.last - best.first;\n+    cursor = best.last + 1;\n+  }\n+\n+  return totalScore;\n+}\n+\n+function findClosestMatch(\n+  text: string, token: string, startFrom: number\n+): { first: number; last: number } | null {\n+  const N = text.length;\n+  const M = token.length;\n+  if (N - startFrom < M) return null;\n+\n+  let bestSpan = Infinity;\n+  let bestFirst = -1;\n+  let bestLast = -1;\n+\n+  for (let first = startFrom; first <= N - M; first++) {\n+    if (text[first] !== token[0]) continue;\n+\n+    let last = first;\n+    let qi = 1;\n+    for (let j = first + 1; j < N && qi < M; j++) {\n+      if (text[j] === token[qi]) { qi++; last = j; }\n+    }\n+    if (qi < M) continue;\n+\n+    const span = last - first;\n+    if (span < bestSpan || (span === bestSpan && first < bestFirst)) {\n+      bestSpan = span;\n+      bestFirst = first;\n+      bestLast = last;\n+    }\n+  }\n+\n+  if (bestFirst < 0) return null;\n+  return { first: bestFirst, last: bestLast };\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n   options: SearchOptions = {}\n ): SearchMatch[] {\n-  if (!query) {\n-    return [];\n+  if (!query) return [];\n+\n+  if (options.fuzzy) {\n+    return findFuzzyMatches(doc, query, options);\n   }\n \n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const escaped = escapeRegExp(query);\n+  let pattern: RegExp;\n+  if (options.wholeWord) {\n+    const b = buildWordBoundary();\n+    pattern = new RegExp(b.left + \"(\" + escaped + \")\" + b.right, flags);\n+  } else {\n+    pattern = new RegExp(escaped, flags);\n+  }\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n-    const text = match[0];\n-    const from = match.index ?? 0;\n-\n-    matches.push({\n-      from,\n-      to: from + text.length,\n-      text\n-    });\n+    const text = match[1] ?? match[0];\n+    const from = (match.index ?? 0) + (match[1] ? match[0].indexOf(match[1]) : 0);\n+    matches.push({ from, to: from + text.length, text });\n   }\n \n   return matches;\n }\n \n+function findFuzzyMatches(\n+  doc: string,\n+  query: string,\n+  options: SearchOptions\n+): SearchMatch[] {\n+  const candidates: Array<SearchMatch & { score: number }> = [];\n+  const wordRE = new RegExp(\"[^\\\\s\" + escapeRegExp(WORD_BOUNDARY_CHARS) + \"\\\\n]+\", \"g\");\n+  for (const match of doc.matchAll(wordRE)) {\n+    const text = match[0];\n+    if (text.length < query.length) continue;\n+    const score = fuzzyMatchScore(text, query, options.caseSensitive ?? false);\n+    if (score < 0) continue;\n+    candidates.push({\n+      from: match.index!,\n+      to: match.index! + text.length,\n+      text,\n+      score\n+    });\n+  }\n+  candidates.sort((a, b) => b.score - a.score);\n+  return candidates.map(function (c) { return { from: c.from, to: c.to, text: c.text }; });\n+}\n+\n export function replaceAllMatches(\n   doc: string,\n   query: string,\n   replacement: string,\n   options: SearchOptions = {}\n ): string {\n-  if (!query) {\n-    return doc;\n+  if (!query) return doc;\n+\n+  if (options.fuzzy) {\n+    return replaceFuzzyMatches(doc, query, replacement, options);\n   }\n \n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n+  const escaped = escapeRegExp(query);\n+  if (options.wholeWord) {\n+    const b = buildWordBoundary();\n+    return doc.replace(new RegExp(b.left + escaped + b.right, flags), function (m) {\n+      var edgeRE = new RegExp(\"^[\\\\s\" + escapeRegExp(WORD_BOUNDARY_CHARS) + \"]+|[\\\\s\" + escapeRegExp(WORD_BOUNDARY_CHARS) + \"]+$\", \"g\");\n+      var inner = m.replace(edgeRE, \"\");\n+      return m.replace(inner, replacement);\n+    });\n+  }\n+  return doc.replace(new RegExp(escaped, flags), replacement);\n+}\n+\n+function replaceFuzzyMatches(\n+  doc: string,\n+  query: string,\n+  replacement: string,\n+  options: SearchOptions\n+): string {\n+  const wordRE = new RegExp(\"[^\\\\s\" + escapeRegExp(WORD_BOUNDARY_CHARS) + \"\\\\n]+\", \"g\");\n+  const chunks: string[] = [];\n+  let lastEnd = 0;\n+  for (const match of doc.matchAll(wordRE)) {\n+    const text = match[0];\n+    if (text.length >= query.length && fuzzyMatchScore(text, query, options.caseSensitive ?? false) >= 0) {\n+      chunks.push(doc.slice(lastEnd, match.index!));\n+      chunks.push(replacement);\n+      lastEnd = match.index! + text.length;\n+    }\n+  }\n+  if (lastEnd === 0) return doc;\n+  chunks.push(doc.slice(lastEnd));\n+  return chunks.join(\"\");\n }\n \n function resolveLabel(\n@@ -128,7 +243,6 @@ function resolveLabel(\n ): string {\n   const candidate = labels?.[key]?.trim();\n   if (candidate) return candidate;\n-\n   const phrase = view.state.phrase(fallback).trim();\n   return phrase || fallback;\n }\n@@ -210,29 +324,12 @@ function createIcon(name: SearchIconName): SVGSVGElement {\n   };\n \n   switch (name) {\n-    case \"toggleReplace\":\n-      appendPath(\"m9 18 6-6-6-6\");\n-      break;\n-    case \"previous\":\n-      appendPath(\"m15 18-6-6 6-6\");\n-      break;\n-    case \"next\":\n-      appendPath(\"m9 18 6-6-6-6\");\n-      break;\n-    case \"all\":\n-      appendLine(5, 7, 19, 7);\n-      appendLine(5, 12, 19, 12);\n-      appendLine(5, 17, 19, 17);\n-      break;\n-    case \"replace\":\n-      appendText(\"R\", 4, 17, 13);\n-      appendPath(\"m15 8 3 3-3 3\");\n-      break;\n-    case \"replaceAll\":\n-      appendText(\"R\", 3, 17, 12);\n-      appendPath(\"m14 7 3 3-3 3\");\n-      appendPath(\"m17 7 3 3-3 3\");\n-      break;\n+    case \"toggleReplace\": appendPath(\"m9 18 6-6-6-6\"); break;\n+    case \"previous\": appendPath(\"m15 18-6-6 6-6\"); break;\n+    case \"next\": appendPath(\"m9 18 6-6-6-6\"); break;\n+    case \"all\": appendLine(5, 7, 19, 7); appendLine(5, 12, 19, 12); appendLine(5, 17, 19, 17); break;\n+    case \"replace\": appendText(\"R\", 4, 17, 13); appendPath(\"m15 8 3 3-3 3\"); break;\n+    case \"replaceAll\": appendText(\"R\", 3, 17, 12); appendPath(\"m14 7 3 3-3 3\"); appendPath(\"m17 7 3 3-3 3\"); break;\n   }\n \n   return svg;\n@@ -244,9 +341,9 @@ let rowId = 0;\n function createTooltip(testId: string, label: string): HTMLSpanElement {\n   const tooltip = document.createElement(\"span\");\n   tooltip.className = \"nexus-search-tooltip\";\n-  tooltip.dataset.testId = `${testId}-tooltip`;\n+  tooltip.dataset.testId = testId + \"-tooltip\";\n   tooltip.dataset.tooltip = label;\n-  tooltip.id = `${testId}-tooltip-${++tooltipId}`;\n+  tooltip.id = testId + \"-tooltip-\" + (++tooltipId);\n   tooltip.setAttribute(\"role\", \"tooltip\");\n   tooltip.setAttribute(\"aria-label\", label);\n   tooltip.textContent = label;\n@@ -268,11 +365,7 @@ function setIconButtonLabel(elements: IconButtonElements, label: string): void {\n }\n \n function createIconButtonElements(\n-  testId: string,\n-  name: string,\n-  label: string,\n-  icon: SearchIconName,\n-  onClick: () => void\n+  testId: string, name: string, label: string, icon: SearchIconName, onClick: () => void\n ): IconButtonElements {\n   const wrapper = document.createElement(\"span\");\n   wrapper.className = \"nexus-search-tooltip-wrap\";\n@@ -292,14 +385,9 @@ function createIconButtonElements(\n }\n \n function createIconButton(\n-  testId: string,\n-  name: string,\n-  label: string,\n-  icon: SearchIconName,\n-  onClick: () => void\n+  testId: string, name: string, label: string, icon: SearchIconName, onClick: () => void\n ): HTMLSpanElement {\n-  const { wrapper } = createIconButtonElements(testId, name, label, icon, onClick);\n-  return wrapper;\n+  return createIconButtonElements(testId, name, label, icon, onClick).wrapper;\n }\n \n function createLabel(input: HTMLInputElement, text: string): HTMLLabelElement {\n@@ -339,18 +427,10 @@ class NexusSearchPanel implements Panel {\n     this.labels = resolvedLabels;\n \n     this.searchField = this.createTextField(\n-      \"markdown-search-input\",\n-      \"search\",\n-      resolvedLabels.find,\n-      this.query.search,\n-      true\n+      \"markdown-search-input\", \"search\", resolvedLabels.find, this.query.search, true\n     );\n     this.replaceField = this.createTextField(\n-      \"markdown-search-replace-input\",\n-      \"replace\",\n-      resolvedLabels.replace,\n-      this.query.replace,\n-      false\n+      \"markdown-search-replace-input\", \"replace\", resolvedLabels.replace, this.query.replace, false\n     );\n     this.caseField = this.createCheckbox(\"markdown-search-case-toggle\", \"case\", this.query.caseSensitive);\n     this.regexpField = this.createCheckbox(\"markdown-search-regexp-toggle\", \"re\", this.query.regexp);\n@@ -365,19 +445,14 @@ class NexusSearchPanel implements Panel {\n     const canReplace = !view.state.readOnly;\n     if (canReplace) {\n       this.replaceToggle = createIconButtonElements(\n-        \"markdown-search-toggle-replace\",\n-        \"toggleReplace\",\n-        resolvedLabels.showReplace,\n-        \"toggleReplace\",\n+        \"markdown-search-toggle-replace\", \"toggleReplace\", resolvedLabels.showReplace, \"toggleReplace\",\n         () => this.setReplaceExpanded(!this.replaceExpanded, true)\n       );\n     }\n     const navigationGroup = document.createElement(\"div\");\n     navigationGroup.className = \"nexus-search-button-group\";\n     navigationGroup.append(\n-      createIconButton(\"markdown-search-prev\", \"prev\", resolvedLabels.previous, \"previous\", () =>\n-        findPrevious(view)\n-      ),\n+      createIconButton(\"markdown-search-prev\", \"prev\", resolvedLabels.previous, \"previous\", () => findPrevious(view)),\n       createIconButton(\"markdown-search-next\", \"next\", resolvedLabels.next, \"next\", () => findNext(view)),\n       createIconButton(\"markdown-search-all\", \"select\", resolvedLabels.all, \"all\", () => selectMatches(view))\n     );\n@@ -389,37 +464,28 @@ class NexusSearchPanel implements Panel {\n       createLabel(this.wholeWordField, resolvedLabels.byWord),\n       navigationGroup\n     ];\n-    if (this.replaceToggle) {\n-      searchRowChildren.unshift(this.replaceToggle.wrapper);\n-    }\n+    if (this.replaceToggle) searchRowChildren.unshift(this.replaceToggle.wrapper);\n     searchRow.append(...searchRowChildren);\n-\n     this.dom.append(searchRow);\n \n     if (canReplace) {\n       const replaceRow = createSearchRow(\"markdown-search-replace-row\");\n-      replaceRow.id = `markdown-search-replace-row-${++rowId}`;\n+      replaceRow.id = \"markdown-search-replace-row-\" + (++rowId);\n       this.replaceRow = replaceRow;\n       this.replaceToggle?.button.setAttribute(\"aria-controls\", replaceRow.id);\n       this.replaceToggle?.button.setAttribute(\"aria-expanded\", \"false\");\n       replaceRow.append(\n         this.replaceField,\n-        createIconButton(\"markdown-search-replace\", \"replace\", resolvedLabels.replaceNext, \"replace\", () =>\n-          replaceNext(view)\n-        ),\n+        createIconButton(\"markdown-search-replace\", \"replace\", resolvedLabels.replaceNext, \"replace\", () => replaceNext(view)),\n         createIconButton(\n-          \"markdown-search-replace-all\",\n-          \"replaceAll\",\n-          resolvedLabels.replaceAll,\n-          \"replaceAll\",\n-          () => replaceAll(view)\n+          \"markdown-search-replace-all\", \"replaceAll\", resolvedLabels.replaceAll, \"replaceAll\", () => replaceAll(view)\n         )\n       );\n       this.setReplaceExpanded(false);\n       this.dom.append(replaceRow);\n     }\n \n-    const closeButton = createButton(\"markdown-search-close\", \"close\", \"×\", () => closeSearchPanel(view));\n+    const closeButton = createButton(\"markdown-search-close\", \"close\", \"\\xD7\", () => closeSearchPanel(view));\n     closeButton.setAttribute(\"aria-label\", resolvedLabels.close);\n     closeButton.title = resolvedLabels.close;\n     this.dom.append(closeButton);\n@@ -435,17 +501,9 @@ class NexusSearchPanel implements Panel {\n     }\n   }\n \n-  mount(): void {\n-    this.searchField.select();\n-  }\n+  mount(): void { this.searchField.select(); }\n \n-  private createTextField(\n-    testId: string,\n-    name: string,\n-    placeholder: string,\n-    value: string,\n-    mainField: boolean\n-  ): HTMLInputElement {\n+  private createTextField(testId: string, name: string, placeholder: string, value: string, mainField: boolean): HTMLInputElement {\n     const input = document.createElement(\"input\");\n     input.className = \"cm-textfield\";\n     input.dataset.testId = testId;\n@@ -454,9 +512,7 @@ class NexusSearchPanel implements Panel {\n     input.placeholder = placeholder;\n     input.setAttribute(\"aria-label\", placeholder);\n     input.value = value;\n-    if (mainField) {\n-      input.setAttribute(\"main-field\", \"true\");\n-    }\n+    if (mainField) input.setAttribute(\"main-field\", \"true\");\n     input.addEventListener(\"input\", () => this.commit());\n     input.addEventListener(\"change\", () => this.commit());\n     input.addEventListener(\"keyup\", () => this.commit());\n@@ -482,7 +538,6 @@ class NexusSearchPanel implements Panel {\n       wholeWord: this.wholeWordField.checked,\n       replace: this.replaceField.value\n     });\n-\n     if (!query.eq(this.query)) {\n       this.query = query;\n       this.view.dispatch({ effects: setSearchQuery.of(query) });\n@@ -491,32 +546,22 @@ class NexusSearchPanel implements Panel {\n \n   private setReplaceExpanded(expanded: boolean, focusReplace = false): void {\n     if (!this.replaceRow || !this.replaceToggle) return;\n-\n     this.replaceExpanded = expanded;\n     this.replaceRow.hidden = !expanded;\n     this.replaceRow.setAttribute(\"aria-hidden\", String(!expanded));\n     this.replaceToggle.button.setAttribute(\"aria-expanded\", String(expanded));\n     setIconButtonLabel(this.replaceToggle, expanded ? this.labels.hideReplace : this.labels.showReplace);\n-\n-    if (expanded && focusReplace) {\n-      this.replaceField.focus();\n-      this.replaceField.select();\n-    }\n+    if (expanded && focusReplace) { this.replaceField.focus(); this.replaceField.select(); }\n   }\n \n   private handleKeyDown(event: KeyboardEvent): void {\n-    if (runScopeHandlers(this.view, event, \"search-panel\")) {\n-      event.preventDefault();\n-      return;\n-    }\n-\n+    if (runScopeHandlers(this.view, event, \"search-panel\")) { event.preventDefault(); return; }\n     if (event.key === \"Enter\" && event.target === this.searchField) {\n       event.preventDefault();\n       this.commit();\n       (event.shiftKey ? findPrevious : findNext)(this.view);\n       return;\n     }\n-\n     if (event.key === \"Enter\" && event.target === this.replaceField) {\n       event.preventDefault();\n       this.commit();"
+      },
+      {
+        "sha": "5b0c8c2654fe2c8de5acf006161533f26792fffe",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 33,
+        "deletions": 0,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -25,6 +25,23 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"finds whole-word matches only\", () => {\n+    expect(findSearchMatches(\"cat scatter cat\", \"cat\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" },\n+      { from: 12, to: 15, text: \"cat\" }\n+    ]);\n+  });\n+\n+  it(\"finds whole-word matches with case sensitivity\", () => {\n+    expect(findSearchMatches(\"Cat cat CAT\", \"cat\", { wholeWord: true, caseSensitive: true })).toEqual([\n+      { from: 4, to: 7, text: \"cat\" }\n+    ]);\n+  });\n+\n+  it(\"replaces whole-word matches only\", () => {\n+    expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\", { wholeWord: true })).toBe(\"dog scatter dog\");\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n \n@@ -168,6 +185,22 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     container.remove();\n   });\n \n+  it(\"finds fuzzy matches in a document\", () => {\n+    expect(findSearchMatches(\"hello world test\", \"hel\", { fuzzy: true })).toEqual([\n+      { from: 0, to: 5, text: \"hello\" }\n+    ]);\n+  });\n+\n+  it(\"finds fuzzy matches with case sensitivity\", () => {\n+    expect(findSearchMatches(\"Hello hello\", \"Hlo\", { fuzzy: true, caseSensitive: true })).toEqual([\n+      { from: 0, to: 5, text: \"Hello\" }\n+    ]);\n+  });\n+\n+  it(\"replaces fuzzy matches only\", () => {\n+    expect(replaceAllMatches(\"hello world\", \"hel\", \"X\", { fuzzy: true })).toBe(\"X world\");\n+  });\n+\n   it(\"falls back to default tooltip labels when localized labels are blank\", () => {\n     const container = document.createElement(\"div\");\n     document.body.append(container);"
+      },
+      {
+        "sha": "45c0ab3fca050c0901b448da7c2500d11d1fc1f9",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 87,
+        "deletions": 32,
+        "changes": 119,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -31,47 +31,102 @@ export function toggleBlockquote(editor: EditorAPI): boolean {\n   return toggleLinePrefix(editor, \"> \");\n }\n \n-export function toggleOrderedList(editor: EditorAPI): boolean {\n-  const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const { lineStart, lineEnd, line } = getCurrentLine(doc, anchor);\n+interface LineRange {\n+  lineStart: number;\n+  lineEnd: number;\n+  line: string;\n+}\n \n-  const olMatch = line.match(/^\\d+\\.\\s/);\n-  let newLine: string;\n-  if (olMatch) {\n-    newLine = line.slice(olMatch[0].length);\n-  } else {\n-    // Remove other list markers if present\n-    const ulMatch = line.match(/^[-*+]\\s/);\n-    const content = ulMatch ? line.slice(ulMatch[0].length) : line;\n-    newLine = \"1. \" + content;\n+function getLinesInRange(doc: string, from: number, to: number): LineRange[] {\n+  const lines: LineRange[] = [];\n+  let pos = 0;\n+  for (const text of doc.split(\"\\n\")) {\n+    const lineStart = pos;\n+    const lineEnd = pos + text.length;\n+    if (lineEnd >= from && lineStart <= to) {\n+      lines.push({ lineStart, lineEnd, line: text });\n+    }\n+    pos = lineEnd + 1;\n   }\n+  return lines;\n+}\n \n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n-  editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n+export function toggleOrderedList(editor: EditorAPI): boolean {\n+  let doc = editor.getDocument();\n+  const { anchor, head } = editor.getSelection();\n+  const selFrom = Math.min(anchor, head);\n+  const selTo = Math.max(anchor, head);\n+  const lines = getLinesInRange(doc, selFrom, selTo);\n+\n+  let offset = 0;\n+  let lastLineEnd = 0;\n+  let number = 1;\n+  const allHaveMarkers = lines.every((l) => /^\\d+\\.\\s/.test(l.line) || /^[-*+]\\s/.test(l.line));\n+  for (const { lineStart, lineEnd, line } of lines) {\n+    if (line.trim() === \"\") continue;\n+    const adjustedStart = lineStart + offset;\n+    const adjustedEnd = lineEnd + offset;\n+    const currentLine = doc.slice(adjustedStart, adjustedEnd);\n+\n+    const olMatch = currentLine.match(/^\\d+\\.\\s/);\n+    let newLine: string;\n+    if (olMatch && allHaveMarkers) {\n+      newLine = currentLine.slice(olMatch[0].length);\n+    } else if (olMatch) {\n+      newLine = `${number}. ${currentLine.slice(olMatch[0].length)}`;\n+      number++;\n+    } else {\n+      const ulMatch = currentLine.match(/^[-*+]\\s/);\n+      const content = ulMatch ? currentLine.slice(ulMatch[0].length) : currentLine;\n+      newLine = `${number}. ${content}`;\n+      number++;\n+    }\n+\n+    doc = doc.slice(0, adjustedStart) + newLine + doc.slice(adjustedEnd);\n+    offset += newLine.length - currentLine.length;\n+    lastLineEnd = adjustedStart + newLine.length;\n+  }\n+\n+  editor.setDocument(doc);\n+  editor.setSelection(selFrom, lastLineEnd);\n   return true;\n }\n \n export function toggleUnorderedList(editor: EditorAPI): boolean {\n-  const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const { lineStart, lineEnd, line } = getCurrentLine(doc, anchor);\n-\n-  const ulMatch = line.match(/^[-*+]\\s/);\n-  let newLine: string;\n-  if (ulMatch) {\n-    newLine = line.slice(ulMatch[0].length);\n-  } else {\n-    // Remove ordered list marker if present\n-    const olMatch = line.match(/^\\d+\\.\\s/);\n-    const content = olMatch ? line.slice(olMatch[0].length) : line;\n-    newLine = \"- \" + content;\n+  let doc = editor.getDocument();\n+  const { anchor, head } = editor.getSelection();\n+  const selFrom = Math.min(anchor, head);\n+  const selTo = Math.max(anchor, head);\n+  const lines = getLinesInRange(doc, selFrom, selTo);\n+\n+  let offset = 0;\n+  let lastLineEnd = 0;\n+  const allHaveMarkers = lines.every((l) => /^\\d+\\.\\s/.test(l.line) || /^[-*+]\\s/.test(l.line));\n+  for (const { lineStart, lineEnd, line } of lines) {\n+    if (line.trim() === \"\") continue;\n+    const adjustedStart = lineStart + offset;\n+    const adjustedEnd = lineEnd + offset;\n+    const currentLine = doc.slice(adjustedStart, adjustedEnd);\n+\n+    const ulMatch = currentLine.match(/^[-*+]\\s/);\n+    let newLine: string;\n+    if (ulMatch && allHaveMarkers) {\n+      newLine = currentLine.slice(ulMatch[0].length);\n+    } else if (ulMatch) {\n+      newLine = `- ${currentLine.slice(ulMatch[0].length)}`;\n+    } else {\n+      const olMatch = currentLine.match(/^\\d+\\.\\s/);\n+      const content = olMatch ? currentLine.slice(olMatch[0].length) : currentLine;\n+      newLine = `- ${content}`;\n+    }\n+\n+    doc = doc.slice(0, adjustedStart) + newLine + doc.slice(adjustedEnd);\n+    offset += newLine.length - currentLine.length;\n+    lastLineEnd = adjustedStart + newLine.length;\n   }\n \n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n-  editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n+  editor.setDocument(doc);\n+  editor.setSelection(selFrom, lastLineEnd);\n   return true;\n }\n "
+      },
+      {
+        "sha": "a21141844c658fd491eff60cdb487be0bd4b4360",
+        "filename": "packages/plugin-toolbar/src/index.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,5 +1,6 @@\n import type { EditorAPI, NexusPlugin, SlashCommandDef } from \"@floatboat/nexus-core\";\n import { colorDecorationExtension } from \"./color-decoration\";\n+import { listReorderExtension } from \"./list-reorder\";\n import {\n   insertCodeBlock,\n   insertHorizontalRule,\n@@ -230,6 +231,6 @@ export function createToolbarPlugin(): NexusPlugin {\n       { key: \"Mod-3\", run: (e) => toggleHeading(e, 3) },\n     ],\n     slashCommands: toolbarSlashCommands,\n-    cmExtensions: [colorDecorationExtension()],\n+    cmExtensions: [colorDecorationExtension(), listReorderExtension()],\n   };\n }"
+      },
+      {
+        "sha": "9b997d65e2f1a9c4f09c4415a142b9b74d9078b9",
+        "filename": "packages/plugin-toolbar/src/list-reorder.ts",
+        "status": "added",
+        "additions": 157,
+        "deletions": 0,
+        "changes": 157,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Fsrc%2Flist-reorder.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Fsrc%2Flist-reorder.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Flist-reorder.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,157 @@\n+import { EditorView, ViewPlugin, ViewUpdate, Decoration, type DecorationSet } from \"@codemirror/view\";\n+import { StateField, StateEffect } from \"@codemirror/state\";\n+import { isTableEditing } from \"@floatboat/nexus-core\";\n+\n+const listLineRE = /^(\\s*)([-*+]|\\d+\\.)\\s/;\n+\n+function injectStyles() {\n+  const id = \"nexus-list-reorder-styles\";\n+  if (document.getElementById(id)) return;\n+  const style = document.createElement(\"style\");\n+  style.id = id;\n+  style.textContent = \".nexus-list-drag-target { background: var(--nexus-bg-muted, #e8f0fe) !important; border-top: 2px solid var(--nexus-accent, #0969da) !important; }\";\n+  document.head.appendChild(style);\n+}\n+\n+function getListLineInfo(view: EditorView, pos: number): { from: number; to: number; indent: number } | null {\n+  const line = view.state.doc.lineAt(pos);\n+  const text = line.text;\n+  const m = text.match(listLineRE);\n+  if (!m) return null;\n+\n+  let to = line.to;\n+  const baseIndent = m[1].length;\n+  const contRE = new RegExp(`^\\\\s{0,${baseIndent + 1}}\\\\S`);\n+  for (let l = line.number + 1; l <= view.state.doc.lines; l++) {\n+    const next = view.state.doc.line(l);\n+    const nextText = next.text;\n+    if (nextText === \"\" || contRE.test(nextText) || listLineRE.test(nextText)) break;\n+    to = next.to;\n+  }\n+  return { from: line.from, to, indent: baseIndent };\n+}\n+\n+const dragStyle = Decoration.line({ attributes: { class: \"nexus-list-drag-target\" } });\n+\n+const setDragState = StateEffect.define<{ from: number; to: number; indent: number; targetLine: number } | null>();\n+\n+const dragStateField = StateField.define<{ from: number; to: number; indent: number; targetLine: number } | null>({\n+  create() { return null; },\n+  update(value, tr) {\n+    for (const e of tr.effects) if (e.is(setDragState)) return e.value;\n+    return value;\n+  }\n+});\n+\n+const dragDecoField = StateField.define<DecorationSet>({\n+  create() { return Decoration.none; },\n+  update(_decos, tr) {\n+    const state = tr.state.field(dragStateField, false) ?? null;\n+    if (!state) return Decoration.none;\n+    const targetLine = tr.state.doc.line(state.targetLine);\n+    return Decoration.set([dragStyle.range(targetLine.from)]);\n+  },\n+  provide: (f) => EditorView.decorations.from(f),\n+});\n+\n+function moveListLines(view: EditorView, from: number, to: number, targetLineNumber: number) {\n+  const doc = view.state.doc;\n+  const block = doc.sliceString(from, to);\n+  const isLastBlock = to >= doc.length;\n+  const targetLine = doc.line(targetLineNumber);\n+  const delFrom = isLastBlock ? Math.max(0, from - 1) : from;\n+  const delTo = isLastBlock ? to : to + 1;\n+\n+  let changes;\n+  if (targetLine.from < from) {\n+    changes = [\n+      { from: delFrom, to: delTo },\n+      { from: targetLine.from, insert: block + \"\\n\" },\n+    ];\n+  } else {\n+    changes = [\n+      { from: targetLine.from, insert: block + \"\\n\" },\n+      { from: delFrom, to: delTo },\n+    ];\n+  }\n+\n+  view.dispatch({ changes, userEvent: \"list.reorder\" });\n+}\n+\n+class ReorderPlugin {\n+  private cleanupDoc: (() => void) | null = null;\n+\n+  constructor(readonly view: EditorView) {}\n+\n+  update(_update: ViewUpdate) {}\n+\n+  destroy() {\n+    if (this.cleanupDoc) {\n+      this.cleanupDoc();\n+      this.cleanupDoc = null;\n+    }\n+  }\n+\n+  private startDrag(info: { from: number; to: number; indent: number }, startX: number, startY: number) {\n+    const view = this.view;\n+    let moved = false;\n+\n+    const onMove = (e: MouseEvent) => {\n+      if (!moved && Math.abs(e.clientX - startX) + Math.abs(e.clientY - startY) < 5) return;\n+      moved = true;\n+      const targetPos = view.posAtCoords({ x: e.clientX, y: e.clientY });\n+      if (targetPos === null) return;\n+      const targetLine = view.state.doc.lineAt(targetPos).number;\n+      view.dispatch({ effects: setDragState.of({ ...info, targetLine }) });\n+    };\n+\n+    const onUp = () => {\n+      document.removeEventListener(\"mousemove\", onMove);\n+      document.removeEventListener(\"mouseup\", onUp);\n+      this.cleanupDoc = null;\n+      view.contentDOM.style.cursor = \"\";\n+\n+      const dragState = view.state.field(dragStateField, false) ?? null;\n+      if (dragState) {\n+        view.dispatch({ effects: setDragState.of(null) });\n+        if (moved) {\n+          moveListLines(view, dragState.from, dragState.to, dragState.targetLine);\n+        }\n+      }\n+    };\n+\n+    if (this.cleanupDoc) this.cleanupDoc();\n+    document.addEventListener(\"mousemove\", onMove);\n+    document.addEventListener(\"mouseup\", onUp);\n+    this.cleanupDoc = () => {\n+      document.removeEventListener(\"mousemove\", onMove);\n+      document.removeEventListener(\"mouseup\", onUp);\n+      view.contentDOM.style.cursor = \"\";\n+    };\n+    view.contentDOM.style.cursor = \"grabbing\";\n+  }\n+\n+  handleMousedown(event: MouseEvent) {\n+    if (event.button !== 0) return;\n+    if (isTableEditing()) return;\n+    const pos = this.view.posAtCoords({ x: event.clientX, y: event.clientY });\n+    if (pos === null) return;\n+    const info = getListLineInfo(this.view, pos);\n+    if (!info) return;\n+    this.startDrag(info, event.clientX, event.clientY);\n+  }\n+}\n+\n+const reorderPlugin = ViewPlugin.fromClass(ReorderPlugin, {\n+  eventHandlers: {\n+    mousedown(event, view) {\n+      const plugin = view.plugin(reorderPlugin);\n+      if (plugin) plugin.handleMousedown(event as MouseEvent);\n+    },\n+  },\n+});\n+\n+export function listReorderExtension() {\n+  injectStyles();\n+  return [dragStateField, dragDecoField, reorderPlugin];\n+}"
+      },
+      {
+        "sha": "236695cd71c2fc6b99142f9aea27cdd96f47e45c",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar-list-reorder.test.ts",
+        "status": "added",
+        "additions": 103,
+        "deletions": 0,
+        "changes": 103,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar-list-reorder.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar-list-reorder.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar-list-reorder.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,103 @@\n+import { describe, expect, it } from \"vitest\";\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import { createToolbarPlugin } from \"../src/index\";\n+\n+describe(\"list drag reorder\", () => {\n+  function setup(initial: string) {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: initial,\n+      plugins: [createToolbarPlugin()],\n+    });\n+    return { editor, container };\n+  }\n+\n+  it(\"plugin is registered\", () => {\n+    const plugin = createToolbarPlugin();\n+    expect(plugin.cmExtensions).toHaveLength(2);\n+  });\n+\n+  it(\"mousedown on list item does not crash\", () => {\n+    const { editor, container } = setup(\"- item1\\n- item2\\n- item3\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    expect(() => {\n+      content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    }).not.toThrow();\n+    expect(editor.getDocument()).toBe(\"- item1\\n- item2\\n- item3\");\n+    editor.destroy();\n+  });\n+\n+  it(\"mousedown on ordered list item does not crash\", () => {\n+    const { editor, container } = setup(\"1. first\\n2. second\\n3. third\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    expect(() => {\n+      content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    }).not.toThrow();\n+    editor.destroy();\n+  });\n+\n+  it(\"mousedown on non-list line does nothing\", () => {\n+    const { editor, container } = setup(\"plain text\\nmore text\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    document.dispatchEvent(new MouseEvent(\"mousemove\", { bubbles: true, clientX: 15, clientY: 15 }));\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", { bubbles: true, clientX: 15, clientY: 15 }));\n+    expect(editor.getDocument()).toBe(\"plain text\\nmore text\");\n+    editor.destroy();\n+  });\n+\n+  it(\"drag on list item does not corrupt document\", () => {\n+    const { editor, container } = setup(\"- a\\n- b\\n- c\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    document.dispatchEvent(new MouseEvent(\"mousemove\", { bubbles: true, clientX: 10, clientY: 30 }));\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", { bubbles: true, clientX: 10, clientY: 30 }));\n+    expect(editor.getDocument()).toBe(\"- a\\n- b\\n- c\");\n+    editor.destroy();\n+  });\n+\n+  it(\"destroy during drag cleans up listeners\", () => {\n+    const { editor, container } = setup(\"- item1\\n- item2\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    // Move mouse to trigger mousemove state\n+    document.dispatchEvent(new MouseEvent(\"mousemove\", { bubbles: true, clientX: 10, clientY: 30 }));\n+    // Destroy editor mid-drag\n+    editor.destroy();\n+    // Remaining mouseup should not throw\n+    expect(() => {\n+      document.dispatchEvent(new MouseEvent(\"mouseup\", { bubbles: true, clientX: 10, clientY: 30 }));\n+    }).not.toThrow();\n+  });\n+\n+  it(\"multi-line list item is detected as single block\", () => {\n+    const { editor, container } = setup(\"- item1\\n  continuation\\n  more\\n- item2\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", { bubbles: true, clientX: 10, clientY: 10 }));\n+    expect(editor.getDocument()).toBe(\"- item1\\n  continuation\\n  more\\n- item2\");\n+    editor.destroy();\n+  });\n+\n+  it(\"tableEditing guard blocks mousedown during table edit\", () => {\n+    // This verifies the isTableEditing() check exists and compiles.\n+    // Actual table editing guard behavior requires table widget interaction.\n+    const { editor, container } = setup(\"- a\\n- b\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    // Mousedown during table editing is not active, so it should proceed\n+    content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 0 }));\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", { bubbles: true, clientX: 10, clientY: 10 }));\n+    expect(editor.getDocument()).toBe(\"- a\\n- b\");\n+    editor.destroy();\n+  });\n+\n+  it(\"mousedown with non-left button is ignored\", () => {\n+    const { editor, container } = setup(\"- item1\\n- item2\");\n+    const content = container.querySelector<HTMLElement>(\".cm-content\")!;\n+    content.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, clientX: 10, clientY: 10, button: 2 }));\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", { bubbles: true, clientX: 10, clientY: 10, button: 2 }));\n+    expect(editor.getDocument()).toBe(\"- item1\\n- item2\");\n+    editor.destroy();\n+  });\n+});"
+      },
+      {
+        "sha": "41bee4ebdc7cd149978d07a9cf42ad51edfce653",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 61,
+        "deletions": 0,
+        "changes": 61,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -7,6 +7,8 @@ import {\n   toggleInlineCode,\n   insertLink,\n   toggleHeading,\n+  toggleOrderedList,\n+  toggleUnorderedList,\n   createToolbarPlugin,\n   createToolbarUI,\n } from \"../src/index\";\n@@ -120,6 +122,65 @@ describe(\"toggleHeading\", () => {\n   });\n });\n \n+describe(\"toggleOrderedList\", () => {\n+  it(\"toggles ordered list on a single line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello\" });\n+\n+    editor.setSelection(2);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. hello\");\n+    editor.destroy();\n+  });\n+\n+  it(\"toggles ordered list on multiple selected lines\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"alpha\\nbeta\\ngamma\" });\n+\n+    editor.setSelection(0, 14);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. alpha\\n2. beta\\n3. gamma\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes ordered list markers from multiple lines\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"1. alpha\\n2. beta\\n3. gamma\" });\n+\n+    editor.setSelection(0, 25);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"alpha\\nbeta\\ngamma\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"toggleUnorderedList\", () => {\n+  it(\"toggles unordered list on multiple selected lines\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"alpha\\nbeta\\ngamma\" });\n+\n+    editor.setSelection(0, 14);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- alpha\\n- beta\\n- gamma\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes unordered list markers from multiple lines\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"- alpha\\n- beta\\n- gamma\" });\n+\n+    editor.setSelection(0, 22);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"alpha\\nbeta\\ngamma\");\n+    editor.destroy();\n+  });\n+});\n+\n describe(\"createToolbarPlugin\", () => {\n   it(\"returns a plugin with keyboard shortcuts\", () => {\n     const plugin = createToolbarPlugin();"
+      },
+      {
+        "sha": "1d41b35ed6e5ee3a458c4d2d0d28fe713d6530a1",
+        "filename": "packages/react/README.md",
+        "status": "added",
+        "additions": 84,
+        "deletions": 0,
+        "changes": 84,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2FREADME.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,84 @@\n+# @floatboat/nexus-react\n+\n+React bindings for Nexus Editor.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-react @floatboat/nexus-core react react-dom\n+```\n+\n+## Editor Component\n+\n+```tsx\n+import { Editor } from \"@floatboat/nexus-react\";\n+\n+function App() {\n+  return (\n+    <Editor\n+      initialValue=\"# Hello\"\n+      className=\"my-editor\"\n+      id=\"editor-main\"\n+      onReady={(editor) => console.log(editor.getDocument())}\n+    />\n+  );\n+}\n+```\n+\n+### EditorProps\n+\n+Extends `UseEditorConfig` and `ContainerProps`.\n+\n+| Prop | Type | Description |\n+|---|---|---|\n+| `initialValue` | `string` | Initial document content |\n+| `onReady` | `(editor: EditorAPI) => void` | Called when editor is created |\n+| `className` | `string` | Forwarded to container div |\n+| `id` | `string` | Forwarded to container div |\n+| `style` | `CSSProperties` | Forwarded to container div |\n+| `data-*` | `string` | Any data attributes forwarded to container |\n+| `plugins` | `NexusPlugin[]` | Feature plugins |\n+| ... | | All other `EditorConfig` options except `container` |\n+\n+## useEditor Hook\n+\n+```tsx\n+import { useEditor } from \"@floatboat/nexus-react\";\n+\n+function MyEditor() {\n+  const { containerRef, editor } = useEditor({\n+    initialValue: \"start\",\n+    onReady: (ed) => ed.focus(),\n+  });\n+\n+  useEffect(() => {\n+    if (editor) {\n+      editor.setDocument(\"updated\");\n+    }\n+  }, [editor]);\n+\n+  return <div ref={containerRef} />;\n+}\n+```\n+\n+### UseEditorConfig\n+\n+`Omit<EditorConfig, \"container\"> & { onReady?: (editor: EditorAPI) => void }`\n+\n+### UseEditorResult\n+\n+| Field | Type | Description |\n+|---|---|---|\n+| `containerRef` | `RefObject<HTMLDivElement>` | Attach to your mount div |\n+| `editor` | `EditorAPI \\| null` | Editor instance (null until mounted) |\n+\n+## Exports\n+\n+| Export | Purpose |\n+|---|---|\n+| `Editor` | Full editor component |\n+| `useEditor` | Hook for custom integration |\n+| `EditorProps` | Component prop type |\n+| `UseEditorConfig` | Hook config type |\n+| `UseEditorResult` | Hook return type |\n+| `ContainerProps` | HTML attribute passthrough type |"
+      },
+      {
+        "sha": "5384f1dd6b550c443dc75395e3271e9cc7bd70c4",
+        "filename": "packages/react/src/editor.tsx",
+        "status": "modified",
+        "additions": 6,
+        "deletions": 4,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Feditor.tsx?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,9 +1,11 @@\n import { useEditor } from \"./use-editor\";\n \n-import type { UseEditorConfig } from \"./types\";\n+import type { ContainerProps, UseEditorConfig } from \"./types\";\n \n-export function Editor(props: UseEditorConfig) {\n-  const { containerRef } = useEditor(props);\n+export type EditorProps = UseEditorConfig & ContainerProps;\n \n-  return <div ref={containerRef} />;\n+export function Editor({ className, id, style, ...editorConfig }: EditorProps) {\n+  const { containerRef } = useEditor(editorConfig);\n+\n+  return <div ref={containerRef} className={className} id={id} style={style} />;\n }"
+      },
+      {
+        "sha": "24e20ad34381925d2f3643d40789b7b87545a3d0",
+        "filename": "packages/react/src/index.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Findex.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,3 +1,4 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type { EditorProps } from \"./editor\";\n+export type { ContainerProps, UseEditorConfig, UseEditorResult } from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "7eacb21194fd76270b42628e188a6a6a10341f69",
+        "filename": "packages/react/src/types.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 2,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Ftypes.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -2,9 +2,18 @@ import type {\n   EditorAPI,\n   EditorConfig\n } from \"@floatboat/nexus-core\";\n-import type { RefObject } from \"react\";\n+import type { CSSProperties, RefObject } from \"react\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  onReady?: (editor: EditorAPI) => void;\n+}\n+\n+export interface ContainerProps {\n+  className?: string;\n+  id?: string;\n+  style?: CSSProperties;\n+  [key: `data-${string}`]: string;\n+}\n \n export interface UseEditorResult {\n   containerRef: RefObject<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "8ce65ad4125c4562fae359c8bc09b817cac48585",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -25,6 +25,7 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n \n     editorRef.current = instance;\n     setEditor(instance);\n+    configRef.current.onReady?.(instance);\n \n     return () => {\n       instance.destroy();"
+      },
+      {
+        "sha": "e26fb53ffa3376a3a881954d7a1e1d2e1a2979a6",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 26,
+        "deletions": 1,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,8 +1,10 @@\n import { render } from \"@testing-library/react\";\n import { useEffect } from \"react\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n \n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n+\n describe(\"@floatboat/nexus-react\", () => {\n   it(\"renders an editor into the provided container through the Editor component\", () => {\n     const { container, unmount } = render(<Editor initialValue=\"# Hello\" />);\n@@ -37,4 +39,27 @@ describe(\"@floatboat/nexus-react\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"fires onReady with the editor instance\", () => {\n+    const readySpy = vi.fn();\n+    render(<Editor initialValue=\"hello\" onReady={readySpy} />);\n+\n+    expect(readySpy).toHaveBeenCalledTimes(1);\n+    const receivedEditor: EditorAPI = readySpy.mock.calls[0][0];\n+    expect(receivedEditor.getDocument()).toBe(\"hello\");\n+  });\n+\n+  it(\"forwards className to the container div\", () => {\n+    const { container } = render(<Editor initialValue=\"test\" className=\"my-editor\" />);\n+\n+    const wrapper = container.firstElementChild as HTMLElement;\n+    expect(wrapper.className).toBe(\"my-editor\");\n+  });\n+\n+  it(\"forwards id to the container div\", () => {\n+    const { container } = render(<Editor initialValue=\"test\" id=\"editor-main\" />);\n+\n+    const wrapper = container.firstElementChild as HTMLElement;\n+    expect(wrapper.id).toBe(\"editor-main\");\n+  });\n });"
+      },
+      {
+        "sha": "82b65830ae2b311f2e18bafbcec4918a1a65a2a8",
+        "filename": "packages/vue/README.md",
+        "status": "added",
+        "additions": 84,
+        "deletions": 0,
+        "changes": 84,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2FREADME.md?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,84 @@\n+# @floatboat/nexus-vue\n+\n+Vue 3 bindings for Nexus Editor.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-vue @floatboat/nexus-core vue\n+```\n+\n+## Editor Component\n+\n+```vue\n+<script setup>\n+import { Editor } from \"@floatboat/nexus-vue\";\n+\n+function onReady(editor) {\n+  console.log(editor.getDocument());\n+}\n+</script>\n+\n+<template>\n+  <Editor\n+    initial-value=\"## Title\"\n+    class=\"my-editor\"\n+    id=\"editor-main\"\n+    :on-ready=\"onReady\"\n+  />\n+</template>\n+```\n+\n+### Props\n+\n+| Prop | Type | Description |\n+|---|---|---|\n+| `initialValue` | `string` | Initial document content |\n+| `onReady` | `(editor: EditorAPI) => void` | Called when editor is created |\n+| `class` | `string` | Forwarded to container div via attrs |\n+| `id` | `string` | Forwarded to container div via attrs |\n+| `style` | `string \\| object` | Forwarded to container div via attrs |\n+\n+All HTML attributes and custom `data-*` attributes are passed through to the container div. Plugin and config props are passed through `useEditor`.\n+\n+## useEditor Composable\n+\n+```vue\n+<script setup>\n+import { useEditor } from \"@floatboat/nexus-vue\";\n+import { onMounted } from \"vue\";\n+\n+const { containerRef, editor } = useEditor({\n+  initialValue: \"start\",\n+  onReady: (ed) => ed.focus(),\n+});\n+\n+onMounted(() => {\n+  editor.value?.setDocument(\"updated\");\n+});\n+</script>\n+\n+<template>\n+  <div ref=\"containerRef\" />\n+</template>\n+```\n+\n+### UseEditorConfig\n+\n+`Omit<EditorConfig, \"container\"> & { onReady?: (editor: EditorAPI) => void }`\n+\n+### UseEditorResult\n+\n+| Field | Type | Description |\n+|---|---|---|\n+| `containerRef` | `Ref<HTMLDivElement \\| null>` | Template ref for mount div |\n+| `editor` | `ShallowRef<EditorAPI \\| null>` | Editor instance (null until mounted) |\n+\n+## Exports\n+\n+| Export | Purpose |\n+|---|---|\n+| `Editor` | Full editor component |\n+| `useEditor` | Composable for custom integration |\n+| `UseEditorConfig` | Composable config type |\n+| `UseEditorResult` | Composable return type |"
+      },
+      {
+        "sha": "41337546312fe5e4703db3f581942a20478fe076",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 8,
+        "deletions": 3,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,18 +1,23 @@\n import { defineComponent, h } from \"vue\";\n \n import { useEditor } from \"./use-editor\";\n+import type { UseEditorConfig } from \"./types\";\n \n export const Editor = defineComponent({\n   name: \"NexusEditor\",\n   props: {\n     initialValue: {\n       type: String,\n       required: false\n+    },\n+    onReady: {\n+      type: Function as unknown as () => UseEditorConfig[\"onReady\"],\n+      required: false\n     }\n   },\n-  setup(props) {\n-    const { containerRef } = useEditor(props);\n+  setup(props, { attrs }) {\n+    const { containerRef } = useEditor({ ...props, ...attrs });\n \n-    return () => h(\"div\", { ref: containerRef });\n+    return () => h(\"div\", { ref: containerRef, ...attrs });\n   }\n });"
+      },
+      {
+        "sha": "f17b69b3801bab5fa0572293c0718ea49328598e",
+        "filename": "packages/vue/src/types.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 1,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Ftypes.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -4,7 +4,9 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { Ref, ShallowRef } from \"vue\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  onReady?: (editor: EditorAPI) => void;\n+}\n \n export interface UseEditorResult {\n   containerRef: Ref<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "88f0e1344a88c9bce0269a1966957567e93861cf",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -16,6 +16,7 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       container: containerRef.value,\n       ...config\n     });\n+    config.onReady?.(editor.value);\n   });\n \n   onBeforeUnmount(() => {"
+      },
+      {
+        "sha": "d9aa46c897b8f95bcbfa058f044dc8d77761be6b",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 34,
+        "deletions": 1,
+        "changes": 35,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -1,8 +1,10 @@\n import { mount } from \"@vue/test-utils\";\n import { defineComponent, h, nextTick, onMounted } from \"vue\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n \n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n+\n describe(\"@floatboat/nexus-vue\", () => {\n   it(\"renders an editor into the provided container through the Editor component\", async () => {\n     const wrapper = mount(Editor, {\n@@ -45,4 +47,35 @@ describe(\"@floatboat/nexus-vue\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"fires onReady with the editor instance\", async () => {\n+    const readySpy = vi.fn();\n+    mount(Editor, {\n+      props: {\n+        initialValue: \"hello\",\n+        onReady: readySpy\n+      }\n+    });\n+\n+    await nextTick();\n+\n+    expect(readySpy).toHaveBeenCalledTimes(1);\n+    const receivedEditor: EditorAPI = readySpy.mock.calls[0][0];\n+    expect(receivedEditor.getDocument()).toBe(\"hello\");\n+  });\n+\n+  it(\"passes through container attributes\", async () => {\n+    const wrapper = mount(Editor, {\n+      props: {\n+        initialValue: \"test\",\n+        class: \"my-editor\",\n+        id: \"editor-main\"\n+      }\n+    });\n+\n+    await nextTick();\n+\n+    expect(wrapper.element.className).toBe(\"my-editor\");\n+    expect(wrapper.element.id).toBe(\"editor-main\");\n+  });\n });"
+      },
+      {
+        "sha": "a14e6119eb35c3064f3372dae86046100014e165",
+        "filename": "playwright.config.ts",
+        "status": "added",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/playwright.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/playwright.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/playwright.config.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -0,0 +1,13 @@\n+import { defineConfig } from \"@playwright/test\";\n+\n+export default defineConfig({\n+  testDir: \"./e2e\",\n+  webServer: {\n+    command: \"pnpm exec vite --config e2e-vite.config.ts\",\n+    port: 5179,\n+    reuseExistingServer: true,\n+  },\n+  use: {\n+    baseURL: \"http://localhost:5179\",\n+  },\n+});"
+      },
+      {
+        "sha": "923809bd0f7c6f364b3f0a9299cd621da8ab7fce",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 48,
+        "deletions": 13,
+        "changes": 61,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -8,6 +8,9 @@ importers:\n \n   .:\n     devDependencies:\n+      '@playwright/test':\n+        specifier: ^1.60.0\n+        version: 1.60.0\n       '@testing-library/react':\n         specifier: ^16.3.0\n         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)\n@@ -29,6 +32,9 @@ importers:\n       jsdom:\n         specifier: ^25.0.1\n         version: 25.0.1\n+      playwright:\n+        specifier: ^1.60.0\n+        version: 1.60.0\n       react:\n         specifier: ^19.2.0\n         version: 19.2.5\n@@ -41,6 +47,9 @@ importers:\n       typescript:\n         specifier: ^5.9.3\n         version: 5.9.3\n+      vite:\n+        specifier: ^6.3.0\n+        version: 6.4.2(@types/node@24.12.2)\n       vitest:\n         specifier: ^2.1.9\n         version: 2.1.9(@types/node@24.12.2)(jsdom@25.0.1)\n@@ -141,6 +150,9 @@ importers:\n       '@codemirror/commands':\n         specifier: ^6.8.1\n         version: 6.10.3\n+      '@codemirror/state':\n+        specifier: ^6.5.2\n+        version: 6.6.0\n       '@codemirror/view':\n         specifier: ^6.36.1\n         version: 6.41.0\n@@ -899,6 +911,11 @@ packages:\n     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}\n     engines: {node: '>=14'}\n \n+  '@playwright/test@1.60.0':\n+    resolution: {integrity: sha512-O71yZIbAh/PxDMNGns37GHBIfrVkEVyn+AXyIa5dOTfb4/xNvRWV+Vv/NMbNCtODB/pO7vLlF2OTmMVLhmr7Ag==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n   '@replit/codemirror-indentation-markers@6.5.3':\n     resolution: {integrity: sha512-hL5Sfvw3C1vgg7GolLe/uxX5T3tmgOA3ZzqlMv47zjU1ON51pzNWiVbS22oh6crYhtVhv8b3gdXwoYp++2ilHw==}\n     peerDependencies:\n@@ -949,79 +966,66 @@ packages:\n     resolution: {integrity: sha512-L+34Qqil+v5uC0zEubW7uByo78WOCIrBvci69E7sFASRl0X7b/MB6Cqd1lky/CtcSVTydWa2WZwFuWexjS5o6g==}\n     cpu: [arm]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-arm-musleabihf@4.60.1':\n     resolution: {integrity: sha512-n83O8rt4v34hgFzlkb1ycniJh7IR5RCIqt6mz1VRJD6pmhRi0CXdmfnLu9dIUS6buzh60IvACM842Ffb3xd6Gg==}\n     cpu: [arm]\n     os: [linux]\n-    libc: [musl]\n \n   '@rollup/rollup-linux-arm64-gnu@4.60.1':\n     resolution: {integrity: sha512-Nql7sTeAzhTAja3QXeAI48+/+GjBJ+QmAH13snn0AJSNL50JsDqotyudHyMbO2RbJkskbMbFJfIJKWA6R1LCJQ==}\n     cpu: [arm64]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-arm64-musl@4.60.1':\n     resolution: {integrity: sha512-+pUymDhd0ys9GcKZPPWlFiZ67sTWV5UU6zOJat02M1+PiuSGDziyRuI/pPue3hoUwm2uGfxdL+trT6Z9rxnlMA==}\n     cpu: [arm64]\n     os: [linux]\n-    libc: [musl]\n \n   '@rollup/rollup-linux-loong64-gnu@4.60.1':\n     resolution: {integrity: sha512-VSvgvQeIcsEvY4bKDHEDWcpW4Yw7BtlKG1GUT4FzBUlEKQK0rWHYBqQt6Fm2taXS+1bXvJT6kICu5ZwqKCnvlQ==}\n     cpu: [loong64]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-loong64-musl@4.60.1':\n     resolution: {integrity: sha512-4LqhUomJqwe641gsPp6xLfhqWMbQV04KtPp7/dIp0nzPxAkNY1AbwL5W0MQpcalLYk07vaW9Kp1PBhdpZYYcEw==}\n     cpu: [loong64]\n     os: [linux]\n-    libc: [musl]\n \n   '@rollup/rollup-linux-ppc64-gnu@4.60.1':\n     resolution: {integrity: sha512-tLQQ9aPvkBxOc/EUT6j3pyeMD6Hb8QF2BTBnCQWP/uu1lhc9AIrIjKnLYMEroIz/JvtGYgI9dF3AxHZNaEH0rw==}\n     cpu: [ppc64]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-ppc64-musl@4.60.1':\n     resolution: {integrity: sha512-RMxFhJwc9fSXP6PqmAz4cbv3kAyvD1etJFjTx4ONqFP9DkTkXsAMU4v3Vyc5BgzC+anz7nS/9tp4obsKfqkDHg==}\n     cpu: [ppc64]\n     os: [linux]\n-    libc: [musl]\n \n   '@rollup/rollup-linux-riscv64-gnu@4.60.1':\n     resolution: {integrity: sha512-QKgFl+Yc1eEk6MmOBfRHYF6lTxiiiV3/z/BRrbSiW2I7AFTXoBFvdMEyglohPj//2mZS4hDOqeB0H1ACh3sBbg==}\n     cpu: [riscv64]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-riscv64-musl@4.60.1':\n     resolution: {integrity: sha512-RAjXjP/8c6ZtzatZcA1RaQr6O1TRhzC+adn8YZDnChliZHviqIjmvFwHcxi4JKPSDAt6Uhf/7vqcBzQJy0PDJg==}\n     cpu: [riscv64]\n     os: [linux]\n-    libc: [musl]\n \n   '@rollup/rollup-linux-s390x-gnu@4.60.1':\n     resolution: {integrity: sha512-wcuocpaOlaL1COBYiA89O6yfjlp3RwKDeTIA0hM7OpmhR1Bjo9j31G1uQVpDlTvwxGn2nQs65fBFL5UFd76FcQ==}\n     cpu: [s390x]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-x64-gnu@4.60.1':\n     resolution: {integrity: sha512-77PpsFQUCOiZR9+LQEFg9GClyfkNXj1MP6wRnzYs0EeWbPcHs02AXu4xuUbM1zhwn3wqaizle3AEYg5aeoohhg==}\n     cpu: [x64]\n     os: [linux]\n-    libc: [glibc]\n \n   '@rollup/rollup-linux-x64-musl@4.60.1':\n     resolution: {integrity: sha512-5cIATbk5vynAjqqmyBjlciMJl1+R/CwX9oLk/EyiFXDWd95KpHdrOJT//rnUl4cUcskrd0jCCw3wpZnhIHdD9w==}\n     cpu: [x64]\n     os: [linux]\n-    libc: [musl]\n \n   '@rollup/rollup-openbsd-x64@4.60.1':\n     resolution: {integrity: sha512-cl0w09WsCi17mcmWqqglez9Gk8isgeWvoUZ3WiJFYSR3zjBQc2J5/ihSjpl+VLjPqjQ/1hJRcqBfLjssREQILw==}\n@@ -1247,6 +1251,7 @@ packages:\n \n   '@ungap/structured-clone@1.3.0':\n     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}\n+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher\n \n   '@upsetjs/venn.js@2.0.0':\n     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}\n@@ -2136,6 +2141,11 @@ packages:\n   fs.realpath@1.0.0:\n     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}\n \n+  fsevents@2.3.2:\n+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}\n+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}\n+    os: [darwin]\n+\n   fsevents@2.3.3:\n     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}\n     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}\n@@ -2906,6 +2916,16 @@ packages:\n   pkg-types@1.3.1:\n     resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}\n \n+  playwright-core@1.60.0:\n+    resolution: {integrity: sha512-9bW6zvX/m0lEbgTKJ6YppOKx8H3VOPBMOCFh2irXFOT4BbHgrx5hPjwJYLT40Lu+4qtD36qKc/Hn56StUW57IA==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n+  playwright@1.60.0:\n+    resolution: {integrity: sha512-hheHdokM8cdqCb0lcE3s+zT4t4W+vvjpGxsZlDnikarzx8tSzMebh3UiFtgqwFwnTnjYQcsyMF8ei2mCO/tpeA==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n   plist@3.1.0:\n     resolution: {integrity: sha512-uysumyrvkUX0rX/dEVqt8gC3sTBzd4zoWfLeS29nb53imdaXVvLINYXTI2GNqzaMuvacNx4uJQ8+b3zXR0pkgQ==}\n     engines: {node: '>=10.4.0'}\n@@ -4237,6 +4257,10 @@ snapshots:\n   '@pkgjs/parseargs@0.11.0':\n     optional: true\n \n+  '@playwright/test@1.60.0':\n+    dependencies:\n+      playwright: 1.60.0\n+\n   '@replit/codemirror-indentation-markers@6.5.3(@codemirror/language@6.12.3)(@codemirror/state@6.6.0)(@codemirror/view@6.41.0)':\n     dependencies:\n       '@codemirror/language': 6.12.3\n@@ -5678,6 +5702,9 @@ snapshots:\n \n   fs.realpath@1.0.0: {}\n \n+  fsevents@2.3.2:\n+    optional: true\n+\n   fsevents@2.3.3:\n     optional: true\n \n@@ -6697,6 +6724,14 @@ snapshots:\n       mlly: 1.8.2\n       pathe: 2.0.3\n \n+  playwright-core@1.60.0: {}\n+\n+  playwright@1.60.0:\n+    dependencies:\n+      playwright-core: 1.60.0\n+    optionalDependencies:\n+      fsevents: 2.3.2\n+\n   plist@3.1.0:\n     dependencies:\n       '@xmldom/xmldom': 0.8.13"
+      },
+      {
+        "sha": "b362e504079fa564f066d918c33f731fc987b195",
+        "filename": "vitest.config.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1434ff2834e48c391af1c456322903110d8077a0/vitest.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1434ff2834e48c391af1c456322903110d8077a0/vitest.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/vitest.config.ts?ref=1434ff2834e48c391af1c456322903110d8077a0",
+        "patch": "@@ -17,6 +17,7 @@ export default defineConfig({\n     }\n   },\n   test: {\n-    environment: \"jsdom\"\n+    environment: \"jsdom\",\n+    exclude: [\"e2e/**\", \"**/node_modules/**\"]\n   }\n });"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=23",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

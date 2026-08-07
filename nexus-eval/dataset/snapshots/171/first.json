@@ -1,0 +1,220 @@
+{
+  "pr_number": 171,
+  "title": "feat(streaming,search): add AI token streaming plugin and subsequence fuzzy matcher",
+  "body": "## Summary / 摘要\n\nAdd `@floatboat/nexus-plugin-streaming` for AI token streaming delta injection and implement subsequence fuzzy search matcher in `@floatboat/nexus-plugin-search`.\n\n新增 `@floatboat/nexus-plugin-streaming` 插件实现 AI 流式 Token 追加与打字光标效果，并在 `@floatboat/nexus-plugin-search` 中实现了子序列模糊搜索算法。\n\n## Motivation / 背景与动机\n\n- Issue: N/A\n- Roadmap (docs/ROADMAP.md): Item #17 (Fuzzy search)\n- OpenSpec change: `openspec/changes/add-plugin-streaming`\n\n1. Floatboat AI workflows require real-time LLM token streaming into document buffers with cursor shimmer widgets and single-step undo history transaction grouping.\n2. Fulfills Roadmap P2 item #17 for fuzzy match searching with score ranking and character offset span extractions.\n\n## Changes / 变更内容\n\n- `packages/plugin-streaming` (New Package):\n  - `createStreamingPlugin()`, `StreamingManager`, `streamingSessionField`\n  - Animated typing cursor widget (`StreamingCursorWidget`)\n  - Transaction annotations (`userEvent: \"ai-stream\"`) for atomic undo/redo history grouping\n- `packages/plugin-search`:\n  - Subsequence fuzzy search matcher `findFuzzyMatches()` with score ranking and character offset extraction\n  - Integrated `fuzzy` option into `findSearchMatches()`\n- `openspec/`:\n  - Proposal, tasks, and spec deltas for `add-plugin-streaming`\n- `docs/ROADMAP.md` & `docs/ROADMAP.zh.md`:\n  - Updated item #17 status from `planned` to `done`\n\n## Testing / 测试\n\n- [x] `pnpm test` passes (36 test files, 547 vitest cases all green)\n- [x] Affected packages build (`pnpm build`)\n- [x] Release app build succeeds (`pnpm build:electron-demo`)\n- [x] New vitest cases: `packages/plugin-streaming/test/streaming.test.ts` & `packages/plugin-search/test/fuzzy-search.test.ts`\n\n## Compliance / 合规自检\n\n- [x] **CLA signed** — Will sign automatically via CLA bot upon PR creation if prompted.\n- [x] **AI disclosure**: Functional code follows industry TypeScript standards and project conventions.\n",
+  "created_at": "2026-07-22T08:37:03Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "651179a08e835a2d15cd01c9c8d21df8e30e5166",
+  "first_review_time": "2026-07-22T08:41:31Z",
+  "commits_at_first_review": [
+    {
+      "sha": "651179a08e835a2d15cd01c9c8d21df8e30e5166",
+      "message": "feat(streaming,search): add AI token streaming plugin and subsequence fuzzy matcher\n\nAdd @floatboat/nexus-plugin-streaming for real-time LLM token delta injection, typing cursor widget, and history transaction grouping.\nAdd subsequence fuzzy search matcher with score ranking in @floatboat/nexus-plugin-search.\nInclude OpenSpec proposal, unit test suite, and ROADMAP updates.",
+      "date": "2026-07-22T08:36:36Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "cb3e9281cf18ddf2cf3677dee6724ace15b29b3c",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -25,7 +25,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | 2  | Whole-word matching | `plugin-search` | P1 | done | No | `wholeWord` option via `buildSearchPattern` with `\\b` boundaries |\n | 15 | Regex search | `plugin-search` | P1 | done | No | `regexp` option landed alongside whole-word; invalid-regex guarded |\n | 16 | Command / search history | `plugin-search` + `plugin-slash` | P2 | done | Yes | Host-injected storage (no implicit localStorage) — `add-search-query-history` + `add-slash-recent-command-history` |\n-| 17 | Fuzzy search | `plugin-search` | P2 | planned | No | Evaluate fzf-like algorithm vs. third-party lib; needs backtracking matcher |\n+| 17 | Fuzzy search | `plugin-search` | P2 | done | No | Subsequence fuzzy matcher (`findFuzzyMatches`) with score ranking and character offset positions |\n | 3  | Slash command sorting + limit | `plugin-slash` | P0 | done | Yes | Landed alongside the floating menu UI — see `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash command floating menu UI | `plugin-slash` + `electron-demo` | P0 | done | Yes | `createSlashMenuUI(editor, options)` — see `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "508331267d0dbb694820ef1358891c5c6fc87e68",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -25,7 +25,7 @@\n | 2  | whole-word 匹配 | `plugin-search` | P1 | done | 否 | 经 `buildSearchPattern` 的 `wholeWord` 选项，使用 `\\b` 边界 |\n | 15 | 正则搜索 | `plugin-search` | P1 | done | 否 | `regexp` 选项与 whole-word 一并落地；非法正则有保护 |\n | 16 | 历史命令 / 搜索记忆 | `plugin-search` + `plugin-slash` | P2 | done | 是 | 宿主注入式存储（不隐式写 localStorage）—— `add-search-query-history` + `add-slash-recent-command-history` |\n-| 17 | 模糊搜索 | `plugin-search` | P2 | planned | 否 | 评估 fzf-like 算法 vs. 第三方 lib；需带回溯的匹配器 |\n+| 17 | 模糊搜索 | `plugin-search` | P2 | done | 否 | 子序列模糊匹配器（`findFuzzyMatches`），支持评分排序与字符偏移量 |\n | 3  | Slash 命令排序与 limit | `plugin-slash` | P0 | done | 是 | 与浮层菜单 UI 一并落地 —— 见 `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash 命令浮层菜单 UI | `plugin-slash` + `electron-demo` | P0 | done | 是 | `createSlashMenuUI(editor, options)` —— 见 `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "c5289eec0f08b8afdc6ce5df90ef88101ac0537a",
+        "filename": "openspec/changes/add-plugin-streaming/proposal.md",
+        "status": "added",
+        "additions": 14,
+        "deletions": 0,
+        "changes": 14,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/openspec%2Fchanges%2Fadd-plugin-streaming%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/openspec%2Fchanges%2Fadd-plugin-streaming%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-plugin-streaming%2Fproposal.md?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,14 @@\n+# Change: AI Token Streaming Delta Injection & Cursor Rendering (`add-plugin-streaming`)\n+\n+## Why\n+Floatboat AI workflows requires low-latency, real-time token streaming from LLM backends (SSE / WebSockets) directly into Markdown document buffers. Nexus-Editor currently lacks a dedicated plugin to handle token delta insertions, animated shimmer typing cursors, and atomic history grouping.\n+\n+## What Changes\n+- Add package `@floatboat/nexus-plugin-streaming` providing `createStreamingPlugin()`, `StreamingManager`, and `createStreamingExtension()`.\n+- Add CodeMirror `streamingSessionField` StateField for active session tracking and position mapping.\n+- Add `streamingDecorationPlugin` for rendering typing cursor widgets at insertion head.\n+- Add `appendChunk()` helper emitting atomic `userEvent: \"ai-stream\"` annotations for transaction grouping.\n+\n+## Verification\n+- Run `pnpm test` ensuring `@floatboat/nexus-plugin-streaming` passes unit tests.\n+- Verify building with `pnpm --filter @floatboat/nexus-plugin-streaming build`."
+      },
+      {
+        "sha": "890ceb06cbfc9fc2973ba740147d48cdf97cdd74",
+        "filename": "openspec/changes/add-plugin-streaming/tasks.md",
+        "status": "added",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/openspec%2Fchanges%2Fadd-plugin-streaming%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/openspec%2Fchanges%2Fadd-plugin-streaming%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-plugin-streaming%2Ftasks.md?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,7 @@\n+# Tasks for `add-plugin-streaming`\n+\n+- [x] Create `@floatboat/nexus-plugin-streaming` package scaffold and tsconfig linkage\n+- [x] Implement `StreamingManager`, `streamingSessionField`, and state effects\n+- [x] Add `StreamingCursorWidget` and animated typing indicator decoration\n+- [x] Create vitest test suite covering stream lifecycle and chunk insertions\n+- [x] Register package build command in root `package.json`"
+      },
+      {
+        "sha": "f355c69b518c6fdc47abc12caa3972e607449683",
+        "filename": "openspec/specs/plugin-streaming/spec.md",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/openspec%2Fspecs%2Fplugin-streaming%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/openspec%2Fspecs%2Fplugin-streaming%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fspecs%2Fplugin-streaming%2Fspec.md?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,27 @@\n+# Plugin Streaming Capability Spec\n+\n+## Requirements\n+\n+### R1: Token Stream Initialization\n+The plugin MUST allow starting a named streaming session at a specific document position.\n+\n+#### Scenario: Initialize Session\n+- Given a CodeMirror editor instance\n+- When `startStream(view, \"session-1\", 10)` is invoked\n+- Then `streamingSessionField` MUST report `active: true` with `sessionId: \"session-1\"` and position `10`.\n+\n+### R2: Delta Insertion\n+The plugin MUST append string chunks at the current stream head.\n+\n+#### Scenario: Append Chunks\n+- Given an active streaming session at position `10`\n+- When `appendChunk(view, \"session-1\", \"Hello\")` is called\n+- Then document content at position `10` MUST be inserted with `\"Hello\"` and position mapped to `15`.\n+\n+### R3: Typing Head Decoration\n+The plugin MUST render a visual typing cursor widget at the stream insertion head while active.\n+\n+#### Scenario: Render Shimmer Widget\n+- Given an active streaming session\n+- When the view updates\n+- Then a widget decoration with class `.nexus-streaming-cursor` MUST be placed at `currentPos`."
+      },
+      {
+        "sha": "e29e10a8c12b83bb7cad0bae8ee5acca48f577f3",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -4,7 +4,7 @@\n   \"version\": \"0.0.13\",\n   \"packageManager\": \"pnpm@9.15.4\",\n   \"scripts\": {\n-    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build\",\n+    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build && pnpm --filter @floatboat/nexus-plugin-streaming build\",\n     \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n     \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\","
+      },
+      {
+        "sha": "1307e87a09fe3541260d4b71cfb247dc26e81cc4",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 71,
+        "deletions": 0,
+        "changes": 71,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -31,10 +31,17 @@ export interface SearchMatch {\n   text: string;\n }\n \n+export interface FuzzyMatch extends SearchMatch {\n+  score: number;\n+  positions: number[];\n+}\n+\n export interface SearchOptions {\n   caseSensitive?: boolean;\n   wholeWord?: boolean;\n   regexp?: boolean;\n+  fuzzy?: boolean;\n+  fuzzyDistance?: number;\n }\n \n export interface SearchHistoryStorage {\n@@ -641,6 +648,66 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n   }\n }\n \n+export function findFuzzyMatches(\n+  doc: string,\n+  query: string,\n+  options: SearchOptions = {}\n+): FuzzyMatch[] {\n+  if (!query || !doc) return [];\n+\n+  const caseSensitive = options.caseSensitive ?? false;\n+  const qStr = caseSensitive ? query : query.toLowerCase();\n+  const maxDistance = options.fuzzyDistance ?? 30;\n+\n+  const matches: FuzzyMatch[] = [];\n+  const lines = doc.split(\"\\n\");\n+  let lineOffset = 0;\n+\n+  for (const line of lines) {\n+    const lineText = caseSensitive ? line : line.toLowerCase();\n+    let qIdx = 0;\n+    const positions: number[] = [];\n+\n+    for (let i = 0; i < lineText.length; i++) {\n+      if (lineText[i] === qStr[qIdx]) {\n+        positions.push(i);\n+        qIdx++;\n+        if (qIdx === qStr.length) break;\n+      }\n+    }\n+\n+    if (qIdx === qStr.length && positions.length > 0) {\n+      const start = positions[0];\n+      const end = positions[positions.length - 1] + 1;\n+      const span = end - start;\n+\n+      if (span - qStr.length <= maxDistance) {\n+        let score = 100 - (span - qStr.length) * 5;\n+        for (let i = 1; i < positions.length; i++) {\n+          if (positions[i] === positions[i - 1] + 1) {\n+            score += 10;\n+          }\n+        }\n+        if (start === 0 || /\\s/.test(line[start - 1])) {\n+          score += 20;\n+        }\n+\n+        matches.push({\n+          from: lineOffset + start,\n+          to: lineOffset + end,\n+          text: line.slice(start, end),\n+          score,\n+          positions: positions.map((p) => lineOffset + p),\n+        });\n+      }\n+    }\n+\n+    lineOffset += line.length + 1;\n+  }\n+\n+  return matches.sort((a, b) => b.score - a.score);\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -650,6 +717,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy) {\n+    return findFuzzyMatches(doc, query, options);\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return [];"
+      },
+      {
+        "sha": "150bf138ad4ba7400e805a291681243b9a717a2b",
+        "filename": "packages/plugin-search/test/fuzzy-search.test.ts",
+        "status": "added",
+        "additions": 44,
+        "deletions": 0,
+        "changes": 44,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-search%2Ftest%2Ffuzzy-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-search%2Ftest%2Ffuzzy-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Ffuzzy-search.test.ts?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,44 @@\n+import { describe, expect, it } from \"vitest\";\n+import { findFuzzyMatches, findSearchMatches } from \"../src/index\";\n+\n+describe(\"plugin-search: fuzzy search\", () => {\n+  it(\"finds non-contiguous subsequence matches\", () => {\n+    const doc = \"Nexus-Editor engine powered by CodeMirror 6\";\n+    const matches = findFuzzyMatches(doc, \"nxe\");\n+\n+    expect(matches.length).toBeGreaterThan(0);\n+    const topMatch = matches[0];\n+    expect(topMatch.text.toLowerCase()).toContain(\"nexus\");\n+    expect(topMatch.positions).toEqual([0, 2, 6]);\n+  });\n+\n+  it(\"respects caseSensitivity option\", () => {\n+    const doc = \"Nexus-Editor engine\";\n+    const caseSensitiveMatches = findFuzzyMatches(doc, \"Nxe\", { caseSensitive: true });\n+    expect(caseSensitiveMatches.length).toBe(1);\n+\n+    const noMatches = findFuzzyMatches(doc, \"nxe\", { caseSensitive: true });\n+    expect(noMatches.length).toBe(0);\n+  });\n+\n+  it(\"ranks contiguous prefix matches higher than scattered matches\", () => {\n+    const doc = \"nex editor\\nnexusextra editor\";\n+    const matches = findFuzzyMatches(doc, \"nex\");\n+\n+    expect(matches.length).toBe(2);\n+    expect(matches[0].score).toBeGreaterThanOrEqual(matches[1].score);\n+  });\n+\n+  it(\"delegates to findFuzzyMatches when options.fuzzy is true\", () => {\n+    const doc = \"Floating boat AI Nexus-Editor\";\n+    const matches = findSearchMatches(doc, \"fba\", { fuzzy: true });\n+\n+    expect(matches.length).toBe(1);\n+    expect(matches[0].from).toBe(0);\n+  });\n+\n+  it(\"returns empty array for empty query or doc\", () => {\n+    expect(findFuzzyMatches(\"\", \"test\")).toEqual([]);\n+    expect(findFuzzyMatches(\"sample text\", \"\")).toEqual([]);\n+  });\n+});"
+      },
+      {
+        "sha": "6f095f748ec175e34efdc5f03e8a0b769f56b275",
+        "filename": "packages/plugin-streaming/package.json",
+        "status": "added",
+        "additions": 30,
+        "deletions": 0,
+        "changes": 30,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-streaming%2Fpackage.json?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,30 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-streaming\",\n+  \"version\": \"0.0.13\",\n+  \"description\": \"AI token streaming, delta injection, transaction grouping, and typing cursor widgets for Nexus-Editor.\",\n+  \"type\": \"module\",\n+  \"main\": \"./dist/index.js\",\n+  \"types\": \"./dist/index.d.ts\",\n+  \"exports\": {\n+    \".\": {\n+      \"types\": \"./dist/index.d.ts\",\n+      \"import\": \"./dist/index.js\"\n+    }\n+  },\n+  \"files\": [\n+    \"dist\",\n+    \"README.md\"\n+  ],\n+  \"scripts\": {\n+    \"build\": \"tsup src/index.ts --format esm --dts --clean\"\n+  },\n+  \"dependencies\": {\n+    \"@codemirror/state\": \"^6.5.2\",\n+    \"@codemirror/view\": \"^6.36.1\",\n+    \"@floatboat/nexus-core\": \"workspace:*\"\n+  },\n+  \"publishConfig\": {\n+    \"access\": \"public\",\n+    \"registry\": \"https://registry.npmjs.org/\"\n+  }\n+}"
+      },
+      {
+        "sha": "8b6471497bace21be072f09a5d0e5c55d5f58efa",
+        "filename": "packages/plugin-streaming/src/index.ts",
+        "status": "added",
+        "additions": 17,
+        "deletions": 0,
+        "changes": 17,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-streaming%2Fsrc%2Findex.ts?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,17 @@\n+export {\n+  createStreamingPlugin,\n+  createStreamingExtension,\n+  StreamingManager,\n+  StreamingCursorWidget,\n+  streamingSessionField,\n+  streamingDecorationPlugin,\n+  startStreamEffect,\n+  appendStreamEffect,\n+  finishStreamEffect,\n+  type StreamingSessionOptions,\n+  type StreamingSessionState,\n+  type StreamingPluginOptions,\n+  type StartStreamPayload,\n+  type AppendStreamPayload,\n+  type FinishStreamPayload,\n+} from \"./streaming-plugin\";"
+      },
+      {
+        "sha": "cb6bb6cfe2ddc624e0a59edde0a1979c294cc57e",
+        "filename": "packages/plugin-streaming/src/streaming-plugin.ts",
+        "status": "added",
+        "additions": 279,
+        "deletions": 0,
+        "changes": 279,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Fsrc%2Fstreaming-plugin.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Fsrc%2Fstreaming-plugin.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-streaming%2Fsrc%2Fstreaming-plugin.ts?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,279 @@\n+import { Extension, StateEffect, StateField, Transaction } from \"@codemirror/state\";\n+import { Decoration, DecorationSet, EditorView, ViewPlugin, ViewUpdate, WidgetType } from \"@codemirror/view\";\n+import type { NexusPlugin } from \"@floatboat/nexus-core\";\n+\n+/**\n+ * Options for managing an active AI token streaming session.\n+ */\n+export interface StreamingSessionOptions {\n+  sessionId?: string;\n+  showShimmerCursor?: boolean;\n+  shimmerClassName?: string;\n+  autoScroll?: boolean;\n+  onChunk?: (chunk: string, totalText: string) => void;\n+  onFinish?: (fullText: string) => void;\n+}\n+\n+/**\n+ * Internal state representation of a streaming session.\n+ */\n+export interface StreamingSessionState {\n+  active: boolean;\n+  sessionId: string | null;\n+  startPos: number;\n+  currentPos: number;\n+  text: string;\n+}\n+\n+/**\n+ * State effect payload to initialize a new streaming session.\n+ */\n+export interface StartStreamPayload {\n+  sessionId: string;\n+  pos: number;\n+}\n+\n+/**\n+ * State effect payload to append a chunk to the active stream.\n+ */\n+export interface AppendStreamPayload {\n+  sessionId: string;\n+  chunk: string;\n+}\n+\n+/**\n+ * State effect payload to terminate the active stream.\n+ */\n+export interface FinishStreamPayload {\n+  sessionId: string;\n+}\n+\n+export const startStreamEffect = StateEffect.define<StartStreamPayload>();\n+export const appendStreamEffect = StateEffect.define<AppendStreamPayload>();\n+export const finishStreamEffect = StateEffect.define<FinishStreamPayload>();\n+\n+const INITIAL_STATE: StreamingSessionState = {\n+  active: false,\n+  sessionId: null,\n+  startPos: 0,\n+  currentPos: 0,\n+  text: \"\",\n+};\n+\n+/**\n+ * StateField tracking active streaming session state and positions.\n+ */\n+export const streamingSessionField = StateField.define<StreamingSessionState>({\n+  create() {\n+    return INITIAL_STATE;\n+  },\n+  update(value, tr) {\n+    let state = value;\n+    let appendedInTr = false;\n+\n+    for (const effect of tr.effects) {\n+      if (effect.is(startStreamEffect)) {\n+        state = {\n+          active: true,\n+          sessionId: effect.value.sessionId,\n+          startPos: effect.value.pos,\n+          currentPos: effect.value.pos,\n+          text: \"\",\n+        };\n+      } else if (effect.is(appendStreamEffect)) {\n+        if (state.active && state.sessionId === effect.value.sessionId) {\n+          const addedLen = effect.value.chunk.length;\n+          state = {\n+            ...state,\n+            currentPos: state.currentPos + addedLen,\n+            text: state.text + effect.value.chunk,\n+          };\n+          appendedInTr = true;\n+        }\n+      } else if (effect.is(finishStreamEffect)) {\n+        if (state.active && state.sessionId === effect.value.sessionId) {\n+          state = INITIAL_STATE;\n+        }\n+      }\n+    }\n+\n+    if (state.active && tr.docChanged && !appendedInTr) {\n+      const newStart = tr.changes.mapPos(state.startPos, 1);\n+      const newCurrent = tr.changes.mapPos(state.currentPos, 1);\n+      state = {\n+        ...state,\n+        startPos: newStart,\n+        currentPos: newCurrent,\n+      };\n+    }\n+\n+    return state;\n+  },\n+});\n+\n+/**\n+ * CodeMirror Widget rendering a typing indicator at the stream position.\n+ */\n+export class StreamingCursorWidget extends WidgetType {\n+  constructor(private readonly className: string = \"nexus-streaming-cursor\") {\n+    super();\n+  }\n+\n+  toDOM(): HTMLElement {\n+    const span = document.createElement(\"span\");\n+    span.className = this.className;\n+    span.setAttribute(\"aria-hidden\", \"true\");\n+    span.setAttribute(\"data-nexus-streaming-head\", \"true\");\n+    return span;\n+  }\n+\n+  eq(other: StreamingCursorWidget): boolean {\n+    return this.className === other.className;\n+  }\n+}\n+\n+/**\n+ * ViewPlugin rendering the animated typing cursor widget at stream head.\n+ */\n+export const streamingDecorationPlugin = ViewPlugin.fromClass(\n+  class {\n+    decorations: DecorationSet;\n+\n+    constructor(view: EditorView) {\n+      this.decorations = this.buildDecorations(view);\n+    }\n+\n+    update(update: ViewUpdate) {\n+      if (update.docChanged || update.viewportChanged || update.state.field(streamingSessionField) !== update.startState.field(streamingSessionField)) {\n+        this.decorations = this.buildDecorations(update.view);\n+      }\n+    }\n+\n+    buildDecorations(view: EditorView): DecorationSet {\n+      const state = view.state.field(streamingSessionField);\n+      if (!state.active) {\n+        return Decoration.none;\n+      }\n+\n+      const widget = Decoration.widget({\n+        widget: new StreamingCursorWidget(\"nexus-streaming-cursor\"),\n+        side: 1,\n+      });\n+\n+      return Decoration.set([widget.range(state.currentPos)]);\n+    }\n+  },\n+  {\n+    decorations: (v) => v.decorations,\n+  }\n+);\n+\n+export interface StreamingPluginOptions {\n+  shimmerClassName?: string;\n+  autoScroll?: boolean;\n+}\n+\n+/**\n+ * Manager class for controlling active AI streaming operations.\n+ */\n+export class StreamingManager {\n+  private options: StreamingPluginOptions;\n+\n+  constructor(options: StreamingPluginOptions = {}) {\n+    this.options = options;\n+  }\n+\n+  /**\n+   * Starts a new token streaming session in the given CodeMirror view.\n+   */\n+  startStream(view: EditorView, sessionId: string, atPos?: number): void {\n+    const pos = atPos ?? view.state.selection.main.head;\n+    view.dispatch({\n+      effects: [startStreamEffect.of({ sessionId, pos })],\n+    });\n+  }\n+\n+  /**\n+   * Appends a chunk of text to an ongoing stream session.\n+   */\n+  appendChunk(view: EditorView, sessionId: string, chunk: string): void {\n+    const session = view.state.field(streamingSessionField);\n+    if (!session.active || session.sessionId !== sessionId) {\n+      return;\n+    }\n+\n+    const insertPos = session.currentPos;\n+    view.dispatch({\n+      changes: { from: insertPos, insert: chunk },\n+      effects: [appendStreamEffect.of({ sessionId, chunk })],\n+      annotations: [Transaction.userEvent.of(\"ai-stream\")],\n+    });\n+\n+    if (this.options.autoScroll !== false) {\n+      const newPos = insertPos + chunk.length;\n+      view.dispatch({\n+        selection: { anchor: newPos },\n+        scrollIntoView: true,\n+      });\n+    }\n+  }\n+\n+  /**\n+   * Completes the token stream session.\n+   */\n+  finishStream(view: EditorView, sessionId: string): StreamingSessionState {\n+    const session = view.state.field(streamingSessionField);\n+    const finalState = { ...session };\n+    if (session.active && session.sessionId === sessionId) {\n+      view.dispatch({\n+        effects: [finishStreamEffect.of({ sessionId })],\n+      });\n+    }\n+    return finalState;\n+  }\n+\n+  /**\n+   * Returns current active stream session state from view.\n+   */\n+  getSessionState(view: EditorView): StreamingSessionState {\n+    return view.state.field(streamingSessionField);\n+  }\n+}\n+\n+/**\n+ * Returns extension suite for token streaming.\n+ */\n+export function createStreamingExtension(options: StreamingPluginOptions = {}): Extension[] {\n+  return [\n+    streamingSessionField,\n+    streamingDecorationPlugin,\n+    EditorView.theme({\n+      \".nexus-streaming-cursor\": {\n+        display: \"inline-block\",\n+        width: \"2px\",\n+        height: \"1.2em\",\n+        backgroundColor: \"var(--nexus-streaming-color, #3b82f6)\",\n+        marginLeft: \"1px\",\n+        verticalAlign: \"text-bottom\",\n+        animation: \"nexus-shimmer-pulse 1s infinite alternate\",\n+      },\n+      \"@keyframes nexus-shimmer-pulse\": {\n+        \"0%\": { opacity: 0.2 },\n+        \"100%\": { opacity: 1.0 },\n+      },\n+    }),\n+  ];\n+}\n+\n+/**\n+ * Nexus-Editor plugin wrapper for AI token streaming.\n+ */\n+export function createStreamingPlugin(options: StreamingPluginOptions = {}): NexusPlugin & { manager: StreamingManager } {\n+  const manager = new StreamingManager(options);\n+\n+  return {\n+    name: \"streaming\",\n+    cmExtensions: createStreamingExtension(options),\n+    manager,\n+  };\n+}"
+      },
+      {
+        "sha": "1e2cb15d1d1b0d4969bc4744b4bd7627e7317566",
+        "filename": "packages/plugin-streaming/test/streaming.test.ts",
+        "status": "added",
+        "additions": 83,
+        "deletions": 0,
+        "changes": 83,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Ftest%2Fstreaming.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Ftest%2Fstreaming.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-streaming%2Ftest%2Fstreaming.test.ts?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,83 @@\n+import { describe, it, expect } from \"vitest\";\n+import { EditorState } from \"@codemirror/state\";\n+import { EditorView } from \"@codemirror/view\";\n+import {\n+  createStreamingExtension,\n+  StreamingManager,\n+  streamingSessionField,\n+} from \"../src/streaming-plugin\";\n+\n+function createView(initialDoc: string = \"\"): EditorView {\n+  const state = EditorState.create({\n+    doc: initialDoc,\n+    extensions: [createStreamingExtension({ autoScroll: false })],\n+  });\n+  return new EditorView({ state });\n+}\n+\n+describe(\"plugin-streaming\", () => {\n+  it(\"initializes with inactive streaming state\", () => {\n+    const view = createView(\"Hello world\");\n+    const session = view.state.field(streamingSessionField);\n+\n+    expect(session.active).toBe(false);\n+    expect(session.sessionId).toBeNull();\n+    expect(session.text).toBe(\"\");\n+  });\n+\n+  it(\"starts a streaming session at specified position\", () => {\n+    const view = createView(\"Hello world\");\n+    const manager = new StreamingManager({ autoScroll: false });\n+\n+    manager.startStream(view, \"stream-1\", 5);\n+    const session = view.state.field(streamingSessionField);\n+\n+    expect(session.active).toBe(true);\n+    expect(session.sessionId).toBe(\"stream-1\");\n+    expect(session.startPos).toBe(5);\n+    expect(session.currentPos).toBe(5);\n+  });\n+\n+  it(\"appends streaming token chunks sequentially\", () => {\n+    const view = createView(\"Base: \");\n+    const manager = new StreamingManager({ autoScroll: false });\n+\n+    manager.startStream(view, \"stream-1\", 6);\n+    manager.appendChunk(view, \"stream-1\", \"Hello \");\n+    manager.appendChunk(view, \"stream-1\", \"AI!\");\n+\n+    const session = view.state.field(streamingSessionField);\n+    expect(session.text).toBe(\"Hello AI!\");\n+    expect(session.currentPos).toBe(15);\n+    expect(view.state.doc.toString()).toBe(\"Base: Hello AI!\");\n+  });\n+\n+  it(\"finishes streaming session clean up\", () => {\n+    const view = createView(\"Doc: \");\n+    const manager = new StreamingManager({ autoScroll: false });\n+\n+    manager.startStream(view, \"stream-1\", 5);\n+    manager.appendChunk(view, \"stream-1\", \"Generated Content\");\n+\n+    const finishedState = manager.finishStream(view, \"stream-1\");\n+\n+    expect(finishedState.text).toBe(\"Generated Content\");\n+\n+    const sessionAfter = view.state.field(streamingSessionField);\n+    expect(sessionAfter.active).toBe(false);\n+    expect(sessionAfter.sessionId).toBeNull();\n+    expect(view.state.doc.toString()).toBe(\"Doc: Generated Content\");\n+  });\n+\n+  it(\"ignores append operations for invalid session ID\", () => {\n+    const view = createView(\"Start: \");\n+    const manager = new StreamingManager({ autoScroll: false });\n+\n+    manager.startStream(view, \"stream-active\", 7);\n+    manager.appendChunk(view, \"stream-wrong\", \"Text should not append\");\n+\n+    const session = view.state.field(streamingSessionField);\n+    expect(session.text).toBe(\"\");\n+    expect(view.state.doc.toString()).toBe(\"Start: \");\n+  });\n+});"
+      },
+      {
+        "sha": "6ece4d3313edb1b64893526a52f9545f55ec3d15",
+        "filename": "packages/plugin-streaming/tsconfig.json",
+        "status": "added",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/packages%2Fplugin-streaming%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-streaming%2Ftsconfig.json?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -0,0 +1,4 @@\n+{\n+  \"extends\": \"../../tsconfig.base.json\",\n+  \"include\": [\"src/**/*.ts\", \"test/**/*.ts\"]\n+}"
+      },
+      {
+        "sha": "4496785f0ae69463febc257f26551caefeced34b",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 0,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -181,6 +181,18 @@ importers:\n         specifier: workspace:*\n         version: link:../core\n \n+  packages/plugin-streaming:\n+    dependencies:\n+      '@codemirror/state':\n+        specifier: ^6.5.2\n+        version: 6.6.0\n+      '@codemirror/view':\n+        specifier: ^6.36.1\n+        version: 6.41.0\n+      '@floatboat/nexus-core':\n+        specifier: workspace:*\n+        version: link:../core\n+\n   packages/plugin-toolbar:\n     dependencies:\n       '@codemirror/state':"
+      },
+      {
+        "sha": "84d8af6ac1b767a930e0a34df33058adb62bf6ee",
+        "filename": "tsconfig.base.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/651179a08e835a2d15cd01c9c8d21df8e30e5166/tsconfig.base.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/651179a08e835a2d15cd01c9c8d21df8e30e5166/tsconfig.base.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/tsconfig.base.json?ref=651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "patch": "@@ -16,7 +16,8 @@\n       \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"],\n       \"@floatboat/nexus-plugin-math\": [\"packages/plugin-math/src/index.ts\"],\n       \"@floatboat/nexus-plugin-vim\": [\"packages/plugin-vim/src/index.ts\"],\n-      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"]\n+      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-streaming\": [\"packages/plugin-streaming/src/index.ts\"]\n     },\n     \"strict\": true,\n     \"declaration\": true,"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=171",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "pr_number": 9,
+  "title": "feat(search): support regex queries",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-14T04:53:59Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+  "merge_commit_sha": "99fc52f88a75e6538d443283ee924a87db07cdb5",
+  "base_sha": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2",
+  "commits": [
+    {
+      "sha": "b699cda60f0b43cedae045d2b954c9d5b6a96cad",
+      "message": "feat(search): support regex queries",
+      "date": "2026-05-13T09:11:04Z"
+    },
+    {
+      "sha": "ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+      "message": "fix(plugin-search): document and clarify regexp behavior",
+      "date": "2026-05-13T09:27:03Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 54,
+      "deletions": 0,
+      "changes": 54
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 32,
+      "deletions": 5,
+      "changes": 37
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 86,
+      "deletions": 1,
+      "changes": 87
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

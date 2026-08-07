@@ -1,0 +1,21 @@
+{
+  "pr_number": 75,
+  "points": [
+    {
+      "id": 1,
+      "summary": "CLAssistant requests CLA signature and account linking"
+    },
+    {
+      "id": 2,
+      "summary": "PR closed after internal review"
+    },
+    {
+      "id": 3,
+      "summary": "Change unsuitable to continue as-is"
+    },
+    {
+      "id": 4,
+      "summary": "Resubmit a clean, focused PR"
+    }
+  ]
+}

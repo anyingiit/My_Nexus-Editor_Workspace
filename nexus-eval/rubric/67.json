@@ -1,0 +1,29 @@
+{
+  "pr_number": 67,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR closed and needs clean, focused resubmission."
+    },
+    {
+      "id": 2,
+      "summary": "Only hardcoded className/style/id passed; role/data-*/aria-* unsupported."
+    },
+    {
+      "id": 3,
+      "summary": "TypeScript types not clean; uses 'as any' in Vue."
+    },
+    {
+      "id": 4,
+      "summary": "React/Vue semantics not aligned and README missing."
+    },
+    {
+      "id": 5,
+      "summary": "Unrelated plugin-search changes bundled in same PR."
+    },
+    {
+      "id": 6,
+      "summary": "Violates CONTRIBUTING.md one-PR-one-concern rule."
+    }
+  ]
+}

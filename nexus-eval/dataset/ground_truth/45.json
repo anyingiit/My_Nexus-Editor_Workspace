@@ -1,0 +1,13 @@
+{
+  "pr_number": 45,
+  "title": "fix(core): resolve timer and listener leaks in table widget, live pre…",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-09T08:33:59Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "GarrisonPJ",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": []
+}

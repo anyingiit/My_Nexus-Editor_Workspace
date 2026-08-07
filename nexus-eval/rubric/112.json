@@ -1,0 +1,21 @@
+{
+  "pr_number": 112,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Ensure PR title follows Conventional Commits"
+    },
+    {
+      "id": 2,
+      "summary": "Ensure single committer and CLA check passing"
+    },
+    {
+      "id": 3,
+      "summary": "Replace unsafe as any casts with narrower types"
+    },
+    {
+      "id": 4,
+      "summary": "Add regression tests for empty table cells and inline HTML"
+    }
+  ]
+}

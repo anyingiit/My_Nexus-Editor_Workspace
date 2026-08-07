@@ -1,0 +1,52 @@
+{
+  "pr_number": 78,
+  "title": "fix(core): cancel pending emitChange on silent setDocument",
+  "body": "## Motivation / 背景与动机\r\n \r\n- Issue: none filed for this specific bug — found while reading `performSetDocument` / `scheduleChange` in `packages/core/src/editor.ts`, not from an existing issue or roadmap entry.\r\n- Roadmap (docs/ROADMAP.md): n/a\r\n- OpenSpec change: n/a — per CONTRIBUTING.md §\"Skip proposal for: Bug fixes...\", this is a bug fix and doesn't require an OpenSpec proposal.\r\n没有对应的已存在issue，是在读`editor.ts`里`performSetDocument`/`scheduleChange`的实现时发现的，不是从已有issue或roadmap条目来的。按CONTRIBUTING.md里\"bug fix跳过OpenSpec proposal\"的规则，这个改动不需要附OpenSpec。\r\n \r\n## Changes / 变更内容\r\n \r\n- `packages/core`: `performSetDocument` now clears any pending `parseTimer` (and queued composition markdown) before applying a document replacement, so a debounced `emitChange` scheduled by a prior edit can no longer fire after a `setDocument({ silent: true })` load with stale, pre-replacement markdown.\r\n- `packages/core/test`: added a regression test (`editor.test.ts`) covering exactly this race — edit pending in debounce → silent `setDocument` before debounce fires → asserts no stale `onChange` call leaks through.\r\n## Testing / 测试\r\n \r\n- [x] `pnpm test` passes / 全绿 — full monorepo run: 318 tests passed (28 test files), no regressions.\r\n- [x] Affected packages build (`pnpm build`) / 受影响包构建通过 — `pnpm --filter @floatboat/nexus-core build` succeeds (ESM + d.ts).\r\n- [x] New / updated vitest cases / 新增或更新的 vitest 用例：`packages/core/test/editor.test.ts` → \"cancels a pending debounced onChange when setDocument silently loads a new file before it fires\". Verified it fails without the fix (reverted the source change locally, confirmed the test catches the exact stale-markdown/fresh-AST mismatch) and passes with it.\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证 — not done; this is a timing/state-consistency fix at the `nexus-core` API boundary, not yet exercised through the Electron demo UI.\r\n## Checklist / 自检清单\r\n \r\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n- [x] Public API changes update package README / types — n/a, no public API surface changed (internal timer-cancellation only).\r\n- [x] Touched `live-preview-table.ts` → n/a, not touched.\r\n- [x] New capability / breaking change → OpenSpec proposal linked — n/a, bug fix, exempt per CONTRIBUTING.md.\r\n- [x] No secrets / personal vault data committed / 无敏感信息被提交 — confirmed, diff is limited to `packages/core/src/editor.ts` and `packages/core/test/editor.test.ts`.",
+  "created_at": "2026-06-23T04:07:03Z",
+  "draft": false,
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "head_sha_at_first_review": "a71b5b37f84b8c7fc4c3a9b806e070984a6156ac",
+  "first_review_time": "2026-06-23T04:07:14Z",
+  "commits_at_first_review": [
+    {
+      "sha": "a71b5b37f84b8c7fc4c3a9b806e070984a6156ac",
+      "message": "fix(core): cancel pending emitChange on silent setDocument",
+      "date": "2026-06-23T03:49:36Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 1,
+    "behind_by": 13,
+    "files": [
+      {
+        "sha": "66c8cb12ddb5ce07632985f5b5f492a10ebac9cf",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 1,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a71b5b37f84b8c7fc4c3a9b806e070984a6156ac/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a71b5b37f84b8c7fc4c3a9b806e070984a6156ac/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=a71b5b37f84b8c7fc4c3a9b806e070984a6156ac",
+        "patch": "@@ -254,6 +254,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   let destroyed = false;\n   let focused = false;\n   let parseTimer: ReturnType<typeof setTimeout> | undefined;\n+  let docVersion = 0;\n   let compositionFlushTimer: ReturnType<typeof setTimeout> | undefined;\n   let pendingCompositionMarkdown: string | null = null;\n   // 组合输入（IME）状态与被推迟的文档回灌。组合输入进行中调用 setDocument 会被\n@@ -318,13 +319,15 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       parseTimer = undefined;\n     }\n \n+    const versionAtSchedule = docVersion; //\n+\n     if (parseDelayMs <= 0) {\n       emitChange(markdown);\n       return;\n     }\n \n     parseTimer = setTimeout(() => {\n-      parseTimer = undefined;\n+      if (versionAtSchedule !== docVersion) return; //\n       emitChange(markdown);\n     }, parseDelayMs);\n   }\n@@ -714,11 +717,14 @@ export function createEditor(config: EditorConfig): EditorAPI {\n         scrollIntoView: true\n       });\n     },\n+\n     setDocument(next, opts) {\n       if (destroyed) {\n         return;\n       }\n \n+      docVersion++;\n+\n       const silent = opts?.silent === true;\n \n       // 组合输入（IME）进行中：整文档替换会打断输入法、丢失合成中文字并把视口重置到顶部。"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=78",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

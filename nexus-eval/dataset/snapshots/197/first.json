@@ -1,0 +1,425 @@
+{
+  "pr_number": 197,
+  "title": "feat(paste): add HTML-to-Markdown paste conversion plugin",
+  "body": "## Summary / 摘要\n\nAdd `@floatboat/nexus-plugin-paste` — converts rich-text clipboard HTML to clean Markdown on paste.\n\n## Motivation / 背景与动机\n\n- **Issue:** (none — filling an existing gap)\n- **Roadmap (docs/ROADMAP.md):** #30 (new)\n- **OpenSpec change:** `openspec/changes/add-plugin-paste`\n\n`@floatboat/nexus-core` already reserves a `handlers.paste` hook (`EditorEventHandlers` in `core/src/types.ts`) and exposes `EditorEventContext.insertMarkdown`, but **no plugin consumes them**. The paste handler in `core/src/editor.ts` dispatches to plugin hooks first, then falls back to its own asset-upload logic. Pasting formatted text from a browser / Office / Google Docs currently dumps raw HTML into the document. This plugin fills that reserved extension point — opt-in, no core changes.\n\n## Changes / 变更内容\n\n- **`packages/core`:** none — no core changes.\n- **`packages/plugin-*`:** new `packages/plugin-paste`:\n  - `src/convert.ts` — pure function `convertHtmlToMarkdown(html, options)` using `turndown` + `turndown-plugin-gfm` (tables, task lists, strikethrough). Never throws; falls back to tag-stripped text.\n  - `src/plugin.ts` — `createPastePlugin()` registers `handlers.paste`: files pass through to core's `onAssetUpload`; no `text/html` passes through to CodeMirror; otherwise convert + `ctx.insertMarkdown`.\n  - 28 tests (19 pure-function + 7 plugin integration + 2 real-DOM e2e dispatching a real `ClipboardEvent` through core's `domEventHandlers`).\n- **`apps/electron-demo`:** none.\n- **`openspec/`:** new `changes/add-plugin-paste` (proposal / design / tasks / spec).\n- **Config:** register package in `tsconfig.base.json`, `vitest.config.ts`, root `package.json` build script; add `paste` scope to `CONTRIBUTING(.zh)`; bump `README(.zh)` and `ROADMAP(.zh)` package tables (11 → 12).\n\n## Testing / 测试\n\n- [x] `pnpm test` passes — **565/565**\n- [x] Affected packages build (`pnpm build`) — all 12 packages\n- [x] New vitest cases: 19 pure-function (convert) + 7 plugin integration + 2 real-DOM e2e (dispatches real `ClipboardEvent` through core's `domEventHandlers` and asserts the document receives converted Markdown)\n- [ ] Manual UI check in electron-demo — deferred (plugin is headless; the e2e test covers the same event path a manual paste would exercise)\n\nRegression verified: core tests 255/255, all 7 existing plugin packages pass individually, zero regressions.\n\n## Compliance / 合规自检\n\n- [ ] **CLA signed** — will sign when prompted by the CLA bot\n- [x] **AI disclosure:** this PR's functional code was developed with significant AI assistance (Claude). The human contributor directed the design, reviewed every change, and verified all tests pass. AI wrote the plugin source, tests, and OpenSpec docs based on a human-authored design.\n- [x] **New dependencies:**\n  - `turndown@^7.2.0` (MIT) — HTML→Markdown conversion engine\n  - `turndown-plugin-gfm@^1.0.2` (MIT) — GFM tables / task lists / strikethrough\n  - `@types/turndown@^5.0.5` (MIT, dev) — types\n  \n  Follows the precedent of `plugin-math` shipping KaTeX (a larger dependency).\n- [x] **No build artifacts** committed (`dist/` is gitignored)\n- [x] **No secrets** / `.env` committed\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits — `feat(paste): ...`\n- [x] Public API changes update package README / types — plugin README + `index.ts` exports\n- [x] (N/A) Touched `live-preview-table.ts`\n- [x] New capability → OpenSpec proposal linked — `openspec/changes/add-plugin-paste`\n- [x] Change aligns with project scope (GOVERNANCE.md §4) — headless plugin filling a reserved extension point\n\n## How it works (design summary)\n\nThe `handlers.paste` hook implements a three-step contract:\n1. Clipboard carries **files** → `return false` (defer to core's `onAssetUpload`).\n2. No `text/html` flavor → `return false` (CodeMirror's native plain-text paste runs).\n3. Otherwise convert via `convertHtmlToMarkdown`, `preventDefault()`, `ctx.insertMarkdown(md)`, `return true`.\n\nReturning `true` = event consumed (core prevents default); `false` = pass through. This matches the design intent recorded in `core/src/lezer-markdown.ts` (`pasteURLAsLink: false` — \"let the asset-upload paste handler win\").",
+  "created_at": "2026-07-28T14:26:24Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "28c68ff18ddae92711b148d0736ade9d088b74f3",
+  "first_review_time": "2026-07-28T14:30:45Z",
+  "commits_at_first_review": [
+    {
+      "sha": "48c4baaf49c8a1ec4786e4ac17d496a23a02db10",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/design.md",
+      "date": "2026-07-28T14:24:01Z"
+    },
+    {
+      "sha": "03dc3f1b152aa718b787659888b2d8954185dd48",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/proposal.md",
+      "date": "2026-07-28T14:24:03Z"
+    },
+    {
+      "sha": "e8ee84e6258975ad00cf205125a195a5fb25a872",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/tasks.md",
+      "date": "2026-07-28T14:24:04Z"
+    },
+    {
+      "sha": "43f576acc9978169a87cdec47ca353cf3489ae78",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/specs/paste/spec.md",
+      "date": "2026-07-28T14:24:06Z"
+    },
+    {
+      "sha": "49b51af41b2305c39a174060aa7bee24075d5696",
+      "message": "feat(paste): add packages/plugin-paste/README.md",
+      "date": "2026-07-28T14:24:08Z"
+    },
+    {
+      "sha": "df5968da8e513a650e029b366549ab32dad6a6cd",
+      "message": "feat(paste): add packages/plugin-paste/package.json",
+      "date": "2026-07-28T14:24:11Z"
+    },
+    {
+      "sha": "0f38c472854daf024e951e454b2df1610e9bff01",
+      "message": "feat(paste): add packages/plugin-paste/tsconfig.json",
+      "date": "2026-07-28T14:24:13Z"
+    },
+    {
+      "sha": "e4541e177377903860dc6e2a0a81946e2f34f8eb",
+      "message": "feat(paste): add packages/plugin-paste/src/convert.ts",
+      "date": "2026-07-28T14:24:15Z"
+    },
+    {
+      "sha": "6cf040fd1e603009df83bc38119c292f8fe16e7b",
+      "message": "feat(paste): add packages/plugin-paste/src/index.ts",
+      "date": "2026-07-28T14:24:17Z"
+    },
+    {
+      "sha": "46c18be904cf4056ca39b14f41ed9f6e37e8d12c",
+      "message": "feat(paste): add packages/plugin-paste/src/plugin.ts",
+      "date": "2026-07-28T14:24:19Z"
+    },
+    {
+      "sha": "cd3d14fe1d567c200e4c8a1d5b3db6821f116b5b",
+      "message": "feat(paste): add packages/plugin-paste/src/turndown-plugin-gfm.d.ts",
+      "date": "2026-07-28T14:24:20Z"
+    },
+    {
+      "sha": "a80f37c28be31bc2b4e56359a25bc7caaa9d9e32",
+      "message": "feat(paste): add packages/plugin-paste/test/convert.test.ts",
+      "date": "2026-07-28T14:24:23Z"
+    },
+    {
+      "sha": "9c143a5ad0d3536433e0adf42c794ad33a44c092",
+      "message": "feat(paste): add packages/plugin-paste/test/e2e-paste.test.ts",
+      "date": "2026-07-28T14:24:24Z"
+    },
+    {
+      "sha": "6ce0422cc37e4f10226c55aa4a365ca6cf9629ed",
+      "message": "feat(paste): add packages/plugin-paste/test/plugin.test.ts",
+      "date": "2026-07-28T14:24:27Z"
+    },
+    {
+      "sha": "f336e0cf4726bb031b11cb874c1dd59017071b29",
+      "message": "feat(paste): register plugin in CONTRIBUTING.md",
+      "date": "2026-07-28T14:24:59Z"
+    },
+    {
+      "sha": "2a402208718902d05c9d3bf234027693e4845180",
+      "message": "feat(paste): register plugin in CONTRIBUTING.zh.md",
+      "date": "2026-07-28T14:25:02Z"
+    },
+    {
+      "sha": "8debe211ae9d6fe780454d1e2d031090f22c959d",
+      "message": "feat(paste): register plugin in README.md",
+      "date": "2026-07-28T14:25:09Z"
+    },
+    {
+      "sha": "b7ddfb20a91e5028bffe61340e40dff5e26d1c93",
+      "message": "feat(paste): register plugin in README.zh.md",
+      "date": "2026-07-28T14:25:11Z"
+    },
+    {
+      "sha": "2fc795dd2bcb0b935f6e9933e478b912c27c7132",
+      "message": "feat(paste): register plugin in docs/ROADMAP.md",
+      "date": "2026-07-28T14:25:14Z"
+    },
+    {
+      "sha": "11bb6bc970cd7a709f0e1895103491fb43615d1f",
+      "message": "feat(paste): register plugin in docs/ROADMAP.zh.md",
+      "date": "2026-07-28T14:25:17Z"
+    },
+    {
+      "sha": "f835ddb7b529fbf42c7abb8a68e4fcf08e19f9fa",
+      "message": "feat(paste): register plugin in package.json",
+      "date": "2026-07-28T14:25:20Z"
+    },
+    {
+      "sha": "10ff1b181d59fe43ef591faa1a988c322e615c0f",
+      "message": "feat(paste): register plugin in tsconfig.base.json",
+      "date": "2026-07-28T14:25:23Z"
+    },
+    {
+      "sha": "28c68ff18ddae92711b148d0736ade9d088b74f3",
+      "message": "feat(paste): register plugin in vitest.config.ts",
+      "date": "2026-07-28T14:25:26Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 23,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "0c773b0f586fde43bbfd9d4cb9c4e5cb2bcf8c01",
+        "filename": "CONTRIBUTING.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/CONTRIBUTING.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/CONTRIBUTING.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/CONTRIBUTING.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -47,7 +47,7 @@ Examples: `feat/toolbar-list-toggle`, `fix/search-regex-escape`, `docs/roadmap-u\n   | `react` | `packages/react` |\n   | `vue` | `packages/vue` |\n   | `gfm` | `packages/preset-gfm` |\n-  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` | corresponding `plugin-*` |\n+  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` / `paste` | corresponding `plugin-*` |\n   | `electron` | `apps/electron-demo` |\n   | `live-preview` / `wikilinks` / `image` | core subsystems (historical usage) |\n   | `openspec` | `openspec/` |"
+      },
+      {
+        "sha": "d3397b88dfd92cb54c15b276201e8cce7b01ad79",
+        "filename": "CONTRIBUTING.zh.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/CONTRIBUTING.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/CONTRIBUTING.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/CONTRIBUTING.zh.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -14,7 +14,7 @@\n |---|---|\n | `packages/core` | 核心编辑器（CodeMirror 6 内核、live-preview、AST） |\n | `packages/preset-gfm` | GFM 默认预设 |\n-| `packages/plugin-*` | 各功能插件（history / search / slash / toolbar / math / vim / wordcount） |\n+| `packages/plugin-*` | 各功能插件（history / search / slash / toolbar / math / vim / wordcount / paste） |\n | `packages/react`、`packages/vue` | 框架 SDK |\n | `apps/electron-demo` | 桌面端 demo / 集成测试场 |\n | `openspec/` | 规格驱动（proposal / specs / archive） |\n@@ -47,7 +47,7 @@\n   | `react` | `packages/react` |\n   | `vue` | `packages/vue` |\n   | `gfm` | `packages/preset-gfm` |\n-  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` | 对应 `plugin-*` |\n+  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` / `paste` | 对应 `plugin-*` |\n   | `electron` | `apps/electron-demo` |\n   | `live-preview` / `wikilinks` / `image` | core 内部子系统（沿用历史用法） |\n   | `openspec` | `openspec/` |"
+      },
+      {
+        "sha": "59306140f4e300250130f7f64c1dc1e9ad9241fd",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -165,7 +165,7 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n ## 📦 Packages\n \n <details>\n-<summary><b>Full package list (11 packages)</b> — click to expand</summary>\n+<summary><b>Full package list (12 packages)</b> — click to expand</summary>\n \n | Package | Description |\n |---|---|\n@@ -180,6 +180,7 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n | `@floatboat/nexus-plugin-math` | Inline / block math rendering (KaTeX) |\n | `@floatboat/nexus-plugin-vim` | Vim keybindings powered by `@replit/codemirror-vim` |\n | `@floatboat/nexus-plugin-wordcount` | Markdown-aware word / character / CJK / reading-time stats + ARIA-live status bar |\n+| `@floatboat/nexus-plugin-paste` | HTML-to-Markdown paste conversion (rich-text clipboard → clean Markdown on paste) |\n \n </details>\n "
+      },
+      {
+        "sha": "cd4e4eb9e03a1f6485e7d1eefb68b06dd04caccb",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -165,7 +165,7 @@ pnpm dev:electron-demo\n ## 📦 包列表\n \n <details>\n-<summary><b>完整包列表（11 个包）</b> —— 点击展开</summary>\n+<summary><b>完整包列表（12 个包）</b> —— 点击展开</summary>\n \n | 包名 | 说明 |\n |---|---|\n@@ -180,6 +180,7 @@ pnpm dev:electron-demo\n | `@floatboat/nexus-plugin-math` | 行内 / 块级数学公式渲染（KaTeX） |\n | `@floatboat/nexus-plugin-vim` | Vim 键位（基于 `@replit/codemirror-vim`） |\n | `@floatboat/nexus-plugin-wordcount` | Markdown 感知的字数 / 字符数 / 中日韩字符 / 阅读时长统计 + ARIA 状态栏 |\n+| `@floatboat/nexus-plugin-paste` | HTML 转 Markdown 粘贴（富文本剪贴板 → 粘贴时转为干净的 Markdown）|\n \n </details>\n "
+      },
+      {
+        "sha": "be36361db97ea74fb1154c2e27c96df7093805a6",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -84,6 +84,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | 25 | End-to-end testing | repo infra | P1 | planned | No | Candidate: Playwright against electron-demo |\n | 26 | CI/CD pipeline polish | `.github/workflows` | P1 | in-progress | No | PR check / CI and publish workflow exist; missing e2e gate |\n | 28 | Markdown-aware word / reading-time stats | new `plugin-wordcount` | P1 | done | Yes | Walks editor AST (no double parse) + CJK-first + ARIA status bar — see `openspec/changes/add-plugin-wordcount` |\n+| 30 | HTML-to-Markdown paste conversion | new `plugin-paste` | P2 | done | Yes | Rich-text clipboard → clean Markdown on paste via core's `handlers.paste` hook — see `openspec/changes/add-plugin-paste` |\n \n ---\n "
+      },
+      {
+        "sha": "bfe5b58539f9200c2343e08682f7e4402061e4ef",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -84,6 +84,7 @@\n | 25 | End-to-End 测试 | 仓库基建 | P1 | planned | 否 | 候选：Playwright，跑 electron-demo |\n | 26 | CI/CD 流程完善 | `.github/workflows` | P1 | in-progress | 否 | 已有 PR check / CI 与 publish workflow，仍缺 e2e gate |\n | 28 | Markdown 感知字数 / 阅读时长统计 | 新包 `plugin-wordcount` | P1 | done | 是 | 复用编辑器 AST（不重复解析）+ 中日韩优先 + ARIA 状态栏 —— 见 `openspec/changes/add-plugin-wordcount` |\n+| 30 | HTML 转 Markdown 粘贴 | 新包 `plugin-paste` | P2 | done | 是 | 富文本剪贴板 → 粘贴时转为干净的 Markdown，经 core 的 `handlers.paste` 钩子接入 —— 见 `openspec/changes/add-plugin-paste` |\n \n ---\n "
+      },
+      {
+        "sha": "2f9147802b655bb50b085d89d6f4b81bd53cd295",
+        "filename": "openspec/changes/add-plugin-paste/design.md",
+        "status": "added",
+        "additions": 106,
+        "deletions": 0,
+        "changes": 106,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-plugin-paste%2Fdesign.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,106 @@\n+## Context\n+\n+Two existing facts shape this design:\n+\n+1. `@floatboat/nexus-core` already dispatches `paste` (and `drop`)\n+   DOM events to plugins via `EditorView.domEventHandlers({ paste })`\n+   in `packages/core/src/editor.ts`. The handler runs plugin-registered\n+   `handlers.paste` hooks first (`runEventHandlers`); only if none\n+   consume the event does core fall back to its own file/asset upload\n+   path. Returning `true` from a hook consumes the event (core calls\n+   `preventDefault` and stops dispatch); returning `false`/`undefined`\n+   passes through.\n+2. `EditorEventContext` (passed to every hook) already exposes\n+   `insertMarkdown(markdown: string)`, implemented as\n+   `view.dispatch(view.state.replaceSelection(markdown))` — exactly\n+   the \"replace current selection\" semantics a paste handler needs.\n+   The context deliberately does not surface CM6 internals\n+   (`types.ts` comment: \"不直接暴露 CodeMirror 内部对象，保持插件\n+   API 稳定\"), so the plugin must use `ctx.insertMarkdown` rather than\n+   reaching into the view.\n+\n+So the extension point is not just present — it is purpose-built for\n+this use case. The plugin's job is to fill it.\n+\n+## Goals / Non-Goals\n+\n+- **Goals**\n+  - Convert rich-text (`text/html`) clipboard content to clean\n+    Markdown on paste — headings, bold/italic, links, lists, code\n+    blocks, blockquotes, GFM tables, strikethrough.\n+  - Never degrade the existing paste behaviour: plain-text paste and\n+    file/image paste must pass through untouched to core / CodeMirror.\n+  - Never throw — a malformed clipboard payload must not break\n+    pasting; it falls back to stripped text.\n+  - Headless: no UI, no theme, no DOM side effects beyond the\n+    inserted Markdown. Consistent with the project's headless\n+    philosophy.\n+  - Reusable pure function: `convertHtmlToMarkdown` works without an\n+    editor (Node, build scripts, workers).\n+- **Non-Goals**\n+  - No paste preview UI / confirmation dialog (hosts can layer that\n+    via `shouldConvert`).\n+  - No round-trip guarantees on the *source* HTML — we convert what\n+    the clipboard gives us; we do not attempt to losslessly preserve\n+    every CSS-styled span.\n+  - No core API changes. The plugin must not require a core release\n+    to land.\n+  - No Excel/Sheets-specific smart table paste beyond what\n+    `turndown-plugin-gfm` already handles.\n+\n+## Decisions\n+\n+### Decision 1: `turndown` + `turndown-plugin-gfm`, not a hand-rolled converter\n+\n+A correct HTML→Markdown converter is a large surface (whitespace\n+collapsing, nested lists, table alignment, entity decoding). Hand-\n+rolling it would be thousands of lines and a permanent bug surface.\n+`turndown` is the de-facto standard (~6M weekly npm downloads),\n+tree-shakable, and `turndown-plugin-gfm` adds exactly the GFM table\n+behaviour Nexus's own `preset-gfm` expects. The ~30 KB cost is\n+acceptable: `plugin-math` already ships KaTeX (much larger), so\n+\"plugin brings its own renderer dep\" is established precedent.\n+\n+### Decision 2: Files take priority over HTML\n+\n+When a paste event carries both a file *and* `text/html` (some\n+browsers do this for copied images), the plugin MUST defer to core's\n+`onAssetUpload` pipeline by returning `false` before reading\n+`text/html`. Otherwise the plugin would race the asset uploader and\n+silently drop the image. This matches the design intent recorded in\n+`packages/core/src/lezer-markdown.ts` (`pasteURLAsLink: false` — \"let\n+the asset-upload paste handler win\").\n+\n+### Decision 3: `keepInlineHtml: false` by default\n+\n+Nexus's stated value prop is \"Markdown text as the source of truth\"\n+and \"round-trip safe\". Letting `<span style=\"color:red\">` survive\n+paste would inject non-Markdown into the document, breaking that\n+contract. Default-stripping inline HTML keeps pasted content pure\n+Markdown; `keepInlineHtml: true` is the explicit opt-out for hosts\n+that want literal HTML.\n+\n+### Decision 4: `<script>` / `<style>` always stripped\n+\n+Web-clipboard HTML frequently carries `<style>` blocks (Google Docs\n+injects reams of CSS) and occasionally `<script>`. These are never\n+useful in a Markdown document. A dedicated turndown rule removes them\n+unconditionally (not gated by `keepInlineHtml`) — this is a safety\n+measure, not a style preference.\n+\n+### Decision 5: Conversion failure falls back to stripped text, never throws\n+\n+`convertHtmlToMarkdown` wraps `turndown` in try/catch. On any error\n+it returns a tag-stripped plain-text version of the input. A paste\n+handler that throws would break the user's paste entirely; falling\n+back to degraded-but-present text preserves the user's intent (get\n+*something* into the editor). Mirrors the wordcount plugin's \"never\n+throws on garbage input\" invariant.\n+\n+### Decision 6: Heading clamp via demotion, not truncation\n+\n+With `headingMaxLevel: N`, headings deeper than N are demoted to bold\n+paragraphs (`**text**`), not dropped or capped. Demotion preserves the\n+content and its relative emphasis without generating `######`-deep\n+nesting that would wreck the document outline. This is reversible and\n+predictable."
+      },
+      {
+        "sha": "d18b5bcaecb4ccd330612a74e871f0c0735e3fcd",
+        "filename": "openspec/changes/add-plugin-paste/proposal.md",
+        "status": "added",
+        "additions": 78,
+        "deletions": 0,
+        "changes": 78,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-plugin-paste%2Fproposal.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,78 @@\n+# Change: Add `@floatboat/nexus-plugin-paste` — HTML-to-Markdown paste conversion\n+\n+## Why\n+\n+`@floatboat/nexus-core` already reserves a `handlers.paste` hook on\n+`NexusPlugin` (see `packages/core/src/types.ts` — `EditorEventHandlers`)\n+and dispatches paste events to plugins before falling back to its own\n+asset-upload logic (`packages/core/src/editor.ts` — the `paste(event)`\n+handler in `EditorView.domEventHandlers`). The hook is wired up, the\n+`EditorEventContext.insertMarkdown` helper is exposed, and yet **no\n+plugin consumes them**. The result: copying formatted text from a web\n+page, Google Docs, or Office and pasting into Nexus dumps raw HTML (or\n+a flattened, formatting-stripped plain-text blob) into the document.\n+\n+This is a high-frequency pain point for the stated audiences —\n+note-taking apps, docs CMSes, LLM writing tools — where users\n+constantly paste research snippets, tables, and lists harvested from\n+the web. Every comparable editor (Obsidian, Typora, Notion) converts\n+rich-text paste to its native format. Nexus currently does not, and\n+the extension point to do so already exists in core.\n+\n+A paste converter belongs in a plugin, not in core: hosts that embed\n+Nexus as a code-review comment box or a raw Markdown textarea (where\n+literal HTML should pass through untouched) should not pay the\n+`turndown` bundle cost. By landing it as\n+`@floatboat/nexus-plugin-paste`, opt-in hosts get the behaviour; core\n+stays lean and framework-neutral.\n+\n+## What Changes\n+\n+- **New package `@floatboat/nexus-plugin-paste`** under\n+  `packages/plugin-paste/`. Public surface:\n+  - `convertHtmlToMarkdown(html: string, options?: PasteConvertOptions):\n+    string` — pure function, no editor required. Converts an HTML\n+    string to Markdown using `turndown` + `turndown-plugin-gfm`\n+    (tables, task lists, strikethrough). Configurable: `tables`\n+    (default `true`), `keepInlineHtml` (default `false` — strip\n+    unmappable inline tags like `<span style>`, emit pure Markdown),\n+    `headingMaxLevel` (default `6`; deeper headings become bold\n+    paragraphs), `rules` (custom / override turndown rules). The\n+    function SHALL never throw — on conversion failure it falls back\n+    to tag-stripped plain text.\n+  - `createPastePlugin(options?: PastePluginOptions): NexusPlugin` —\n+    registers a `handlers.paste` hook. On each paste:\n+    1. If the clipboard holds **files** → `return false` (core's\n+       `onAssetUpload` pipeline owns image / attachment paste).\n+    2. If there is **no `text/html`** flavor → `return false`\n+       (CodeMirror's native plain-text paste runs unmodified).\n+    3. Otherwise run `convertHtmlToMarkdown` on the `text/html`\n+       payload, call `ctx.insertMarkdown(md)`, `preventDefault()`,\n+       `return true`.\n+    Adds a `shouldConvert?(event): boolean` gate for hosts that want\n+    to restrict conversion to specific sources.\n+- **No core changes.** The plugin uses only already-exported types\n+  (`NexusPlugin`, `EditorEventContext`, `EditorEventHandlers`) and\n+  the already-dispatched `handlers.paste` + `ctx.insertMarkdown`\n+  runtime path.\n+- **New runtime dependencies**: `turndown` + `turndown-plugin-gfm`.\n+  Both are tree-shakable ESM, ~30 KB combined. This follows the\n+  precedent set by `@floatboat/nexus-plugin-math` (which ships\n+  KaTeX, a larger dependency).\n+\n+## Impact\n+\n+- **Affected packages**: new `packages/plugin-paste/`; documentation\n+  touch-ups in root `README.md` / `README.zh.md`, `docs/ROADMAP.md` /\n+  `docs/ROADMAP.zh.md`, `CONTRIBUTING.md` scope whitelist,\n+  `tsconfig.base.json` paths, root `package.json` build script,\n+  `vitest.config.ts` alias.\n+- **No breaking changes.** Core API is untouched; the plugin is\n+  opt-in.\n+- **Bundle**: only hosts that install the plugin pay the `turndown`\n+  cost.\n+- **Tests**: 28 new tests — pure-function converter coverage (inline,\n+  block, GFM tables, inline-HTML handling, heading clamp, edge cases)\n+  + plugin integration (HTML paste inserts Markdown, plain-text\n+  passthrough, file-paste passthrough, `shouldConvert` gate,\n+  end-to-end real-DOM-event dispatch)."
+      },
+      {
+        "sha": "c578f0376a98a3facac605c9d7b41098efba55ad",
+        "filename": "openspec/changes/add-plugin-paste/specs/paste/spec.md",
+        "status": "added",
+        "additions": 152,
+        "deletions": 0,
+        "changes": 152,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Fspecs%2Fpaste%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Fspecs%2Fpaste%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-plugin-paste%2Fspecs%2Fpaste%2Fspec.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,152 @@\n+# Paste Plugin Spec — HTML-to-Markdown paste conversion\n+\n+## ADDED Requirements\n+\n+### Requirement: HTML-to-Markdown Conversion Function\n+\n+The package SHALL export `convertHtmlToMarkdown(html: string,\n+options?: PasteConvertOptions): string`. The function SHALL convert\n+an HTML string to Markdown using `turndown` configured with ATX\n+headings, `-` bullet markers, fenced code blocks, `*` emphasis, `**`\n+strong, and inlined links. The function SHALL never throw — on\n+conversion failure it SHALL fall back to a tag-stripped plain-text\n+representation and return that.\n+\n+#### Scenario: Empty input returns empty string\n+- **WHEN** `convertHtmlToMarkdown(\"\")` or\n+  `convertHtmlToMarkdown(\"   \")` is invoked\n+- **THEN** the result SHALL equal `\"\"`\n+\n+#### Scenario: Inline bold and italic\n+- **WHEN** `convertHtmlToMarkdown(\"<b>hi</b>\")` is invoked\n+- **THEN** the result SHALL equal `\"**hi**\"`\n+- **AND** `convertHtmlToMarkdown(\"<i>hi</i>\")` SHALL equal `\"*hi*\"`\n+\n+#### Scenario: Anchor becomes inlined link\n+- **WHEN** `convertHtmlToMarkdown('<a href=\"https://x.com\">link</a>')`\n+  is invoked\n+- **THEN** the result SHALL equal `\"[link](https://x.com)\"`\n+\n+#### Scenario: GFM table conversion\n+- **WHEN** the input is a `<table>` with header row `A`, `B` and body\n+  row `1`, `2`\n+- **THEN** the result SHALL contain `\"| A | B |\"`, a `\"| --- |\"`\n+  separator, and `\"| 1 | 2 |\"`\n+\n+#### Scenario: tables disabled opts out of GFM tables\n+- **WHEN** the input is a `<table>` and `convertHtmlToMarkdown(html,\n+  { tables: false })` is invoked\n+- **THEN** the result SHALL NOT contain a `\"| --- |\"` separator row\n+\n+#### Scenario: Script and style always stripped\n+- **WHEN** the input contains `<style>.x{color:red}</style>` and\n+  `<script>alert(1)</script>` alongside visible text\n+- **THEN** the result SHALL contain the visible text\n+- **AND** SHALL NOT contain `\"alert\"` or `\"color:red\"`\n+\n+#### Scenario: Garbage input never throws\n+- **WHEN** `convertHtmlToMarkdown` is invoked with any malformed\n+  string (e.g. `\"<<<>>>\"`, `\"<unclosed\"`)\n+- **THEN** the function SHALL NOT throw\n+- **AND** SHALL return a string\n+\n+### Requirement: Inline HTML Handling\n+\n+By default (`keepInlineHtml: false`, the default), the converter\n+SHALL strip unmappable inline style tags (`span`, `font`, `mark`,\n+`small`, `sub`, `sup`) down to their text content. When\n+`keepInlineHtml: true` is supplied, the converter SHALL emit those\n+tags verbatim with their attributes preserved.\n+\n+#### Scenario: Default strips span\n+- **WHEN** `convertHtmlToMarkdown('<span style=\"color:red\">text</span>')`\n+  is invoked\n+- **THEN** the result SHALL equal `\"text\"`\n+\n+#### Scenario: keepInlineHtml preserves span\n+- **WHEN** `convertHtmlToMarkdown('<span style=\"color:red\">text</span>',\n+  { keepInlineHtml: true })` is invoked\n+- **THEN** the result SHALL contain `\"<span\"`\n+\n+### Requirement: Heading Level Clamp\n+\n+`headingMaxLevel` (default `6`, clamped to the range `[1, 6]`) SHALL\n+cap the deepest heading level emitted. Headings whose level exceeds\n+`headingMaxLevel` SHALL be demoted to a bold paragraph (`**content**`)\n+rather than dropped.\n+\n+#### Scenario: Deep heading demoted to bold\n+- **WHEN** `convertHtmlToMarkdown(\"<h3>deep</h3>\", { headingMaxLevel: 2 })`\n+  is invoked\n+- **THEN** the result SHALL contain `\"**deep**\"`\n+- **AND** SHALL NOT match `/^###\\s/`\n+\n+### Requirement: Plugin Factory and Paste Hook Contract\n+\n+The package SHALL export `createPastePlugin(options?:\n+PastePluginOptions): NexusPlugin`. The returned object SHALL be a\n+valid `NexusPlugin` with `name: \"plugin-paste\"` and a `handlers.paste`\n+hook. `PastePluginOptions` SHALL extend `PasteConvertOptions` with an\n+optional `shouldConvert?: (event: ClipboardEvent) => boolean` gate.\n+\n+The `handlers.paste` hook SHALL implement this contract, in order:\n+\n+1. If the clipboard carries files → return `false` (defer to core's\n+   `onAssetUpload`).\n+2. If `event.clipboardData.getData(\"text/html\")` is empty → return\n+   `false` (let CodeMirror's plain-text paste run).\n+3. If `options.shouldConvert` is set and returns `false` for this\n+   event → return `false`.\n+4. Otherwise convert the HTML; if the result is non-empty, call\n+   `event.preventDefault()`, `ctx.insertMarkdown(md)`, and return\n+   `true`; if the result is empty, return `false`.\n+\n+Returning `true` SHALL be treated by core as \"event consumed\"\n+(prevent default, stop dispatch); returning `false`/`undefined` SHALL\n+pass the event through to core's default behaviour.\n+\n+#### Scenario: HTML paste converts and inserts Markdown\n+- **WHEN** an editor is created with `plugins: [createPastePlugin()]`\n+  and a paste event carrying `text/html` `\"<h1>Title</h1><p>Body\n+  <b>bold</b></p>\"` is dispatched to the editor's content element\n+- **THEN** the document SHALL contain `\"# Title\"` and `\"**bold**\"`\n+- **AND** SHALL NOT contain `\"<h1>\"` or `\"<strong>\"`\n+- **AND** the paste event's `preventDefault` SHALL have been called\n+\n+#### Scenario: Plain-text paste passes through\n+- **WHEN** a paste event carries `text/plain` but no `text/html`\n+- **THEN** the hook SHALL return `false`\n+- **AND** `preventDefault` SHALL NOT have been called\n+- **AND** the document SHALL NOT be rewritten by the plugin\n+\n+#### Scenario: File paste defers to core\n+- **WHEN** a paste event carries a file (e.g. an image) even if\n+  `text/html` is also present\n+- **THEN** the hook SHALL return `false`\n+- **AND** `preventDefault` SHALL NOT have been called\n+\n+#### Scenario: shouldConvert gate rejects conversion\n+- **WHEN** the plugin is created with `shouldConvert: () => false`\n+  and a paste event carrying `text/html` is dispatched\n+- **THEN** the hook SHALL return `false`\n+- **AND** the document SHALL be unchanged by the plugin\n+\n+#### Scenario: Empty conversion passes through\n+- **WHEN** the `text/html` payload converts to an empty string\n+- **THEN** the hook SHALL return `false`\n+- **AND** `ctx.insertMarkdown` SHALL NOT have been called\n+\n+### Requirement: Standalone Pure-Function Reuse\n+\n+`convertHtmlToMarkdown` SHALL be usable without an editor instance —\n+in Node, build scripts, or workers — and SHALL produce output\n+consistent with the in-editor paste path for the same HTML input and\n+options.\n+\n+#### Scenario: Standalone call matches in-editor conversion\n+- **WHEN** `convertHtmlToMarkdown(\"<ul><li>a</li><li>b</li></ul>\",\n+  { tables: true })` is invoked standalone\n+- **AND** the same HTML is pasted through `createPastePlugin({\n+  tables: true })` into an editor\n+- **THEN** the editor's document SHALL equal the standalone return\n+  value"
+      },
+      {
+        "sha": "4987435c3d5309f63cd109da3432ac00ab181f19",
+        "filename": "openspec/changes/add-plugin-paste/tasks.md",
+        "status": "added",
+        "additions": 126,
+        "deletions": 0,
+        "changes": 126,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/openspec%2Fchanges%2Fadd-plugin-paste%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-plugin-paste%2Ftasks.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,126 @@\n+# Implementation Tasks\n+\n+## 1. Package scaffolding\n+\n+- [x] 1.1 Create `packages/plugin-paste/` with `package.json`\n+  (matching the shape of `packages/plugin-wordcount/package.json`:\n+  `tsup` build script, `@floatboat/nexus-core` workspace dep,\n+  `publishConfig` set to public npm). Runtime deps: `turndown`,\n+  `turndown-plugin-gfm`; dev dep: `@types/turndown`.\n+- [x] 1.2 Create `packages/plugin-paste/tsconfig.json` extending\n+  `../../tsconfig.base.json` and `include`-ing `src/**/*.ts` +\n+  `test/**/*.ts`.\n+- [x] 1.3 Add the alias `\"@floatboat/nexus-plugin-paste\":\n+  [\"packages/plugin-paste/src/index.ts\"]` to `tsconfig.base.json`\n+  `paths`.\n+- [x] 1.4 Add the matching alias to `vitest.config.ts`\n+  `resolve.alias`.\n+- [x] 1.5 Append `&& pnpm --filter @floatboat/nexus-plugin-paste\n+  build` to the root `package.json` `build` script.\n+\n+## 2. Pure-function converter (`src/convert.ts`)\n+\n+- [x] 2.1 Implement `convertHtmlToMarkdown(html: string, options?:\n+  PasteConvertOptions): string`. Empty / whitespace-only input\n+  returns `\"\"`. Wraps `turndown` in try/catch; on failure falls back\n+  to tag-stripped plain text. Never throws.\n+- [x] 2.2 Configure `TurndownService` with Nexus-aligned defaults:\n+  ATX headings, `-` bullets, fenced code blocks (```), `*` emphasis,\n+  `**` strong, inlined links.\n+- [x] 2.3 Apply `turndown-plugin-gfm` when `options.tables !== false`\n+  (default `true`) for GFM tables / task lists / strikethrough. When\n+  `tables: false`, apply only the `strikethrough` rule so tables fall\n+  through to default (non-GFM) handling.\n+- [x] 2.4 Add an unconditional `removeScriptStyle` rule that strips\n+  `<script>` and `<style>` nodes entirely (safety, not style).\n+- [x] 2.5 Implement heading clamp: for levels > `headingMaxLevel`\n+  (default `6`, clamped to `[1,6]`), add a rule demoting `hN` to a\n+  bold paragraph (`**content**`).\n+- [x] 2.6 Implement inline-HTML handling gated by `keepInlineHtml`\n+  (default `false`): strip common inline style tags (`span`, `font`,\n+  `mark`, `small`, `sub`, `sup`) to their text content; when `true`,\n+  emit the tag with attributes intact.\n+- [x] 2.7 Support `options.rules` — custom turndown rules appended\n+  after the built-ins (later rules can override by filter).\n+- [x] 2.8 Export `createConverter(options)` returning the configured\n+  `TurndownService` for advanced reuse / testing.\n+- [x] 2.9 Add `src/turndown-plugin-gfm.d.ts` ambient declaration\n+  (the package ships no types).\n+\n+## 3. Plugin factory (`src/plugin.ts`)\n+\n+- [x] 3.1 Export `createPastePlugin(options?: PastePluginOptions):\n+  NexusPlugin`. The returned object is a valid `NexusPlugin` with\n+  `name: \"plugin-paste\"` and a `handlers.paste` hook.\n+- [x] 3.2 The paste hook SHALL:\n+  - return `false` when the clipboard carries files (defer to core's\n+    `onAssetUpload`);\n+  - return `false` when `event.clipboardData.getData(\"text/html\")` is\n+    empty;\n+  - return `false` when `options.shouldConvert?.(event) === false`;\n+  - otherwise `convertHtmlToMarkdown(html, options)`, and if the\n+    result is non-empty: `event.preventDefault()`,\n+    `ctx.insertMarkdown(md)`, `return true`;\n+  - return `false` if the conversion result is empty.\n+- [x] 3.3 `PastePluginOptions` extends `PasteConvertOptions` with\n+  `shouldConvert?: (event: ClipboardEvent) => boolean`.\n+\n+## 4. Public exports (`src/index.ts`)\n+\n+- [x] 4.1 Re-export `createPastePlugin`, `convertHtmlToMarkdown`,\n+  `createConverter`, and public types (`PastePlugin`,\n+  `PastePluginOptions`, `PasteConvertOptions`, `TurndownRule`).\n+\n+## 5. Tests\n+\n+- [x] 5.1 `test/convert.test.ts` (pure-function): inline elements\n+  (bold/italic/link/code); block elements (headings, lists, code\n+  block, blockquote); GFM table conversion + `tables:false` opt-out;\n+  inline-HTML strip vs `keepInlineHtml:true`; heading demotion under\n+  `headingMaxLevel`; edge cases (empty input, plain text, script/style\n+  stripping, garbage input never throws, combined content).\n+- [x] 5.2 `test/plugin.test.ts` (jsdom + editor integration): HTML\n+  paste inserts Markdown and consumes the event; plain-text (no\n+  `text/html`) passes through; file paste passes through;\n+  `shouldConvert: () => false` passes through; empty conversion\n+  passes through without calling `insertMarkdown`; end-to-end\n+  consistency with `convertHtmlToMarkdown`; plugin is a valid\n+  `NexusPlugin` (name + handlers.paste function).\n+- [x] 5.3 `test/e2e-paste.test.ts` (real DOM event dispatch): mount\n+  plugin in `createEditor`, dispatch a real `ClipboardEvent` (with\n+  DataTransfer/ClipboardEvent polyfills, since jsdom lacks them) at\n+  `.cm-content`, assert the document receives converted Markdown end\n+  to end; plain-text paste does not get rewritten to Markdown.\n+\n+## 6. Documentation\n+\n+- [x] 6.1 `packages/plugin-paste/README.md` — install, quick start,\n+  how-it-works (the three-step hook contract), options reference,\n+  standalone-usage, license.\n+- [x] 6.2 Root `README.md` / `README.zh.md` plugin table — add a row\n+  for `@floatboat/nexus-plugin-paste`; bump package count 11 → 12.\n+- [x] 6.3 `docs/ROADMAP.md` / `docs/ROADMAP.zh.md` — add a row under\n+  \"9. Developer Experience\" with status `done`.\n+- [x] 6.4 `CONTRIBUTING.md` scope whitelist — add `paste` to the\n+  plugin scope list.\n+\n+## 7. Verify\n+\n+- [x] 7.1 `pnpm install` — workspace recognises the new package;\n+  `turndown` + `turndown-plugin-gfm` + `@types/turndown` resolve.\n+- [x] 7.2 `pnpm --filter @floatboat/nexus-plugin-paste exec tsc\n+  --noEmit` clean.\n+- [x] 7.3 `pnpm test` — 565/565 (existing 563 + 28 new, including\n+  2 real-DOM e2e). Run from repo root.\n+- [x] 7.4 `pnpm --filter @floatboat/nexus-plugin-paste build` —\n+  `dist/index.js` + `dist/index.d.ts` emit cleanly.\n+- [ ] 7.5 Manual smoke in the electron demo — deferred (the plugin is\n+  headless with no demo wiring in this PR; the jsdom e2e test in\n+  `test/e2e-paste.test.ts` dispatches a real `ClipboardEvent` through\n+  core's `domEventHandlers` and asserts the document update, covering\n+  the same event path a manual paste would exercise).\n+- [ ] 7.6 `openspec validate add-plugin-paste --strict` — CLI not\n+  installed in the dev environment. Spec format hand-linted against\n+  `openspec/AGENTS.md` (each `### Requirement:` has ≥1 `#### Scenario:`\n+  with `**WHEN**`/`**THEN**` bullets; delta files use\n+  `## ADDED Requirements`)."
+      },
+      {
+        "sha": "f6bf341990f078397675e0124f88f763a66b7452",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -4,7 +4,7 @@\n   \"version\": \"0.0.13\",\n   \"packageManager\": \"pnpm@9.15.4\",\n   \"scripts\": {\n-    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build\",\n+    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build && pnpm --filter @floatboat/nexus-plugin-paste build\",\n     \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n     \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\","
+      },
+      {
+        "sha": "65fb14c233ccc9f2bd45bb07636ebc3a8b4715a4",
+        "filename": "packages/plugin-paste/README.md",
+        "status": "added",
+        "additions": 95,
+        "deletions": 0,
+        "changes": 95,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2FREADME.md?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,95 @@\n+# @floatboat/nexus-plugin-paste\n+\n+HTML-to-Markdown paste conversion for\n+[Nexus-Editor](https://github.com/floatboatai/Nexus-Editor) — turns\n+rich-text clipboard content into clean Markdown on paste.\n+\n+- **HTML → Markdown on paste** — when the clipboard carries `text/html`\n+  (copying from a browser, Office doc, Google Docs, another editor),\n+  the plugin converts it to Markdown before it lands in the document.\n+- **Pure-text passthrough** — when there is no `text/html`, the plugin\n+  steps aside and lets CodeMirror's native plain-text paste run.\n+- **File paste untouched** — image / attachment paste is left to core's\n+  `onAssetUpload` pipeline; this plugin never competes with it.\n+- **GFM-aware** — tables, task lists, and strikethrough from\n+  `turndown-plugin-gfm`.\n+- **Pure-function entry point** — `convertHtmlToMarkdown(html, options)`\n+  works with or without an editor instance, in Node, in a build script,\n+  in a Cloudflare Worker.\n+- **Headless** — no UI, no theme, no opinions about where the editor\n+  lives. Just logic.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-plugin-paste @floatboat/nexus-core\n+```\n+\n+## Quick start\n+\n+```ts\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import { createPastePlugin } from \"@floatboat/nexus-plugin-paste\";\n+\n+const editor = createEditor({\n+  container: document.getElementById(\"editor\")!,\n+  initialValue: \"# Hello\\n\\nStart typing...\",\n+  plugins: [createPastePlugin()],\n+});\n+```\n+\n+That's it. Copy a formatted snippet from a web page and paste — bold,\n+italics, headings, links, lists, and tables arrive as Markdown, not as\n+a wall of `<span>` tags.\n+\n+## How it works\n+\n+The plugin registers the `handlers.paste` hook that\n+`@floatboat/nexus-core` already reserves for exactly this purpose (see\n+`EditorEventHandlers` in `core/src/types.ts`). On each paste event:\n+\n+1. If the clipboard holds **files** (images, attachments), the plugin\n+   returns `false` — core's `onAssetUpload` pipeline owns that path.\n+2. If there is **no `text/html`** flavor, the plugin returns `false` —\n+   CodeMirror's native plain-text paste runs unmodified.\n+3. Otherwise the `text/html` payload is run through\n+   `convertHtmlToMarkdown` and inserted via `ctx.insertMarkdown`, and\n+   the event is consumed (`return true`).\n+\n+The conversion layer is a standalone pure function, so it is fully\n+testable without an editor and reusable outside the plugin.\n+\n+## Options\n+\n+```ts\n+createPastePlugin({\n+  // Convert <table> to GFM tables. Default: true.\n+  tables: true,\n+  // Keep unmappable inline HTML (<span style=\"...\">) instead of\n+  // stripping it. Default: false (strip — emit pure Markdown).\n+  keepInlineHtml: false,\n+  // Max heading level (1–6). Deeper headings become bold paragraphs.\n+  // Default: 6.\n+  headingMaxLevel: 6,\n+  // Custom gate: return false to skip conversion for this paste and\n+  // let core handle it. Default: convert whenever text/html is present.\n+  shouldConvert: (event) => true,\n+  // Override / append turndown rules.\n+  rules: [],\n+});\n+```\n+\n+## Standalone usage\n+\n+The converter does not need an editor:\n+\n+```ts\n+import { convertHtmlToMarkdown } from \"@floatboat/nexus-plugin-paste\";\n+\n+const md = convertHtmlToMarkdown(\"<h1>Title</h1><p>Body <b>bold</b></p>\");\n+// \"# Title\\n\\nBody **bold**\"\n+```\n+\n+## License\n+\n+MIT © floatboat"
+      },
+      {
+        "sha": "8534ce21cb7fb192c743cf1f3288ed2b04feb714",
+        "filename": "packages/plugin-paste/package.json",
+        "status": "added",
+        "additions": 33,
+        "deletions": 0,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Fpackage.json?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,33 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-paste\",\n+  \"version\": \"0.0.13\",\n+  \"description\": \"HTML-to-Markdown paste conversion for Nexus-Editor — turns rich-text clipboard content into clean Markdown on paste.\",\n+  \"type\": \"module\",\n+  \"main\": \"./dist/index.js\",\n+  \"types\": \"./dist/index.d.ts\",\n+  \"exports\": {\n+    \".\": {\n+      \"types\": \"./dist/index.d.ts\",\n+      \"import\": \"./dist/index.js\"\n+    }\n+  },\n+  \"files\": [\n+    \"dist\",\n+    \"README.md\"\n+  ],\n+  \"scripts\": {\n+    \"build\": \"tsup src/index.ts --format esm --dts --clean\"\n+  },\n+  \"dependencies\": {\n+    \"@floatboat/nexus-core\": \"workspace:*\",\n+    \"turndown\": \"^7.2.0\",\n+    \"turndown-plugin-gfm\": \"^1.0.2\"\n+  },\n+  \"devDependencies\": {\n+    \"@types/turndown\": \"^5.0.5\"\n+  },\n+  \"publishConfig\": {\n+    \"access\": \"public\",\n+    \"registry\": \"https://registry.npmjs.org/\"\n+  }\n+}"
+      },
+      {
+        "sha": "7b17240a0a992bed8d88a3852950c39a296753d3",
+        "filename": "packages/plugin-paste/src/convert.ts",
+        "status": "added",
+        "additions": 149,
+        "deletions": 0,
+        "changes": 149,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Fconvert.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Fconvert.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Fsrc%2Fconvert.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,149 @@\n+/**\n+ * HTML → Markdown 转换的纯函数实现。\n+ *\n+ * 这一层不依赖编辑器实例，只接收 HTML 字符串、输出 Markdown 字符串，\n+ * 因此可以独立单测、也可以脱离插件单独复用（例如宿主想自定义粘贴预览）。\n+ *\n+ * 实现基于 `turndown` + `turndown-plugin-gfm`：后者补齐 GFM 表格、任务列表、\n+ * 删除线等规则，使从网页/Office 复制的内容能干净地落成 Nexus 原生的 Markdown。\n+ */\n+\n+import TurndownService from \"turndown\";\n+import * as turndownPluginGfm from \"turndown-plugin-gfm\";\n+\n+export type TurndownRule = {\n+  /** 匹配的 DOM 节点名称（小写），例如 \"div\"、\"span\"。 */\n+  filter: TurndownService.Filter;\n+  /** 替换函数：接收节点 HTML 与 TurndownService 实例，返回 Markdown 片段。 */\n+  replacement: TurndownService.ReplacementFunction;\n+};\n+\n+export interface PasteConvertOptions {\n+  /**\n+   * 是否转换 `<table>` 为 GFM 表格。默认 `true`。\n+   * 表格转换依赖 `turndown-plugin-gfm`；关闭后表格会按行内 HTML 处理。\n+   */\n+  tables?: boolean;\n+  /**\n+   * 是否保留无法映射为 Markdown 的行内 HTML（如 `<span style=\"...\">`）。\n+   * 默认 `false`：剥离这些标签、只留文本，保证产出是纯 Markdown。\n+   */\n+  keepInlineHtml?: boolean;\n+  /**\n+   * 标题转换的最大层级（1–6）。默认 `6`。\n+   * 超过该层级的 `<hN>` 会被降级为加粗段落，避免生成过深层级。\n+   */\n+  headingMaxLevel?: number;\n+  /**\n+   * 自定义 / 覆盖 turndown 规则。按数组顺序依次 `addRule`，\n+   * 后注册的同名规则会覆盖先注册的。\n+   */\n+  rules?: TurndownRule[];\n+}\n+\n+const DEFAULT_OPTIONS: Required<Omit<PasteConvertOptions, \"rules\">> = {\n+  tables: true,\n+  keepInlineHtml: false,\n+  headingMaxLevel: 6\n+};\n+\n+/**\n+ * 构造一个配置好的 TurndownService 实例。导出主要便于测试与高级复用；\n+ * 普通使用直接调 {@link convertHtmlToMarkdown} 即可。\n+ */\n+export function createConverter(options: PasteConvertOptions = {}): TurndownService {\n+  const opts = { ...DEFAULT_OPTIONS, ...options };\n+  const maxLevel = Math.max(1, Math.min(6, Math.trunc(opts.headingMaxLevel)));\n+\n+  const service = new TurndownService({\n+    headingStyle: \"atx\",\n+    bulletListMarker: \"-\",\n+    codeBlockStyle: \"fenced\",\n+    fence: \"```\",\n+    emDelimiter: \"*\",\n+    strongDelimiter: \"**\",\n+    linkStyle: \"inlined\"\n+  });\n+\n+  if (opts.tables) {\n+    service.use(turndownPluginGfm.gfm);\n+  } else {\n+    // 仅启用删除线 / 任务列表，跳过表格规则\n+    service.use(turndownPluginGfm.strikethrough);\n+  }\n+\n+  // 超过最大层级的标题降级为加粗段落\n+  for (let level = maxLevel + 1; level <= 6; level++) {\n+    service.addRule(`heading${level}`, {\n+      filter: [`h${level}`] as unknown as TurndownService.Filter,\n+      replacement: (content) => `**${content.trim()}**\\n\\n`\n+    });\n+  }\n+\n+  // 始终移除 <script> / <style>：从网页复制的 HTML 常带这些，落进 Markdown 毫无意义\n+  service.addRule(\"removeScriptStyle\", {\n+    filter: [\"script\", \"style\"] as unknown as TurndownService.Filter,\n+    replacement: () => \"\"\n+  });\n+\n+  // 行内 HTML 处理\n+  if (!opts.keepInlineHtml) {\n+    // 默认：剥离常见行内样式标签，只留文本\n+    service.addRule(\"stripInlineHtml\", {\n+      filter: [\"span\", \"font\", \"mark\", \"small\", \"sub\", \"sup\"] as unknown as TurndownService.Filter,\n+      replacement: (content) => content\n+    });\n+  } else {\n+    // 保留：把行内标签原样输出为 HTML（连同属性）\n+    service.addRule(\"keepInlineHtml\", {\n+      filter: [\"span\", \"font\", \"mark\", \"small\", \"sub\", \"sup\"] as unknown as TurndownService.Filter,\n+      replacement: (content, node) => {\n+        const el = node as HTMLElement;\n+        const tag = el.tagName.toLowerCase();\n+        const attrs = Array.from(el.attributes)\n+          .map((a) => ` ${a.name}=\"${a.value}\"`)\n+          .join(\"\");\n+        return `<${tag}${attrs}>${content}</${tag}>`;\n+      }\n+    });\n+  }\n+\n+  if (opts.rules) {\n+    for (const rule of opts.rules) {\n+      service.addRule(\n+        `custom-${Math.random().toString(36).slice(2)}`,\n+        { filter: rule.filter, replacement: rule.replacement }\n+      );\n+    }\n+  }\n+\n+  return service;\n+}\n+\n+/**\n+ * 将 HTML 字符串转换为 Markdown。\n+ *\n+ * - 输入为空 / 仅空白时返回空串，不抛异常。\n+ * - 转换失败时回退为\"剥离标签的纯文本\"，保证粘贴永不中断。\n+ *\n+ * @param html 剪贴板中的 `text/html` 内容\n+ * @param options 转换选项，见 {@link PasteConvertOptions}\n+ */\n+export function convertHtmlToMarkdown(html: string, options?: PasteConvertOptions): string {\n+  if (!html || !html.trim()) return \"\";\n+\n+  try {\n+    const service = createConverter(options);\n+    const md = service.turndown(html);\n+    // turndown 偶尔在首尾留下多余空行，规整一下\n+    return md.replace(/^\\n+/, \"\").replace(/\\n+$/, \"\\n\").replace(/\\n{3,}/g, \"\\n\\n\");\n+  } catch {\n+    // 兜底：剥离所有标签，至少把可见文本粘进去\n+    return html\n+      .replace(/<style[\\s\\S]*?<\\/style>/gi, \"\")\n+      .replace(/<script[\\s\\S]*?<\\/script>/gi, \"\")\n+      .replace(/<[^>]+>/g, \"\")\n+      .replace(/\\s+\\n/g, \"\\n\")\n+      .trim();\n+  }\n+}"
+      },
+      {
+        "sha": "ef184dff9404afb225a9e09a410063996cb9f689",
+        "filename": "packages/plugin-paste/src/index.ts",
+        "status": "added",
+        "additions": 12,
+        "deletions": 0,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Fsrc%2Findex.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,12 @@\n+export {\n+  createPastePlugin,\n+  type PastePlugin,\n+  type PastePluginOptions\n+} from \"./plugin\";\n+\n+export {\n+  convertHtmlToMarkdown,\n+  createConverter,\n+  type PasteConvertOptions,\n+  type TurndownRule\n+} from \"./convert\";"
+      },
+      {
+        "sha": "f216e96ae7aef113d687e85e19fd5ef87857d005",
+        "filename": "packages/plugin-paste/src/plugin.ts",
+        "status": "added",
+        "additions": 85,
+        "deletions": 0,
+        "changes": 85,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Fplugin.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Fplugin.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Fsrc%2Fplugin.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,85 @@\n+/**\n+ * Nexus 粘贴插件：把剪贴板里的富文本 HTML 自动转成 Markdown 再插入。\n+ *\n+ * 工作方式：注册 core 已预留的 `handlers.paste` 钩子（见 `@floatboat/nexus-core`\n+ * 的 `EditorEventHandlers`）。当剪贴板包含 `text/html` 时，调用\n+ * {@link convertHtmlToMarkdown} 转换后用 `ctx.insertMarkdown` 插入；否则放行，\n+ * 交回 core 的默认逻辑（图片/文件上传，或 CodeMirror 的纯文本粘贴）。\n+ *\n+ * 设计约束（来自 core 的约定）：\n+ * - 处理器返回 `true` 表示已消费 → core 阻止默认行为并停止派发；\n+ *   返回 `false`/`undefined` 表示放行。\n+ * - 文件类粘贴（图片、附件）必须放行，让 core 的 `onAssetUpload` 管线接管，\n+ *   不与本插件抢事件。\n+ */\n+\n+import type { EditorEventContext, NexusPlugin } from \"@floatboat/nexus-core\";\n+\n+import { convertHtmlToMarkdown, type PasteConvertOptions } from \"./convert\";\n+\n+export interface PastePluginOptions extends PasteConvertOptions {\n+  /**\n+   * 自定义\"是否对该次粘贴启用 HTML→Markdown 转换\"的判断。\n+   *\n+   * 默认：剪贴板含 `text/html` 即启用。返回 `false` 时插件放行，事件回到 core。\n+   * 可用于\"只在特定来源启用\"或\"粘贴前弹确认\"等场景。\n+   */\n+  shouldConvert?: (event: ClipboardEvent) => boolean;\n+}\n+\n+export type PastePlugin = NexusPlugin;\n+\n+/** 剪贴板里是否带文件（图片/附件）——有则交给 core 上传管线，本插件不抢。 */\n+function hasFiles(event: ClipboardEvent): boolean {\n+  const data = event.clipboardData;\n+  if (!data) return false;\n+  if (data.files && data.files.length > 0) return true;\n+  if (data.items && data.items.length > 0) {\n+    for (const item of Array.from(data.items)) {\n+      if (item.kind === \"file\") return true;\n+    }\n+  }\n+  return false;\n+}\n+\n+/**\n+ * 创建粘贴插件。返回值可直接传入 `createEditor({ plugins: [...] })`：\n+ *\n+ * ```ts\n+ * import { createEditor } from \"@floatboat/nexus-core\";\n+ * import { createPastePlugin } from \"@floatboat/nexus-plugin-paste\";\n+ *\n+ * const editor = createEditor({\n+ *   container,\n+ *   plugins: [createPastePlugin()],\n+ * });\n+ * ```\n+ */\n+export function createPastePlugin(options: PastePluginOptions = {}): PastePlugin {\n+  const shouldConvert = options.shouldConvert;\n+\n+  return {\n+    name: \"plugin-paste\",\n+    handlers: {\n+      paste(event: ClipboardEvent, ctx: EditorEventContext): boolean {\n+        // 1. 文件类粘贴（图片/附件）→ 放行，交给 core 上传管线\n+        if (hasFiles(event)) return false;\n+\n+        // 2. 没有 text/html → 放行，让 CodeMirror 做纯文本粘贴\n+        const html = event.clipboardData?.getData(\"text/html\") ?? \"\";\n+        if (!html) return false;\n+\n+        // 3. 自定义闸门\n+        if (shouldConvert && shouldConvert(event) === false) return false;\n+\n+        // 4. 转换并插入；转换为空则放行\n+        const markdown = convertHtmlToMarkdown(html, options);\n+        if (!markdown) return false;\n+\n+        event.preventDefault();\n+        ctx.insertMarkdown(markdown);\n+        return true;\n+      }\n+    }\n+  };\n+}"
+      },
+      {
+        "sha": "c342e07b64dec45b8cfd3c0cd0b345430a7ee228",
+        "filename": "packages/plugin-paste/src/turndown-plugin-gfm.d.ts",
+        "status": "added",
+        "additions": 12,
+        "deletions": 0,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Fturndown-plugin-gfm.d.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Fsrc%2Fturndown-plugin-gfm.d.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Fsrc%2Fturndown-plugin-gfm.d.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,12 @@\n+declare module \"turndown-plugin-gfm\" {\n+  import type TurndownService from \"turndown\";\n+\n+  export interface GfmPlugin {\n+    (service: TurndownService): void;\n+  }\n+\n+  export const gfm: GfmPlugin;\n+  export const tables: GfmPlugin;\n+  export const strikethrough: GfmPlugin;\n+  export const taskListItems: GfmPlugin;\n+}"
+      },
+      {
+        "sha": "06de1231498ce1f255f8da783e08c4d1b7b2710d",
+        "filename": "packages/plugin-paste/test/convert.test.ts",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftest%2Fconvert.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftest%2Fconvert.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Ftest%2Fconvert.test.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3"
+      },
+      {
+        "sha": "c33e7bec55ae78f78a76cf9a9725334ce2b1de2c",
+        "filename": "packages/plugin-paste/test/e2e-paste.test.ts",
+        "status": "added",
+        "additions": 122,
+        "deletions": 0,
+        "changes": 122,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftest%2Fe2e-paste.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftest%2Fe2e-paste.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Ftest%2Fe2e-paste.test.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,122 @@\n+/**\n+ * 真实端到端验证：把插件挂进 createEditor，向编辑器 DOM 真实派发 paste 事件，\n+ * 验证 core 的事件派发 → 插件 handlers.paste → insertMarkdown → 文档更新 全链路打通。\n+ *\n+ * 这不是常驻单测（jsdom 的 ClipboardEvent 支持有限），而是一次性验证脚本。\n+ */\n+\n+import { afterEach, beforeEach, describe, expect, it } from \"vitest\";\n+\n+import { createEditor, type EditorAPI } from \"@floatboat/nexus-core\";\n+import { createPastePlugin } from \"../src/plugin\";\n+\n+// ── jsdom 不实现 DataTransfer / ClipboardEvent，这里做最小 polyfill ──\n+// 只需满足：构造 ClipboardEvent 时携带可 getData 的 clipboardData。\n+class DataTransferShim {\n+  private data = new Map<string, string>();\n+  setData(type: string, value: string) {\n+    this.data.set(type, value);\n+  }\n+  getData(type: string) {\n+    return this.data.get(type) ?? \"\";\n+  }\n+  get files() {\n+    return [] as File[];\n+  }\n+  get items() {\n+    return [];\n+  }\n+  get types() {\n+    return Array.from(this.data.keys());\n+  }\n+}\n+\n+class ClipboardEventShim extends Event {\n+  clipboardData: DataTransferShim;\n+  constructor(type: string, init: { clipboardData?: DataTransferShim; bubbles?: boolean; cancelable?: boolean } = {}) {\n+    super(type, { bubbles: init.bubbles, cancelable: init.cancelable });\n+    this.clipboardData = init.clipboardData ?? new DataTransferShim();\n+  }\n+}\n+\n+const DataTransferPolyfill = (globalThis as { DataTransfer?: unknown }).DataTransfer;\n+const ClipboardEventPolyfill = (globalThis as { ClipboardEvent?: unknown }).ClipboardEvent;\n+beforeEach(() => {\n+  (globalThis as { DataTransfer?: unknown }).DataTransfer = DataTransferShim;\n+  (globalThis as { ClipboardEvent?: unknown }).ClipboardEvent = ClipboardEventShim as unknown as typeof ClipboardEvent;\n+});\n+afterEach(() => {\n+  (globalThis as { DataTransfer?: unknown }).DataTransfer = DataTransferPolyfill;\n+  (globalThis as { ClipboardEvent?: unknown }).ClipboardEvent = ClipboardEventPolyfill;\n+});\n+\n+describe(\"plugin-paste 真实 DOM 事件端到端\", () => {\n+  let container: HTMLDivElement;\n+  let editor: EditorAPI;\n+\n+  beforeEach(() => {\n+    container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+  });\n+\n+  afterEach(() => {\n+    editor?.destroy();\n+    container.remove();\n+  });\n+\n+  it(\"向编辑器 DOM 派发带 text/html 的 paste 事件 → 文档变为 Markdown\", () => {\n+    editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [createPastePlugin()]\n+    });\n+    editor.focus();\n+\n+    const dt = new DataTransferShim();\n+    dt.setData(\"text/html\", \"<h2>From Web</h2><p>Pasted <strong>rich</strong> text</p>\");\n+    dt.setData(\"text/plain\", \"From Web Pasted rich text\");\n+\n+    const event = new ClipboardEventShim(\"paste\", {\n+      clipboardData: dt,\n+      bubbles: true,\n+      cancelable: true\n+    });\n+\n+    const cmEl = container.querySelector(\".cm-content\") as HTMLElement;\n+    expect(cmEl, \"应找到 CodeMirror 内容元素\").toBeTruthy();\n+    cmEl.dispatchEvent(event);\n+\n+    const doc = editor.getDocument();\n+    expect(doc).toContain(\"## From Web\");\n+    expect(doc).toContain(\"**rich**\");\n+    expect(doc).not.toContain(\"<h2>\");\n+    expect(doc).not.toContain(\"<strong>\");\n+  });\n+\n+  it(\"纯文本 paste（无 text/html）→ 文档不被插件改写成 Markdown\", () => {\n+    editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [createPastePlugin()]\n+    });\n+    editor.focus();\n+\n+    const dt = new DataTransferShim();\n+    dt.setData(\"text/plain\", \"just plain\");\n+\n+    const event = new ClipboardEventShim(\"paste\", {\n+      clipboardData: dt,\n+      bubbles: true,\n+      cancelable: true\n+    });\n+\n+    const cmEl = container.querySelector(\".cm-content\") as HTMLElement;\n+    cmEl.dispatchEvent(event);\n+\n+    // 关键行为断言：插件未把纯文本当 HTML 转换，文档不应出现 markdown 标记\n+    const doc = editor.getDocument();\n+    expect(doc).not.toContain(\"**\");\n+    expect(doc).not.toContain(\"##\");\n+  });\n+});\n+"
+      },
+      {
+        "sha": "3d150b8427df90d3bff854a6e491d07a90c3e5c4",
+        "filename": "packages/plugin-paste/test/plugin.test.ts",
+        "status": "added",
+        "additions": 171,
+        "deletions": 0,
+        "changes": 171,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftest%2Fplugin.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftest%2Fplugin.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Ftest%2Fplugin.test.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,171 @@\n+/**\n+ * 粘贴插件集成测试。\n+ *\n+ * jsdom 不实现 ClipboardEvent / DataTransfer，因此这里手工构造一个最小\n+ * mock 事件对象，只实现插件用到的字段（clipboardData.getData / files / items），\n+ * 然后直接调用插件 `handlers.paste` 处理器，配合真实 editor 的\n+ * `EditorEventContext.insertMarkdown` 验证端到端插入效果。\n+ */\n+\n+import { afterEach, beforeEach, describe, expect, it, vi } from \"vitest\";\n+\n+import { createEditor, type EditorAPI, type EditorEventContext } from \"@floatboat/nexus-core\";\n+\n+import { createPastePlugin } from \"../src/plugin\";\n+import { convertHtmlToMarkdown } from \"../src/convert\";\n+\n+/** 构造一个仅满足插件读取需求的 mock ClipboardEvent。 */\n+function makePasteEvent(opts: {\n+  html?: string;\n+  text?: string;\n+  files?: File[];\n+}): ClipboardEvent {\n+  const data: {\n+    html: string;\n+    text: string;\n+    files: File[];\n+  } = {\n+    html: opts.html ?? \"\",\n+    text: opts.text ?? \"\",\n+    files: opts.files ?? []\n+  };\n+\n+  const clipboardData = {\n+    getData: vi.fn((type: string) => {\n+      if (type === \"text/html\") return data.html;\n+      if (type === \"text/plain\") return data.text;\n+      return \"\";\n+    }),\n+    get files() {\n+      return data.files;\n+    },\n+    get items() {\n+      return data.files.map((file) => ({ kind: \"file\", type: file.type, getAsFile: () => file }));\n+    }\n+  };\n+\n+  const event = {\n+    type: \"paste\",\n+    clipboardData,\n+    preventDefault: vi.fn(),\n+    defaultPrevented: false\n+  } as unknown as ClipboardEvent;\n+\n+  return event;\n+}\n+\n+/** 构造一个绑定到真实 editor 的 EditorEventContext，复用 core 的 insertMarkdown 语义。 */\n+function makeContext(editor: EditorAPI): EditorEventContext {\n+  return {\n+    editor,\n+    insertMarkdown: (markdown: string) => {\n+      // 复用 core 事件上下文里的\"替换当前选区\"语义：replaceRange(from, to, insert)\n+      const { anchor, head } = editor.getSelection();\n+      editor.replaceRange(Math.min(anchor, head), Math.max(anchor, head), markdown);\n+    },\n+    uploadAsset: (file: File) => editor.uploadAsset(file)\n+  };\n+}\n+\n+describe(\"createPastePlugin — handlers.paste\", () => {\n+  let container: HTMLDivElement;\n+  let editor: EditorAPI;\n+\n+  beforeEach(() => {\n+    container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+  });\n+\n+  afterEach(() => {\n+    editor?.destroy();\n+    container.remove();\n+  });\n+\n+  it(\"HTML 粘贴 → 转为 Markdown 并插入文档\", () => {\n+    const plugin = createPastePlugin();\n+    editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [plugin]\n+    });\n+\n+    const event = makePasteEvent({ html: \"<h1>Title</h1><p>Body <b>bold</b></p>\" });\n+    const consumed = plugin.handlers!.paste!(event, makeContext(editor));\n+\n+    expect(consumed).toBe(true);\n+    expect(event.preventDefault).toHaveBeenCalled();\n+    const doc = editor.getDocument();\n+    expect(doc).toContain(\"# Title\");\n+    expect(doc).toContain(\"**bold**\");\n+  });\n+\n+  it(\"无 text/html 时放行（返回 false，不阻止默认）\", () => {\n+    const plugin = createPastePlugin();\n+    editor = createEditor({ container, initialValue: \"before\", plugins: [plugin] });\n+\n+    const event = makePasteEvent({ text: \"plain only\" });\n+    const consumed = plugin.handlers!.paste!(event, makeContext(editor));\n+\n+    expect(consumed).toBe(false);\n+    expect(event.preventDefault).not.toHaveBeenCalled();\n+    // 文档未被插件改动\n+    expect(editor.getDocument()).toBe(\"before\");\n+  });\n+\n+  it(\"文件粘贴（图片）放行，交给 core 上传管线\", () => {\n+    const plugin = createPastePlugin();\n+    editor = createEditor({ container, initialValue: \"\", plugins: [plugin] });\n+\n+    const file = new File([\"data\"], \"img.png\", { type: \"image/png\" });\n+    const event = makePasteEvent({ html: \"<img src='x'>\", files: [file] });\n+    const consumed = plugin.handlers!.paste!(event, makeContext(editor));\n+\n+    expect(consumed).toBe(false);\n+    expect(event.preventDefault).not.toHaveBeenCalled();\n+  });\n+\n+  it(\"shouldConvert 返回 false 时放行\", () => {\n+    editor = createEditor({ container, initialValue: \"x\", plugins: [] });\n+\n+    const plugin = createPastePlugin({ shouldConvert: () => false });\n+    const event = makePasteEvent({ html: \"<b>hi</b>\" });\n+    const consumed = plugin.handlers!.paste!(event, makeContext(editor));\n+\n+    expect(consumed).toBe(false);\n+    expect(editor.getDocument()).toBe(\"x\");\n+  });\n+\n+  it(\"转换为空时放行，不调用 insertMarkdown\", () => {\n+    editor = createEditor({ container, initialValue: \"keep\", plugins: [] });\n+\n+    const plugin = createPastePlugin();\n+    // 只有空白 HTML → convertHtmlToMarkdown 返回 \"\"\n+    const event = makePasteEvent({ html: \"   \" });\n+    const ctx = makeContext(editor);\n+    const spy = vi.spyOn(ctx, \"insertMarkdown\");\n+\n+    const consumed = plugin.handlers!.paste!(event, ctx);\n+\n+    expect(consumed).toBe(false);\n+    expect(spy).not.toHaveBeenCalled();\n+    expect(editor.getDocument()).toBe(\"keep\");\n+  });\n+\n+  it(\"转换结果与 convertHtmlToMarkdown 一致（端到端一致性）\", () => {\n+    editor = createEditor({ container, initialValue: \"\", plugins: [] });\n+    const plugin = createPastePlugin({ tables: true });\n+\n+    const html = \"<ul><li>a</li><li>b</li></ul>\";\n+    const event = makePasteEvent({ html });\n+    plugin.handlers!.paste!(event, makeContext(editor));\n+\n+    const expected = convertHtmlToMarkdown(html, { tables: true });\n+    expect(editor.getDocument()).toBe(expected);\n+  });\n+\n+  it(\"插件是合法的 NexusPlugin（带 name 与 handlers）\", () => {\n+    const plugin = createPastePlugin();\n+    expect(plugin.name).toBe(\"plugin-paste\");\n+    expect(typeof plugin.handlers?.paste).toBe(\"function\");\n+  });\n+});"
+      },
+      {
+        "sha": "6ece4d3313edb1b64893526a52f9545f55ec3d15",
+        "filename": "packages/plugin-paste/tsconfig.json",
+        "status": "added",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/packages%2Fplugin-paste%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-paste%2Ftsconfig.json?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -0,0 +1,4 @@\n+{\n+  \"extends\": \"../../tsconfig.base.json\",\n+  \"include\": [\"src/**/*.ts\", \"test/**/*.ts\"]\n+}"
+      },
+      {
+        "sha": "6d449929c69fbbbec6f3ada578048f79feb31789",
+        "filename": "tsconfig.base.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/tsconfig.base.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/tsconfig.base.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/tsconfig.base.json?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -16,7 +16,8 @@\n       \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"],\n       \"@floatboat/nexus-plugin-math\": [\"packages/plugin-math/src/index.ts\"],\n       \"@floatboat/nexus-plugin-vim\": [\"packages/plugin-vim/src/index.ts\"],\n-      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"]\n+      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-paste\": [\"packages/plugin-paste/src/index.ts\"]\n     },\n     \"strict\": true,\n     \"declaration\": true,"
+      },
+      {
+        "sha": "3a90bc86abdd08dc999887e55fa88153548ac511",
+        "filename": "vitest.config.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/28c68ff18ddae92711b148d0736ade9d088b74f3/vitest.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/28c68ff18ddae92711b148d0736ade9d088b74f3/vitest.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/vitest.config.ts?ref=28c68ff18ddae92711b148d0736ade9d088b74f3",
+        "patch": "@@ -14,7 +14,8 @@ export default defineConfig({\n       \"@floatboat/nexus-plugin-toolbar\": path.resolve(__dirname, \"packages/plugin-toolbar/src/index.ts\"),\n       \"@floatboat/nexus-plugin-math\": path.resolve(__dirname, \"packages/plugin-math/src/index.ts\"),\n       \"@floatboat/nexus-plugin-vim\": path.resolve(__dirname, \"packages/plugin-vim/src/index.ts\"),\n-      \"@floatboat/nexus-plugin-wordcount\": path.resolve(__dirname, \"packages/plugin-wordcount/src/index.ts\")\n+      \"@floatboat/nexus-plugin-wordcount\": path.resolve(__dirname, \"packages/plugin-wordcount/src/index.ts\"),\n+      \"@floatboat/nexus-plugin-paste\": path.resolve(__dirname, \"packages/plugin-paste/src/index.ts\")\n     }\n   },\n   test: {"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=197",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

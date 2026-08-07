@@ -1,0 +1,93 @@
+{
+  "pr_number": 7,
+  "title": "feat(core): add getSelectedText API",
+  "body": "## Summary\n- Add `EditorAPI.getSelectedText()` for reading the current main selection as Markdown text.\n- Return an empty string for collapsed selections and normalize reversed anchor/head ranges.\n- Document the new API in English and Chinese README files.\n\n## Tests\n- `pnpm test -- packages/core/test/editor.test.ts`\n- `pnpm test`\n- `pnpm build`\n\nRoadmap item: P0 Core API completeness - `getSelectedText()` API.",
+  "created_at": "2026-05-13T08:52:27Z",
+  "draft": false,
+  "base_sha": "78b7bdfd2f499f5cb570cbfeb9cd38aaacdc3364",
+  "head_sha_at_first_review": "3ae32de8b517862a16f699144aa5eba44f4255f2",
+  "first_review_time": "2026-05-13T09:16:31Z",
+  "commits_at_first_review": [
+    {
+      "sha": "3ae32de8b517862a16f699144aa5eba44f4255f2",
+      "message": "feat(core): add selected text API",
+      "date": "2026-05-13T08:51:06Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "02c52d16cd3a8fee3d7c45d799a6ca22d29b1e7c",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3ae32de8b517862a16f699144aa5eba44f4255f2/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3ae32de8b517862a16f699144aa5eba44f4255f2/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=3ae32de8b517862a16f699144aa5eba44f4255f2",
+        "patch": "@@ -206,6 +206,7 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n ```ts\n editor.getDocument()          // current Markdown string\n editor.getAst()               // current mdast Root\n+editor.getSelectedText()      // current selected Markdown text\n editor.setDocument(md)        // replace entire document\n editor.setSelection(pos)      // move cursor\n editor.focus() / editor.blur()"
+      },
+      {
+        "sha": "1bcd2291c803a16fed8351c98b263a034db60b23",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3ae32de8b517862a16f699144aa5eba44f4255f2/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3ae32de8b517862a16f699144aa5eba44f4255f2/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=3ae32de8b517862a16f699144aa5eba44f4255f2",
+        "patch": "@@ -206,6 +206,7 @@ pnpm dev:electron-demo\n ```ts\n editor.getDocument()          // 当前 Markdown 文本\n editor.getAst()               // 当前 mdast 语法树\n+editor.getSelectedText()      // 当前选中的 Markdown 文本\n editor.setDocument(md)        // 替换整个文档\n editor.setSelection(pos)      // 移动光标\n editor.focus() / editor.blur()"
+      },
+      {
+        "sha": "fd041ffe1248dba7ce6493326600dfff1dd64d5a",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 6,
+        "deletions": 0,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3ae32de8b517862a16f699144aa5eba44f4255f2/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3ae32de8b517862a16f699144aa5eba44f4255f2/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=3ae32de8b517862a16f699144aa5eba44f4255f2",
+        "patch": "@@ -407,6 +407,12 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const sel = view.state.selection.main;\n       return { anchor: sel.anchor, head: sel.head };\n     },\n+    getSelectedText() {\n+      const sel = view.state.selection.main;\n+      const from = Math.min(sel.anchor, sel.head);\n+      const to = Math.max(sel.anchor, sel.head);\n+      return from === to ? \"\" : view.state.sliceDoc(from, to);\n+    },\n     getSlashCommands() {\n       return slashCommands;\n     },"
+      },
+      {
+        "sha": "c62ea15e79df3dff0c884a8b01e756d13eb70952",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3ae32de8b517862a16f699144aa5eba44f4255f2/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3ae32de8b517862a16f699144aa5eba44f4255f2/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=3ae32de8b517862a16f699144aa5eba44f4255f2",
+        "patch": "@@ -129,6 +129,7 @@ export interface EditorAPI {\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;\n   getSelection(): { anchor: number; head: number };\n+  getSelectedText(): string;\n   getSlashCommands(): SlashCommandDef[];\n   uploadAsset(file: File): Promise<string | null>;\n   setSelection(anchor: number, head?: number): void;"
+      },
+      {
+        "sha": "4f47ff2c55c3593427108d42069f876f085371b4",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3ae32de8b517862a16f699144aa5eba44f4255f2/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3ae32de8b517862a16f699144aa5eba44f4255f2/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=3ae32de8b517862a16f699144aa5eba44f4255f2",
+        "patch": "@@ -85,6 +85,21 @@ describe(\"createEditor\", () => {\n     editor.destroy();\n   });\n \n+  it(\"returns selected text from the current main selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello **world**\" });\n+\n+    editor.setSelection(6, 15);\n+    expect(editor.getSelectedText()).toBe(\"**world**\");\n+\n+    editor.setSelection(15, 6);\n+    expect(editor.getSelectedText()).toBe(\"**world**\");\n+\n+    editor.setSelection(5);\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n+\n   it(\"keeps the editor usable when the parser throws\", () => {\n     const container = document.createElement(\"div\");\n     const docs: string[] = [];"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

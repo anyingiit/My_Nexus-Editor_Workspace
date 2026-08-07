@@ -1,0 +1,33 @@
+{
+  "pr_number": 144,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Regex-based Markdown character removal is not semantic format clearing"
+    },
+    {
+      "id": 2,
+      "summary": "Regex can delete legitimate text like code, math, headings, strikethrough"
+    },
+    {
+      "id": 3,
+      "summary": "No handling for empty selection case"
+    },
+    {
+      "id": 4,
+      "summary": "Missing support for links, images, lists, quotes, HTML, escapes"
+    },
+    {
+      "id": 5,
+      "summary": "No automated tests proving behavior boundaries"
+    },
+    {
+      "id": 6,
+      "summary": "Suggest using Markdown AST or selection range for structured conversion"
+    },
+    {
+      "id": 7,
+      "summary": "Require complete regression tests before resubmission"
+    }
+  ]
+}

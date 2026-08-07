@@ -1,0 +1,21 @@
+{
+  "pr_number": 107,
+  "points": [
+    {
+      "id": 1,
+      "summary": "TypeScript type check fails on matchedIndices property"
+    },
+    {
+      "id": 2,
+      "summary": "Test asserts matchedIndices but ScoredSearchMatch lacks it"
+    },
+    {
+      "id": 3,
+      "summary": "Add matchedIndices to public type or update test"
+    },
+    {
+      "id": 4,
+      "summary": "CLA is not signed; contribution cannot be accepted"
+    }
+  ]
+}

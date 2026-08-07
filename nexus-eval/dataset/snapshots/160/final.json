@@ -1,0 +1,88 @@
+{
+  "pr_number": 160,
+  "title": "fix(electron): keep wiki-link backlinks consistent after file changes",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-15T09:35:52Z",
+  "merged_by": null,
+  "closed_by": "Azanwei",
+  "head_sha_final": "1b2e4ead5ed40178afb272799a14c86cbc0a790d",
+  "merge_commit_sha": "38f39ab6b15dce97dce9e8e31513eeffd6669d0c",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "10771566c7d286459e7724aeac7bc36f12f27b44",
+      "message": "fix(electron): keep wiki-link backlinks consistent after file changes",
+      "date": "2026-07-15T07:22:35Z"
+    },
+    {
+      "sha": "1b2e4ead5ed40178afb272799a14c86cbc0a790d",
+      "message": "docs(electron): clarify backlink rebuild usage",
+      "date": "2026-07-15T09:31:35Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 13,
+      "changes": 50
+    },
+    {
+      "filename": "apps/electron-demo/test/link-index.test.ts",
+      "status": "modified",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "5ae98ce769b301602885adae98f1a139902e93f2",
+        "filename": "apps/electron-demo/src/renderer/link-index.ts",
+        "status": "modified",
+        "additions": 37,
+        "deletions": 13,
+        "changes": 50,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1b2e4ead5ed40178afb272799a14c86cbc0a790d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1b2e4ead5ed40178afb272799a14c86cbc0a790d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts?ref=1b2e4ead5ed40178afb272799a14c86cbc0a790d",
+        "patch": "@@ -217,28 +217,51 @@ export class LinkIndex {\n     return true;\n   }\n \n-  /** Incremental update for a single file's contents. */\n+  /**\n+   * Update a single file's contents.\n+   *\n+   * Editing an existing file only changes that file's outgoing edges, so the\n+   * reverse index can be maintained incrementally. Adding a new file changes\n+   * basename uniqueness and may change how existing links resolve; rebuild the\n+   * reverse index in that case so those links do not remain stale.\n+   */\n   updateFile(path: string, content: string): void {\n-    this.removeFromBasenames(path);\n-    this.indexFile(path, content);\n+    const norm = normalizeSlashes(path);\n+    const existed = this.contents.has(norm);\n+    this.removeFromBasenames(norm);\n+    this.indexFile(norm, content);\n     this.invalidateUnlinkedCache();\n-    // Incremental reverse-index maintenance — only rewrites backward edges\n-    // whose `sourcePath` is this file. O(|edges of this file|) instead of\n-    // O(|total edges in the vault|). On keystroke-driven updates the previous\n-    // behavior scaled with vault size; now it only scales with this file.\n-    this.rebuildBackwardFor(normalizeSlashes(path));\n+    if (existed) {\n+      // Incremental reverse-index maintenance — only rewrites backward edges\n+      // whose `sourcePath` is this file. O(|edges of this file|) instead of\n+      // O(|total edges in the vault|). On keystroke-driven updates the reverse\n+      // index therefore still scales with the edited file.\n+      this.rebuildBackwardFor(norm);\n+    } else {\n+      // A new file can resolve previously unresolved links or make an existing\n+      // basename ambiguous, so every outgoing edge must be resolved again.\n+      this.rebuildBackward();\n+    }\n     this.notify();\n   }\n \n   /** Drop a file and all its outgoing/incoming edges. */\n   removeFile(path: string): void {\n-    this.removeFromBasenames(path);\n     const norm = normalizeSlashes(path);\n+    const existed = this.contents.has(norm);\n+    this.removeFromBasenames(norm);\n     this.forward.delete(norm);\n     this.contents.delete(norm);\n     this.invalidateUnlinkedCache();\n-    // Only purge edges whose sourcePath is this file.\n-    this.removeBackwardEdgesFrom(norm);\n+    if (existed) {\n+      // Removing a target can make previously ambiguous links resolvable, so\n+      // rebuild all reverse edges after the file leaves the candidate maps.\n+      this.rebuildBackward();\n+    } else {\n+      // Keep the no-op removal path cheap while preserving the old cleanup\n+      // behavior if a source edge exists without a corresponding file entry.\n+      this.removeBackwardEdgesFrom(norm);\n+    }\n     this.notify();\n   }\n \n@@ -478,8 +501,9 @@ export class LinkIndex {\n   }\n \n   /**\n-   * Rebuild the backward map from scratch. O(E) where E is total outgoing\n-   * edges — used only by full `rebuild*` paths.\n+   * Rebuild the current backward map from scratch. O(E) where E is total\n+   * outgoing edges. Used when file topology changes can affect how existing\n+   * wiki links resolve.\n    */\n   private rebuildBackward(): void {\n     this.rebuildBackwardInto(this.currentSnapshot());"
+      },
+      {
+        "sha": "747e7e6d92ef7027247b1e756109e46e05354334",
+        "filename": "apps/electron-demo/test/link-index.test.ts",
+        "status": "modified",
+        "additions": 52,
+        "deletions": 0,
+        "changes": 52,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1b2e4ead5ed40178afb272799a14c86cbc0a790d/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1b2e4ead5ed40178afb272799a14c86cbc0a790d/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts?ref=1b2e4ead5ed40178afb272799a14c86cbc0a790d",
+        "patch": "@@ -75,6 +75,58 @@ describe(\"LinkIndex.backlinks\", () => {\n     idx.removeFile(\"/v/a.md\");\n     expect(idx.getBacklinks(\"/v/X.md\")).toHaveLength(0);\n   });\n+\n+  it(\"removes inbound backlinks when the target file is deleted\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"/v/X.md\", content: \"\" },\n+      { path: \"/v/a.md\", content: \"[[X]]\" },\n+    ]);\n+\n+    idx.removeFile(\"/v/X.md\");\n+\n+    expect(idx.getBacklinks(\"/v/X.md\")).toEqual([]);\n+  });\n+\n+  it(\"indexes links that become resolvable when a file is added\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([{ path: \"/v/a.md\", content: \"[[X]]\" }]);\n+\n+    idx.updateFile(\"/v/X.md\", \"\");\n+\n+    expect(idx.getBacklinks(\"/v/X.md\").map((hit) => hit.sourcePath)).toEqual([\"/v/a.md\"]);\n+  });\n+\n+  it(\"re-resolves links when deleting an ambiguous target\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"/v/work/Meeting.md\", content: \"\" },\n+      { path: \"/v/personal/Meeting.md\", content: \"\" },\n+      { path: \"/v/Inbox.md\", content: \"[[Meeting]]\" },\n+    ]);\n+\n+    expect(idx.getBacklinks(\"/v/work/Meeting.md\")).toEqual([]);\n+\n+    idx.removeFile(\"/v/personal/Meeting.md\");\n+\n+    expect(idx.getBacklinks(\"/v/work/Meeting.md\").map((hit) => hit.sourcePath)).toEqual([\n+      \"/v/Inbox.md\",\n+    ]);\n+  });\n+\n+  it(\"drops links when adding a duplicate target makes a basename ambiguous\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"/v/work/Meeting.md\", content: \"\" },\n+      { path: \"/v/Inbox.md\", content: \"[[Meeting]]\" },\n+    ]);\n+\n+    expect(idx.getBacklinks(\"/v/work/Meeting.md\")).toHaveLength(1);\n+\n+    idx.updateFile(\"/v/personal/Meeting.md\", \"\");\n+\n+    expect(idx.getBacklinks(\"/v/work/Meeting.md\")).toEqual([]);\n+  });\n });\n \n describe(\"LinkIndex.getAllNoteNames\", () => {"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=160",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

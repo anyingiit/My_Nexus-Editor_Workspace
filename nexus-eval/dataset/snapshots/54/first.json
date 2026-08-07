@@ -1,0 +1,136 @@
+{
+  "pr_number": 54,
+  "title": "feat(electron-demo): refresh workspace shell",
+  "body": "## Summary\n- restyle the Electron demo main workspace to match the supplied four-column reference\n- replace emoji utility controls with consistent SVG icons and accessible pressed states\n- add responsive panel sizing while preserving existing vault, editor, outline, and backlinks behavior\n- document the UI change through OpenSpec proposal, requirements, and completed tasks\n\n## Verification\n- `pnpm --filter @floatboat/nexus-electron-demo test` (58 tests passed)\n- `pnpm --filter @floatboat/nexus-electron-demo exec tsc --noEmit`\n- `pnpm --filter @floatboat/nexus-electron-demo build`\n- visually reviewed the renderer at 2048x1000 against the supplied reference\n\n## Notes\n- Vite still reports the repository's existing large-chunk warning during production build.",
+  "created_at": "2026-06-10T06:22:03Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "d6a453440f8b57a6331ededd7affcdd22a21defa",
+  "first_review_time": "2026-06-10T06:22:11Z",
+  "commits_at_first_review": [
+    {
+      "sha": "d6a453440f8b57a6331ededd7affcdd22a21defa",
+      "message": "feat(electron-demo): refresh workspace shell",
+      "date": "2026-06-10T06:14:57Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "94f6a481a5d10e768a11e889718ca2c99758c469",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 74,
+        "deletions": 40,
+        "changes": 114,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -21,74 +21,104 @@ let backlinks: BacklinksPanel;\n const linkIndex = new LinkIndex();\n state.linkIndex = linkIndex;\n \n+type AppIcon = \"vault\" | \"outline\" | \"backlinks\" | \"search\" | \"settings\";\n+\n+const APP_ICONS: Record<AppIcon, string> = {\n+  vault: '<path d=\"M4 5.5h6l1.5 2H20v11H4z\"/><path d=\"M4 8h16\"/>',\n+  outline: '<path d=\"M8 6h12M8 12h12M8 18h12\"/><path d=\"M4 6h.01M4 12h.01M4 18h.01\"/>',\n+  backlinks: '<path d=\"M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.15 1.15\"/><path d=\"M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.15-1.15\"/>',\n+  search: '<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-4-4\"/>',\n+  settings: '<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.17.36.38.7.6 1 .28.3.67.46 1.1.46h.1v4h-.1c-.43 0-.82.16-1.1.46-.22.3-.43.64-.6 1.08Z\"/>',\n+};\n+\n+function createIcon(name: AppIcon): SVGSVGElement {\n+  const namespace = \"http://www.w3.org/2000/svg\";\n+  const icon = document.createElementNS(namespace, \"svg\");\n+  icon.setAttribute(\"viewBox\", \"0 0 24 24\");\n+  icon.setAttribute(\"aria-hidden\", \"true\");\n+  icon.setAttribute(\"fill\", \"none\");\n+  icon.setAttribute(\"stroke\", \"currentColor\");\n+  icon.setAttribute(\"stroke-width\", \"1.8\");\n+  icon.setAttribute(\"stroke-linecap\", \"round\");\n+  icon.setAttribute(\"stroke-linejoin\", \"round\");\n+  icon.innerHTML = APP_ICONS[name];\n+  return icon;\n+}\n+\n+function createUtilityButton(\n+  name: AppIcon,\n+  label: string,\n+  onClick: () => void,\n+  toggle = false\n+): HTMLButtonElement {\n+  const button = document.createElement(\"button\");\n+  button.type = \"button\";\n+  button.className = \"toolbar-icon-button\";\n+  button.title = label;\n+  button.setAttribute(\"aria-label\", label);\n+  if (toggle) button.setAttribute(\"aria-pressed\", \"true\");\n+  button.appendChild(createIcon(name));\n+  button.addEventListener(\"click\", onClick);\n+  return button;\n+}\n+\n function createAppToolbar(): HTMLElement {\n-  const toolbar = document.createElement(\"div\");\n+  const toolbar = document.createElement(\"header\");\n   toolbar.className = \"toolbar\";\n \n+  const fileActions = document.createElement(\"div\");\n+  fileActions.className = \"toolbar-file-actions\";\n+\n   const vaultBtn = document.createElement(\"button\");\n+  vaultBtn.type = \"button\";\n   vaultBtn.textContent = \"Vault\";\n   vaultBtn.title = \"Open a folder as a vault\";\n   vaultBtn.addEventListener(\"click\", () => {\n     void vault.promptPickVault();\n   });\n \n   const openBtn = document.createElement(\"button\");\n+  openBtn.type = \"button\";\n   openBtn.textContent = \"Open\";\n   openBtn.addEventListener(\"click\", handleOpen);\n \n   const saveBtn = document.createElement(\"button\");\n+  saveBtn.type = \"button\";\n   saveBtn.textContent = \"Save\";\n   saveBtn.addEventListener(\"click\", handleSave);\n \n   const saveAsBtn = document.createElement(\"button\");\n+  saveAsBtn.type = \"button\";\n   saveAsBtn.textContent = \"Save As\";\n   saveAsBtn.addEventListener(\"click\", handleSaveAs);\n \n-  const spacer = document.createElement(\"div\");\n-  spacer.style.flex = \"1\";\n-\n-  const vaultToggleBtn = document.createElement(\"button\");\n-  vaultToggleBtn.textContent = \"\\uD83D\\uDCD1\"; // 📑\n-  vaultToggleBtn.title = \"Toggle vault panel\";\n-  vaultToggleBtn.style.fontSize = \"14px\";\n-  vaultToggleBtn.addEventListener(\"click\", toggleVault);\n-\n-  const outlineBtn = document.createElement(\"button\");\n-  outlineBtn.textContent = \"\\u2630\"; // ☰\n-  outlineBtn.title = \"Toggle outline\";\n-  outlineBtn.style.fontSize = \"14px\";\n-  outlineBtn.addEventListener(\"click\", toggleOutline);\n-\n-  const backlinksBtn = document.createElement(\"button\");\n-  backlinksBtn.textContent = \"\\uD83D\\uDD17\"; // 🔗\n-  backlinksBtn.title = \"Toggle backlinks panel\";\n-  backlinksBtn.style.fontSize = \"14px\";\n-  backlinksBtn.addEventListener(\"click\", toggleBacklinks);\n-\n-  const searchBtn = document.createElement(\"button\");\n-  searchBtn.textContent = \"\\uD83D\\uDD0D\"; // 🔍\n-  searchBtn.title = \"Search (Ctrl+F)\";\n-  searchBtn.style.fontSize = \"14px\";\n-  searchBtn.addEventListener(\"click\", () => searchBar.open());\n-\n-  const settingsBtn = document.createElement(\"button\");\n-  settingsBtn.textContent = \"\\u2699\"; // ⚙\n-  settingsBtn.title = \"Settings\";\n-  settingsBtn.style.fontSize = \"16px\";\n-  settingsBtn.addEventListener(\"click\", handleSettings);\n-\n-  toolbar.append(\n-    vaultBtn,\n-    openBtn,\n-    saveBtn,\n-    saveAsBtn,\n-    spacer,\n+  fileActions.append(vaultBtn, openBtn, saveBtn, saveAsBtn);\n+\n+  const utilityActions = document.createElement(\"div\");\n+  utilityActions.className = \"toolbar-utility-actions\";\n+  const vaultToggleBtn = createUtilityButton(\"vault\", \"Toggle vault panel\", () => {\n+    toggleVault();\n+    syncToggleState(vaultToggleBtn, vault.element);\n+  }, true);\n+  const outlineBtn = createUtilityButton(\"outline\", \"Toggle outline\", () => {\n+    toggleOutline();\n+    syncToggleState(outlineBtn, outline.element);\n+  }, true);\n+  const backlinksBtn = createUtilityButton(\"backlinks\", \"Toggle backlinks panel\", () => {\n+    toggleBacklinks();\n+    syncToggleState(backlinksBtn, backlinks.element);\n+  }, true);\n+  const searchBtn = createUtilityButton(\"search\", \"Search (Ctrl+F)\", () => searchBar.open());\n+  const settingsBtn = createUtilityButton(\"settings\", \"Settings\", handleSettings);\n+\n+  utilityActions.append(\n     vaultToggleBtn,\n     outlineBtn,\n     backlinksBtn,\n     searchBtn,\n     settingsBtn\n   );\n+  toolbar.append(fileActions, utilityActions);\n   return toolbar;\n }\n \n@@ -190,6 +220,10 @@ function togglePanel(panel: HTMLElement, onShow?: () => void): void {\n   }\n }\n \n+function syncToggleState(button: HTMLButtonElement, panel: HTMLElement): void {\n+  button.setAttribute(\"aria-pressed\", String(panel.style.display !== \"none\"));\n+}\n+\n function toggleOutline(): void {\n   togglePanel(outline.element, () => outline.update());\n }"
+      },
+      {
+        "sha": "ca0b9ca2d412db28afc7d91bdc3f768d79d27e47",
+        "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbacklinks-panel.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbacklinks-panel.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbacklinks-panel.ts?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -133,11 +133,13 @@ export function createBacklinksPanel(options: BacklinksPanelOptions): BacklinksP\n   root.style.cssText = PANEL_STYLES;\n \n   const header = document.createElement(\"div\");\n+  header.className = \"nexus-panel-header\";\n   header.style.cssText = HEADER_STYLES;\n   header.textContent = \"Backlinks\";\n   root.appendChild(header);\n \n   const list = document.createElement(\"div\");\n+  list.className = \"nexus-backlinks-list\";\n   list.style.cssText = LIST_STYLES;\n   root.appendChild(list);\n "
+      },
+      {
+        "sha": "07759db5ae67c988c24214384807dcc016dbae1b",
+        "filename": "apps/electron-demo/src/renderer/outline-panel.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Foutline-panel.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Foutline-panel.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Foutline-panel.ts?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -66,10 +66,12 @@ export function createOutlinePanel(editor: EditorAPI): OutlinePanel {\n   panel.style.cssText = PANEL_STYLES;\n \n   const header = document.createElement(\"div\");\n+  header.className = \"nexus-panel-header\";\n   header.style.cssText = HEADER_STYLES;\n   header.textContent = \"Outline\";\n \n   const list = document.createElement(\"div\");\n+  list.className = \"nexus-outline-list\";\n   list.style.cssText = LIST_STYLES;\n \n   panel.append(header, list);"
+      },
+      {
+        "sha": "f1d4a13433ffea0742d5da645f0ccdcc93c43fcb",
+        "filename": "apps/electron-demo/src/renderer/style.css",
+        "status": "modified",
+        "additions": 245,
+        "deletions": 10,
+        "changes": 255,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -4,45 +4,168 @@\n   box-sizing: border-box;\n }\n \n+:root {\n+  color-scheme: light;\n+  --workspace-chrome: #f4f4f4;\n+  --workspace-line: #dedede;\n+  --workspace-line-soft: #e9e9e9;\n+  --workspace-text: #232323;\n+  --workspace-muted: #858585;\n+  --workspace-faint: #b7b7b7;\n+  --workspace-hover: #e9e9e9;\n+}\n+\n html,\n body,\n #app {\n   height: 100%;\n }\n \n+body {\n+  overflow: hidden;\n+  background: #fff;\n+}\n+\n+button,\n+input {\n+  font: inherit;\n+}\n+\n #app {\n   display: flex;\n   flex-direction: column;\n-  font-family: system-ui, sans-serif;\n+  min-width: 720px;\n+  color: var(--workspace-text);\n+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n }\n \n .toolbar {\n   display: flex;\n-  gap: 8px;\n-  padding: 8px 12px;\n-  background: #f0f0f0;\n-  border-bottom: 1px solid #ddd;\n+  align-items: center;\n+  justify-content: space-between;\n+  min-height: 58px;\n+  padding: 8px 13px;\n+  background: var(--workspace-chrome);\n+  border-bottom: 1px solid var(--workspace-line);\n   flex-shrink: 0;\n }\n \n+.toolbar-file-actions,\n+.toolbar-utility-actions {\n+  display: flex;\n+  align-items: center;\n+  gap: 10px;\n+}\n+\n .toolbar button {\n-  padding: 4px 12px;\n+  height: 39px;\n+  padding: 0 16px;\n+  border: 1px solid #868686;\n+  border-radius: 3px;\n+  background: linear-gradient(#fafafa, #f1f1f1);\n+  color: #161616;\n+  font-size: 16px;\n+  line-height: 1;\n   cursor: pointer;\n+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);\n+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;\n+}\n+\n+.toolbar button:hover {\n+  border-color: #626262;\n+  background: #fff;\n+}\n+\n+.toolbar button:focus-visible {\n+  outline: 2px solid var(--nexus-accent, #356fd4);\n+  outline-offset: 2px;\n+}\n+\n+.toolbar .toolbar-icon-button {\n+  width: 51px;\n+  padding: 0;\n+  display: grid;\n+  place-items: center;\n+}\n+\n+.toolbar-icon-button svg {\n+  width: 19px;\n+  height: 19px;\n+}\n+\n+.toolbar-icon-button[aria-pressed=\"true\"] {\n+  background: #ededed;\n+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);\n }\n \n .main-area {\n   flex: 1;\n   display: flex;\n+  min-height: 0;\n   overflow: hidden;\n }\n \n+.nexus-vault-panel {\n+  width: 290px !important;\n+  border-right-color: var(--workspace-line-soft) !important;\n+}\n+\n .editor-column {\n   flex: 1;\n+  min-width: 300px;\n   display: flex;\n   flex-direction: column;\n   overflow: hidden;\n }\n \n+.nexus-outline-panel {\n+  width: 268px !important;\n+  border-right-color: var(--workspace-line-soft) !important;\n+  border-left: 1px solid var(--workspace-line-soft);\n+}\n+\n+.backlinks-panel {\n+  width: 340px !important;\n+  border-left-color: var(--workspace-line-soft) !important;\n+}\n+\n+.nexus-panel-header {\n+  min-height: 41px;\n+  padding: 0 14px !important;\n+  display: flex !important;\n+  align-items: center !important;\n+  border-bottom-color: var(--workspace-line-soft) !important;\n+  color: var(--workspace-muted) !important;\n+  font-size: 13px !important;\n+  font-weight: 650 !important;\n+  letter-spacing: 0.5px !important;\n+}\n+\n+.nexus-vault-header {\n+  gap: 5px !important;\n+}\n+\n+.nexus-vault-header button {\n+  width: 29px;\n+  height: 29px;\n+  padding: 0 !important;\n+  display: grid;\n+  place-items: center;\n+  color: #8b949e !important;\n+}\n+\n+.nexus-panel-title {\n+  font-size: 13px !important;\n+  color: var(--workspace-muted) !important;\n+}\n+\n+.nexus-vault-tree,\n+.nexus-outline-list,\n+.nexus-backlinks-list {\n+  scrollbar-color: #c9c9c9 transparent;\n+  scrollbar-width: thin;\n+}\n+\n .editor-container {\n   flex: 1;\n   min-height: 0;\n@@ -55,6 +178,30 @@ body,\n .editor-container > [data-nexus-toolbar],\n .editor-container > [role=\"toolbar\"] {\n   flex-shrink: 0;\n+  min-height: 52px;\n+  padding: 7px 17px !important;\n+  gap: 3px !important;\n+  background: #fafafa !important;\n+  border-bottom: 1px dotted #6d6d6d !important;\n+  overflow-x: auto;\n+}\n+\n+.editor-container .nexus-toolbar-btn {\n+  width: 31px !important;\n+  height: 31px !important;\n+  color: #858585 !important;\n+  border-radius: 3px !important;\n+}\n+\n+.editor-container .nexus-toolbar-btn:hover {\n+  color: #444 !important;\n+  background: var(--workspace-hover) !important;\n+}\n+\n+.editor-container .nexus-toolbar-separator {\n+  height: 25px !important;\n+  margin: 0 5px !important;\n+  background: #dedede !important;\n }\n \n .editor-container .cm-editor {\n@@ -63,15 +210,103 @@ body,\n   height: auto;\n }\n \n+.editor-container .cm-scroller {\n+  font-family: inherit;\n+}\n+\n+.editor-container .cm-content {\n+  padding-top: 17px;\n+}\n+\n+.editor-container .cm-gutters {\n+  min-width: 40px;\n+  background: #f8f9fa;\n+  border-right-color: var(--workspace-line-soft);\n+}\n+\n+.editor-container .cm-lineNumbers .cm-gutterElement {\n+  padding-right: 10px;\n+  color: #b4b4b4;\n+}\n+\n .status-line {\n-  padding: 4px 12px;\n-  font-size: 13px;\n-  color: #666;\n+  min-height: 11px;\n+  max-height: 24px;\n+  padding: 3px 12px;\n+  overflow: hidden;\n+  color: #777;\n   background: #fafafa;\n-  border-top: 1px solid #eee;\n+  border-top: 1px solid var(--workspace-line-soft);\n+  font-size: 11px;\n+  line-height: 17px;\n+  white-space: nowrap;\n+  text-overflow: ellipsis;\n   flex-shrink: 0;\n }\n \n+@media (max-width: 1500px) {\n+  .nexus-vault-panel {\n+    width: 240px !important;\n+  }\n+\n+  .nexus-outline-panel {\n+    width: 220px !important;\n+  }\n+\n+  .backlinks-panel {\n+    width: 280px !important;\n+  }\n+}\n+\n+@media (max-width: 1050px) {\n+  .toolbar-file-actions,\n+  .toolbar-utility-actions {\n+    gap: 6px;\n+  }\n+\n+  .toolbar button {\n+    padding: 0 12px;\n+  }\n+\n+  .nexus-vault-panel {\n+    width: 190px !important;\n+  }\n+\n+  .nexus-outline-panel {\n+    width: 170px !important;\n+  }\n+\n+  .backlinks-panel {\n+    width: 220px !important;\n+  }\n+\n+  .editor-column {\n+    min-width: 260px;\n+  }\n+}\n+\n+@media (max-width: 820px) {\n+  .toolbar .toolbar-icon-button {\n+    width: 42px;\n+  }\n+\n+  .nexus-vault-panel {\n+    width: 160px !important;\n+  }\n+\n+  .nexus-outline-panel {\n+    width: 140px !important;\n+  }\n+\n+  .backlinks-panel {\n+    width: 180px !important;\n+  }\n+\n+  .editor-column {\n+    min-width: 240px;\n+  }\n+}\n+\n /* Syntax highlighting for fenced code blocks.\n    Tokens produced by the parser worker use hljs-* class names, mapped here\n    to a minimal colour palette. */"
+      },
+      {
+        "sha": "7abf7cd44220cda8789af8c6af02875e8beda503",
+        "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fvault-panel.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fvault-panel.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fvault-panel.ts?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -188,9 +188,11 @@ export function createVaultPanel(callbacks: VaultPanelCallbacks): VaultPanel {\n   panel.style.cssText = PANEL_STYLES;\n \n   const header = document.createElement(\"div\");\n+  header.className = \"nexus-panel-header nexus-vault-header\";\n   header.style.cssText = HEADER_STYLES;\n \n   const title = document.createElement(\"div\");\n+  title.className = \"nexus-panel-title\";\n   title.style.cssText = HEADER_TITLE_STYLES;\n   title.textContent = \"Vault\";\n \n@@ -230,6 +232,7 @@ export function createVaultPanel(callbacks: VaultPanelCallbacks): VaultPanel {\n   }\n \n   const tree = document.createElement(\"div\");\n+  tree.className = \"nexus-vault-tree\";\n   tree.style.cssText = TREE_STYLES;\n \n   panel.append(header, tree);"
+      },
+      {
+        "sha": "2b4a473cffed94968d165daf1da3170992560368",
+        "filename": "openspec/changes/update-electron-workspace-shell/proposal.md",
+        "status": "added",
+        "additions": 16,
+        "deletions": 0,
+        "changes": 16,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Fproposal.md?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -0,0 +1,16 @@\n+# Change: Update the Electron workspace shell\n+\n+## Why\n+The Electron demo exposes the right editor capabilities, but its default browser-like styling does not present them as a cohesive desktop workspace. The supplied reference establishes a clearer hierarchy for file actions, panel controls, navigation, editing, outline, and backlinks.\n+\n+## What Changes\n+- Restyle the Electron demo as a compact four-column writing workspace.\n+- Replace emoji utility controls with consistent monochrome SVG icons.\n+- Expose pressed state for panel toggle buttons.\n+- Align panel headers, empty states, editor toolbar, gutters, and status line with the reference layout.\n+- Preserve all existing file, vault, search, settings, outline, and backlink behavior.\n+\n+## Impact\n+- Affected specs: electron-demo workspace shell\n+- Affected code: `apps/electron-demo/src/renderer/app.ts`, renderer panels, and `style.css`\n+- No changes to package APIs, persistence, or Electron IPC"
+      },
+      {
+        "sha": "2c2db14d4311696d1c9e5cc000689259d72362b8",
+        "filename": "openspec/changes/update-electron-workspace-shell/specs/electron-workspace-shell/spec.md",
+        "status": "added",
+        "additions": 26,
+        "deletions": 0,
+        "changes": 26,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Fspecs%2Felectron-workspace-shell%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Fspecs%2Felectron-workspace-shell%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Fspecs%2Felectron-workspace-shell%2Fspec.md?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -0,0 +1,26 @@\n+## ADDED Requirements\n+\n+### Requirement: Reference workspace layout\n+The Electron demo SHALL present file actions, vault navigation, the editor, outline navigation, and backlinks in a visually coherent desktop workspace based on the supplied reference.\n+\n+#### Scenario: Initial workspace\n+- **WHEN** the Electron renderer starts\n+- **THEN** file actions appear in the leading area of the top bar\n+- **AND** panel, search, and settings controls appear in the trailing area\n+- **AND** the vault, editor, outline, and backlinks regions remain visually distinct\n+\n+### Requirement: Panel toggle state\n+Panel toggle controls SHALL expose whether their associated panel is currently visible.\n+\n+#### Scenario: Toggle a workspace panel\n+- **WHEN** the user activates a vault, outline, or backlinks toggle\n+- **THEN** the corresponding panel changes visibility\n+- **AND** the control's pressed state reflects the resulting visibility\n+\n+### Requirement: Responsive workspace\n+The workspace SHALL preserve the editor as the primary surface when the available window width is constrained.\n+\n+#### Scenario: Narrow window\n+- **WHEN** the application window becomes narrower than the full four-column layout\n+- **THEN** secondary panels use reduced widths or are hidden at defined breakpoints\n+- **AND** the editor remains usable"
+      },
+      {
+        "sha": "6ca48731896d8a9c495f871a31083ef79ec16168",
+        "filename": "openspec/changes/update-electron-workspace-shell/tasks.md",
+        "status": "added",
+        "additions": 10,
+        "deletions": 0,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d6a453440f8b57a6331ededd7affcdd22a21defa/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d6a453440f8b57a6331ededd7affcdd22a21defa/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fupdate-electron-workspace-shell%2Ftasks.md?ref=d6a453440f8b57a6331ededd7affcdd22a21defa",
+        "patch": "@@ -0,0 +1,10 @@\n+## 1. Implementation\n+- [x] 1.1 Rework the application toolbar structure and icon controls.\n+- [x] 1.2 Add stable classes to workspace panel internals.\n+- [x] 1.3 Implement the reference-inspired workspace styling and responsive behavior.\n+- [x] 1.4 Verify panel controls retain accessible labels and pressed state.\n+\n+## 2. Verification\n+- [x] 2.1 Run Electron demo tests.\n+- [x] 2.2 Run the Electron demo production build.\n+- [x] 2.3 Review the rendered workspace and update this checklist."
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=54",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

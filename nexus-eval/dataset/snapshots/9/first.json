@@ -1,0 +1,77 @@
+{
+  "pr_number": 9,
+  "title": "feat(search): support regex queries",
+  "body": "## Summary\n- Add `regexp` support to plugin-search helper APIs.\n- Keep literal search as the default behavior and safely ignore invalid regex patterns.\n- Allow `createSearchPlugin({ regexp: true })` to initialize the search panel in regexp mode.\n\n## Tests\n- `pnpm test -- packages/plugin-search/test/plugin-search.test.ts`\n- `pnpm test`\n- `pnpm build`\n\nRoadmap item: P1 Search / Commands - Regex search.",
+  "created_at": "2026-05-13T09:11:40Z",
+  "draft": false,
+  "base_sha": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2",
+  "head_sha_at_first_review": "ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+  "first_review_time": "2026-05-13T11:22:26Z",
+  "commits_at_first_review": [
+    {
+      "sha": "b699cda60f0b43cedae045d2b954c9d5b6a96cad",
+      "message": "feat(search): support regex queries",
+      "date": "2026-05-13T09:11:04Z"
+    },
+    {
+      "sha": "ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+      "message": "fix(plugin-search): document and clarify regexp behavior",
+      "date": "2026-05-13T09:27:03Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 2,
+    "behind_by": 10,
+    "files": [
+      {
+        "sha": "357215d5b88858b85faaa6216bd144492c0ea0d5",
+        "filename": "packages/plugin-search/README.md",
+        "status": "added",
+        "additions": 54,
+        "deletions": 0,
+        "changes": 54,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages%2Fplugin-search%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages%2Fplugin-search%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2FREADME.md?ref=ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+        "patch": "@@ -0,0 +1,54 @@\n+# @floatboat/nexus-plugin-search\n+\n+Search panel and programmatic search/replace helpers for Nexus Editor.\n+\n+## Usage\n+\n+```ts\n+import {\n+  createSearchPlugin,\n+  findSearchMatches,\n+  replaceAllMatches\n+} from \"@floatboat/nexus-plugin-search\";\n+\n+const searchPlugin = createSearchPlugin({\n+  regexp: true,\n+  caseSensitive: true\n+});\n+```\n+\n+## Options\n+\n+### `createSearchPlugin(options)`\n+\n+| Option | Type | Default | Description |\n+|---|---|---|---|\n+| `top` | `boolean` | `true` | Render the search panel above the editor content. |\n+| `caseSensitive` | `boolean` | `false` | Enable case-sensitive search by default. |\n+| `regexp` | `boolean` | `false` | Enable regular expression search by default. When enabled, the CodeMirror search configuration uses regex semantics instead of literal search. |\n+| `highlightSelectionMatches` | `boolean` | `true` | Highlight viewport matches for the current selection. |\n+| `labels` | `Partial<SearchPluginLabels>` | `undefined` | Override search panel labels. |\n+\n+### `findSearchMatches(doc, query, options)`\n+\n+Returns all matches for `query`. Searches are case-insensitive and literal by default.\n+\n+Pass `{ regexp: true }` to interpret `query` as a JavaScript regular expression:\n+\n+```ts\n+findSearchMatches(\"hello hullo\", \"h.llo\", { regexp: true });\n+```\n+\n+Invalid regular expressions are treated as no matches and emit a `console.warn`.\n+\n+### `replaceAllMatches(doc, query, replacement, options)`\n+\n+Replaces every match in `doc`. Literal replacement is used by default.\n+\n+With `{ regexp: true }`, replacement strings support JavaScript replacement syntax such as capture groups:\n+\n+```ts\n+replaceAllMatches(\"width=10\", \"(\\\\w+)=(\\\\d+)\", \"$1: $2\", { regexp: true });\n+```\n+\n+Invalid regular expressions return the original document and emit a `console.warn`."
+      },
+      {
+        "sha": "dfd92c36783dca92ba1c1873932614ffac80d1e1",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 32,
+        "deletions": 5,
+        "changes": 37,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+        "patch": "@@ -25,6 +25,7 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  regexp?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -36,6 +37,10 @@ export interface SearchPluginOptions {\n    * Enable case-sensitive search by default.\n    */\n   caseSensitive?: boolean;\n+  /**\n+   * Enable regular expression search by default.\n+   */\n+  regexp?: boolean;\n   /**\n    * Highlight viewport matches for the current selection.\n    */\n@@ -79,6 +84,20 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function createSearchPattern(query: string, options: SearchOptions): RegExp | null {\n+  const flags = options.caseSensitive ? \"g\" : \"gi\";\n+  const source = options.regexp ? query : escapeRegExp(query);\n+\n+  try {\n+    return new RegExp(source, flags);\n+  } catch (error) {\n+    if (options.regexp) {\n+      console.warn(\"[@floatboat/nexus-plugin-search] Invalid regular expression treated as no matches.\", error);\n+    }\n+    return null;\n+  }\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,8 +107,11 @@ export function findSearchMatches(\n     return [];\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const pattern = createSearchPattern(query, options);\n+  if (!pattern) {\n+    return [];\n+  }\n+\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n@@ -116,8 +138,12 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n+  const pattern = createSearchPattern(query, options);\n+  if (!pattern) {\n+    return doc;\n+  }\n+\n+  return doc.replace(pattern, replacement);\n }\n \n function resolveLabel(\n@@ -539,7 +565,8 @@ export function createSearchPlugin(options: SearchPluginOptions = {}): NexusPlug\n     search({\n       top: options.top ?? true,\n       caseSensitive: options.caseSensitive ?? false,\n-      literal: true,\n+      regexp: options.regexp ?? false,\n+      literal: !(options.regexp ?? false),\n       createPanel: (view) => new NexusSearchPanel(view, options.top ?? true, options.labels)\n     }),\n     keymap.of(searchKeymap)"
+      },
+      {
+        "sha": "28ce17799156d03f74c0510ec59c555230522ee8",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 86,
+        "deletions": 1,
+        "changes": 87,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+        "patch": "@@ -1,4 +1,4 @@\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { createEditor } from \"@floatboat/nexus-core\";\n import {\n   createSearchPlugin,\n@@ -21,10 +21,55 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"treats search text literally by default\", () => {\n+    expect(findSearchMatches(\"a.b axb a.b\", \"a.b\")).toEqual([\n+      { from: 0, to: 3, text: \"a.b\" },\n+      { from: 8, to: 11, text: \"a.b\" }\n+    ]);\n+  });\n+\n+  it(\"supports regular expression search\", () => {\n+    expect(findSearchMatches(\"hello hullo hxllo\", \"h.llo\", { regexp: true })).toEqual([\n+      { from: 0, to: 5, text: \"hello\" },\n+      { from: 6, to: 11, text: \"hullo\" },\n+      { from: 12, to: 17, text: \"hxllo\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive regular expression search\", () => {\n+    expect(findSearchMatches(\"ABC abc Abc\", \"a.c\", { regexp: true, caseSensitive: true })).toEqual([\n+      { from: 4, to: 7, text: \"abc\" }\n+    ]);\n+  });\n+\n+  it(\"returns no matches for invalid regular expressions\", () => {\n+    const warn = vi.spyOn(console, \"warn\").mockImplementation(() => undefined);\n+\n+    expect(findSearchMatches(\"alpha beta\", \"[\", { regexp: true })).toEqual([]);\n+    expect(warn).toHaveBeenCalledOnce();\n+\n+    warn.mockRestore();\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"supports capture groups in regular expression replacements\", () => {\n+    expect(\n+      replaceAllMatches(\"width=10 height=20\", \"(\\\\w+)=(\\\\d+)\", \"$1: $2\", { regexp: true })\n+    ).toBe(\"width: 10 height: 20\");\n+  });\n+\n+  it(\"returns the original document when replacing with an invalid regular expression\", () => {\n+    const warn = vi.spyOn(console, \"warn\").mockImplementation(() => undefined);\n+\n+    expect(replaceAllMatches(\"alpha beta\", \"[\", \"x\", { regexp: true })).toBe(\"alpha beta\");\n+    expect(warn).toHaveBeenCalledOnce();\n+\n+    warn.mockRestore();\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n \n@@ -116,6 +161,46 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     container.remove();\n   });\n \n+  it(\"can enable regular expression search by default in the search panel\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.append(container);\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"alpha beta\",\n+      plugins: [createSearchPlugin({ regexp: true })]\n+    });\n+\n+    const content = container.querySelector<HTMLElement>(\".cm-content\");\n+    expect(content).not.toBeNull();\n+    content?.dispatchEvent(\n+      new KeyboardEvent(\"keydown\", {\n+        key: \"f\",\n+        code: \"KeyF\",\n+        metaKey: true,\n+        bubbles: true,\n+        cancelable: true\n+      })\n+    );\n+    if (!container.querySelector('[data-test-id=\"markdown-search-bar\"]')) {\n+      content?.dispatchEvent(\n+        new KeyboardEvent(\"keydown\", {\n+          key: \"f\",\n+          code: \"KeyF\",\n+          ctrlKey: true,\n+          bubbles: true,\n+          cancelable: true\n+        })\n+      );\n+    }\n+\n+    const regexpToggle = container.querySelector<HTMLInputElement>('[data-test-id=\"markdown-search-regexp-toggle\"]');\n+    expect(regexpToggle).not.toBeNull();\n+    expect(regexpToggle?.checked).toBe(true);\n+\n+    editor.destroy();\n+    container.remove();\n+  });\n+\n   it(\"commits input events before Enter navigates to a match\", () => {\n     const container = document.createElement(\"div\");\n     document.body.append(container);"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

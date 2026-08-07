@@ -1,0 +1,26 @@
+{
+  "pr_number": 34,
+  "title": "chore: add governance doc and PR compliance template",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:37:10Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ketd",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-27T13:43:41Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=34) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=34) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=34) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:37:09Z",
+      "body": "感谢这份 governance 文档 🙏 已经合入 main（\\`b8e758b\\`）。\n\n由于本分支是从较早的 main 切出的，它的 diff 里同时带着对**此后已合并功能**（多光标、wordcount、getSelectedText、搜索增强、slash 历史、react/vue onReady/受控文档等）及其测试和 OpenSpec 的大量删除（-8773 行）。直接合并会把这一整轮已落地的功能全部回滚，所以我只采纳了纯新增的 governance 价值：\n\n- \\`GOVERNANCE.md\\`（项目范围、maintainer、CLA / AI 披露 / 依赖 / 安全政策）\n- PR 模板的「合规自检」section\n- CONTRIBUTING（中英）开头的 governance 引用 + §3.2 合规 checklist + §5 安全条款\n\n其中对 README/CONTRIBUTING 里 wordcount、setDocument 新选项等的删除已反掉（那些功能已在 main 上）。内容已在主分支生效，故关闭本 PR。"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

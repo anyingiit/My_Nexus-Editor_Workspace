@@ -1,0 +1,67 @@
+{
+  "pr_number": 120,
+  "title": "feat(core): copy table ranges as HTML",
+  "body": "## Summary / 摘要\n\n表格选区复制时同时写入 `text/plain` (TSV) 和 `text/html` (HTML table) 双格式，支持粘贴到富文本编辑器时保留表格结构和单元格内的基础富文本格式。\n\n## Motivation / 背景与动机\n\nNexus-Editor 的 live preview 表格已支持拖选单元格、列选择、行选择，但原有复制只写入纯文本 TSV。粘贴到 Notion、邮件、富文本编辑器时丢失表格结构。\n\n本次改动在保留纯文本兼容性的基础上，新增 HTML 格式复制，提升跨应用粘贴体验。\n\n- Issue: 无关联 issue\n- Roadmap: 属于 live preview 交互体验增强\n- OpenSpec change: 无（属于体验增强，不涉及新 capability 或 breaking change）\n\n## Changes / 变更内容\n\n- `packages/core`:\n  - 新增 `clipboardCellHtml()` 克隆单元格并过滤编辑器内部控件\n  - 新增 `serializeRangeSelectionHtml()` 序列化选区为语义化 HTML table\n  - copy 事件处理器同时写入 `text/plain` 和 `text/html`\n- `packages/core/test`:\n  - 新增 3 个测试用例覆盖范围选择、列选择、行选择场景\n\n## Testing / 测试\n\n- [x] `pnpm test` passes / 全绿 (518 tests)\n- [x] `pnpm typecheck` passes\n- [x] 新增 vitest 用例：\n  - 拖选单元格范围时复制 TSV + HTML table\n  - 列选择时 HTML 包含 `<thead><th>` 表头结构\n  - 行选择时保留单元格内富文本（如 `**bold**` → `<strong>bold</strong>`）\n- [ ] electron-demo 手动验证（建议）\n\n## Compliance / 合规自检\n\n- [ ] **CLA signed** — 需首次提交时签署\n- [x] **AI disclosure**: AI 辅助编写测试用例和部分实现代码\n- [x] **No new dependencies**\n- [x] **No build artifacts** committed\n- [x] **No secrets** committed\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits\n- [x] Touched `live-preview-table.ts` → 已核对 Table Widget 规则\n- [x] Change aligns with project scope\n",
+  "created_at": "2026-07-03T10:28:21Z",
+  "draft": true,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+  "first_review_time": "2026-07-03T11:35:59Z",
+  "commits_at_first_review": [
+    {
+      "sha": "efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+      "message": "feat(core): copy table ranges as HTML",
+      "date": "2026-07-03T09:03:03Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "0c1a15b31f881eb88e8d0f52db0c1dd9797b9027",
+        "filename": "packages/core/src/live-preview-table.ts",
+        "status": "modified",
+        "additions": 31,
+        "deletions": 0,
+        "changes": 31,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec/packages%2Fcore%2Fsrc%2Flive-preview-table.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec/packages%2Fcore%2Fsrc%2Flive-preview-table.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Flive-preview-table.ts?ref=efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+        "patch": "@@ -756,6 +756,36 @@ export class EditableTableWidget extends WidgetType {\n       return lines.join(\"\\n\");\n     }\n \n+    function clipboardCellHtml(cell: HTMLElement | null): string {\n+      if (!cell) return \"\";\n+      const clone = cell.cloneNode(true) as HTMLElement;\n+      // Clipboard HTML should include cell content only, not editor-only controls.\n+      clone.querySelectorAll(\".nexus-col-resize\").forEach((el) => el.remove());\n+      return clone.innerHTML;\n+    }\n+\n+    function serializeRangeSelectionHtml(range: { r1: number; c1: number; r2: number; c2: number }): string {\n+      const headRows: string[] = [];\n+      const bodyRows: string[] = [];\n+      for (let row = range.r1; row <= range.r2; row++) {\n+        const cellHtml: string[] = [];\n+        const tagName = row === 0 ? \"th\" : \"td\";\n+        for (let col = range.c1; col <= range.c2; col++) {\n+          const cell = getCellElement(row, col);\n+          cellHtml.push(`<${tagName}>${clipboardCellHtml(cell)}</${tagName}>`);\n+        }\n+        const html = `<tr>${cellHtml.join(\"\")}</tr>`;\n+        if (row === 0) {\n+          headRows.push(html);\n+        } else {\n+          bodyRows.push(html);\n+        }\n+      }\n+      const thead = headRows.length > 0 ? `<thead>${headRows.join(\"\")}</thead>` : \"\";\n+      const tbody = bodyRows.length > 0 ? `<tbody>${bodyRows.join(\"\")}</tbody>` : \"\";\n+      return `<table>${thead}${tbody}</table>`;\n+    }\n+\n     function selectedCopyRange(): { r1: number; c1: number; r2: number; c2: number } | null {\n       const range = getNormalizedRange();\n       if (rangeActive && range) return range;\n@@ -1630,6 +1660,7 @@ export class EditableTableWidget extends WidgetType {\n       const text = serializeRangeSelection(range);\n       if (!text) return;\n       e.clipboardData?.setData(\"text/plain\", text);\n+      e.clipboardData?.setData(\"text/html\", serializeRangeSelectionHtml(range));\n       e.preventDefault();\n     });\n     wrapper.tabIndex = -1;"
+      },
+      {
+        "sha": "9cfe409ebeb820c7e3cca28fc62a6beb8bde5d30",
+        "filename": "packages/core/test/live-preview.test.ts",
+        "status": "modified",
+        "additions": 143,
+        "deletions": 0,
+        "changes": 143,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Flive-preview.test.ts?ref=efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+        "patch": "@@ -803,6 +803,149 @@ describe(\"live preview\", () => {\n     container.remove();\n   });\n \n+  it(\"copies table range selections as both TSV text and HTML table\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"| A | B |\\n| --- | --- |\\n| A & B | **bold** |\",\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    const cells = container.querySelectorAll<HTMLElement>(\"tr\")[2]?.querySelectorAll<HTMLElement>(\".nexus-cell\");\n+    const firstCell = cells?.[0];\n+    const secondCell = cells?.[1];\n+    expect(firstCell).not.toBeUndefined();\n+    expect(secondCell).not.toBeUndefined();\n+\n+    firstCell!.getBoundingClientRect = () => ({\n+      x: 0,\n+      y: 0,\n+      left: 0,\n+      top: 0,\n+      right: 80,\n+      bottom: 30,\n+      width: 80,\n+      height: 30,\n+      toJSON: () => ({})\n+    });\n+    secondCell!.getBoundingClientRect = () => ({\n+      x: 80,\n+      y: 0,\n+      left: 80,\n+      top: 0,\n+      right: 160,\n+      bottom: 30,\n+      width: 80,\n+      height: 30,\n+      toJSON: () => ({})\n+    });\n+\n+    firstCell?.dispatchEvent(new MouseEvent(\"mousedown\", {\n+      bubbles: true,\n+      cancelable: true,\n+      button: 0,\n+      clientX: 40,\n+      clientY: 15\n+    }));\n+    document.dispatchEvent(new MouseEvent(\"mousemove\", {\n+      bubbles: true,\n+      button: 0,\n+      clientX: 120,\n+      clientY: 15\n+    }));\n+    document.dispatchEvent(new MouseEvent(\"mouseup\", {\n+      bubbles: true,\n+      button: 0,\n+      clientX: 120,\n+      clientY: 15\n+    }));\n+\n+    const copied: Record<string, string> = {};\n+    const copyEvent = new Event(\"copy\", { bubbles: true, cancelable: true });\n+    Object.defineProperty(copyEvent, \"clipboardData\", {\n+      configurable: true,\n+      value: {\n+        setData: (type: string, value: string) => {\n+          copied[type] = value;\n+        },\n+      },\n+    });\n+    container.querySelector<HTMLElement>(\".nexus-table-wrapper\")?.dispatchEvent(copyEvent);\n+\n+    expect(copyEvent.defaultPrevented).toBe(true);\n+    expect(copied[\"text/plain\"]).toBe(\"A & B\\tbold\");\n+    expect(copied[\"text/html\"]).toBe(\"<table><tbody><tr><td>A &amp; B</td><td><strong>bold</strong></td></tr></tbody></table>\");\n+    editor.destroy();\n+    container.remove();\n+  });\n+\n+  it(\"copies table column selections with header cells in the HTML table\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"| Name | Score |\\n| --- | --- |\\n| Alice | 42 |\\n| Bob | 7 |\",\n+      livePreview: true\n+    });\n+\n+    const firstGrip = container.querySelector<HTMLElement>(\".nexus-col-grip\");\n+    expect(firstGrip).not.toBeNull();\n+    firstGrip?.click();\n+\n+    const copied: Record<string, string> = {};\n+    const copyEvent = new Event(\"copy\", { bubbles: true, cancelable: true });\n+    Object.defineProperty(copyEvent, \"clipboardData\", {\n+      configurable: true,\n+      value: {\n+        setData: (type: string, value: string) => {\n+          copied[type] = value;\n+        },\n+      },\n+    });\n+    container.querySelector<HTMLElement>(\".nexus-table-wrapper\")?.dispatchEvent(copyEvent);\n+\n+    expect(copyEvent.defaultPrevented).toBe(true);\n+    expect(copied[\"text/plain\"]).toBe(\"Name\\nAlice\\nBob\");\n+    expect(copied[\"text/html\"]).toBe(\"<table><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Alice</td></tr><tr><td>Bob</td></tr></tbody></table>\");\n+    editor.destroy();\n+    container.remove();\n+  });\n+\n+  it(\"copies table row selections as both TSV text and HTML table\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"| Name | Score |\\n| --- | --- |\\n| Alice | **42** |\\n| Bob | 7 |\",\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    const firstDataRowGrip = container.querySelectorAll<HTMLElement>(\".nexus-row-grip\")[1];\n+    expect(firstDataRowGrip).not.toBeUndefined();\n+    firstDataRowGrip?.click();\n+\n+    const copied: Record<string, string> = {};\n+    const copyEvent = new Event(\"copy\", { bubbles: true, cancelable: true });\n+    Object.defineProperty(copyEvent, \"clipboardData\", {\n+      configurable: true,\n+      value: {\n+        setData: (type: string, value: string) => {\n+          copied[type] = value;\n+        },\n+      },\n+    });\n+    container.querySelector<HTMLElement>(\".nexus-table-wrapper\")?.dispatchEvent(copyEvent);\n+\n+    expect(copyEvent.defaultPrevented).toBe(true);\n+    expect(copied[\"text/plain\"]).toBe(\"Alice\\t42\");\n+    expect(copied[\"text/html\"]).toBe(\"<table><tbody><tr><td>Alice</td><td><strong>42</strong></td></tr></tbody></table>\");\n+    editor.destroy();\n+    container.remove();\n+  });\n+\n   it(\"allows native text selection inside a table cell without entering edit mode\", () => {\n     const container = document.createElement(\"div\");\n     document.body.appendChild(container);"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=120",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

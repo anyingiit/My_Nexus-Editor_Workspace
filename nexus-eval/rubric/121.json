@@ -1,0 +1,17 @@
+{
+  "pr_number": 121,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Raw HTML innerHTML injection enables XSS in split preview"
+    },
+    {
+      "id": 2,
+      "summary": "New AST renderer diverges from core live-preview sanitizer/plugins"
+    },
+    {
+      "id": 3,
+      "summary": "Duplicates roadmap #13 exportHTML sourceMap sync approach"
+    }
+  ]
+}

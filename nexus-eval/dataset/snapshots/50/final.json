@@ -1,0 +1,67 @@
+{
+  "pr_number": 50,
+  "title": "fix(electron): Fix the issue of incompatible file paths during execution on the Windows operating system",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T08:01:42Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+  "merge_commit_sha": "d27ef559910579499ececc10b4df56bd7accf996",
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+      "message": "fix(electron): Fix the issue of incompatible file paths when executing the test command on Windows",
+      "date": "2026-06-01T17:42:31Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 9,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+      "status": "added",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "apps/electron-demo/test/path-utils.test.ts",
+      "status": "added",
+      "additions": 70,
+      "deletions": 0,
+      "changes": 70
+    },
+    {
+      "filename": "apps/electron-demo/test/sample-vault.test.ts",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 16,
+      "changes": 33
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=50",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

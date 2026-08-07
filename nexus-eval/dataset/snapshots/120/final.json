@@ -1,0 +1,53 @@
+{
+  "pr_number": 120,
+  "title": "feat(core): copy table ranges as HTML",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-03T11:36:02Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+  "merge_commit_sha": "e76675f39b47e65c78e7d3f5e9c4cb8fd18dc5f6",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+      "message": "feat(core): copy table ranges as HTML",
+      "date": "2026-07-03T09:03:03Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 0,
+      "changes": 31
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 143,
+      "deletions": 0,
+      "changes": 143
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=120",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

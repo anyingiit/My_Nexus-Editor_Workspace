@@ -1,0 +1,22 @@
+{
+  "pr_number": 5,
+  "title": "feat(slash): floating menu UI with ranking, result cap, and toolbar slash commands",
+  "merged": true,
+  "state": "closed",
+  "closed_at": "2026-05-13T09:11:01Z",
+  "merged_at": "2026-05-13T09:11:01Z",
+  "merged_by": "ketd",
+  "user": "2391384896",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-13T06:36:30Z",
+      "body": "Review completed. Overall this is a solid and well-scoped implementation for the slash menu capability.\n\nWhat I checked:\n\n- Reviewed the core slash state/ranking path (`getSlashMatch`, `filterSlashCommands`, `computeSlashState`) and the `EditorConfig.slashMenuLimit` integration in `editor.ts`.\n- Reviewed the vanilla DOM floating menu implementation, including lifecycle, keyboard handling, IME guard, outside-click dismissal, viewport positioning, ARIA attributes, and `destroy()` cleanup symmetry.\n- Reviewed toolbar slash command registration and confirmed the commands reuse the existing formatting helpers.\n- Reviewed demo integration and package exports/docs/spec updates.\n- Ran the focused PR test set: 5 files / 84 tests passed.\n- Ran the full test suite: 28 files / 268 tests passed.\n- Ran the full build successfully.\n\nNotes:\n\n- The headless/event-first design is preserved: the UI remains optional, and hosts can still consume `slashMenuChange` directly.\n- Keeping empty-query order as registration order is the right default for host-curated/frequently-used command ordering.\n- The UI implementation avoids innerHTML for command text, which keeps command-provided title/description safe.\n- `destroy()` correctly removes editor subscriptions and document/window listeners.\n\nNo blocking issues found from this review. Nice work on the tests and OpenSpec coverage as well.\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [],
+  "golden_decision": "approve",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

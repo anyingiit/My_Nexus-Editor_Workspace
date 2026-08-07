@@ -1,0 +1,112 @@
+{
+  "pr_number": 207,
+  "title": "fix(electron): preserve edits across debounced saves",
+  "body": "## Summary / 摘要\n\nPrevent the Electron demo from losing or misclassifying edits when Save, Save As, or file switching happens inside the editor's 150 ms debounced `onChange` window.\n\n## Motivation / 背景与动机\n\nThe demo deliberately debounces the AST/change pipeline with `parseDelayMs: 150`, but it also treated the debounced `state.content` and `state.dirty` fields as the persistence source of truth. This creates three races:\n\n1. Save immediately after typing can write the previous buffer to disk.\n2. Switch files immediately after typing can skip the discard prompt.\n3. Typing while file I/O is in flight can be incorrectly marked clean when the older snapshot finishes saving.\n\nA pending callback from the previous document can also arrive after a silent file load and overwrite the new file's renderer state and link-index input.\n\n- Issue: none; found during repository audit\n- Roadmap: n/a\n- OpenSpec change: n/a — bug fix with no public API change\n\n## Changes / 变更内容\n\n- `apps/electron-demo/src/renderer/state.ts`\n  - Track the exact `savedContent` baseline separately from the latest observed editor buffer.\n  - Derive `dirty` from the buffer/baseline comparison.\n  - Reconcile a completed save against the current live buffer so edits made during I/O remain dirty.\n- `apps/electron-demo/src/renderer/app.ts`\n  - Read Save and Save As snapshots directly from `editor.getDocument()`.\n  - Check the live document before allowing a file switch.\n- `apps/electron-demo/src/renderer/editor-shell.ts`\n  - Ignore debounced change payloads superseded by a silent load or newer edit.\n- Tests\n  - Cover pre-debounce unsaved detection, persisted-baseline transitions, typing during save, and the old-document callback race.\n\n## Testing / 测试\n\n- [x] `pnpm typecheck`\n- [x] `pnpm test` — 34 files, 541 tests passed\n- [x] `pnpm build`\n- [x] `pnpm build:electron-demo`\n- [x] Regression proof: removing the stale-callback guard makes the new file-load race test fail with the previous file's content.\n- [ ] Manual UI check in electron-demo\n\n## Compliance / 合规自检\n\n- [ ] **CLA signed** — pending first-time contributor check\n- [x] **AI assistance disclosed** — Codex assisted with repository audit, root-cause analysis, implementation, regression tests, and validation. The PR is intentionally draft so the contributor can review and defend every state transition before marking it ready.\n- [x] **New dependencies** — none\n- [x] **No build artifacts** committed\n- [x] **No secrets / `.env` / personal vault data committed**\n- [x] Bug fix is within `apps/electron-demo` scope and introduces no public API or OpenSpec change.\n\n## Review guide\n\nThe key invariant is:\n\n```\ndirty === (editor.getDocument() !== savedContent)\n```\n\nA save records only the snapshot actually written. If the live editor has advanced before I/O completes, the newer buffer stays dirty.\n",
+  "created_at": "2026-08-03T08:54:49Z",
+  "draft": true,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+  "first_review_time": "2026-08-03T08:54:56Z",
+  "commits_at_first_review": [
+    {
+      "sha": "d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+      "message": "fix(electron): preserve edits across debounced saves",
+      "date": "2026-08-03T08:53:13Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "679989fafc280d4e25c96ed181a650c95153c008",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 16,
+        "deletions": 7,
+        "changes": 23,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+        "patch": "@@ -1,4 +1,9 @@\n-import { createState, type AppState } from \"./state\";\n+import {\n+  createState,\n+  hasUnsavedChanges,\n+  markContentSaved,\n+  type AppState,\n+} from \"./state\";\n import { createEditorShell, type EditorShell } from \"./editor-shell\";\n import { loadSettings, createSettingsPanel, type EditorSettings } from \"./settings\";\n import { createOutlinePanel, type OutlinePanel } from \"./outline-panel\";\n@@ -115,7 +120,7 @@ function renderStatus(): void {\n }\n \n async function confirmDiscardIfDirty(): Promise<boolean> {\n-  if (!state.dirty) return true;\n+  if (!hasUnsavedChanges(state, shell.editor.getDocument())) return true;\n   return window.confirm(\"You have unsaved changes. Discard them and switch files?\");\n }\n \n@@ -142,12 +147,15 @@ async function handleSave(): Promise<void> {\n     state.error = null;\n     const targetPath = state.activeFile ?? state.filePath;\n     if (targetPath) {\n+      // Snapshot the editor directly: state.content follows the intentionally\n+      // debounced AST/onChange pipeline and may still contain the previous edit.\n+      const snapshot = shell.editor.getDocument();\n       if (state.vaultPath && targetPath.startsWith(state.vaultPath)) {\n-        await window.nexusDemo.vault.write(targetPath, state.content);\n+        await window.nexusDemo.vault.write(targetPath, snapshot);\n       } else {\n-        await window.nexusDemo.saveFile(targetPath, state.content);\n+        await window.nexusDemo.saveFile(targetPath, snapshot);\n       }\n-      state.dirty = false;\n+      markContentSaved(state, snapshot, shell.editor.getDocument());\n     } else {\n       await handleSaveAs();\n       return;\n@@ -161,12 +169,13 @@ async function handleSave(): Promise<void> {\n async function handleSaveAs(): Promise<void> {\n   try {\n     state.error = null;\n-    const result = await window.nexusDemo.saveFileAs(state.content);\n+    const snapshot = shell.editor.getDocument();\n+    const result = await window.nexusDemo.saveFileAs(snapshot);\n     if (!result) return;\n \n     state.filePath = result.path;\n     state.activeFile = result.path;\n-    state.dirty = false;\n+    markContentSaved(state, snapshot, shell.editor.getDocument());\n     vault.setActiveFile(result.path);\n   } catch (err) {\n     state.error = err instanceof Error ? err.message : String(err);"
+      },
+      {
+        "sha": "f2de659dc5c305a603ae5f578470aead3de914a6",
+        "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 5,
+        "changes": 16,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts?ref=d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+        "patch": "@@ -14,7 +14,11 @@ import {\n   createWordCountPlugin,\n   type WordCountPlugin\n } from \"@floatboat/nexus-plugin-wordcount\";\n-import type { AppState } from \"./state\";\n+import {\n+  markContentLoaded,\n+  syncEditorContent,\n+  type AppState,\n+} from \"./state\";\n import { type EditorSettings, settingsToTheme } from \"./settings\";\n \n // Parse Obsidian-style size specifier from the alt text: `alt|width` or\n@@ -319,8 +323,11 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n     direction: settings.direction,\n     indentGuides: settings.indentGuides,\n     onChange(doc) {\n-      state.content = doc;\n-      state.dirty = true;\n+      // parseDelayMs intentionally debounces this callback. Ignore a payload\n+      // superseded by a silent file load or a newer edit before the timer ran.\n+      if (editorRef.current?.getDocument() !== doc) return;\n+\n+      syncEditorContent(state, doc);\n       // Keep the link index in sync with the buffer so the backlinks panel\n       // reacts immediately when the user types `[[...]]`.\n       if (state.linkIndex && state.activeFile) {\n@@ -362,8 +369,7 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n       const t0 = performance.now();\n       editor.setDocument(content, { silent: true });\n       const t1 = performance.now();\n-      state.content = content;\n-      state.dirty = false;\n+      markContentLoaded(state, content);\n       onStateChange();\n       // Surfaced here because editor.setDocument triggers the whole CM6\n       // decoration rebuild chain (live-preview buildDecorations), so this"
+      },
+      {
+        "sha": "1ebf1045cb1e0c9ba4f4cd418ca06603267c3c15",
+        "filename": "apps/electron-demo/src/renderer/state.ts",
+        "status": "modified",
+        "additions": 34,
+        "deletions": 0,
+        "changes": 34,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstate.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstate.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstate.ts?ref=d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+        "patch": "@@ -2,7 +2,10 @@ import type { LinkIndex } from \"./link-index\";\n \n export interface AppState {\n   filePath: string | null;\n+  /** Latest editor buffer observed by the renderer. */\n   content: string;\n+  /** Exact snapshot last loaded from or successfully written to disk. */\n+  savedContent: string;\n   dirty: boolean;\n   error: string | null;\n   vaultPath: string | null;\n@@ -15,6 +18,7 @@ export function createState(): AppState {\n   return {\n     filePath: null,\n     content: \"\",\n+    savedContent: \"\",\n     dirty: false,\n     error: null,\n     vaultPath: null,\n@@ -23,3 +27,33 @@ export function createState(): AppState {\n     linkIndex: null,\n   };\n }\n+\n+/** Sync a debounced editor change without losing the persisted baseline. */\n+export function syncEditorContent(state: AppState, content: string): void {\n+  state.content = content;\n+  state.dirty = content !== state.savedContent;\n+}\n+\n+/** Reset the persisted baseline after loading a document from disk. */\n+export function markContentLoaded(state: AppState, content: string): void {\n+  state.savedContent = content;\n+  syncEditorContent(state, content);\n+}\n+\n+/**\n+ * Record the snapshot that finished saving, then compare it with the live\n+ * buffer. The two may differ when the user keeps typing during file I/O.\n+ */\n+export function markContentSaved(\n+  state: AppState,\n+  savedContent: string,\n+  currentContent: string\n+): void {\n+  state.savedContent = savedContent;\n+  syncEditorContent(state, currentContent);\n+}\n+\n+/** Include edits that have not reached the debounced onChange callback yet. */\n+export function hasUnsavedChanges(state: AppState, currentContent: string): boolean {\n+  return currentContent !== state.savedContent;\n+}"
+      },
+      {
+        "sha": "177816a4de603509c5640194f25a393c92f275f0",
+        "filename": "apps/electron-demo/test/app-handlers.test.ts",
+        "status": "modified",
+        "additions": 19,
+        "deletions": 15,
+        "changes": 34,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Ftest%2Fapp-handlers.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Ftest%2Fapp-handlers.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fapp-handlers.test.ts?ref=d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+        "patch": "@@ -1,5 +1,10 @@\n import { describe, expect, it, vi, beforeEach } from \"vitest\";\n-import { createState } from \"../src/renderer/state\";\n+import {\n+  createState,\n+  markContentLoaded,\n+  markContentSaved,\n+  syncEditorContent,\n+} from \"../src/renderer/state\";\n \n function mockBridge() {\n   const bridge = {\n@@ -29,8 +34,7 @@ describe(\"open handler logic\", () => {\n \n     if (result) {\n       state.filePath = result.path;\n-      state.content = result.content;\n-      state.dirty = false;\n+      markContentLoaded(state, result.content);\n     }\n \n     expect(state.filePath).toBe(\"/tmp/test.md\");\n@@ -43,8 +47,8 @@ describe(\"open handler logic\", () => {\n \n     const state = createState();\n     state.filePath = \"/existing.md\";\n-    state.content = \"existing\";\n-    state.dirty = true;\n+    markContentLoaded(state, \"existing\");\n+    syncEditorContent(state, \"edited\");\n \n     const result = await window.nexusDemo.openFile();\n     if (result) {\n@@ -68,11 +72,12 @@ describe(\"save handler logic\", () => {\n \n     const state = createState();\n     state.filePath = \"/tmp/test.md\";\n-    state.content = \"updated\";\n-    state.dirty = true;\n+    markContentLoaded(state, \"before\");\n+    syncEditorContent(state, \"updated\");\n \n-    await window.nexusDemo.saveFile(state.filePath, state.content);\n-    state.dirty = false;\n+    const snapshot = state.content;\n+    await window.nexusDemo.saveFile(state.filePath, snapshot);\n+    markContentSaved(state, snapshot, state.content);\n \n     expect(state.dirty).toBe(false);\n     expect(bridge.saveFile).toHaveBeenCalledWith(\"/tmp/test.md\", \"updated\");\n@@ -82,13 +87,13 @@ describe(\"save handler logic\", () => {\n     bridge.saveFileAs.mockResolvedValue({ path: \"/tmp/new.md\" });\n \n     const state = createState();\n-    state.content = \"new content\";\n-    state.dirty = true;\n+    syncEditorContent(state, \"new content\");\n \n-    const result = await window.nexusDemo.saveFileAs(state.content);\n+    const snapshot = state.content;\n+    const result = await window.nexusDemo.saveFileAs(snapshot);\n     if (result) {\n       state.filePath = result.path;\n-      state.dirty = false;\n+      markContentSaved(state, snapshot, state.content);\n     }\n \n     expect(state.filePath).toBe(\"/tmp/new.md\");\n@@ -99,8 +104,7 @@ describe(\"save handler logic\", () => {\n     bridge.saveFileAs.mockResolvedValue(null);\n \n     const state = createState();\n-    state.content = \"content\";\n-    state.dirty = true;\n+    syncEditorContent(state, \"content\");\n \n     const result = await window.nexusDemo.saveFileAs(state.content);\n     if (!result) {"
+      },
+      {
+        "sha": "9fd40c69b98b775de3a9c1d85125dca335b12d3f",
+        "filename": "apps/electron-demo/test/editor-shell.test.ts",
+        "status": "modified",
+        "additions": 21,
+        "deletions": 0,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Ftest%2Feditor-shell.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Ftest%2Feditor-shell.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Feditor-shell.test.ts?ref=d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+        "patch": "@@ -59,4 +59,25 @@ describe(\"createEditorShell\", () => {\n     expect(shell.editor.getDocument()).toBe(\"loaded from file\");\n     shell.destroy();\n   });\n+\n+  it(\"ignores a debounced change superseded by a silent file load\", async () => {\n+    const container = document.createElement(\"div\");\n+    const state = createState();\n+    const shell = createEditorShell({\n+      container,\n+      state,\n+      settings: defaultSettings(),\n+      onStateChange: vi.fn(),\n+    });\n+\n+    shell.editor.setDocument(\"pending edit from the previous file\");\n+    shell.loadDocument(\"newly loaded file\");\n+\n+    await new Promise((resolve) => setTimeout(resolve, 200));\n+\n+    expect(state.content).toBe(\"newly loaded file\");\n+    expect(state.savedContent).toBe(\"newly loaded file\");\n+    expect(state.dirty).toBe(false);\n+    shell.destroy();\n+  });\n });"
+      },
+      {
+        "sha": "f97c5481875831304542bddffe73e2500374ba3b",
+        "filename": "apps/electron-demo/test/state.test.ts",
+        "status": "modified",
+        "additions": 38,
+        "deletions": 1,
+        "changes": 39,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Ftest%2Fstate.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7/apps%2Felectron-demo%2Ftest%2Fstate.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fstate.test.ts?ref=d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+        "patch": "@@ -1,12 +1,49 @@\n import { describe, expect, it } from \"vitest\";\n-import { createState } from \"../src/renderer/state\";\n+import {\n+  createState,\n+  hasUnsavedChanges,\n+  markContentLoaded,\n+  markContentSaved,\n+  syncEditorContent,\n+} from \"../src/renderer/state\";\n \n describe(\"createState\", () => {\n   it(\"initializes with no file path and not dirty\", () => {\n     const state = createState();\n     expect(state.filePath).toBeNull();\n     expect(state.content).toBe(\"\");\n+    expect(state.savedContent).toBe(\"\");\n     expect(state.dirty).toBe(false);\n     expect(state.error).toBeNull();\n   });\n+\n+  it(\"detects unsaved text before a debounced onChange reaches state\", () => {\n+    const state = createState();\n+    markContentLoaded(state, \"saved\");\n+\n+    expect(state.dirty).toBe(false);\n+    expect(hasUnsavedChanges(state, \"saved plus a fast edit\")).toBe(true);\n+  });\n+\n+  it(\"derives dirty state from the last persisted snapshot\", () => {\n+    const state = createState();\n+    markContentLoaded(state, \"saved\");\n+\n+    syncEditorContent(state, \"edited\");\n+    expect(state.dirty).toBe(true);\n+\n+    syncEditorContent(state, \"saved\");\n+    expect(state.dirty).toBe(false);\n+  });\n+\n+  it(\"keeps edits made while a save is in flight dirty\", () => {\n+    const state = createState();\n+    markContentLoaded(state, \"before\");\n+\n+    markContentSaved(state, \"saved snapshot\", \"newer editor buffer\");\n+\n+    expect(state.savedContent).toBe(\"saved snapshot\");\n+    expect(state.content).toBe(\"newer editor buffer\");\n+    expect(state.dirty).toBe(true);\n+  });\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=207",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

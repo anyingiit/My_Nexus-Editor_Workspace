@@ -1,0 +1,26 @@
+{
+  "pr_number": 96,
+  "title": "feat(core): implement Obsidian-style YAML frontmatter preview and dia…",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T07:01:09Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "747857485",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T06:29:16Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=96) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=96) before we can accept your contribution.<br/><hr/>**admin** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=96) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T07:01:06Z",
+      "body": "感谢提交。本 PR 暂不建议合入，主要原因如下：\n\n1. 基础质量检查未通过：`git diff --check` 发现 `packages/core/test/frontmatter.test.ts` 存在 trailing whitespace。\n2. TypeScript 编译失败：`packages/core/src/live-preview-ranges.ts` 中直接判断 `child.type === \"yaml\"`，但当前 mdast 节点类型联合不包含 `\"yaml\"`，导致 `pnpm -r exec tsc --noEmit` 失败。\n3. 对当前 parser / AST 类型系统的接入方式不够严谨。若要支持 YAML frontmatter，应先明确 markdown parser 是否产出 yaml 节点、类型如何扩展、mdast adapter 如何映射，而不是直接在现有类型联合上硬判断。\n4. PR 边界不干净：提交中包含 `PR_SUBMISSION.md`、`nexus-prompts.md`、中文测试结果文档、screenshot 图片等过程材料。这些内容更适合放在 PR 描述或附件，不应进入产品源码仓库。\n5. 变更涉及 live preview、ranges、wikilinks、editor/types 等 core 链路，风险较高；但当前连格式和类型检查都未通过，不能进入合入讨论。\n\n结论：当前 PR 不通过。建议移除过程材料，缩小变更范围，先保证 `git diff --check`、`pnpm -r exec tsc --noEmit` 和相关测试全部通过，再重新提交。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

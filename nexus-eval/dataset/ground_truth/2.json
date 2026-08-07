@@ -1,0 +1,26 @@
+{
+  "pr_number": 2,
+  "title": "feat(electron): i18n for renderer UI driven by language setting",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-12T03:18:47Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "MaLunan",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-12T03:18:44Z",
+      "body": "@MaLunan thanks for the contribution. I reviewed this PR against the repository contribution rules and current Electron demo architecture. The overall direction is reasonable, but we will close this PR for now and ask for a follow-up PR with the required process and tests.\n\nWhat looks good:\n\n- The change is scoped to `apps/electron-demo/src/renderer/*` and does not pollute `packages/core` or the framework packages.\n- The lightweight `setUiLocale` / `t` / `subscribeLocale` runtime is simple and avoids adding a heavy i18n dependency.\n- Keeping renderer UI localization inside the Electron demo layer generally matches the project architecture.\n\nWhat needs to be addressed before merging:\n\n- This is a new renderer UI capability, so it should either link an OpenSpec proposal or clearly explain why this demo-only change can skip OpenSpec.\n- The PR body still contains template placeholders and some checklist items appear inaccurate. Please fill in Summary / Motivation / Changes / Testing with concrete details.\n- Please add focused tests for the i18n runtime, especially locale fallback, placeholder interpolation, and subscribe/unsubscribe behavior.\n- Please clarify the semantics of the `language` setting: whether it controls UI locale, document/page language, or both.\n- The PR adds many languages at once. Please either document translation source/maintenance strategy, or start with a smaller language set such as `en` + `zh-CN`.\n\nClosing this PR for now to keep the review queue clean. A smaller follow-up PR with the above items addressed should be much easier to review and merge.\n"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-12T03:18:46Z",
+      "body": "Closing for now as discussed in the review comment above. Please resubmit with OpenSpec/skip rationale, completed PR description, and focused i18n runtime tests."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

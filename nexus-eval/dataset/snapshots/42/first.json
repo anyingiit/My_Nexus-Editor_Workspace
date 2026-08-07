@@ -1,0 +1,69 @@
+{
+  "pr_number": 42,
+  "title": "feat(ci): add Vitest coverage reporting to CI workflow",
+  "body": " ## Summary / 摘要\r\n\r\n  为 CI 流程集成 Vitest 覆盖率统计，终端打印覆盖率表格并上传报告产物。\r\n\r\n  ##Motivation / 背景与动机\r\n\r\n  - Issue: N/A\r\n  - Roadmap (docs/ROADMAP.md): N/A（CI 工程基建）\r\n  - OpenSpec change: N/A\r\n\r\n  当前 CI 仅运行测试但无覆盖率数据输出，缺少代码质量量化指标。@vitest/coverage-v8 已在 devDependencies 中，零额外依赖即可启用。\r\n\r\n  ##Changes / 变更内容\r\n\r\n  - Root:\r\n    - vitest.config.ts — 新增 coverage 配置：v8 provider，text / json / html 三种 reporter，仅统计 packages/*/src/**/*.ts，排除 barrel 文件 **/index.ts\r\n    - package.json — 新增 test:coverage 脚本\r\n    - .github/workflows/ci.yml — verify job 中 pnpm test → pnpm test:coverage，新增 upload-artifact@v4 上传 coverage/ 产物（retention 14 天，if: always() 确保失败时仍可下载分析）\r\n\r\n  ##Testing / 测试\r\n\r\n  - [x] pnpm test:coverage passes / 全绿（28 files, 314 tests, 74.66% stmts）\r\n  - [x] Affected packages build — N/A（无代码变更）\r\n  - [x] New / updated vitest cases — N/A\r\n  - [x] Manual verification — 本地运行 pnpm test:coverage 终端打印覆盖率表格，coverage/ 目录生成 html/json 报告\r\n\r\n  ##Checklist / 自检清单\r\n\r\n  - [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n  - [x] Public API changes update package README / types — 无公共 API 变更\r\n  - [x] Touched live-preview-table.ts — N/A\r\n  - [x] New capability / breaking change — 无破坏性变更\r\n  - [x] No secrets / personal vault data committed / 无敏感信息被提交\r\n  - [x] @vitest/coverage-v8 已在 devDependencies 中，无新增依赖",
+  "created_at": "2026-06-02T07:15:57Z",
+  "draft": false,
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "head_sha_at_first_review": "4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+  "first_review_time": "2026-06-02T07:15:57Z",
+  "commits_at_first_review": [
+    {
+      "sha": "4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+      "message": "ci: add Vitest coverage reporting to CI workflow\n\nAdd vitest coverage config (v8 provider, text/json/html reporters),\ntest:coverage script, and upload-artifact step in CI verify job.",
+      "date": "2026-06-02T07:12:52Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "eae42bdf619f4123a9d8e7d04c9bc47a4af6b5cf",
+        "filename": ".github/workflows/ci.yml",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 2,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/4bf8d7cd557f70b40ce0b1c71da29862f9b64315/.github%2Fworkflows%2Fci.yml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/4bf8d7cd557f70b40ce0b1c71da29862f9b64315/.github%2Fworkflows%2Fci.yml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/.github%2Fworkflows%2Fci.yml?ref=4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+        "patch": "@@ -50,8 +50,16 @@ jobs:\n       - name: Typecheck\n         run: pnpm typecheck\n \n-      - name: Run tests\n-        run: pnpm test\n+      - name: Run tests with coverage\n+        run: pnpm test:coverage\n+\n+      - name: Upload coverage report\n+        if: always()\n+        uses: actions/upload-artifact@v4\n+        with:\n+          name: coverage-report\n+          path: coverage/\n+          retention-days: 14\n \n       - name: Build packages\n         run: pnpm build"
+      },
+      {
+        "sha": "544d4953b52d7fbd02f3015b8ffdc9d3bcd056e9",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/4bf8d7cd557f70b40ce0b1c71da29862f9b64315/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/4bf8d7cd557f70b40ce0b1c71da29862f9b64315/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+        "patch": "@@ -7,6 +7,7 @@\n     \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build\",\n     \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n+    \"test:coverage\": \"vitest run --coverage\",\n     \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\",\n     \"build:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo build\",\n     \"publish:packages\": \"pnpm -r --filter \\\"./packages/*\\\" publish --access public --no-git-checks\""
+      },
+      {
+        "sha": "34fcdcaed4524373dd61f618fb3ed53a314ea030",
+        "filename": "vitest.config.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 1,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/4bf8d7cd557f70b40ce0b1c71da29862f9b64315/vitest.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/4bf8d7cd557f70b40ce0b1c71da29862f9b64315/vitest.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/vitest.config.ts?ref=4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+        "patch": "@@ -17,6 +17,12 @@ export default defineConfig({\n     }\n   },\n   test: {\n-    environment: \"jsdom\"\n+    environment: \"jsdom\",\n+    coverage: {\n+      provider: \"v8\",\n+      reporter: [\"text\", \"json\", \"html\"],\n+      include: [\"packages/*/src/**/*.ts\"],\n+      exclude: [\"**/index.ts\"],\n+    },\n   }\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

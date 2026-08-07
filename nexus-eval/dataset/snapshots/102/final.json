@@ -1,0 +1,158 @@
+{
+  "pr_number": 102,
+  "title": "test(core): add table drag eval harness",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T15:16:57Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "83b22f75778d7bdbc6bc2b7678ece47a8ddd0881",
+  "merge_commit_sha": "9b65c1dc5c29f555e1a195aff4add313ae851b2a",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "83b22f75778d7bdbc6bc2b7678ece47a8ddd0881",
+      "message": "test(core): add table drag eval harness\n\nAdd headless eval for moveColumn with YAML corpus, Node bridge via tsup,\nrule-based oracle checks, and `pnpm eval` entry script.",
+      "date": "2026-07-02T14:21:21Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "eval/README.md",
+      "status": "added",
+      "additions": 70,
+      "deletions": 0,
+      "changes": 70
+    },
+    {
+      "filename": "eval/bridge/setup-dom.ts",
+      "status": "added",
+      "additions": 113,
+      "deletions": 0,
+      "changes": 113
+    },
+    {
+      "filename": "eval/bridge/table-ops-bridge.ts",
+      "status": "added",
+      "additions": 321,
+      "deletions": 0,
+      "changes": 321
+    },
+    {
+      "filename": "eval/bridge/tsup.config.ts",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "eval/corpus/table-drag.yaml",
+      "status": "added",
+      "additions": 132,
+      "deletions": 0,
+      "changes": 132
+    },
+    {
+      "filename": "eval/harness/__init__.py",
+      "status": "added",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "eval/harness/dataset.py",
+      "status": "added",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "eval/harness/env.py",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0,
+      "changes": 36
+    },
+    {
+      "filename": "eval/harness/evaluator.py",
+      "status": "added",
+      "additions": 213,
+      "deletions": 0,
+      "changes": 213
+    },
+    {
+      "filename": "eval/harness/main.py",
+      "status": "added",
+      "additions": 78,
+      "deletions": 0,
+      "changes": 78
+    },
+    {
+      "filename": "eval/harness/reporter.py",
+      "status": "added",
+      "additions": 168,
+      "deletions": 0,
+      "changes": 168
+    },
+    {
+      "filename": "eval/harness/runner.py",
+      "status": "added",
+      "additions": 204,
+      "deletions": 0,
+      "changes": 204
+    },
+    {
+      "filename": "eval/requirements.txt",
+      "status": "added",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "eval/run.sh",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "eval/run_eval.py",
+      "status": "added",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=102",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

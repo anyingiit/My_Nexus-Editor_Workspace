@@ -1,0 +1,15 @@
+[llm empty] retry 0: None finish=length
+[llm empty] retry 1: None finish=error
+[llm empty] retry 0: None finish=length
+[llm empty] retry 1: None finish=length
+[llm empty] retry 0: None finish=length
+[llm empty] retry 0: None finish=length
+PR 76: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 81: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 83: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 88: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 91: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 92: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 93: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+PR 94: decisions=['reject', 'reject', 'reject', 'reject', 'reject']
+C (self-consistency, full agreement) = 1.00 over 8 PRs x 5 runs

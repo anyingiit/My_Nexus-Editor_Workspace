@@ -1,0 +1,13 @@
+{
+  "pr_number": 209,
+  "title": "fix(core): honor remark syntax extensions in public AST",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "KiJune-309",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": []
+}

@@ -1,0 +1,46 @@
+{
+  "pr_number": 146,
+  "title": "fix(test): unify absolute path assertions to vaultPath()",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-30T07:50:28Z",
+  "merged_by": null,
+  "closed_by": "liuEason-mike",
+  "head_sha_final": "a9abc48d3108d91688c2bdb0c2b4a08965ec80ca",
+  "merge_commit_sha": "306c5177ddcbe248e25f6a99feb846bf9fbb035c",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "a9abc48d3108d91688c2bdb0c2b4a08965ec80ca",
+      "message": "断言里的期望绝对路径，统一改成 vaultPath(...)",
+      "date": "2026-07-10T02:22:19Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/test/sample-vault.test.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 15,
+      "changes": 34
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=145",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

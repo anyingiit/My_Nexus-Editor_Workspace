@@ -1,0 +1,116 @@
+{
+  "pr_number": 211,
+  "title": "feat(core): add list item drag reorder",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "dfed46862c18779c2371fa0023b14473f2b766ab",
+  "merge_commit_sha": "adff6ba4f77386b0fe7d87e13c09cc3a8ba556a2",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "dfed46862c18779c2371fa0023b14473f2b766ab",
+      "message": "feat(core): add list item drag reorder",
+      "date": "2026-08-04T08:54:05Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/add-missing-features/specs/plugins/spec.md",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/tasks.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/list-reorder.ts",
+      "status": "added",
+      "additions": 80,
+      "deletions": 0,
+      "changes": 80
+    },
+    {
+      "filename": "packages/core/src/live-preview-list.ts",
+      "status": "added",
+      "additions": 359,
+      "deletions": 0,
+      "changes": 359
+    },
+    {
+      "filename": "packages/core/src/live-preview-widget.ts",
+      "status": "added",
+      "additions": 38,
+      "deletions": 0,
+      "changes": 38
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 143,
+      "changes": 154
+    },
+    {
+      "filename": "packages/core/src/locale.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 6,
+      "changes": 22
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/list-reorder.test.ts",
+      "status": "added",
+      "additions": 320,
+      "deletions": 0,
+      "changes": 320
+    },
+    {
+      "filename": "packages/core/test/locale.test.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=211",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

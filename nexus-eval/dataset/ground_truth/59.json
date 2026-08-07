@@ -1,0 +1,29 @@
+{
+  "pr_number": 59,
+  "title": "Fix/electron theme color scheme",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "yusishuma",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-11T07:27:30Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=59) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:42:36Z",
+      "body": "感谢修复 Electron 暗色主题配色 🙏 这是实打实的 bug 修复。当前对 main 为 MERGEABLE。请补充：改动主要在 electron-demo 的话，按测试矩阵做一次 electron-demo 手动验证说明（截图/录屏更好），并确认 `pnpm test` 通过。\n\n⚠️ 该 PR 目前 **CLA 未签署**，签署前无法合并。请点 PR 内 CLA 机器人的链接签署；签完并调整后维护者会重新评审。感谢理解 🙏"
+    },
+    {
+      "user": "yusishuma",
+      "created_at": "2026-06-23T17:37:25Z",
+      "body": "> 感谢修复 Electron 暗色主题配色 🙏 这是实打实的 bug 修复。当前对 main 为 MERGEABLE。请补充：改动主要在 electron-demo 的话，按测试矩阵做一次 electron-demo 手动验证说明（截图/录屏更好），并确认 `pnpm test` 通过。\r\n> \r\n> ⚠️ 该 PR 目前 **CLA 未签署**，签署前无法合并。请点 PR 内 CLA 机器人的链接签署；签完并调整后维护者会重新评审。感谢理解 🙏\r\n\r\nhttps://github.com/user-attachments/assets/85448394-bc75-48f4-a8d3-9d11f0315778\r\n\r\n\r\nhttps://github.com/user-attachments/assets/2e9ae7e0-92e1-4b3a-a809-e7368b4f80d0\r\n\r\n\r\n\r\n"
+    }
+  ]
+}

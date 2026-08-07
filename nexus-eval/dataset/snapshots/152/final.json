@@ -1,0 +1,53 @@
+{
+  "pr_number": 152,
+  "title": "fix(core): preserve async asset insertion anchors",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-08-01T03:07:50Z",
+  "merged_by": null,
+  "closed_by": "xiaoxiaowen610",
+  "head_sha_final": "41bdb8c13616ba0856f747d030a3ea2a47d786a2",
+  "merge_commit_sha": "2765b64cea25c761f4acc4a69e11cd3fe2e52409",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "41bdb8c13616ba0856f747d030a3ea2a47d786a2",
+      "message": "fix(core): preserve async asset insertion anchors\n\n问题：资源上传完成时按当前选区逐个插入，上传期间移动光标或编辑原选区会导致落点漂移、覆盖新内容，并产生多个撤销步骤。\n\n实现：使用 CodeMirror StateField 追踪并映射发起时的所有选区和拖放锚点；串行上传后将成功项以单事务原子插入，并处理并发批次、部分失败、只读、setDocument 和 destroy 生命周期。\n\n复现：粘贴或拖入资源后，在上传 Promise 结束前移动光标、修改原选区或发起第二批上传；旧实现会在完成时插入到错误位置或拆成多次文档修改。",
+      "date": "2026-07-13T12:55:28Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 169,
+      "deletions": 15,
+      "changes": 184
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 397,
+      "deletions": 0,
+      "changes": 397
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=152",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

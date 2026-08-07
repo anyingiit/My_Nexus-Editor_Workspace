@@ -1,0 +1,26 @@
+{
+  "pr_number": 63,
+  "title": "feat(toolbar): extend list, blockquote and heading toggle to multi-line selections",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:40:50Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "BonnyBing",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-11T14:14:08Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=63) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=63) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=63) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:40:49Z",
+      "body": "感谢把 list/blockquote/heading toggle 扩展到多行 🙏 多行 list toggle 已随 #21 合入 main（`ccbb25f`），本 PR 与之重叠且对当前 main CONFLICTING。blockquote / heading 的多行 toggle 是 #21 没覆盖的、有价值的增量——欢迎基于当前 main 单独提一个只做 blockquote+heading 多行 toggle 的聚焦 PR。当前重叠形态故关闭。\n\n—— 此关闭基于代码评审；如果其中某块功能你想单独推进，欢迎基于当前 main 提一个聚焦的小 PR（记得先签 CLA）🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,75 @@
+{
+  "pr_number": 135,
+  "title": "fix: render strikethrough text inside markdown table cells",
+  "body": "## Summary\n- Treat Lezer `StrikethroughMark` nodes as inline markdown markers so GFM delete text inside table cells renders without raw `~~` delimiters.\n- Extend the live-preview table inline formatting test to cover delete/strikethrough cells.\n\n## Verification\n- `pnpm exec vitest run packages/core/test/live-preview.test.ts` -> pass (63 tests)\n- `pnpm --filter @floatboat/nexus-core build` -> pass\n- `git diff --check` -> pass",
+  "created_at": "2026-07-06T14:52:43Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "0cf65607ba73a177d33658c7c612064de91ff281",
+  "first_review_time": "2026-07-06T14:52:54Z",
+  "commits_at_first_review": [
+    {
+      "sha": "0cf65607ba73a177d33658c7c612064de91ff281",
+      "message": "fix: render strikethrough text inside markdown table cells",
+      "date": "2026-07-06T14:51:52Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "83175af1c24d6e6125271533f82de034f8a8d591",
+        "filename": "packages/core/src/lezer-mdast-adapter.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/0cf65607ba73a177d33658c7c612064de91ff281/packages%2Fcore%2Fsrc%2Flezer-mdast-adapter.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/0cf65607ba73a177d33658c7c612064de91ff281/packages%2Fcore%2Fsrc%2Flezer-mdast-adapter.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Flezer-mdast-adapter.ts?ref=0cf65607ba73a177d33658c7c612064de91ff281",
+        "patch": "@@ -237,6 +237,7 @@ const MARKER_NODE_NAMES = new Set([\n   \"EmphasisMark\",\n   \"CodeMark\",\n   \"LinkMark\",\n+  \"StrikethroughMark\",\n   \"ListMark\",\n   \"QuoteMark\",\n   \"HeaderMark\","
+      },
+      {
+        "sha": "741392f3e87ac6e969d2ba5ea26f47798ae80033",
+        "filename": "packages/core/test/live-preview.test.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 2,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/0cf65607ba73a177d33658c7c612064de91ff281/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/0cf65607ba73a177d33658c7c612064de91ff281/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Flive-preview.test.ts?ref=0cf65607ba73a177d33658c7c612064de91ff281",
+        "patch": "@@ -942,19 +942,21 @@ describe(\"live preview\", () => {\n     editor.destroy();\n   });\n \n-  it(\"renders inline bold/em/code inside table cells\", () => {\n+  it(\"renders inline bold/em/code/delete inside table cells\", () => {\n     const container = document.createElement(\"div\");\n     const editor = createEditor({\n       container,\n       initialValue:\n-        \"| Style | Sample |\\n|---|---|\\n| Bold | **strong** |\\n| Italic | *em* |\\n| Code | `code` |\",\n+        \"| Style | Sample |\\n|---|---|\\n| Bold | **strong** |\\n| Italic | *em* |\\n| Code | `code` |\\n| Delete | ~~removed~~ |\",\n       livePreview: true,\n       plugins: [createGfmPreset()],\n     });\n \n     expect(container.querySelector(\"table strong\")?.textContent).toBe(\"strong\");\n     expect(container.querySelector(\"table em\")?.textContent).toBe(\"em\");\n     expect(container.querySelector(\"table code\")?.textContent).toBe(\"code\");\n+    expect(container.querySelector(\"table del\")?.textContent).toBe(\"removed\");\n+    expect(container.querySelector(\"table\")?.textContent).not.toContain(\"~~\");\n     editor.destroy();\n   });\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=135",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  }
+}

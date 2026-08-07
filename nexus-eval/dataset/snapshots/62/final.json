@@ -1,0 +1,166 @@
+{
+  "pr_number": 62,
+  "title": "feat(core,history,react,vue): add canUndo/canRedo API, undo grouping, clearHistory, and framework bindings",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:40:43Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "b89aee31439f31e2c0712c294d5eabc2e1d6a763",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "9c6bc0689fa4f3c4c94937e5bf585b890631f8bc",
+      "message": "feat(core,history): add canUndo/canRedo API and undo grouping\n\nAdd canUndo() and canRedo() methods to EditorAPI so host UIs can query\nthe undo/redo stack state for toolbar button enablement.\n\nAdd historyChange event to EditorEventMap — emits { canUndo, canRedo }\non every history state transition, with deduplication for unchanged states.\n\nEnhance createHistoryPlugin() with HistoryPluginOptions (newGroupDelay,\nminDepth) for configurable undo grouping — replaces the bare history()\ncall with explicit configuration while preserving backward compatibility.\n\nOpenSpec: add-history-state-api",
+      "date": "2026-06-11T08:33:14Z"
+    },
+    {
+      "sha": "02c9e18a8492f7fd96b0f9336ee4e41c16344ceb",
+      "message": "fix(core): suppress historyChange on silent document loads\n\nPreviously setDocument({ silent: true }) (file-open from disk) would\nemit historyChange events despite the silent flag. Silent transactions\nshould not trigger any user-facing UI events.\n\nAlso adds 7 edge-case tests:\n- Silent load suppression\n- undo() / redo() on empty stack returns false, no events\n- replaceSelection triggers historyChange\n- No history plugin installed → no events fire\n- Multi-step undo tracking with fake timers",
+      "date": "2026-06-11T09:55:44Z"
+    },
+    {
+      "sha": "b2b680d4b7e72a2ed716fd58099ef16222fbbee2",
+      "message": "feat(history,react,vue): add clearHistory, expose canUndo/canRedo in bindings\n\nclearHistory via editor.runCommand(history.clear):\n- Uses two-stage Compartment reconfigure (empty then history) to\n  reset CodeMirror's singleton historyField_ StateField.\n- Emits historyChange({ canUndo: false, canRedo: false }) on clear.\n- Guarded against IME composition.\n\nReact useEditor now returns reactive canUndo / canRedo:\n- Subscribes to historyChange event, cleans up on unmount.\n- Types updated (UseEditorResult).\n\nVue useEditor now returns reactive canUndo / canRedo:\n- Same pattern with ref() and historyChange subscription.\n\nAdded @codemirror/state dependency to plugin-history for Compartment.",
+      "date": "2026-06-11T10:38:58Z"
+    },
+    {
+      "sha": "b89aee31439f31e2c0712c294d5eabc2e1d6a763",
+      "message": "test(history): add edge-case tests for clearHistory\n\nCover undo-after-clear, fresh-edit-after-clear, idempotent double-clear,\nand Ctrl+Z after clear scenarios. All 14 plugin-history tests pass.",
+      "date": "2026-06-11T10:45:34Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/add-history-state-api/proposal.md",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "openspec/changes/add-history-state-api/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 53,
+      "deletions": 0,
+      "changes": 53
+    },
+    {
+      "filename": "openspec/changes/add-history-state-api/tasks.md",
+      "status": "added",
+      "additions": 12,
+      "deletions": 0,
+      "changes": 12
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 1,
+      "changes": 26
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 324,
+      "deletions": 0,
+      "changes": 324
+    },
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 106,
+      "deletions": 4,
+      "changes": 110
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 296,
+      "deletions": 0,
+      "changes": 296
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 4,
+      "changes": 29
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 0,
+      "changes": 36
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 3,
+      "changes": 24
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 49,
+      "deletions": 0,
+      "changes": 49
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 13,
+      "changes": 16
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=62",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

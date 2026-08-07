@@ -1,0 +1,156 @@
+{
+  "pr_number": 116,
+  "title": "feat(core): scroll-synced split preview via sourceMap export (ROADMAP #13)",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "697efb1a6339366080d9d3c6aed65483fcd5af4e",
+  "merge_commit_sha": "2580720501856ba89bdd8ede150cc8b132083af9",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "c23eb03a3dd12f88419a3a709f03f4775b459400",
+      "message": "feat(core): scroll-synced split preview via sourceMap export (ROADMAP #13)\n\nCore:\n- exportHTML({ sourceMap: true }) stamps blocks with data-nexus-from/to\n  source offsets (rehypeSourceMap); descends into list/blockquote\n  containers so outline-style documents get per-item anchors. Default\n  exportHTML() output is byte-identical to before.\n- EditorAPI: \"scroll\" event, getScrollAnchor() / scrollToAnchor(offset)\n  with sub-line interpolation over CM6 line blocks.\n- createScrollSync(): bidirectional editor<->preview sync. Linear\n  interpolation between source-mapped anchors keeps unevenly rendered\n  content (code fences, tables) aligned; a driver lock with a 150ms\n  window suppresses programmatic-scroll feedback loops; rAF-coalesced\n  handlers; hidden previews are skipped entirely.\n- themeToCssVars() exported so host UI outside the editor DOM can apply\n  the same theme variables instead of hand-copying names.\n\nElectron demo:\n- Split preview pane (toolbar toggle + persisted setting), rendered via\n  exportHTML sourceMap and wired through createScrollSync. Re-rendered\n  on debounced change events and explicitly after silent file loads,\n  which bypass the change pipeline.\n\nTests: 38 new (mapping math incl. inverse round-trips, source-map\ngranularity, feedback-loop suppression, hidden-pane guard, preview pane\nlifecycle). Verified end-to-end in the packaged Electron app: typing,\nbidirectional wheel scroll, live update, toggle.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-03T06:20:12Z"
+    },
+    {
+      "sha": "697efb1a6339366080d9d3c6aed65483fcd5af4e",
+      "message": "test(core): edge-case coverage for scroll-sync mapping and sourceMap export\n\nFull-range monotonicity sweeps for both mapping directions (no NaN, no\nregressions across anchor gaps), negative scrollTop (elastic overscroll),\nzero-height anchors, and empty-document behavior for exportHTML sourceMap\nand the scroll-anchor APIs.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-03T06:41:38Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 2,
+      "changes": 39
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/preview-pane.ts",
+      "status": "added",
+      "additions": 90,
+      "deletions": 0,
+      "changes": 90
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 122,
+      "deletions": 0,
+      "changes": 122
+    },
+    {
+      "filename": "apps/electron-demo/test/preview-pane.test.ts",
+      "status": "added",
+      "additions": 91,
+      "deletions": 0,
+      "changes": 91
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 0,
+      "changes": 41
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 51,
+      "deletions": 4,
+      "changes": 55
+    },
+    {
+      "filename": "packages/core/src/html-source-map.ts",
+      "status": "added",
+      "additions": 109,
+      "deletions": 0,
+      "changes": 109
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 1,
+      "changes": 17
+    },
+    {
+      "filename": "packages/core/src/scroll-sync.ts",
+      "status": "added",
+      "additions": 261,
+      "deletions": 0,
+      "changes": 261
+    },
+    {
+      "filename": "packages/core/src/theme.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 1,
+      "changes": 14
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 1,
+      "changes": 38
+    },
+    {
+      "filename": "packages/core/test/export-html-source-map.test.ts",
+      "status": "added",
+      "additions": 136,
+      "deletions": 0,
+      "changes": 136
+    },
+    {
+      "filename": "packages/core/test/scroll-sync.test.ts",
+      "status": "added",
+      "additions": 366,
+      "deletions": 0,
+      "changes": 366
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=116",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

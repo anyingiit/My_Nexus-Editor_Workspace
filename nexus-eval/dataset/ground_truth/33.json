@@ -1,0 +1,26 @@
+{
+  "pr_number": 33,
+  "title": "Feat/ai text polish",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-27T12:59:14Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "FruitJ",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-27T07:04:38Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=33) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=33) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=33) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-27T12:58:47Z",
+      "body": "@FruitJ 谢谢你花时间做这套东西，从流式 UI 到测试都看得出投入。但在合并前我要把方向先说清楚，避免后面继续返工。\n\n### 这个 PR 整体方向和 Nexus 不符\n\n**Nexus 就是一个纯粹的 Markdown 编辑器引擎，不会引入 AI 功能。**\n\nREADME 第一句就写明了：*\"a headless, AST-driven Markdown editor engine\"*。我们对标的是 Tiptap / Lexical / Milkdown —— 只做编辑器本身，被宿主应用集成。AI 是**宿主应用**的事，不是引擎的事。\n\n具体到这个 PR：\n\n1. **`packages/plugin-ai` 不会被接受** —— AI 润色不是编辑器引擎能力，而且绑死了火山引擎/豆包一家厂商，这种口子一旦开了就收不回。\n2. **`packages/plugin-ui` 不会被接受** —— Nexus 是 headless 的，README 明确写过 *\"Headless means no theme. We ship logic, not looks.\"* 在引擎仓库发布 toast + dialog 通用 UI 库，跟这条原则正面冲突。\n3. **`apps/electron-demo` 里也不要加 AI 按钮和相关逻辑** —— demo 的作用是展示引擎能力，不是产品级演示。在 demo 里塞 AI 功能会让外界误以为 AI 是引擎内置能力，定位会被稀释。\n\n另外按 \\`CONTRIBUTING.md\\` §3.1，新增插件/新增 capability **必须先在 \\`openspec/changes/\\` 提 proposal**，roadmap 里也没有 AI 相关条目 —— 这个 PR 两条流程都没走。\n\n### 这个 PR 里唯一可以独立保留的部分\n\n\\`packages/plugin-toolbar\\` 里的 \\`additionalGroups\\` 扩展点这个改动本身是有价值的，**和 AI 解耦后单独开一个小 PR**，我可以合。这样你写的扩展机制能进主仓库，AI 那部分你可以在自己的项目里基于这个扩展点接入。\n\n### 建议的处理方式\n\n- 关掉这个 PR，或者把它彻底改成只包含 \\`additionalGroups\\` 那部分\n- 整个 \\`packages/plugin-ai\\`、\\`packages/plugin-ui\\`、\\`docs/AI_POLISH_FEATURE.md\\`、demo 里所有 AI 改动**全部回退**\n- 顺手清掉这几个不该进仓库的东西：\n  - \\`apps/electron-demo/.env\\`（加进 \\`.gitignore\\`）\n  - \\`apps/electron-demo/dist-electron/main.js\\`、\\`preload.js\\`（构建产物）\n  - 根 \\`.npmrc\\` 和 \\`package.json\\` 里跟 PR 主题无关的改动\n\n如果你后续想让 Nexus 对 AI 场景更友好，正确的路径是在 core 补齐选区读写、范围替换、流式 API 等**原子能力**（\\`getSelectedText()\\` 已经在 P0），让宿主应用更容易接入自己的 AI —— 而不是把某家厂商的 SDK 打成 plugin。这种 core 层的提案欢迎走 OpenSpec 流程提。\n\n辛苦了。👍"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,86 @@
+{
+  "pr_number": 182,
+  "title": "docs(core): document selection and range editing APIs",
+  "body": "## Summary / 摘要\r\n\r\nDocument the core selection and atomic range-editing APIs in the package and bilingual root READMEs, and refresh the roadmap summary to match the detailed roadmap.\r\n\r\n## Motivation / 背景与动机\r\n\r\nThe detailed roadmap marks `getSelectedText()`, multi-cursor support, regex search, slash sorting, and framework `onReady` support as shipped, while the root README still presents them as upcoming work. The root API reference also omits the already-public selection and `replaceRange()` APIs, making host integrations harder to discover.\r\n\r\n- Issue: N/A — documentation consistency fix\r\n- Roadmap (`docs/ROADMAP.md`): Core Editor #5 and Developer Experience #24\r\n- OpenSpec change: N/A — documentation-only change; no capability or behavior change\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/core`: expand the selections section with `getSelectedText()`, `replaceSelection()`, and atomic `replaceRange()` semantics, including main-range and pre-edit-offset behavior.\r\n- Root documentation: add the same selection/range-editing surface to the English and Chinese API references.\r\n- Roadmap summary: remove already-shipped P0/P1 highlights and reflect the remaining planned work in both languages.\r\n- `packages/plugin-*`: N/A\r\n- `apps/electron-demo`: N/A\r\n- `openspec/`: N/A\r\n\r\n## Testing / 测试\r\n\r\n- [ ] `pnpm test` passes / 全绿 — not run; documentation-only change\r\n- [ ] Affected packages build (`pnpm build`) / 受影响包构建通过 — not run; no source or package metadata changed\r\n- [x] Cross-checked every documented method against `EditorAPI` in `packages/core/src/types.ts`\r\n- [x] Verified English/Chinese API parity and balanced Markdown code fences\r\n- [x] Re-fetched the committed branch and confirmed all three files exactly match the validated content\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证 — not applicable\r\n\r\n## Compliance / 合规自检\r\n\r\n- [ ] **CLA signed** — first-time contributors will follow the CLA bot prompt\r\n- [x] **AI disclosure**: this PR changes documentation only; no functional code was generated. AI assistance drafted and reviewed the documentation and cross-checked it against the public TypeScript API.\r\n- [x] **New dependencies**: none\r\n- [x] **No build artifacts** committed (`dist/`, `dist-electron/`, compiled `.js` from `.ts`)\r\n- [x] **No secrets** / `.env` / personal vault data committed\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n- [x] Public API documentation is synchronized with the existing types; no API behavior changed\r\n- [x] `live-preview-table.ts` was not touched\r\n- [x] No new capability or breaking change; OpenSpec is not required\r\n- [x] Change aligns with project scope (`GOVERNANCE.md` §4)\r\n\r\n## Screenshots / Recordings · 截图或录屏\r\n\r\nN/A — documentation-only change.",
+  "created_at": "2026-07-24T14:49:18Z",
+  "draft": true,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+  "first_review_time": "2026-07-24T14:49:31Z",
+  "commits_at_first_review": [
+    {
+      "sha": "35da3f2640c174be27f1feb5fd0604e179329494",
+      "message": "docs(core): document selection and range editing APIs",
+      "date": "2026-07-24T14:34:10Z"
+    },
+    {
+      "sha": "0a43870f2ccd83d63078184cac30774324f99482",
+      "message": "docs: sync root selection API reference",
+      "date": "2026-07-24T14:34:12Z"
+    },
+    {
+      "sha": "e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+      "message": "docs: sync Chinese selection API reference",
+      "date": "2026-07-24T14:34:15Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 3,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "cb394678ccfeada188b6e19d7c365cd2d2c65586",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 17,
+        "deletions": 4,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e96f4cbc0e5c30558c3d10f6915a02f083ab0148/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e96f4cbc0e5c30558c3d10f6915a02f083ab0148/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+        "patch": "@@ -19,8 +19,8 @@ We ship in priority tiers — **P0 is what we're working on right now**.\n \n | Tier | Theme | Highlights |\n |---|---|---|\n-| **P0 — Now** | Core API completeness | `getSelectedText()`, slash command sorting, `<Editor />` `onReady`, TS strict coverage |\n-| **P1 — Next** | Power-user features | Multi-cursor, regex search, undo/redo grouping, widget API standardization, Electron packaging |\n+| **P0 — Now** | Core API completeness | TypeScript strict coverage (ongoing; other P0 items shipped) |\n+| **P1 — Next** | Power-user features | Undo/redo grouping, widget API standardization, Electron packaging, end-to-end testing |\n | **P2 — Mid-term** | UX & ecosystem | Advanced toolbar (emoji / table / color), fuzzy search, sync-scroll preview, web-component wrapper |\n | **P3 — Long-term** | Collaboration | Realtime CRDT collab, shared comments / @mention, plugin hot-reload |\n \n@@ -207,10 +207,21 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n ```ts\n editor.getDocument()          // current Markdown string\n editor.getAst()               // current mdast Root\n-editor.setDocument(md)        // replace entire document\n+\n+// Selection and range editing\n+editor.getSelection()         // main range: { anchor, head }\n+editor.getSelections()        // { ranges: [{ anchor, head }, ...], mainIndex }\n+editor.getSelectedText()      // text in the main range; \"\" when collapsed\n+editor.setSelection(anchor, head)\n+editor.setSelections([{ anchor: 2 }, { anchor: 9, head: 14 }], 1)\n+editor.replaceSelection(text)\n+editor.replaceRange(from, to, insert, { anchor: nextPos })\n+\n+// Whole-document replacement\n+editor.setDocument(md)\n editor.setDocument(md, { silent: true, preserveSelection: true })\n editor.setDocument(md, { selection: { anchor: 0 } })\n-editor.setSelection(pos)      // move cursor\n+\n editor.focus() / editor.blur()\n editor.destroy()\n \n@@ -224,6 +235,8 @@ editor.off(\"change\", handler)\n editor.getCoordsAtPos(pos)     // { left, right, top, bottom } | null\n ```\n \n+`getSelectedText()` reads the main selection range; use `getSelections()` when a host needs every range in multi-cursor mode. `replaceRange()` applies the content change and optional post-edit selection in one CodeMirror transaction, so a single undo restores both. Its offsets use pre-edit document coordinates.\n+\n </details>\n \n <details>"
+      },
+      {
+        "sha": "ec66b890f4d0b1c16bb05ca804dfe363aeb7d1d0",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 17,
+        "deletions": 4,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e96f4cbc0e5c30558c3d10f6915a02f083ab0148/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e96f4cbc0e5c30558c3d10f6915a02f083ab0148/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+        "patch": "@@ -19,8 +19,8 @@\n \n | 优先级 | 主题 | 关键项 |\n |---|---|---|\n-| **P0 — 当前** | 核心 API 完善 | `getSelectedText()`、斜杠命令排序、`<Editor />` `onReady`、TS 严格类型覆盖 |\n-| **P1 — 下一阶段** | 进阶功能 | 多光标、正则搜索、撤销/重做分组、Widget API 标准化、Electron 打包优化 |\n+| **P0 — 当前** | 核心 API 完善 | TypeScript 严格类型覆盖（进行中；其余 P0 已完成） |\n+| **P1 — 下一阶段** | 进阶功能 | 撤销/重做分组、Widget API 标准化、Electron 打包优化、端到端测试 |\n | **P2 — 中期** | 体验与生态 | 高级工具栏（emoji / 表格 / 颜色）、模糊搜索、滚动同步预览、Web Component 包装 |\n | **P3 — 长期** | 协作能力 | 实时 CRDT 协作、共享评论 / @提醒、插件热重载 |\n \n@@ -207,10 +207,21 @@ pnpm dev:electron-demo\n ```ts\n editor.getDocument()          // 当前 Markdown 文本\n editor.getAst()               // 当前 mdast 语法树\n-editor.setDocument(md)        // 替换整个文档\n+\n+// 选区与范围编辑\n+editor.getSelection()         // 主选区：{ anchor, head }\n+editor.getSelections()        // { ranges: [{ anchor, head }, ...], mainIndex }\n+editor.getSelectedText()      // 主选区文本；光标折叠时为 \"\"\n+editor.setSelection(anchor, head)\n+editor.setSelections([{ anchor: 2 }, { anchor: 9, head: 14 }], 1)\n+editor.replaceSelection(text)\n+editor.replaceRange(from, to, insert, { anchor: nextPos })\n+\n+// 整文档替换\n+editor.setDocument(md)\n editor.setDocument(md, { silent: true, preserveSelection: true })\n editor.setDocument(md, { selection: { anchor: 0 } })\n-editor.setSelection(pos)      // 移动光标\n+\n editor.focus() / editor.blur()\n editor.destroy()\n \n@@ -224,6 +235,8 @@ editor.off(\"change\", handler)\n editor.getCoordsAtPos(pos)     // { left, right, top, bottom } | null\n ```\n \n+`getSelectedText()` 只读取主选区；多光标模式下如需所有选区，请使用 `getSelections()`。`replaceRange()` 会在同一个 CodeMirror 事务中完成内容替换和可选的选区移动，因此一次撤销即可同时恢复两者；所有偏移量均基于编辑前的文档坐标。\n+\n </details>\n \n <details>"
+      },
+      {
+        "sha": "0144251f45456ed5f78c3448b43f1e609720b8d4",
+        "filename": "packages/core/README.md",
+        "status": "modified",
+        "additions": 24,
+        "deletions": 6,
+        "changes": 30,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e96f4cbc0e5c30558c3d10f6915a02f083ab0148/packages%2Fcore%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e96f4cbc0e5c30558c3d10f6915a02f083ab0148/packages%2Fcore%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2FREADME.md?ref=e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+        "patch": "@@ -57,19 +57,37 @@ import {\n ### Selections API\n \n ```ts\n-editor.getSelection();   // main range: { anchor, head }\n-editor.getSelections();  // all ranges: { ranges: [{ anchor, head }, ...], mainIndex }\n+editor.getSelection();      // main range: { anchor, head }\n+editor.getSelections();     // all ranges: { ranges: [{ anchor, head }, ...], mainIndex }\n+editor.getSelectedText();   // text in the main range; \"\" when collapsed\n \n-editor.setSelection(5);                                  // single cursor\n-editor.setSelections([{ anchor: 2 }, { anchor: 9, head: 14 }]);  // multiple ranges\n-editor.setSelections([{ anchor: 2 }, { anchor: 9 }], 0);         // explicit main range\n+editor.setSelection(5);                                           // single cursor\n+editor.setSelections([{ anchor: 2 }, { anchor: 9, head: 14 }]);   // multiple ranges\n+editor.setSelections([{ anchor: 2 }, { anchor: 9 }], 0);          // explicit main range\n \n editor.on(\"selectionChange\", ({ anchor, head, ranges, mainIndex }) => {\n   // anchor/head describe the main range; ranges carries all of them\n });\n ```\n \n-Multiple ranges in `setSelections` require `multiCursor: true` — without the flag CodeMirror collapses the selection to its main range.\n+Multiple ranges in `setSelections` require `multiCursor: true` — without the flag CodeMirror collapses the selection to its main range. `getSelectedText()` always reads the main range and returns an empty string for a collapsed cursor.\n+\n+### Range edits\n+\n+Use `replaceSelection()` for the current selection, or `replaceRange()` when the host already has source offsets:\n+\n+```ts\n+editor.replaceSelection(\"replacement\");\n+\n+editor.replaceRange(\n+  0,\n+  7,\n+  \"## Title\",\n+  { anchor: 8 }\n+);\n+```\n+\n+`replaceRange()` dispatches the text change and optional post-edit selection as one CodeMirror transaction, producing one undo entry. Its `from`, `to`, and selection offsets are pre-edit document coordinates. Pass `{ silent: true }` as the fifth argument only for non-user synchronization that must skip change events.\n \n ## Other config highlights\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=182",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

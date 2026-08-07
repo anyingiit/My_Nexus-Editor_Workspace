@@ -1,0 +1,95 @@
+{
+  "pr_number": 204,
+  "title": "feat(electron): 添加 AI 上下文复制功能",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "a54b1083abfb4cd0173b13e008ab92391cb8e045",
+  "merge_commit_sha": "487806d40b6d8e294918bb99861e4d0f4fceda48",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "a54b1083abfb4cd0173b13e008ab92391cb8e045",
+      "message": "feat(electron): add AI context copy action",
+      "date": "2026-08-01T07:10:32Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 1,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/ai-context.ts",
+      "status": "added",
+      "additions": 146,
+      "deletions": 0,
+      "changes": 146
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/test/ai-context.test.ts",
+      "status": "added",
+      "additions": 86,
+      "deletions": 0,
+      "changes": 86
+    },
+    {
+      "filename": "openspec/changes/add-ai-context-copy/proposal.md",
+      "status": "added",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "openspec/changes/add-ai-context-copy/specs/electron-demo/spec.md",
+      "status": "added",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "openspec/changes/add-ai-context-copy/tasks.md",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=204",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

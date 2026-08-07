@@ -1,0 +1,26 @@
+{
+  "pr_number": 91,
+  "title": "fix(search): make whole-word matching Unicode-aware",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T07:00:50Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "jinli59656-sys",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-01T16:12:48Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=91) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=91) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=91) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T07:00:44Z",
+      "body": "感谢提交。本 PR 暂不建议合入，主要原因如下：\n\n1. 修复方向是合理的：JavaScript `\\b` 对 accented Latin、Cyrillic、CJK 等 Unicode 文本确实不可靠。\n2. 但当前实现会引入兼容性回归：在 `wholeWord: true` 且非 CJK 查询时强制追加 `u` flag，会破坏已有 `regexp: true + wholeWord: true` 的部分用法。例如一些过去在非 `u` 模式下合法的用户正则，如 `foo\\-bar`，会在 `u` 模式下变成非法正则。\n3. 测试没有覆盖 `regexp: true + wholeWord: true` 的兼容性边界，因此无法证明这个公开能力没有被破坏。\n4. CJK 场景下 whole-word 实际退化为 term / substring matching，这个设计可以讨论，但需要在实现注释和测试里明确语义。\n\n结论：当前 PR 不通过。建议重新设计 literal search 与 regexp search 的边界：不要对用户 regexp 无条件强加 `u` flag；补充 regex + wholeWord 的兼容性回归测试后再提交。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

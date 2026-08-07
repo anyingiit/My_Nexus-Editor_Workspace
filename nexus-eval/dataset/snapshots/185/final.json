@@ -1,0 +1,82 @@
+{
+  "pr_number": 185,
+  "title": "fix(react,vue): restore rejected controlled edits",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "2af46a24350d732540777c91f4d247b1ad2677f0",
+  "merge_commit_sha": "fcf9df33d08eb4afde6762f43a6a8595a2d79423",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "9be890f2ba7d849292ae688054177077693804f3",
+      "message": "fix(react): reconcile rejected controlled edits",
+      "date": "2026-07-25T06:22:46Z"
+    },
+    {
+      "sha": "84ac1aba9f51c32dea2a7fd5835cb98df510b999",
+      "message": "test(react): cover accepted and rejected controlled edits",
+      "date": "2026-07-25T06:22:50Z"
+    },
+    {
+      "sha": "de3769265958609f9f6da54b5457ebf60b384f63",
+      "message": "fix(vue): reconcile rejected controlled edits",
+      "date": "2026-07-25T06:22:53Z"
+    },
+    {
+      "sha": "2af46a24350d732540777c91f4d247b1ad2677f0",
+      "message": "test(vue): cover accepted and rejected controlled edits",
+      "date": "2026-07-25T06:22:55Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 27,
+      "deletions": 2,
+      "changes": 29
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 55,
+      "deletions": 0,
+      "changes": 55
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=185",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "pr_number": 16,
+  "title": "feat(search): add fuzzy search with fzf-like scoring algorithm",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:40:54Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "JungleYwl",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-13T11:22:22Z",
+      "body": "## Review: PR #16 — feat(search): add fuzzy search with fzf-like scoring algorithm\n\n### ✅ Approved\n\n**Highlights:**\n1. **Roadmap alignment** — Directly addresses #17 (fuzzy search), a P2 item.\n2. **Well-scoped implementation** — Core fuzzy module (140 lines) with fzf-like scoring (word boundary bonus, prefix bonus, contiguous bonus, gap penalty). No external dependencies.\n3. **Good test coverage** — 14 core tests + 5 plugin-search tests, all passing (278/278).\n4. **Clean integration** — Adds `fuzzy` option to SearchOptions, toggle in UI, and character-level match indices for highlighting.\n5. **No conflicts** — Mergeable.\n\n**Minor notes:**\n- Single commit is fine for this scope, though splitting core vs plugin would make bisecting easier.\n- Consider adding a brief JSDoc on the scoring constants (why those specific values) for future maintainers.\n\nOverall: solid, focused feature with good test coverage. Ship it."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "JungleYwl",
+      "created_at": "2026-05-13T12:06:23Z",
+      "body": "@ketd 感谢老师的review 和 approve！\r\n我已经在 commit 17b38a0 中为评分常数补充了 JSDoc 注释，解释了每个数值的设计理由。如果合并前还需要改动，请随时告诉我。\r\nRoadmap #17 是一个很好的学习经历，期待继续为项目做贡献。"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:11:55Z",
+      "body": "### Code review\n\nFound 3 issues:\n\n1. The new `fuzzy` checkbox in the panel is dead UI. The checkbox is created via `createCheckbox` (which does wire a `change → commit()` listener), but `commit()` builds a `SearchQuery` without any fuzzy state, and CM6's `SearchQuery` has no `fuzzy` field anyway. The `update()` method has a comment acknowledging that `fuzzyField is not part of CM6 SearchQuery`. The result: toggling the checkbox dispatches a no-op `setSearchQuery`, and `findSearchMatches` (which is the only place `options.fuzzy` is consumed) is never invoked from the panel. The default-on plumbing through `createSearchPlugin({ fuzzy: true })` is also dead — the panel calls CM6's built-in matcher, not `findSearchMatches`.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/17b38a0a997fb56a927ba66098f741393704e005/packages/plugin-search/src/index.ts#L510-L529\n\n2. `findSearchMatches` in fuzzy mode emits one 1-character-wide `SearchMatch` per matched character instead of a single span per hit. The regex path (lines 129-140) returns one `SearchMatch` per full hit; the fuzzy path pushes a separate entry for every matched character. A 3-char fuzzy hit on a line becomes 3 distinct matches — break navigation count, replace targeting, and any code that assumes \"one match = one span\".\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/17b38a0a997fb56a927ba66098f741393704e005/packages/plugin-search/src/index.ts#L98-L141\n\n3. `replaceAllMatches` is not updated for fuzzy mode. It uses regex unconditionally and ignores `options.fuzzy`. Callers passing `{ fuzzy: true }` get a silent fallback to regex semantics that diverge from what `findSearchMatches` returned.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/17b38a0a997fb56a927ba66098f741393704e005/packages/plugin-search/src/index.ts#L142-L155\n\nLower-confidence flags worth a look (not blocking): line splitting uses `\"\\n\"` only, so on CRLF docs `\\r` stays inside `line` and may end up in `SearchMatch.text`; the fuzzy branch calls `fuzzyFilter(query, [line])` per line — wasteful single-element-array misuse, plus the comment \"Use the highest-scoring match for this line\" is misleading since there's only one candidate; `packages/core/src/fuzzy.ts:42-44` documents an invariant (\"word-boundary match always beats a non-boundary match, regardless of gap penalty accumulation\") that is overclaimed — gap penalty accumulates linearly and can dominate the fixed boundary bonus over long candidates; and PR #12 implements fuzzy over the same `SearchOptions.fuzzy` surface with a different (line-local window) approach — these two PRs will conflict at merge and need a coordination decision.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "JungleYwl",
+      "created_at": "2026-05-17T12:17:49Z",
+      "body": "@ketd 老师，再次感谢你在 Issue #17 中给出的详细 review —— 这些反馈非常有价值，帮我发现了之前遗漏的问题。\r\n我已经推送了 commit `812ba62`，修复了所有提到的问题：\r\n核心问题（3/3）：\r\n1.fuzzy checkbox 是死 UI（Issue 1）：新增了 5 个模糊感知导航函数（`fuzzyAwareFindNext` / `Previous` / `SelectMatches` / `ReplaceNext` / `ReplaceAll`），通过 DOM 查询检测面板的 fuzzy checkbox 状态，激活时委托给 `findSearchMatches` 执行，未激活时回退 CM6 原生函数。所有按钮和 Enter 键处理都已接入这些函数。\r\n2.单字符碎片匹配（Issue 2）： 将 `findSearchMatches` 的模糊分支改为每次命中输出一个完整的 `from` → `to` 区间（取首尾匹配位置），与正则路径的\"一次匹配 = 一个区间\"契约一致，确保导航、计数和替换行为正确。\r\n3.replaceAllMatches 不支持模糊（Issue 3）：新增模糊模式分支，调用 `findSearchMatches` 获取匹配区间后从左到右逐个替换，并跟踪偏移量。\r\n\r\n低置信度问题：\r\n拆行前 CRLF → LF 归一化\r\n`fuzzyFilter(query, [line])` 改为 `fuzzyMatch(query, line)`\r\n软化了 JSDoc 中词边界不变量的声明\r\n\r\n测试结果：Core 157/157 通过 + Plugin-Search 12/12 通过（sample-vault 的 9 个失败是已有的 Windows 路径 bug，应该与本次改动无关）\r\n\r\n方便的时候麻烦再看一下，有任何需要调整的地方随时告诉我。"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:23Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=16) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=16) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=16) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:40:52Z",
+      "body": "感谢 fzf 式模糊搜索 🙏 模糊搜索方向与 #28 重复，且本 PR 对当前 main CONFLICTING。我们倾向先收敛到一个实现——#28 的评审中指出了贪心无回溯的漏匹配问题，如果你的 fzf 评分实现能正确处理回溯，欢迎基于当前 main 重新提一个聚焦 PR 参与对比。当前形态故关闭。\n\n—— 此关闭基于代码评审；如果其中某块功能你想单独推进，欢迎基于当前 main 提一个聚焦的小 PR（记得先签 CLA）🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

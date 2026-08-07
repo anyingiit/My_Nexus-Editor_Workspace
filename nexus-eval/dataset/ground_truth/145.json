@@ -1,0 +1,24 @@
+{
+  "pr_number": 145,
+  "title": "fix(模块): 统一断言路径为vaultPath()断言里的期望绝对路径，统一改成 vaultPath(...)",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-10T03:59:19Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "liuEason-mike",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-10T03:52:12Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=145) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=145) before we can accept your contribution.<br/><hr/>**liuchang918** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=145) it.</sub>"
+    },
+    {
+      "user": "liuEason-mike",
+      "created_at": "2026-07-10T03:59:19Z",
+      "body": "### 改动目的\r\n统一测试用例中断言硬编码的绝对文件路径，替换为封装后的 vaultPath() 工具函数，消除环境路径耦合，提升用例跨设备兼容性。\r\n\r\n### 修改范围\r\n仅修改1个测试文件，将15处硬编码绝对路径断言统一替换为 vaultPath() 调用，无业务逻辑改动。\r\n\r\n### 自测验证\r\n1. 本地完整执行单元测试，全部用例通过；\r\n2. 验证不同工作目录下，路径断言均可正常匹配，不再依赖固定本地路径。"
+    }
+  ]
+}

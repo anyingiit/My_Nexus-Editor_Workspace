@@ -1,0 +1,151 @@
+{
+  "pr_number": 35,
+  "title": "feat(toolbar): multi-line formatting, list marker guard, inline HTML fix",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-28T15:05:22Z",
+  "merged_by": null,
+  "closed_by": "741848374",
+  "head_sha_final": "2bb9f638e65af8d4ad640dfd57d7f895fe6fb46c",
+  "merge_commit_sha": null,
+  "base_sha": "06ebeff8120c2dbde87ff9206a7f9fd921f70088",
+  "commits": [
+    {
+      "sha": "2bb9f638e65af8d4ad640dfd57d7f895fe6fb46c",
+      "message": "feat(toolbar): multi-line formatting, list marker guard, inline HTML fix\n\n- feat(plugin-toolbar): multi-line selection support for bold/italic/strikethrough/inline-code/highlight/link\n- feat(plugin-toolbar): multi-line blockquote toggle\n- feat(plugin-toolbar): multi-line heading toggle with list marker aware\n- feat(core): live preview CSS + Prec.highest guards to prevent selection into list markers\n- fix(core): list item inline HTML (span, u) now rendered inline instead of breaking list flow\n- fix(core): StrikethroughMark added to MARKER_NODE_NAMES\n- fix(core): regex fallback for overlapping bold+strikethrough markers in live preview\n- fix(plugin-toolbar): toggleWrap star-count algorithm for bold+italic boundary cases\n- fix(plugin-toolbar): dead code in toggleBlockquote single-line condition\n- docs: update ROADMAP.md/ROADMAP.zh.md with #28, #29, #30\n- docs(openspec): add multi-line-formatting change proposal",
+      "date": "2026-05-28T05:38:05Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 45,
+      "changes": 93
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 45,
+      "changes": 93
+    },
+    {
+      "filename": "openspec/changes/add-multi-line-formatting/design.md",
+      "status": "added",
+      "additions": 72,
+      "deletions": 0,
+      "changes": 72
+    },
+    {
+      "filename": "openspec/changes/add-multi-line-formatting/proposal.md",
+      "status": "added",
+      "additions": 48,
+      "deletions": 0,
+      "changes": 48
+    },
+    {
+      "filename": "openspec/changes/add-multi-line-formatting/specs/live-preview/spec.md",
+      "status": "added",
+      "additions": 48,
+      "deletions": 0,
+      "changes": 48
+    },
+    {
+      "filename": "openspec/changes/add-multi-line-formatting/specs/plugins/spec.md",
+      "status": "added",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64
+    },
+    {
+      "filename": "openspec/changes/add-multi-line-formatting/tasks.md",
+      "status": "added",
+      "additions": 35,
+      "deletions": 0,
+      "changes": 35
+    },
+    {
+      "filename": "packages/core/src/lezer-mdast-adapter.ts",
+      "status": "modified",
+      "additions": 162,
+      "deletions": 49,
+      "changes": 211
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 592,
+      "deletions": 176,
+      "changes": 768
+    },
+    {
+      "filename": "packages/core/test/live-preview-ranges.test.ts",
+      "status": "modified",
+      "additions": 52,
+      "deletions": 27,
+      "changes": 79
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 249,
+      "deletions": 82,
+      "changes": 331
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/color-decoration.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 6,
+      "changes": 20
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 315,
+      "deletions": 57,
+      "changes": 372
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 587,
+      "deletions": 17,
+      "changes": 604
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 205,
+      "deletions": 38,
+      "changes": 243
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 936,
+      "deletions": 5,
+      "changes": 941
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=35",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

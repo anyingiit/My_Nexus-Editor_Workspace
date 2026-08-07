@@ -1,0 +1,88 @@
+{
+  "pr_number": 97,
+  "title": "feat(core): add getSelectedText() API",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T15:27:08Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "a0b50138445fd30bce4bd84f251cf7c4196c8637",
+  "merge_commit_sha": "b09ec18fe9e3fb84cdbdc526a7b049e22e0d9961",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "3f568087331c3498a2ac460bc9c9eb6a46a7b3b9",
+      "message": "Pre-exec backup: editor.test.ts",
+      "date": "2026-07-02T07:38:15Z"
+    },
+    {
+      "sha": "a0b50138445fd30bce4bd84f251cf7c4196c8637",
+      "message": "feat(core): add getSelectedText() API\n\n- Add getSelectedText() method to EditorAPI\n- Returns currently selected text, empty string if nothing selected\n- Include type definition in EditorAPI interface\n- Add unit tests for empty selection and text selection",
+      "date": "2026-07-02T07:38:16Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "baddec5431f87a2af51a656ae0dda715166aed0c",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a0b50138445fd30bce4bd84f251cf7c4196c8637/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a0b50138445fd30bce4bd84f251cf7c4196c8637/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=a0b50138445fd30bce4bd84f251cf7c4196c8637",
+        "patch": "@@ -186,6 +186,8 @@ export interface SetDocumentOptions {\n export interface EditorAPI {\n   getDocument(): string;\n   getAst(): Root;\n+  /** Returns the currently selected text. Returns empty string if nothing is selected. */\n+  getSelectedText(): string;\n   getTableOfContents(): TocEntry[];\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;"
+      },
+      {
+        "sha": "92d0c8cfa6b1e77ecfcab74d23f60657da043a17",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 22,
+        "deletions": 0,
+        "changes": 22,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a0b50138445fd30bce4bd84f251cf7c4196c8637/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a0b50138445fd30bce4bd84f251cf7c4196c8637/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=a0b50138445fd30bce4bd84f251cf7c4196c8637",
+        "patch": "@@ -918,3 +918,25 @@ describe(\"createEditor — DOM event hook layer\", () => {\n     editor.destroy();\n   });\n });\n+\n+\n+describe(\"getSelectedText\", () => {\n+  it(\"returns empty string when nothing is selected\", () => {\n+    const editor = createEditor({\n+      container: document.getElementById(\"editor\")!,\n+      initialValue: \"hello world\",\n+    });\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text\", () => {\n+    const editor = createEditor({\n+      container: document.getElementById(\"editor\")!,\n+      initialValue: \"hello world\",\n+    });\n+    editor.setSelection(0, 5);\n+    expect(editor.getSelectedText()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+});"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=97",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

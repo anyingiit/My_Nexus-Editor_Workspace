@@ -1,0 +1,74 @@
+{
+  "pr_number": 127,
+  "title": "fix(core): preserve cells when structurally editing ragged GFM tables",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "2f9df46f92c5057efbd9f6cfa54eff67cd28fbb7",
+  "merge_commit_sha": null,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "2f9df46f92c5057efbd9f6cfa54eff67cd28fbb7",
+      "message": "fix(core): preserve cells when structurally editing ragged GFM tables\n\nGFM lets table rows omit their leading/trailing pipe, and remark renders\nsuch ragged tables as normal table widgets. The structural edits (column\ndrag reorder, column delete, range clear) parsed rows with\nsplit(\"|\") + slice/filter, which assumes canonical pipes: on ragged rows\nthey silently dropped the first/last cell and skipped rows whose parsed\ncell count fell short of the drag index, reordering data rows while the\nheader stayed put — corrupting the table.\n\nExtract the row parsing/serialization into pure functions\n(table-markdown.ts) that strip at most one pipe per edge, honor \\|\nescapes, pad every row to the table's widest row before editing, and\nre-serialize touched rows in canonical form. Well-formed tables\nround-trip byte-identical.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WoRNuUB2DWz7csbpNvABnz",
+      "date": "2026-07-03T11:40:36Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/__probe.mjs",
+      "status": "added",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 39,
+      "changes": 55
+    },
+    {
+      "filename": "packages/core/src/table-markdown.ts",
+      "status": "added",
+      "additions": 159,
+      "deletions": 0,
+      "changes": 159
+    },
+    {
+      "filename": "packages/core/test/live-preview-regressions.test.ts",
+      "status": "modified",
+      "additions": 102,
+      "deletions": 0,
+      "changes": 102
+    },
+    {
+      "filename": "packages/core/test/table-markdown.test.ts",
+      "status": "added",
+      "additions": 355,
+      "deletions": 0,
+      "changes": 355
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=127",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

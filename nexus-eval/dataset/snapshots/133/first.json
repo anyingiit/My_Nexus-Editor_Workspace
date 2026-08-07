@@ -1,0 +1,136 @@
+{
+  "pr_number": 133,
+  "title": "feat(electron): add Playwright-driven e2e tests for the demo app",
+  "body": "## Summary / 摘要\r\n\r\nAdds a real end-to-end test layer (Roadmap #25) that drives the *packaged* electron-demo build via Playwright's `_electron` — real Chromium, real main process, real IPC — instead of jsdom.\r\n\r\n## Motivation / 背景与动机\r\n\r\n- Issue:\r\n- Roadmap (docs/ROADMAP.md): #25 End-to-end testing, P1, marked done in this PR. Row says \"Needs OpenSpec: No\", so no proposal opened.\r\n- OpenSpec change: none (test infra, exempted per CONTRIBUTING.md §3.1)\r\n\r\n## Changes / 变更内容\r\n\r\n- `apps/electron-demo`:\r\n  - `e2e/driver.ts`: `launchApp()`/`closeApp()` helper. Resolves the electron binary via the `electron` package's own export (portable, no hardcoded paths) and strips `ELECTRON_RUN_AS_NODE` from the spawned env — some sandboxed/CI shells set it to stop a stray `electron` invocation from opening a GUI window, which would otherwise make the launch handshake silently time out.\r\n  - `e2e/smoke.e2e.test.ts`: three golden-path scenarios — app launches to an empty editor, live-preview renders typed markdown (heading/bold/italic), and a GFM task checkbox toggles via a real DOM click.\r\n  - `vitest.e2e.config.ts` + new `test:e2e` script: separate from the default `pnpm test` on purpose (needs a prior `pnpm build` + a display).\r\n  - `tsconfig.json`: include `e2e/**/*.ts` so it's typechecked.\r\n  - `package.json`: new `playwright-core` devDependency.\r\n- `vitest.config.ts` (root): excludes `**/e2e/**`. Without this the root `pnpm test` picked the new file up anyway (vitest's default include glob matches any `*.test.ts` regardless of the `.e2e.` infix) and ran it under jsdom with no built app — confirmed by actually running `pnpm test` before adding the exclude and watching it try (and fail the isolation goal, though the individual test happened to still pass).\r\n- `docs/ROADMAP.md`: #25 → done, documents how to run it and what's out of scope for this first pass.\r\n\r\n**Explicitly out of scope** (flagging so it doesn't look like an oversight):\r\n- CI wiring (Roadmap #26, \"missing e2e gate\") — different roadmap item, kept separate per CONTRIBUTING.md \"one PR, one concern\".\r\n- Vault/file-IO e2e coverage — the vault flow goes through a real native OS file picker dialog (`dialog.showOpenDialog`), which Playwright can't drive directly; bypassing it needs its own design (e.g. a test-only IPC shortcut) rather than folding it into this PR.\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes (515/515) — confirmed the e2e file does NOT run here after the `vitest.config.ts` exclude fix\r\n- [x] `pnpm typecheck` passes repo-wide\r\n- [x] `pnpm build` passes repo-wide\r\n- [x] New e2e suite: `pnpm --filter @floatboat/nexus-electron-demo build && pnpm --filter @floatboat/nexus-electron-demo test:e2e` — 3/3 passing, run 4 times total (~3s each) with no flakiness observed\r\n- [ ] Manual UI check in electron-demo — n/a, this PR *is* the automated version of that manual check\r\n\r\n## Compliance / 合规自检\r\n\r\n- [ ] **CLA signed** — will sign if/when the bot prompts\r\n- [x] **AI disclosure**: this PR's functional code is **primarily AI-generated**, same as my prior PR (#132) on this repo. I asked Claude (Anthropic's Claude Code) to pick the hardest of the roadmap items I'd surveyed and implement it end-to-end — the driver, the tests, the config isolation fix, and the roadmap update. I reviewed the diff, the actual `test:e2e` output across multiple runs, and the repo-wide `pnpm test`/`typecheck`/`build` results, and caught (and had it fix) one real bug along the way: the checkbox e2e assertion originally trusted a stale DOM reference after `.click()`, which the app's own decoration-keying behavior detaches. I have not independently rewritten the implementation myself. Disclosing this explicitly per GOVERNANCE.md §6.2 rather than checking \"not AI-generated\" — understand maintainers may decide this doesn't meet that bar.\r\n- [x] **New dependencies**: `playwright-core@^1.61.1` (devDependency, `apps/electron-demo` only) — Apache-2.0 license — needed to drive the packaged Electron app from outside its process; `-core` variant specifically because it doesn't bundle/download its own browser binaries, it drives the project's *own* already-installed Electron binary.\r\n- [x] **No build artifacts** committed\r\n- [x] **No secrets** committed\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits\r\n- [ ] Public API changes update package README — n/a, `electron-demo` is a private app, not a published package\r\n- [ ] Touched `live-preview-table.ts` — n/a, not touched in this PR\r\n- [ ] New capability / breaking change → OpenSpec — test infra is exempt per CONTRIBUTING.md §3.1 (\"bug fixes, internal refactors, dependency bumps, test/doc additions\" don't need a proposal); confirmed against the ROADMAP.md row's own \"Needs OpenSpec: No\"\r\n- [x] Change aligns with project scope\r\n",
+  "created_at": "2026-07-06T06:06:09Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+  "first_review_time": "2026-07-06T06:35:05Z",
+  "commits_at_first_review": [
+    {
+      "sha": "ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+      "message": "feat(electron): add Playwright-driven e2e tests for the demo app\n\nRoadmap #25 (End-to-end testing) — no OpenSpec required per the\nroadmap row. Adds a real end-to-end layer that drives the *packaged*\nelectron-demo build (real Chromium, real main process, real IPC) via\nplaywright-core's `_electron`, catching the class of bug that never\nshows up in the jsdom unit suite: production build wiring, preload\nbridge exposure, real layout/paint, real mouse coordinates.\n\n- apps/electron-demo/e2e/driver.ts: launchApp()/closeApp() helper.\n  Resolves the electron binary via the `electron` package's own export\n  (portable — no hardcoded paths) and strips ELECTRON_RUN_AS_NODE from\n  the spawned env, since some sandboxed/CI shells set it to stop a\n  stray `electron` invocation from opening a GUI window, which would\n  otherwise make the launch handshake silently time out.\n- apps/electron-demo/e2e/smoke.e2e.test.ts: three golden-path\n  scenarios — app launches to an empty editor, live-preview renders\n  typed markdown (heading/bold/italic), and a GFM task checkbox\n  toggles via a real DOM click. The checkbox assertion re-queries the\n  element after clicking rather than trusting the original reference:\n  its click handler dispatches a CM6 change whose decoration key\n  embeds the checked state, so CM6 replaces the <input> node\n  synchronously and the original reference is left detached.\n- apps/electron-demo/vitest.e2e.config.ts + new `test:e2e` script:\n  separate from the default `pnpm test` on purpose — these need a\n  prior `pnpm build` and a display, so keeping them in the default\n  jsdom run would make the fast unit suite flaky in headless CI.\n- vitest.config.ts: excludes `**/e2e/**` from the root config. Without\n  this, the root `pnpm test` picked the new file up anyway (vitest's\n  default include glob matches any `*.test.ts`, `.e2e.` infix or not)\n  and ran it under jsdom with no built app — confirmed by running\n  `pnpm test` before adding the exclude.\n- docs/ROADMAP.md: #25 marked done, documents how to run it and what's\n  intentionally out of scope for this first pass (vault/file-IO e2e\n  coverage — needs a way to bypass native OS file dialogs, which is\n  its own piece of work).\n\nCI wiring (roadmap #26, \"missing e2e gate\") is intentionally not part\nof this PR — different roadmap item, kept separate per \"one PR, one\nconcern\".\n\nVerified: `pnpm --filter @floatboat/nexus-electron-demo build` then\n`test:e2e` — 3/3 passing, stable across 3 consecutive runs (~3s each).\nFull repo `pnpm test` (515/515), `pnpm typecheck`, and `pnpm build`\nall pass unaffected.",
+      "date": "2026-07-06T06:00:08Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "39dacdfced36812f43d28251701fe10c19b2aa9a",
+        "filename": "apps/electron-demo/e2e/driver.ts",
+        "status": "added",
+        "additions": 77,
+        "deletions": 0,
+        "changes": 77,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fe2e%2Fdriver.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fe2e%2Fdriver.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Fdriver.ts?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -0,0 +1,77 @@\n+import { existsSync } from \"node:fs\";\n+import path from \"node:path\";\n+import { fileURLToPath } from \"node:url\";\n+\n+import { _electron as electron, type ElectronApplication, type Page } from \"playwright-core\";\n+// `electron`'s package export IS the absolute path to its executable when\n+// required from a plain Node process (the same resolution electron-mocha /\n+// spectron-style test runners rely on) — its .d.ts types the *runtime* API\n+// surface instead (BrowserWindow, app, ...), since that's what the import\n+// resolves to from *inside* an Electron process. Hence the cast.\n+import electronModule from \"electron\";\n+const electronBinaryPath = electronModule as unknown as string;\n+\n+const APP_DIR = path.resolve(fileURLToPath(import.meta.url), \"../..\");\n+\n+export interface AppHandle {\n+  app: ElectronApplication;\n+  page: Page;\n+}\n+\n+/**\n+ * Launches the production build of the Electron demo (`dist-electron/` +\n+ * `dist/`, built via `pnpm build`) and returns the app + its main window.\n+ *\n+ * Requires a prior `pnpm --filter @floatboat/nexus-electron-demo build` —\n+ * e2e tests exercise the packaged app, not the dev server, so behavior\n+ * matches what a real user launches.\n+ */\n+export async function launchApp(): Promise<AppHandle> {\n+  const mainEntry = path.join(APP_DIR, \"dist-electron/main.js\");\n+  const rendererEntry = path.join(APP_DIR, \"dist/index.html\");\n+  if (!existsSync(mainEntry) || !existsSync(rendererEntry)) {\n+    throw new Error(\n+      `electron-demo build output not found (looked for ${mainEntry} and ${rendererEntry}). ` +\n+      \"Run `pnpm --filter @floatboat/nexus-electron-demo build` before the e2e suite.\"\n+    );\n+  }\n+\n+  // Some sandboxed/CI shells export ELECTRON_RUN_AS_NODE=1 (to stop a stray\n+  // `electron` invocation from ever opening a real GUI window). Inheriting\n+  // that here would make Playwright's `_electron.launch` spawn a plain Node\n+  // process instead of the Electron runtime, and the launch handshake would\n+  // simply time out. Strip it so the app always launches for real.\n+  const env: Record<string, string> = {};\n+  for (const [key, value] of Object.entries(process.env)) {\n+    if (value !== undefined && key !== \"ELECTRON_RUN_AS_NODE\") env[key] = value;\n+  }\n+\n+  const app = await electron.launch({\n+    executablePath: electronBinaryPath,\n+    args: [APP_DIR],\n+    env,\n+    timeout: 30_000,\n+  });\n+\n+  const page = await app.firstWindow();\n+  await page.waitForLoadState(\"domcontentloaded\");\n+  await page.waitForSelector(\".cm-content\", { timeout: 15_000 });\n+  return { app, page };\n+}\n+\n+export async function closeApp(handle: AppHandle): Promise<void> {\n+  await handle.app.close().catch(() => {});\n+}\n+\n+/** Types into the CM6 content area, replacing any existing text first. */\n+export async function setEditorText(page: Page, text: string): Promise<void> {\n+  const content = await page.waitForSelector(\".cm-content\");\n+  await content.click();\n+  await page.keyboard.press(process.platform === \"darwin\" ? \"Meta+A\" : \"Control+A\");\n+  await page.keyboard.press(\"Backspace\");\n+  await page.keyboard.type(text, { delay: 10 });\n+}\n+\n+export async function getEditorText(page: Page): Promise<string> {\n+  return page.evaluate(() => document.querySelector(\".cm-content\")?.textContent ?? \"\");\n+}"
+      },
+      {
+        "sha": "028c586d57f3132957700119119035e94ee618da",
+        "filename": "apps/electron-demo/e2e/smoke.e2e.test.ts",
+        "status": "added",
+        "additions": 88,
+        "deletions": 0,
+        "changes": 88,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fe2e%2Fsmoke.e2e.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fe2e%2Fsmoke.e2e.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fe2e%2Fsmoke.e2e.test.ts?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -0,0 +1,88 @@\n+import { afterEach, describe, expect, it } from \"vitest\";\n+\n+import { type AppHandle, closeApp, getEditorText, launchApp, setEditorText } from \"./driver\";\n+\n+// These tests drive the *packaged* Electron app (real Chromium, real main\n+// process, real IPC) via Playwright — the class of bug that only shows up\n+// outside jsdom: production build wiring, preload bridge exposure, real\n+// layout/paint, real mouse coordinates. Slow and requires a prior\n+// `pnpm build`, so they run under their own `test:e2e` script rather than\n+// the default `pnpm test`.\n+\n+let current: AppHandle | null = null;\n+\n+afterEach(async () => {\n+  if (current) await closeApp(current);\n+  current = null;\n+});\n+\n+describe(\"electron-demo smoke\", () => {\n+  it(\"launches and shows an empty editor\", async () => {\n+    const handle = await launchApp();\n+    current = handle;\n+    const text = await getEditorText(handle.page);\n+    expect(text.trim()).toBe(\"\");\n+  });\n+\n+  it(\"renders live-preview formatting for typed markdown\", async () => {\n+    const handle = await launchApp();\n+    current = handle;\n+    await setEditorText(handle.page, \"# Heading\\n\\n**bold** and *italic*\\n\\nend\");\n+    await handle.page.keyboard.press(\"End\");\n+\n+    const text = await getEditorText(handle.page);\n+    expect(text).toContain(\"Heading\");\n+    expect(text).toContain(\"bold\");\n+    expect(text).toContain(\"italic\");\n+    // Live preview hides the raw markers once the cursor leaves the line.\n+    expect(text).not.toContain(\"**bold**\");\n+    expect(text).not.toContain(\"# Heading\");\n+\n+    const heading = await handle.page.evaluate(() =>\n+      document.querySelector(\"[data-heading-level]\")?.getAttribute(\"data-heading-level\")\n+    );\n+    expect(heading).toBe(\"1\");\n+  });\n+\n+  it(\"toggles a GFM task list checkbox via a real mouse click\", async () => {\n+    const handle = await launchApp();\n+    current = handle;\n+    await setEditorText(handle.page, \"- [ ] alpha\\n- [ ] beta\");\n+    await handle.page.keyboard.press(\"Meta+End\").catch(() => {});\n+    await handle.page.keyboard.press(\"End\");\n+\n+    const checkboxCountBefore = await handle.page.evaluate(\n+      () => document.querySelectorAll(\"input[type=checkbox]\").length\n+    );\n+    expect(checkboxCountBefore).toBeGreaterThanOrEqual(1);\n+\n+    // Click the DOM checkbox directly rather than via Playwright's coordinate\n+    // click — contextIsolation puts the real UI in the main window's page\n+    // context, so a plain DOM click always lands on the right element.\n+    //\n+    // The checkbox's own click handler calls preventDefault() (it drives\n+    // `checked` purely from the dispatched markdown source, not the\n+    // browser's native toggle) and dispatches a CM6 change. That change's\n+    // decoration key embeds the checked state, so CM6 treats it as a\n+    // different widget and replaces the <input> node synchronously — the\n+    // element `box` pointed at is detached once `.click()` returns. Re-query\n+    // fresh rather than trusting the stale reference's `.checked`.\n+    const checked = await handle.page.evaluate(() => {\n+      const box = document.querySelector<HTMLInputElement>(\"input[type=checkbox]\");\n+      if (!box) return null;\n+      box.click();\n+      return document.querySelector<HTMLInputElement>(\"input[type=checkbox]\")?.checked ?? null;\n+    });\n+    expect(checked).toBe(true);\n+\n+    // The toggle round-trips through a real CM6 dispatch; give it a tick to\n+    // re-render the strike-through decoration before asserting on it.\n+    await handle.page.waitForTimeout(100);\n+    const strikethrough = await handle.page.evaluate(() =>\n+      Array.from(document.querySelectorAll(\"*\")).some(\n+        (el) => (el as HTMLElement).style?.textDecoration?.includes(\"line-through\")\n+      )\n+    );\n+    expect(strikethrough).toBe(true);\n+  });\n+});"
+      },
+      {
+        "sha": "2e40c18dd8910ae03d2c8dbaad60e0403006bffe",
+        "filename": "apps/electron-demo/package.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fpackage.json?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -13,6 +13,7 @@\n     \"build\": \"tsup electron/main.ts electron/preload.ts --outDir dist-electron --format cjs --platform node --external electron --clean && vite build\",\n     \"start\": \"electron dist-electron/main.js\",\n     \"test\": \"vitest run --config ../../vitest.config.ts\",\n+    \"test:e2e\": \"vitest run --config vitest.e2e.config.ts\",\n     \"dist\": \"pnpm run build && electron-builder\",\n     \"dist:mac\": \"pnpm run build && electron-builder --mac\",\n     \"dist:mac-arm64\": \"pnpm run build && electron-builder --mac --arm64\",\n@@ -35,6 +36,7 @@\n     \"electron\": \"^35.0.0\",\n     \"electron-builder\": \"^25.1.8\",\n     \"npm-run-all2\": \"^7.0.0\",\n+    \"playwright-core\": \"^1.61.1\",\n     \"tsup\": \"^8.5.0\",\n     \"vite\": \"^6.3.0\"\n   },"
+      },
+      {
+        "sha": "137aa3eb5bc02ce94a37e6a45c978b94bf81de91",
+        "filename": "apps/electron-demo/tsconfig.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftsconfig.json?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -16,6 +16,7 @@\n     \"src/**/*.ts\",\n     \"src/**/*.d.ts\",\n     \"electron/**/*.ts\",\n-    \"test/**/*.ts\"\n+    \"test/**/*.ts\",\n+    \"e2e/**/*.ts\"\n   ]\n }"
+      },
+      {
+        "sha": "b012a0ab16ead3452237877ecbdc6a3a3f3c25a4",
+        "filename": "apps/electron-demo/vitest.e2e.config.ts",
+        "status": "added",
+        "additions": 19,
+        "deletions": 0,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fvitest.e2e.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/apps%2Felectron-demo%2Fvitest.e2e.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fvitest.e2e.config.ts?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -0,0 +1,19 @@\n+import { defineConfig } from \"vitest/config\";\n+\n+// Separate from the root vitest.config.ts (jsdom, fast, no external process)\n+// on purpose: these tests spawn a real packaged Electron app via\n+// playwright-core and are correspondingly slow and environment-sensitive.\n+// Keeping them out of the default `pnpm test` run means the fast unit suite\n+// stays fast and hermetic; `pnpm --filter @floatboat/nexus-electron-demo\n+// test:e2e` (after a `build`) opts into this one explicitly.\n+export default defineConfig({\n+  test: {\n+    environment: \"node\",\n+    include: [\"e2e/**/*.e2e.test.ts\"],\n+    testTimeout: 30_000,\n+    hookTimeout: 30_000,\n+    // Electron launches are heavy; running many in parallel on constrained\n+    // CI runners is a common source of launch-timeout flakiness.\n+    fileParallelism: false,\n+  },\n+});"
+      },
+      {
+        "sha": "2d3675dd5ba07e1af5b7bd24e48329ae6e1bd69a",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -81,7 +81,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | # | Feature | Package | Priority | Status | Needs OpenSpec | Notes |\n |---|---|---|---|---|---|---|\n | 24 | TypeScript type coverage | repo-wide | P0 | in-progress | No | Ongoing; new code enforces strict |\n-| 25 | End-to-end testing | repo infra | P1 | planned | No | Candidate: Playwright against electron-demo |\n+| 25 | End-to-end testing | repo infra | P1 | done | No | Playwright (`playwright-core` + `_electron`) drives the packaged electron-demo build; `pnpm --filter @floatboat/nexus-electron-demo test:e2e` after `build`. Kept out of default `pnpm test` (separate `vitest.e2e.config.ts`) since it needs a build + display. Initial coverage: app launch, live-preview rendering, task checkbox toggle — more scenarios (vault/file IO, multi-cursor, etc.) are natural follow-ups. |\n | 26 | CI/CD pipeline polish | `.github/workflows` | P1 | in-progress | No | PR check / CI and publish workflow exist; missing e2e gate |\n | 28 | Markdown-aware word / reading-time stats | new `plugin-wordcount` | P1 | done | Yes | Walks editor AST (no double parse) + CJK-first + ARIA status bar — see `openspec/changes/add-plugin-wordcount` |\n "
+      },
+      {
+        "sha": "81c078f25dc60b73af26fd5a050ac49d2fe46663",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -84,6 +84,9 @@ importers:\n       npm-run-all2:\n         specifier: ^7.0.0\n         version: 7.0.2\n+      playwright-core:\n+        specifier: ^1.61.1\n+        version: 1.61.1\n       tsup:\n         specifier: ^8.5.0\n         version: 8.5.1(postcss@8.5.9)(typescript@5.9.3)\n@@ -1262,6 +1265,7 @@ packages:\n \n   '@ungap/structured-clone@1.3.0':\n     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}\n+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher\n \n   '@upsetjs/venn.js@2.0.0':\n     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}\n@@ -2934,6 +2938,11 @@ packages:\n   pkg-types@1.3.1:\n     resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}\n \n+  playwright-core@1.61.1:\n+    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}\n+    engines: {node: '>=18'}\n+    hasBin: true\n+\n   plist@3.1.0:\n     resolution: {integrity: sha512-uysumyrvkUX0rX/dEVqt8gC3sTBzd4zoWfLeS29nb53imdaXVvLINYXTI2GNqzaMuvacNx4uJQ8+b3zXR0pkgQ==}\n     engines: {node: '>=10.4.0'}\n@@ -6752,6 +6761,8 @@ snapshots:\n       mlly: 1.8.2\n       pathe: 2.0.3\n \n+  playwright-core@1.61.1: {}\n+\n   plist@3.1.0:\n     dependencies:\n       '@xmldom/xmldom': 0.8.13"
+      },
+      {
+        "sha": "fdcca70071bd9bc833c74d18c802182ce5a68f02",
+        "filename": "vitest.config.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 2,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ddee2dea6a5ba7264fc8c42d70be292778e34a25/vitest.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ddee2dea6a5ba7264fc8c42d70be292778e34a25/vitest.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/vitest.config.ts?ref=ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+        "patch": "@@ -1,5 +1,5 @@\n import path from \"node:path\";\n-import { defineConfig } from \"vitest/config\";\n+import { configDefaults, defineConfig } from \"vitest/config\";\n \n export default defineConfig({\n   resolve: {\n@@ -19,6 +19,13 @@ export default defineConfig({\n   },\n   test: {\n     environment: \"jsdom\",\n-    setupFiles: [\"./vitest.setup.ts\"]\n+    setupFiles: [\"./vitest.setup.ts\"],\n+    // e2e/**/*.e2e.test.ts spawns a real packaged Electron app via\n+    // playwright-core (see apps/electron-demo/vitest.e2e.config.ts) — it\n+    // needs a prior build and a display, so it must stay out of the default\n+    // fast/hermetic `pnpm test` run. Vitest's `exclude` replaces the\n+    // built-in defaults rather than extending them, hence spreading them\n+    // back in here.\n+    exclude: [...configDefaults.exclude, \"**/e2e/**\"]\n   }\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=133",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

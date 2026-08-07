@@ -1,0 +1,25 @@
+{
+  "pr_number": 99,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Fuzzy search not integrated with search panel UI"
+    },
+    {
+      "id": 2,
+      "summary": "Unsupported combinations silently return empty/original"
+    },
+    {
+      "id": 3,
+      "summary": "Fuzzy match ranges are continuous but hits are discrete"
+    },
+    {
+      "id": 4,
+      "summary": "Custom heuristic lacks design docs and complexity proof"
+    },
+    {
+      "id": 5,
+      "summary": "Roadmap status changed prematurely without product integration"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "pr_number": 195,
+  "title": "Fix slash command confirmation creating two undo entries",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "e809b6d8247fddf23f9633036d35574c0e6fb41e",
+  "merge_commit_sha": "d9c7f4ea74d11aad418428edde5c9f6c10a126c9",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "5aad0924a8d86d9004ac604195a26684b3353df7",
+      "message": "feat(core): add EditorAPI.transact() for atomic multi-mutation undo\n\n- New EditorAPI.transact(fn) method batches multiple mutations into\n  one CM6 dispatch → exactly one undo entry.\n- Intercepts view.dispatch during callback to collect TransactionSpecs.\n- Throws 'Nested transactions are not supported' on nested calls.\n- On callback throw, discards all collected specs and restores dispatch.\n- Computation: replays all {from,to,insert} changes against original doc\n  string buffer, emits single full-document replacement.\n- No modification to existing EditorAPI methods.\n- All 537 existing tests still pass.",
+      "date": "2026-07-28T12:00:08Z"
+    },
+    {
+      "sha": "e809b6d8247fddf23f9633036d35574c0e6fb41e",
+      "message": "fix(slash): make slash command confirmation a single undo step\n\nIntroduce a small EditorAPI.transact() helper to group multiple editor mutations into one undoable operation. Slash command confirmation now uses this helper so that deleting the trigger text and executing the command produce only one undo entry.",
+      "date": "2026-07-28T13:32:17Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 67,
+      "deletions": 1,
+      "changes": 68
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 155,
+      "deletions": 0,
+      "changes": 155
+    },
+    {
+      "filename": "packages/plugin-slash/src/menu-ui.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 26,
+      "changes": 51
+    },
+    {
+      "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+      "status": "modified",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "6d96aa8e595f50129bb0160a4fbaa5d399ac9aef",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 67,
+        "deletions": 1,
+        "changes": 68,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=e809b6d8247fddf23f9633036d35574c0e6fb41e",
+        "patch": "@@ -1,4 +1,4 @@\n-import { Annotation, EditorSelection, EditorState } from \"@codemirror/state\";\n+import { Annotation, EditorSelection, EditorState, type TransactionSpec } from \"@codemirror/state\";\n \n // Annotation attached to dispatches that load content programmatically (e.g.\n // setDocument from file open) so updateListener can skip the user-edit path —\n@@ -284,6 +284,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   let destroyed = false;\n   let destroying = false;\n   let focused = false;\n+  let transacting = false;\n   let parseTimer: ReturnType<typeof setTimeout> | undefined;\n   let compositionFlushTimer: ReturnType<typeof setTimeout> | undefined;\n   let pendingCompositionMarkdown: string | null = null;\n@@ -921,6 +922,71 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const lines = view.state.doc.lines;\n       return { characters, words, lines };\n     },\n+    transact(fn: () => void): void {\n+      if (destroyed) return;\n+      if (transacting) {\n+        throw new Error(\"Nested transactions are not supported\");\n+      }\n+\n+      transacting = true;\n+      const originalDispatch = view.dispatch.bind(view);\n+      const specs: TransactionSpec[] = [];\n+\n+      view.dispatch = ((spec: TransactionSpec): void => {\n+        specs.push(spec);\n+      }) as unknown as typeof view.dispatch;\n+\n+      try {\n+        fn();\n+      } catch (e) {\n+        transacting = false;\n+        view.dispatch = originalDispatch;\n+        throw e;\n+      }\n+\n+      transacting = false;\n+      view.dispatch = originalDispatch;\n+\n+      if (specs.length === 0) return;\n+\n+      // All specs are relative to the original view.state, which was frozen\n+      // during the callback (dispatch was intercepted). Because later specs'\n+      // positions are NOT relative to earlier specs' results, we replay them\n+      // sequentially against a string buffer and emit a single full-document\n+      // replacement → exactly one undo entry.\n+      let doc = view.state.doc.toString();\n+      let finalSelection: { anchor: number; head: number } | undefined;\n+      let needsScroll = false;\n+\n+      for (const spec of specs) {\n+        if (spec.changes) {\n+          const changeList = Array.isArray(spec.changes)\n+            ? spec.changes\n+            : [spec.changes];\n+          for (const c of changeList) {\n+            if (c && typeof c === \"object\" && \"from\" in c) {\n+              const ch = c as { from: number; to?: number; insert?: string };\n+              const to = ch.to ?? ch.from;\n+              doc = doc.slice(0, ch.from) + (ch.insert ?? \"\") + doc.slice(to);\n+            }\n+          }\n+        }\n+        if (spec.selection) {\n+          finalSelection = \"ranges\" in spec.selection\n+            ? { anchor: spec.selection.main.anchor, head: spec.selection.main.head }\n+            : { anchor: spec.selection.anchor, head: spec.selection.head ?? spec.selection.anchor };\n+        }\n+        if (spec.scrollIntoView) needsScroll = true;\n+      }\n+\n+      originalDispatch({\n+        changes: { from: 0, to: view.state.doc.length, insert: doc },\n+        selection: finalSelection\n+          ? { anchor: finalSelection.anchor, head: finalSelection.head }\n+          : undefined,\n+        scrollIntoView: needsScroll,\n+      });\n+    },\n     destroy() {\n       if (destroyed || destroying) return;\n       destroying = true;"
+      },
+      {
+        "sha": "8a1e836de4b8f137e2fec521a0e1d3dca399b816",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=e809b6d8247fddf23f9633036d35574c0e6fb41e",
+        "patch": "@@ -264,6 +264,19 @@ export interface EditorAPI {\n    * 避免在合成过程中调用 setDocument 打断输入。\n    */\n   isComposing(): boolean;\n+  /**\n+   * Execute a set of editor operations as a single undoable unit. All\n+   * mutations — replaceRange, replaceSelection, setDocument, etc. — are\n+   * collected and dispatched as ONE CodeMirror transaction, producing\n+   * exactly ONE undo entry.\n+   *\n+   * - If the callback throws, no changes are applied and any collected\n+   *   specs are discarded.\n+   * - Nested transact() calls throw an Error.\n+   * - The callback receives no arguments; callers capture the editor\n+   *   reference from the surrounding scope.\n+   */\n+  transact(fn: () => void): void;\n   destroy(): void;\n   on<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;\n   off<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;"
+      },
+      {
+        "sha": "da3991574133bd97156c4eec9971a81fd0a6fa64",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 155,
+        "deletions": 0,
+        "changes": 155,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=e809b6d8247fddf23f9633036d35574c0e6fb41e",
+        "patch": "@@ -918,3 +918,158 @@ describe(\"createEditor — DOM event hook layer\", () => {\n     editor.destroy();\n   });\n });\n+\n+describe(\"transact\", () => {\n+  it(\"combines multiple mutations into one undo entry\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello\",\n+      plugins: [createHistoryPlugin()],\n+    });\n+\n+    editor.transact(() => {\n+      editor.replaceRange(5, 5, \" world\");\n+      editor.replaceRange(0, 5, \"**hello**\");\n+    });\n+\n+    expect(editor.getDocument()).toBe(\"**hello** world\");\n+\n+    // One undo reverts everything\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"hello\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"produces one undo entry for slash-style trigger-delete + command\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"/bold\",\n+      plugins: [createHistoryPlugin()],\n+    });\n+\n+    const original = editor.getDocument();\n+\n+    // Simulate slash confirm: delete trigger /bold, then wrap in markers\n+    editor.transact(() => {\n+      editor.replaceRange(0, 5, \"\");\n+      editor.replaceRange(0, 0, \"**bold**\");\n+    });\n+\n+    expect(editor.getDocument()).toBe(\"**bold**\");\n+\n+    expect(editor.undo()).toBe(true);\n+    // Should restore /bold — both the trigger deletion and the command\n+    // were in the same CM6 transaction\n+    expect(editor.getDocument()).toBe(original);\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"does not apply any changes if the callback throws\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello\",\n+      plugins: [createHistoryPlugin()],\n+    });\n+\n+    const original = editor.getDocument();\n+\n+    try {\n+      editor.transact(() => {\n+        editor.replaceRange(0, 0, \"world \");\n+        throw new Error(\"boom\");\n+      });\n+    } catch {\n+      // expected\n+    }\n+\n+    // Document must be unchanged\n+    expect(editor.getDocument()).toBe(original);\n+\n+    // Verify editor is still usable\n+    editor.replaceRange(5, 5, \"!\");\n+    expect(editor.getDocument()).toBe(\"hello!\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"works with multiple replaceRange calls inside transact\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello world\",\n+      plugins: [createHistoryPlugin()],\n+    });\n+\n+    editor.transact(() => {\n+      editor.replaceRange(0, 5, \"hi\");\n+      editor.replaceRange(3, 8, \"earth\");\n+    });\n+\n+    expect(editor.getDocument()).toBe(\"hi earth\");\n+\n+    editor.undo();\n+    expect(editor.getDocument()).toBe(\"hello world\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"throws on nested transact\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"x\" });\n+\n+    expect(() => {\n+      editor.transact(() => {\n+        editor.transact(() => {\n+          editor.replaceSelection(\"y\");\n+        });\n+      });\n+    }).toThrow(\"Nested transactions are not supported\");\n+\n+    // Outer transact was aborted, document unchanged\n+    expect(editor.getDocument()).toBe(\"x\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"selection-only ops inside transact do not create empty dispatch\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello\" });\n+\n+    editor.transact(() => {\n+      editor.setSelection(2);\n+    });\n+\n+    // 0 changes → nothing dispatched, selection applied via spec\n+    expect(editor.getDocument()).toBe(\"hello\");\n+    expect(editor.getSelection().anchor).toBe(2);\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"last setDocument inside transact wins and undo restores original\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"original\",\n+      plugins: [createHistoryPlugin()],\n+    });\n+\n+    editor.transact(() => {\n+      editor.setDocument(\"interim\");\n+      editor.setDocument(\"final\");\n+    });\n+\n+    expect(editor.getDocument()).toBe(\"final\");\n+\n+    // One undo restores \"original\" (both setDocuments in one transaction)\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"original\");\n+\n+    editor.destroy();\n+  });\n+});"
+      },
+      {
+        "sha": "b91df10ffdd0fc68426592a9cc8f98416ab3d2d2",
+        "filename": "packages/plugin-slash/src/menu-ui.ts",
+        "status": "modified",
+        "additions": 25,
+        "deletions": 26,
+        "changes": 51,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fplugin-slash%2Fsrc%2Fmenu-ui.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fplugin-slash%2Fsrc%2Fmenu-ui.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-slash%2Fsrc%2Fmenu-ui.ts?ref=e809b6d8247fddf23f9633036d35574c0e6fb41e",
+        "patch": "@@ -280,44 +280,43 @@ export function createSlashMenuUI(\n     if (!isMenuOpen() || !currentState) return;\n     const cmds = visibleCommands;\n     if (cmds.length === 0 || highlight < 0 || highlight >= cmds.length) {\n-      // Nothing valid to run; treat as dismiss so a stray Enter doesn't\n-      // leave the menu visible.\n       dismiss();\n       return;\n     }\n     const cmd = cmds[highlight];\n     const { from, to, query } = currentState;\n-    // Remove the /query trigger before invoking run so commands that\n-    // insert content at the caret don't have to know about the slash\n-    // syntax. We select the trigger range first because\n-    // `replaceSelection` operates on the current selection.\n-    if (from !== null && to !== null) {\n-      editor.setSelection(from, to);\n-      editor.replaceSelection(\"\");\n-    }\n-    editor.focus();\n-\n-    const ctx: SlashMenuCommandContext = {\n-      trigger: { from: from ?? 0, to: to ?? 0, query },\n-      editor,\n-    };\n \n-    // Hide eagerly. The natural slashMenuChange that follows the doc\n-    // edit will also flip isOpen=false, but waiting for it would leave\n-    // the menu visible for one frame after confirm — visible as a\n-    // flash on slow paint paths.\n+    // Dismiss the menu before mutating the document so the natural\n+    // slashMenuChange that follows the edit doesn't flicker the menu.\n     hide();\n     currentState = null;\n     visibleCommands = [];\n     prevIsOpen = false;\n \n-    commandHistory?.record(cmd.id);\n+    // Combine trigger deletion and command execution into ONE CM6\n+    // transaction → ONE undo entry. Use replaceRange (not setSelection\n+    // + replaceSelection) because the selection is frozen during\n+    // transact and replaceSelection would operate on the stale\n+    // pre-transact selection.\n+    editor.transact(() => {\n+      if (from !== null && to !== null) {\n+        editor.replaceRange(from, to, \"\");\n+      }\n+      editor.focus();\n \n-    if (options.onCommand) {\n-      options.onCommand(cmd, ctx);\n-    } else if (cmd.run) {\n-      cmd.run(editor);\n-    }\n+      const ctx: SlashMenuCommandContext = {\n+        trigger: { from: from ?? 0, to: to ?? 0, query },\n+        editor,\n+      };\n+\n+      if (options.onCommand) {\n+        options.onCommand(cmd, ctx);\n+      } else if (cmd.run) {\n+        cmd.run(editor);\n+      }\n+    });\n+\n+    commandHistory?.record(cmd.id);\n   }\n \n   // ── Event handlers ──────────────────────────────────────────────"
+      },
+      {
+        "sha": "94a7c484883d36b8e9a0f9bc487337de9cf29650",
+        "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+        "status": "modified",
+        "additions": 64,
+        "deletions": 0,
+        "changes": 64,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/e809b6d8247fddf23f9633036d35574c0e6fb41e/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts?ref=e809b6d8247fddf23f9633036d35574c0e6fb41e",
+        "patch": "@@ -1,10 +1,13 @@\n import { describe, expect, it } from \"vitest\";\n+import { createEditor, type SlashCommandDef } from \"@floatboat/nexus-core\";\n+import { createHistoryPlugin } from \"@floatboat/nexus-plugin-history\";\n import {\n   createSlashPlugin,\n   filterSlashCommands,\n   getSlashState,\n   getSlashMatch\n } from \"../src/index\";\n+import { createSlashMenuUI } from \"../src/menu-ui\";\n \n describe(\"@floatboat/nexus-plugin-slash\", () => {\n   it(\"detects a slash query at the cursor position\", () => {\n@@ -99,3 +102,64 @@ describe(\"@floatboat/nexus-plugin-slash\", () => {\n     expect(filtered[0].run).toBe(run);\n   });\n });\n+\n+describe(\"@floatboat/nexus-plugin-slash transact undo\", () => {\n+  it(\"one Ctrl+Z after slash confirm restores /query and command effect\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+\n+    const slashCommands: SlashCommandDef[] = [\n+      {\n+        id: \"bold\",\n+        title: \"Bold\",\n+        // Inside transact, view.state is frozen. getDocument() and\n+        // replaceSelection use the original (pre-transact) state.\n+        // Commands should use replaceRange with explicit positions\n+        // instead of getDocument()/replaceSelection.\n+        run: (editor) => {\n+          editor.replaceRange(0, 0, \"**bold**\");\n+        },\n+      },\n+    ];\n+\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [\n+        createHistoryPlugin(),\n+        { name: \"test-slash\", slashCommands },\n+      ],\n+    });\n+\n+    const menu = createSlashMenuUI(editor);\n+\n+    // Mimic user typing \"/bold\": setDocument fires updateListener →\n+    // computeSlashState → getSlashMatch(\"/bold\", 5) → slashMenuChange\n+    // → menu opens. Then press Enter to confirm.\n+    editor.setDocument(\"/bold\");\n+    editor.setSelection(5);\n+\n+    // Small delay to let the menu state settle after setSelection\n+    // dispatches the second updateListener callback.\n+    const enterEvent = new KeyboardEvent(\"keydown\", {\n+      key: \"Enter\",\n+      bubbles: true,\n+      cancelable: true,\n+    });\n+    document.dispatchEvent(enterEvent);\n+\n+    // After confirm: trigger deleted, bold applied\n+    expect(editor.getDocument()).toBe(\"**bold**\");\n+\n+    // One undo reverts both trigger deletion AND command\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"/bold\");\n+\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"\");\n+\n+    menu.destroy();\n+    editor.destroy();\n+    container.remove();\n+  });\n+});"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=195",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

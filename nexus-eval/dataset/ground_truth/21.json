@@ -1,0 +1,38 @@
+{
+  "pr_number": 21,
+  "title": "feat(editor): add getSelectedText(), multi-line list toggle, and atomic replaceRange",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T08:02:17Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "caine-21",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-05-15T06:37:54Z",
+      "body": "The implementation is directionally strong: the half-open line range handling, reversed-selection tests, and atomic `replaceRange` approach are all good. I am requesting changes for repo process and source hygiene before this can merge.\n\n1. This PR adds public core API (`getSelectedText`, `replaceRange`) and changes toolbar behavior, but it does not include an OpenSpec change. Please add `openspec/changes/...` with deltas for the core API and toolbar list-toggle semantics, then run `openspec validate <change-id> --strict`.\n\n2. `PR_DESCRIPTION.md` should not be committed as a source file. Please move that content into the GitHub PR description and remove the file from the branch.\n\n3. `replaceRange()` is now a public `EditorAPI` method, but the direct tests live only indirectly through toolbar behavior. Please add focused core tests for the primitive itself, especially range replacement plus selection in one dispatch and the `silent` option matching `setDocument` semantics.\n\nI ran `pnpm vitest run packages/core/test/editor.test.ts packages/plugin-toolbar/test/plugin-toolbar.test.ts`, `pnpm --filter @floatboat/nexus-core build`, and `pnpm --filter @floatboat/nexus-plugin-toolbar build`; all passed locally."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "caine-21",
+      "created_at": "2026-05-15T07:46:09Z",
+      "body": "Thanks for the detailed review @ketd. All three items addressed in the amended commit:\r\n**1. OpenSpec change** — Added `openspec/changes/add-selection-api/` with `proposal.md`, `tasks.md`, and spec deltasfor `editor-core` (`getSelectedText` + `replaceRange` requirements with scenarios) and `plugin-toolbar` (range-awarelist toggle semantics).\r\n**2. `PR_DESCRIPTION.md`** — Removed from the branch (`git rm`). Content already lives in the GitHub PR description.\r\n**3. Focused `replaceRange()` core tests** — Added 5 direct tests to `packages/core/test/editor.test.ts` covering : basic range replacement, selection repositioned in same dispatch, collapsed range insert, `silent` option suppresses`onChange` but keeps AST consistent, and exactly-one-undo-entry (using `createHistoryPlugin()` to activate CM6 history, same pattern as the toolbar atomic-undo suite). All 27 core tests pass."
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:08Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=21) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T08:02:02Z",
+      "body": "感谢贡献 🙌 已在本地 rebase 到最新 main，跑通 `pnpm typecheck` + `pnpm test` + `pnpm build` 全绿后，以 squash 提交合入主分支：`ccbb25f`（保留你为 author + Co-authored-by）。\n\n为保持 main 线性整洁，这里采用 squash 后手动合并的方式落地，所以 PR 由系统关闭而非显示 merged，但你的提交已经在主分支上了。再次感谢！"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,29 @@
+{
+  "pr_number": 104,
+  "points": [
+    {
+      "id": 1,
+      "summary": "API key in renderer localStorage and arbitrary host bridge risk"
+    },
+    {
+      "id": 2,
+      "summary": "Tool calling protocol not OpenAI-compliant for multi-turn tool_calls"
+    },
+    {
+      "id": 3,
+      "summary": "Lack of user authorization and host policy for document data exfiltration"
+    },
+    {
+      "id": 4,
+      "summary": "Write approval flow lacks conflict detection for overlapping edits"
+    },
+    {
+      "id": 5,
+      "summary": "PR scope too large with 30+ files and 3.4k lines hampers review"
+    },
+    {
+      "id": 6,
+      "summary": "Missing tests for Electron bridge security, API key persistence, and concurrency"
+    }
+  ]
+}

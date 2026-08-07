@@ -1,0 +1,29 @@
+{
+  "pr_number": 100,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Ratio-based sync scroll inaccurate for varied content heights"
+    },
+    {
+      "id": 2,
+      "summary": "Exposing internal DOM via getScrollElement() lacks justification"
+    },
+    {
+      "id": 3,
+      "summary": "requestAnimationFrame-based guard risks event loss and jitter"
+    },
+    {
+      "id": 4,
+      "summary": "Demo rebuilds innerHTML each update, no throttling, performance issues"
+    },
+    {
+      "id": 5,
+      "summary": "Lacks semantic block-anchor sync required by roadmap P2 #13"
+    },
+    {
+      "id": 6,
+      "summary": "Should redesign using block/source range sync, avoid exposing CodeMirror DOM"
+    }
+  ]
+}

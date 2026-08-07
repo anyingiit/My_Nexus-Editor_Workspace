@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+"""Deterministic audit of ALL 213 PRs' reviews / issue events (Round 6).
+
+Root AGENTS.md 1.1 scope = every PR actually handled by an actor with manage
+permission (approve / close / merge). We cannot prove permission (403, recorded
+in admin_audit). We use the established WEAK maintainer evidence (surviving,
+mechanically-filtered direct-push commits: ketd 95, 2391384896 14,
+redreamality 2, aoe 1) to recognise an "admin" formal review, and the
+close/merge actor evidence for finalized PRs (as in Round 5).
+
+Outputs (deterministic, no LLM):
+  - dataset/evidence/review_universe_v6.json : per-candidate universe + GT
+  - dataset/evidence/review_commit_ids.json  : formal-review commit_ids (API)
+  - dataset/evidence/v6_universe_summary.json: counts / split by class
+
+GT decision rules (pre-fixed):
+  * Finalized PR (merged/closed): merged -> approve; closed-without-merge ->
+    reject (final outcome; same as Round 5).
+  * OPEN PR with at least one admin formal review that carries a decision
+    (APPROVED / CHANGES_REQUESTED / DISMISSED): GT = state of the EARLIEST such
+    decision-state admin review -> APPROVED=approve, CHANGES_REQUESTED/
+    DISMISSED=reject. COMMENT-only reviews are activity, not a decision.
+  * OPEN PR without any admin decision review: NOT in the scored universe
+    ("开放且没有 formal review 不纳入 literal 集").
+  * Author-self-finalized: only included when the author holds direct-push weak
+    maintainer evidence (Round 5 rule, kept).
+
+First-review snapshot basis (AGENTS.md 1.2, literal):
+  * For any candidate whose PR has a formal review by an evidenced admin actor,
+    the first-review snapshot MUST be anchored at the FIRST formal admin review
+    submitted_at + that review's commit_id (exact reviewed SHA). Candidates
+    whose exact SHA/diff/checks cannot be restored are excluded and recorded.
+  * Finalized PRs WITHOUT any formal review keep the documented
+    first-activity-proxy (Round 5 head_sha_report) — never disguised as literal.
+"""
+import json
+import os
+import sys
+import time
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.normpath(os.path.join(HERE, ".."))
+EVID = os.path.join(ROOT, "dataset", "evidence")
+RAW = os.path.join(ROOT, "dataset", "raw")
+GTD = os.path.join(ROOT, "dataset", "ground_truth")
+SNAP = os.path.join(ROOT, "dataset", "snapshots")
+PR_LIST = os.path.join(RAW, "_pr_list.json")
+
+REPO = "floatboatai/Nexus-Editor"
+API = "https://api.github.com"
+DECISION_STATES = ("APPROVED", "CHANGES_REQUESTED", "DISMISSED")
+ALL_REVIEW_STATES = DECISION_STATES + ("COMMENTED", "COMMENT", "PENDING", "APPROVED")
+
+
+def load_weak_actors():
+    p = os.path.join(EVID, "direct_push.json")
+    d = json.load(open(p))
+    ev = d.get("weak_maintainer_actor_evidence", {}) or {}
+    actors = {}
+    for k, v in ev.items():
+        actors[k] = int(v.get("total_surviving_direct_pushes", 0))
+    return actors
+
+
+def main():
+    key = os.environ.get("GITHUB_TOKEN")
+    sys.path.insert(0, HERE)
+    from collect_prs import get_token, GH
+    if not key:
+        key = get_token()
+    gh = GH(key)
+
+    weak_actors = load_weak_actors()
+    print("weak maintainer actors:", weak_actors)
+
+    prs_list = {p["number"]: p for p in json.load(open(PR_LIST))}
+
+    reviews_by_pr = {}   # pr -> [review dicts]
+    # For every PR we have a ground_truth file; refetch reviews w/ commit_id only
+    # for PRs that already have >=1 review in GT (API saving), but to be safe and
+    # deterministic fetch reviews for all 213 PRs that have any review, plus the
+    # whole list is cheap: fetch reviews for every PR with a GT review object.
+    n_fetched = 0
+    for n, p in sorted(prs_list.items()):
+        gtp = os.path.join(GTD, f"{n}.json")
+        if not os.path.exists(gtp):
+            continue
+        gt = json.load(open(gtp))
+        if not gt.get("reviews"):
+            continue
+        try:
+            revs = gh.all_pages(f"{API}/repos/{REPO}/pulls/{n}/reviews")
+        except Exception as e:
+            print(f"[reviews {n}] error {e!r}")
+            continue
+        keep = []
+        for r in revs:
+            keep.append({
+                "user": (r.get("user") or {}).get("login"),
+                "state": r.get("state"),
+                "submitted_at": r.get("submitted_at"),
+                "commit_id": r.get("commit_id"),
+                "body_prefix": (r.get("body") or "")[:80],
+            })
+        reviews_by_pr[n] = keep
+        n_fetched += 1
+        print(f"[reviews {n}] {len(keep)} review objects", flush=True)
+    print(f"fetched review lists for {n_fetched} PRs")
+
+    with open(os.path.join(EVID, "review_commit_ids.json"), "w") as fh:
+        json.dump({"generated_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                   "reviews": {str(k): v for k, v in reviews_by_pr.items()}},
+                  fh, indent=2, ensure_ascii=False)
+
+    # ---- build the universe ----
+    universe = {}
+    for n, p in sorted(prs_list.items()):
+        gtp = os.path.join(GTD, f"{n}.json")
+        if not os.path.exists(gtp):
+            continue
+        gt = json.load(open(gtp))
+        author = gt.get("user")
+        state = p.get("state")
+        merged = bool(gt.get("merged"))
+        closed_at = p.get("closed_at")
+
+        revs = reviews_by_pr.get(n, [])
+        admin_revs = [r for r in revs if r.get("user") in weak_actors]
+        decision_revs = [r for r in admin_revs if r.get("state") in DECISION_STATES]
+        decision_revs.sort(key=lambda r: (r.get("submitted_at") or "", r.get("commit_id") or ""))
+        first_admin_rev = None
+        if admin_revs:
+            sorted_admin = sorted(admin_revs, key=lambda r: (r.get("submitted_at") or "", r.get("commit_id") or ""))
+            first_admin_rev = sorted_admin[0]
+        first_decision = decision_revs[0] if decision_revs else None
+
+        if not (p.get("merged") or p.get("closed_at")):  # OPEN
+            if first_decision is None:
+                rec = {"pr_number": n, "state": state, "author": author,
+                       "open": True, "include": False,
+                       "exclude_reason": "open PR without an admin decision formal "
+                                        "review (not in the literal set)"}
+            else:
+                golden = "approve" if first_decision["state"] == "APPROVED" else "reject"
+                rec = {"pr_number": n, "state": state, "author": author,
+                       "open": True, "include": True,
+                       "basis": "admin_formal_review",
+                       "gt_basis": "earliest admin decision review",
+                       "golden": golden,
+                       "gt_admin_review": first_decision,
+                       "first_admin_review": first_admin_rev,
+                       "exclude_reason": None}
+        else:  # FINALIZED
+            golden = "approve" if merged else "reject"
+            rec = {"pr_number": n, "state": state, "merged": merged,
+                   "open": False, "include": True,
+                   "basis": "final_actor_evidence",
+                   "gt_basis": "final outcome",
+                   "golden": golden,
+                   "first_admin_review": first_admin_rev,
+                   "first_decision": first_decision,
+                   "exclude_reason": None}
+        rec["author"] = author
+        rec["weak_actor"] = author in weak_actors
+        rec["weak_actor_direct_pushes"] = weak_actors.get(author, 0)
+        universe[n] = rec
+
+    # ---- apply author-self-finalized exclusion (Round 5 rule, for finalized) ----
+    # Reuse Round5 admin_audit tiers where available; else recompute self finalized.
+    admin_audit_path = os.path.join(EVID, "admin_audit.json")
+    admin_audit = {}
+    if os.path.exists(admin_audit_path):
+        admin_audit = json.load(open(admin_audit_path)).get("prs", {})
+    for n, rec in universe.items():
+        if rec.get("open"):
+            # open included PRs are never author-self-finalized
+            continue
+        tier = (admin_audit.get(str(n)) or {}).get("evidence_tier", "unknown")
+        rec["evidence_tier"] = tier
+        if tier == "author_self_finalized_unverified":
+            rec["include"] = False
+            rec["exclude_reason"] = ("author self-finalized without direct-push "
+                                     "weak maintainer evidence")
+
+    included = {n: r for n, r in universe.items() if r["include"]}
+    excluded = {n: r for n, r in universe.items() if not r["include"]}
+    open_included = {n: r for n, r in included.items() if r.get("open")}
+    open_excluded = {n: r for n, r in excluded.items() if r.get("open")}
+
+    def gt_counts(d):
+        return {"approve": sum(1 for r in d.values() if r["golden"] == "approve"),
+                "reject": sum(1 for r in d.values() if r["golden"] == "reject")}
+
+    summary = {
+        "generated_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "n_total_prs": len(prs_list),
+        "n_included": len(included),
+        "n_excluded": len(excluded),
+        "included_gt_counts": gt_counts(included),
+        "n_open_included": len(open_included),
+        "n_open_excluded": len(open_excluded),
+        "open_included_list": sorted(open_included.keys()),
+        "open_excluded_list": sorted(open_excluded.keys()),
+        "open_included_gt": gt_counts(open_included),
+        "weak_maintainer_actors": weak_actors,
+        "note": ("Universe = finalized PRs handled by an evidence-gated final "
+                 "actor (Round5 rule) UNION open PRs with an admin decision "
+                 "formal review (GT = earliest admin decision-review state). "
+                 "Open PRs without an admin decision review are excluded. Weak "
+                 "maintainer evidence is weak, never claimed as proven admin."),
+    }
+    print(json.dumps(summary, indent=2))
+
+    with open(os.path.join(EVID, "review_universe_v6.json"), "w") as fh:
+        json.dump({"summary": summary, "universe": {str(k): v for k, v in universe.items()}},
+                  fh, indent=2, ensure_ascii=False)
+    with open(os.path.join(EVID, "v6_universe_summary.json"), "w") as fh:
+        json.dump(summary, fh, indent=2, ensure_ascii=False)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

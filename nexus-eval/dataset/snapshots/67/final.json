@@ -1,0 +1,128 @@
+{
+  "pr_number": 67,
+  "title": "feat(react,vue): add onReady callback and container pass-through props",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T03:36:47Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "1905df029a6b5a6795d8ea53ed12622647c12173",
+  "merge_commit_sha": "5fd80c12cf427129a44d13125e4bc9c4ddbf4ddc",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+      "message": "feat(search): add whole-word and regex matching to utility functions\n\nAdd `wholeWord` and `regexp` options to `SearchOptions`. Whole-word uses\n\\b boundaries; regex mode passes the query as a raw pattern with graceful\nhandling of invalid expressions (returns empty results).\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T05:37:10Z"
+    },
+    {
+      "sha": "1905df029a6b5a6795d8ea53ed12622647c12173",
+      "message": "feat(react,vue): add onReady callback and container pass-through props\n\nBoth `<Editor />` components now accept `onReady` (called with EditorAPI\nafter initialization), plus `className`/`style`/`id` (React) and\n`class`/`style`/`id` (Vue) forwarded to the container div.\n\nThe `useEditor` hook also supports `onReady` in its config object.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T06:00:40Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 4,
+      "changes": 33
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 56,
+      "deletions": 0,
+      "changes": 56
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 4,
+      "changes": 8
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 2,
+      "changes": 12
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 1,
+      "changes": 5
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 23,
+      "deletions": 1,
+      "changes": 24
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 3,
+      "changes": 19
+    },
+    {
+      "filename": "packages/vue/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 1,
+      "changes": 10
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 2,
+      "changes": 9
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 1,
+      "changes": 37
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=67",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

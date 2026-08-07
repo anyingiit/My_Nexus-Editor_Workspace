@@ -1,0 +1,46 @@
+{
+  "pr_number": 123,
+  "title": "docs: 完善中文README，补充完整本地启动步骤与新手排错方案",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "be31eb0e3adc30405400013264cb470b73ac5251",
+  "merge_commit_sha": "0cd5abeb55905e566c31e47054a26c50b3d2a83a",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "be31eb0e3adc30405400013264cb470b73ac5251",
+      "message": "docs: 完善中文README，补充完整本地启动步骤与新手排错方案",
+      "date": "2026-07-03T15:43:30Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=123",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

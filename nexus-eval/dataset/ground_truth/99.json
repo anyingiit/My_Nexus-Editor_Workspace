@@ -1,0 +1,26 @@
+{
+  "pr_number": 99,
+  "title": "feat(search): add opt-in fuzzy matching",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T15:27:43Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "gustavlee",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T08:24:50Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=99) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=99) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=99) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T15:27:39Z",
+      "body": "严格审查结论：不通过。\n\n这个 PR 做了不少代码，但作为可合入主分支的 fuzzy search 功能还不够成熟，主要问题如下：\n\n1. 功能语义不完整。PR 标题是 “fuzzy matching”，但实现只是在 helper 层 `findSearchMatches()` 里新增 fuzzy 分支，并没有接入 CodeMirror search panel 的真实交互、导航、选区高亮、替换 UI 等用户实际路径；对终端用户来说功能不可用或不可发现。\n\n2. 行为定义不清且有反直觉点：`fuzzy + regexp` 直接返回空结果，`replaceAllMatches(..., { fuzzy: true })` 直接返回原文；这属于静默 no-op，调用方很难区分“没有匹配”和“功能不支持”。更合理的是 API 层显式拒绝或不暴露未完成组合。\n\n3. 匹配范围过粗。当前 fuzzy 主要按行候选/word 候选处理，返回的 `from/to` 是覆盖首末匹配字符的连续区间，而 fuzzy 命中本质是离散位置；这会导致高亮/替换/导航语义很容易与用户预期不一致。\n\n4. 算法是自定义启发式，包含 backtracking 上限、路径截断、greedy fallback 等多个 magic number，但缺少设计说明、复杂度证明和与现有搜索体验的集成边界说明。作为核心插件能力，维护风险偏高。\n\n5. Roadmap 被直接从 planned 改为 in-progress，但能力只完成了 helper 级雏形，没有完成产品级集成，不应改变路线图状态。\n\n本地验证：`pnpm install --frozen-lockfile` 与 `pnpm typecheck` 通过；`pnpm test` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入用例执行。该环境问题不作为本 PR 的主要扣分点。\n\n建议关闭。若继续做，需要先明确 fuzzy search 的产品语义，接入实际 search panel/高亮/导航路径，并对不支持的组合给出显式 API 约束。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,12 @@
+=== [dev] empty (tag=round4) ===
+[llm empty opencode-go] retry 0: finish=length
+[llm empty opencode-go] retry 1: finish=length
+[llm empty opencode-go] retry 2: finish=length
+[llm empty opencode-go] retry 0: finish=length
+Terminated
+=== [dev] baseline (tag=round4) ===
+[llm empty opencode-go] retry 0: finish=length
+[llm empty opencode-go] retry 0: finish=length
+harness/run_dev.sh: line 6: 63304 Killed                  python3 judge.py "$v" dev 0 "$TAG"
+=== [dev] ours (tag=round4) ===
+[llm empty opencode-go] retry 0: finish=length

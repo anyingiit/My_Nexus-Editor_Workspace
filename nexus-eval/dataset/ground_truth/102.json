@@ -1,0 +1,26 @@
+{
+  "pr_number": 102,
+  "title": "test(core): add table drag eval harness",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T15:16:57Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "eagle-tiger",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T14:22:14Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=102) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=102) before we can accept your contribution.<br/><hr/>**jinhai.zhang** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=102) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T15:16:54Z",
+      "body": "严格审查结论：不通过。\n\n主要原因：\n\n1. 交付范围不符合预期。这个 PR 只新增了约 1.5k 行 eval harness，并没有修复表格列拖动本身的问题；`eval/corpus/table-drag.yaml` 里也明确写了多条用例“目前会判为 table-corruption”，因此它更像是问题复现脚手架，而不是可合入主分支的完成交付。\n\n2. 新增的 `pnpm eval` 默认以 `--baseline 1.0` 判定，且语料中包含预期失败用例。这会导致仓库新增一个默认失败的命令；如果后续 CI 接入，会直接制造红灯。PR body 里也没有证明 `pnpm build` 通过。\n\n3. 评测可靠性不足。`eval/bridge/table-ops-bridge.ts` 通过大量手写 `getBoundingClientRect`、列宽估算和 viewport clamp 来模拟拖拽，和真实浏览器布局/滚动/事件链存在明显偏差；这类 harness 容易只验证“模拟逻辑”，不能稳定代表用户真实拖拽行为。\n\n4. oracle 与 Markdown 表格解析过于简化。`evaluator.py` 基本按空行切 block、按 `|` split 单元格，未处理 code fence、转义 pipe、alignment row、非表格含 pipe 文本、复杂/相邻表格等 Markdown 边界。作为 regression eval 的判定依据不够严谨。\n\n5. 工程化完整度不足。Python 依赖需要手动创建 venv；Node bridge 运行前动态打包；新增大量脚本但缺少 CI 集成、失败/预期失败分层、版本兼容说明和维护边界。对于核心库主分支来说维护成本偏高。\n\n我本地做了基础验证：`pnpm install --frozen-lockfile` 和 `pnpm typecheck` 能过；但 `pnpm eval -- --verbose` / `pnpm test` 在当前环境被 Rollup native optional dependency 问题阻断，未能完成运行验证。这一点不完全归因于 PR，但也说明该方案依赖链较重、落地稳定性一般。\n\n建议：关闭本 PR。候选人如果要继续，需要提交一个真正修复表格列拖动问题的最小 PR，并配套少量稳定的 vitest/Playwright 回归用例；eval harness 可作为独立实验目录或后续提案，不应以当前形态直接进入主分支。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

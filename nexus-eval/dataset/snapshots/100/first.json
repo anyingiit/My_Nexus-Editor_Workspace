@@ -1,0 +1,184 @@
+{
+  "pr_number": 100,
+  "title": "feat(core): add split-pane preview sync scroll",
+  "body": "## Summary / 摘要\r\n\r\nAdd bidirectional scroll sync for split-pane HTML preview (Roadmap P2 #13).\r\n\r\n## Motivation / 背景与动机\r\n\r\n- Roadmap (docs/ROADMAP.md): item #13 — Markdown live preview sync scroll\r\n- Hosts rendering `exportHTML()` in a side pane need scroll coupling\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/core`: `attachSyncScroll`, `getScrollElement()`, tests, README\r\n- `apps/electron-demo`: split preview pane, Settings toggle, styles\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes (525 tests)\r\n- [x] `pnpm build` + `pnpm build:electron-demo`\r\n- [x] New vitest: `sync-scroll.test.ts`, `getScrollElement` in `editor.test.ts`\r\n- [x] Manual: electron-demo → Settings → Split preview → bidirectional scroll\r\n\r\n## Compliance / 合规自检\r\n\r\n- [ ] **CLA signed** — signing now via CLA bot\r\n- [x] **AI disclosure**: AI assisted with scaffolding and test brainstorming; design and implementation reviewed line-by-line.\r\n- [x] **New dependencies**: none\r\n- [x] **No build artifacts** committed\r\n- [x] **No secrets** committed\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits\r\n- [x] Public API changes update package README / types\r\n- [x] Change aligns with project scope (GOVERNANCE.md §4)",
+  "created_at": "2026-07-02T09:07:51Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+  "first_review_time": "2026-07-02T09:08:04Z",
+  "commits_at_first_review": [
+    {
+      "sha": "121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+      "message": "feat(core): add split-pane preview sync scroll\n\nExpose getScrollElement() and attachSyncScroll() for hosts wiring a\nside-by-side HTML preview. Integrate the feature in electron-demo with\na settings toggle (Roadmap P2 #13).\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-02T09:05:53Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "8acede1fae5358a06a6b2ee788dfcd112c7fdc35",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 8,
+        "deletions": 1,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -354,6 +354,9 @@ function boot(): void {\n   const editorColumn = document.createElement(\"div\");\n   editorColumn.className = \"editor-column\";\n \n+  const editorWorkspace = document.createElement(\"div\");\n+  editorWorkspace.className = \"editor-workspace\";\n+\n   const editorContainer = document.createElement(\"div\");\n   editorContainer.className = \"editor-container\";\n \n@@ -407,9 +410,13 @@ function boot(): void {\n     getActiveFile: () => state.activeFile,\n   });\n \n-  editorColumn.append(searchBar.element, editorContainer);\n+  editorWorkspace.append(editorContainer);\n+  editorColumn.append(searchBar.element, editorWorkspace);\n   mainArea.append(vault.element, editorColumn, outline.element, backlinks.element);\n \n+  // Split preview mounts beside the editor once the shell is ready.\n+  editorWorkspace.append(shell.splitPreview.element);\n+\n   // External file changes → re-seed the index (cheap for typical vaults).\n   window.nexusDemo.vault.onChanged(() => {\n     void seedLinkIndex();"
+      },
+      {
+        "sha": "1b2550d61e6025b1f73a203fb0b7c6c107da495e",
+        "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 5,
+        "changes": 34,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -16,6 +16,7 @@ import {\n } from \"@floatboat/nexus-plugin-wordcount\";\n import type { AppState } from \"./state\";\n import { type EditorSettings, settingsToTheme } from \"./settings\";\n+import { createSplitPreviewPane, type SplitPreviewPane } from \"./split-preview\";\n \n // Parse Obsidian-style size specifier from the alt text: `alt|width` or\n // `alt|widthxheight`. Returns { alt, width, height } with the size stripped\n@@ -85,6 +86,8 @@ export interface EditorShell {\n   slashMenu: SlashMenuUI;\n   /** Markdown-aware word-count plugin (handle + status bar). */\n   wordcount: WordCountPlugin;\n+  /** Side-by-side HTML preview pane (Roadmap P2 #13). */\n+  splitPreview: SplitPreviewPane;\n   applySettings(settings: EditorSettings): void;\n   loadDocument(content: string): void;\n   destroy(): void;\n@@ -101,6 +104,8 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n     suggestWikilinks,\n   } = options;\n \n+  let currentSettings = settings;\n+\n   // Forward ref so the image renderer (built BEFORE createEditor returns)\n   // can dispatch selection changes through the editor API after it exists.\n   const editorRef: { current: EditorAPI | null } = { current: null };\n@@ -144,7 +149,7 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n       wikilinksPlugin,\n       wordcount,\n     ],\n-    livePreview: settings.livePreview\n+    livePreview: currentSettings.livePreview\n       ? {\n           enabled: true,\n           renderers: {\n@@ -314,10 +319,10 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n           },\n         }\n       : false,\n-    theme: settingsToTheme(settings),\n-    tabSize: settings.tabSize,\n-    direction: settings.direction,\n-    indentGuides: settings.indentGuides,\n+    theme: settingsToTheme(currentSettings),\n+    tabSize: currentSettings.tabSize,\n+    direction: currentSettings.direction,\n+    indentGuides: currentSettings.indentGuides,\n     onChange(doc) {\n       state.content = doc;\n       state.dirty = true;\n@@ -326,12 +331,21 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n       if (state.linkIndex && state.activeFile) {\n         state.linkIndex.updateFile(state.activeFile, doc);\n       }\n+      if (currentSettings.splitPreview) {\n+        splitPreview.updateFromEditor(editor);\n+      }\n       onStateChange();\n     },\n   });\n \n   editorRef.current = editor;\n \n+  const splitPreview = createSplitPreviewPane(editor);\n+  splitPreview.setEnabled(currentSettings.splitPreview);\n+  if (currentSettings.splitPreview) {\n+    splitPreview.updateFromEditor(editor);\n+  }\n+\n   const toolbar = createToolbarUI(editor);\n   container.insertBefore(toolbar.element, container.firstChild);\n \n@@ -351,8 +365,14 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n     toolbar,\n     slashMenu,\n     wordcount,\n+    splitPreview,\n     applySettings(next: EditorSettings) {\n+      currentSettings = next;\n       editor.setTheme(settingsToTheme(next));\n+      splitPreview.setEnabled(next.splitPreview);\n+      if (next.splitPreview) {\n+        splitPreview.updateFromEditor(editor);\n+      }\n     },\n     loadDocument(content: string) {\n       // Load from disk is NOT a user edit — use silent mode to skip the\n@@ -371,8 +391,12 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n       // eslint-disable-next-line no-console\n       console.log(\"%c[perf]\", \"color:#0aa;font-weight:bold\", \"editor.setDocument\",\n         `${(t1 - t0).toFixed(1)}ms`, { bytes: content.length });\n+      if (currentSettings.splitPreview) {\n+        splitPreview.updateFromEditor(editor);\n+      }\n     },\n     destroy() {\n+      splitPreview.destroy();\n       wordcount.destroy();\n       slashMenu.destroy();\n       toolbar.destroy();"
+      },
+      {
+        "sha": "8c753c30c1d3140fca57e5bdfae586f82044c356",
+        "filename": "apps/electron-demo/src/renderer/settings.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsettings.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsettings.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsettings.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -12,6 +12,8 @@ export interface EditorSettings {\n   indentGuides: boolean;\n   lineNumbers: boolean;\n   livePreview: boolean;\n+  /** Side-by-side HTML preview with bidirectional scroll sync (Roadmap P2 #13). */\n+  splitPreview: boolean;\n }\n \n const STORAGE_KEY = \"nexus-editor-settings\";\n@@ -28,6 +30,7 @@ export function defaultSettings(): EditorSettings {\n     indentGuides: false,\n     lineNumbers: true,\n     livePreview: true,\n+    splitPreview: false,\n   };\n }\n \n@@ -271,6 +274,7 @@ export function createSettingsPanel(settings: EditorSettings, onChange: OnChange\n   body.appendChild(row(\"Color scheme\", \"Light or dark theme\", createSelect([\"light\", \"dark\"], s.colorScheme, (v) => { s.colorScheme = v as \"light\" | \"dark\"; emit(); })));\n   body.appendChild(row(\"Line numbers\", \"Show line numbers in the gutter\", createToggle(s.lineNumbers, (v) => { s.lineNumbers = v; emit(); })));\n   body.appendChild(row(\"Live preview\", \"Render markdown in real-time\", createToggle(s.livePreview, (v) => { s.livePreview = v; emit(); })));\n+  body.appendChild(row(\"Split preview\", \"Side-by-side HTML preview with sync scroll\", createToggle(s.splitPreview, (v) => { s.splitPreview = v; emit(); })));\n   body.appendChild(row(\"Indent guides\", \"Show indentation guide lines\", createToggle(s.indentGuides, (v) => { s.indentGuides = v; emit(); })));\n   body.appendChild(row(\"Content max width\", \"Limit line width for readability (e.g. 720px)\", createTextInput(s.contentMaxWidth, \"e.g. 720px\", (v) => { s.contentMaxWidth = v; emit(); })));\n   body.appendChild(row(\"Text direction\", \"Left-to-right or right-to-left\", createSelect([\"ltr\", \"rtl\"], s.direction, (v) => { s.direction = v as \"ltr\" | \"rtl\"; emit(); })));"
+      },
+      {
+        "sha": "f272be3d484917b5b79831e914eb45ce039af54a",
+        "filename": "apps/electron-demo/src/renderer/split-preview.ts",
+        "status": "added",
+        "additions": 65,
+        "deletions": 0,
+        "changes": 65,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsplit-preview.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsplit-preview.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsplit-preview.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -0,0 +1,65 @@\n+import { attachSyncScroll, type EditorAPI } from \"@floatboat/nexus-core\";\n+\n+export interface SplitPreviewPane {\n+  element: HTMLElement;\n+  setEnabled(enabled: boolean): void;\n+  updateFromEditor(editor: EditorAPI): void;\n+  destroy(): void;\n+}\n+\n+export function createSplitPreviewPane(editor: EditorAPI): SplitPreviewPane {\n+  const root = document.createElement(\"aside\");\n+  root.className = \"split-preview-pane\";\n+  root.hidden = true;\n+\n+  const header = document.createElement(\"div\");\n+  header.className = \"split-preview-header\";\n+  header.textContent = \"Preview\";\n+\n+  const scroll = document.createElement(\"div\");\n+  scroll.className = \"split-preview-scroll\";\n+\n+  const content = document.createElement(\"div\");\n+  content.className = \"split-preview-content\";\n+  scroll.appendChild(content);\n+  root.append(header, scroll);\n+\n+  let syncHandle: ReturnType<typeof attachSyncScroll> | null = null;\n+\n+  const wireSync = (): void => {\n+    syncHandle?.destroy();\n+    syncHandle = null;\n+\n+    const editorScroll = editor.getScrollElement();\n+    if (!editorScroll || root.hidden) {\n+      return;\n+    }\n+\n+    syncHandle = attachSyncScroll({\n+      primary: editorScroll,\n+      secondary: scroll,\n+    });\n+  };\n+\n+  return {\n+    element: root,\n+    setEnabled(enabled) {\n+      root.hidden = !enabled;\n+      if (enabled) {\n+        wireSync();\n+      } else {\n+        syncHandle?.destroy();\n+        syncHandle = null;\n+      }\n+    },\n+    updateFromEditor(ed) {\n+      content.innerHTML = ed.exportHTML();\n+      wireSync();\n+    },\n+    destroy() {\n+      syncHandle?.destroy();\n+      syncHandle = null;\n+      root.remove();\n+    },\n+  };\n+}"
+      },
+      {
+        "sha": "a836803e24fc11b032ce189e0498ae99690ece35",
+        "filename": "apps/electron-demo/src/renderer/style.css",
+        "status": "modified",
+        "additions": 72,
+        "deletions": 0,
+        "changes": 72,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fstyle.css?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -43,6 +43,78 @@ body,\n   overflow: hidden;\n }\n \n+.editor-workspace {\n+  flex: 1;\n+  min-height: 0;\n+  display: flex;\n+  overflow: hidden;\n+}\n+\n+.split-preview-pane {\n+  flex: 1;\n+  min-width: 0;\n+  display: flex;\n+  flex-direction: column;\n+  overflow: hidden;\n+  border-left: 1px solid var(--nexus-border, #ddd);\n+  background: var(--nexus-bg, #fff);\n+}\n+\n+.split-preview-pane[hidden] {\n+  display: none !important;\n+}\n+\n+.split-preview-header {\n+  flex-shrink: 0;\n+  padding: 8px 12px;\n+  font-size: 12px;\n+  font-weight: 600;\n+  text-transform: uppercase;\n+  letter-spacing: 0.04em;\n+  color: var(--nexus-text-muted, #666);\n+  border-bottom: 1px solid var(--nexus-border-subtle, #eee);\n+}\n+\n+.split-preview-scroll {\n+  flex: 1;\n+  min-height: 0;\n+  overflow: auto;\n+  padding: 16px 20px;\n+}\n+\n+.split-preview-content {\n+  max-width: 720px;\n+  line-height: 1.6;\n+  color: var(--nexus-text, #24292e);\n+}\n+\n+.split-preview-content h1,\n+.split-preview-content h2,\n+.split-preview-content h3,\n+.split-preview-content h4 {\n+  margin: 1.2em 0 0.5em;\n+  line-height: 1.25;\n+}\n+\n+.split-preview-content p,\n+.split-preview-content ul,\n+.split-preview-content ol,\n+.split-preview-content pre {\n+  margin: 0.75em 0;\n+}\n+\n+.split-preview-content pre {\n+  padding: 12px;\n+  overflow-x: auto;\n+  border-radius: 6px;\n+  background: var(--nexus-bg-subtle, #f6f8fa);\n+}\n+\n+.split-preview-content code {\n+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;\n+  font-size: 0.9em;\n+}\n+\n .editor-container {\n   flex: 1;\n   min-height: 0;"
+      },
+      {
+        "sha": "8b92579f235bd9f01a0dd2cd04c385188887debc",
+        "filename": "packages/core/README.md",
+        "status": "modified",
+        "additions": 21,
+        "deletions": 0,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2FREADME.md?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -71,6 +71,27 @@ editor.on(\"selectionChange\", ({ anchor, head, ranges, mainIndex }) => {\n \n Multiple ranges in `setSelections` require `multiCursor: true` — without the flag CodeMirror collapses the selection to its main range.\n \n+## Split-pane preview sync scroll\n+\n+Hosts that render a side-by-side HTML preview (via `exportHTML()`) can wire bidirectional scroll sync:\n+\n+```ts\n+import { attachSyncScroll } from \"@floatboat/nexus-core\";\n+\n+const editorScroll = editor.getScrollElement();\n+const previewScroll = document.querySelector(\".preview-scroll\") as HTMLElement;\n+\n+const sync = attachSyncScroll({\n+  primary: editorScroll!,\n+  secondary: previewScroll,\n+});\n+\n+// later\n+sync.destroy();\n+```\n+\n+`attachSyncScroll` maps scroll position by normalized ratio so the preview does not need a line-perfect DOM mapping. See `docs/ROADMAP.md` item #13.\n+\n ## Other config highlights\n \n See the `EditorConfig` type for the full surface: `livePreview`, `plugins`, `theme` / `setTheme`, `locale`, `readOnly`, `tabSize`, `direction`, `indentGuides`, `parseDelayMs`, `slashMenuLimit`, `onChange` / `onFocus` / `onBlur` / `onAssetUpload`."
+      },
+      {
+        "sha": "17625d23cf5be5926706ba146a3cd9cbbd695e08",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -883,6 +883,10 @@ export function createEditor(config: EditorConfig): EditorAPI {\n     off(event, handler) {\n       emitter.off(event, handler);\n     },\n+    getScrollElement() {\n+      if (destroyed) return null;\n+      return view.scrollDOM;\n+    },\n     getCoordsAtPos(pos) {\n       if (destroyed) return null;\n       try {"
+      },
+      {
+        "sha": "e3110a690cbb9042b9f08cdcc1c597d6e87faee4",
+        "filename": "packages/core/src/index.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Findex.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -20,6 +20,13 @@ export {\n   type SlashStateResult,\n } from \"./slash-state\";\n export { lightTheme, darkTheme, type NexusTheme } from \"./theme\";\n+export {\n+  applyScrollRatio,\n+  attachSyncScroll,\n+  computeScrollRatio,\n+  type AttachSyncScrollOptions,\n+  type SyncScrollHandle,\n+} from \"./sync-scroll\";\n export {\n   scanWikiLinks,\n   createWikilinksExtension,"
+      },
+      {
+        "sha": "2e444cacb2d86db3eedcf69cf5b8a93b34cd3150",
+        "filename": "packages/core/src/sync-scroll.ts",
+        "status": "added",
+        "additions": 79,
+        "deletions": 0,
+        "changes": 79,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Fsync-scroll.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Fsync-scroll.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Fsync-scroll.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -0,0 +1,79 @@\n+/**\n+ * Bidirectional scroll-ratio sync for split-pane Markdown preview.\n+ *\n+ * Maps scroll position by normalized ratio so hosts can pair the editor's\n+ * CodeMirror scroll container with any preview pane (HTML export, iframe, etc.)\n+ * without needing a line-perfect DOM correspondence.\n+ */\n+\n+export function computeScrollRatio(element: HTMLElement): number {\n+  const maxScroll = element.scrollHeight - element.clientHeight;\n+  if (maxScroll <= 0) {\n+    return 0;\n+  }\n+  return element.scrollTop / maxScroll;\n+}\n+\n+export function applyScrollRatio(element: HTMLElement, ratio: number): void {\n+  const maxScroll = element.scrollHeight - element.clientHeight;\n+  if (maxScroll <= 0) {\n+    element.scrollTop = 0;\n+    return;\n+  }\n+\n+  const clamped = Math.max(0, Math.min(1, ratio));\n+  element.scrollTop = clamped * maxScroll;\n+}\n+\n+export interface SyncScrollHandle {\n+  destroy(): void;\n+}\n+\n+export interface AttachSyncScrollOptions {\n+  /** Primary scroll container — typically the editor's scroll DOM. */\n+  primary: HTMLElement;\n+  /** Secondary scroll container — typically the preview pane. */\n+  secondary: HTMLElement;\n+}\n+\n+/**\n+ * Wire bidirectional scroll sync between two overflow containers.\n+ * Uses a short re-entrancy guard so programmatic scroll updates do not loop.\n+ */\n+export function attachSyncScroll(options: AttachSyncScrollOptions): SyncScrollHandle {\n+  const { primary, secondary } = options;\n+  let syncing: \"primary\" | \"secondary\" | null = null;\n+\n+  const sync = (\n+    source: HTMLElement,\n+    target: HTMLElement,\n+    from: \"primary\" | \"secondary\"\n+  ): void => {\n+    if (syncing !== null && syncing !== from) {\n+      return;\n+    }\n+\n+    syncing = from === \"primary\" ? \"secondary\" : \"primary\";\n+    applyScrollRatio(target, computeScrollRatio(source));\n+    requestAnimationFrame(() => {\n+      syncing = null;\n+    });\n+  };\n+\n+  const onPrimaryScroll = (): void => {\n+    sync(primary, secondary, \"primary\");\n+  };\n+  const onSecondaryScroll = (): void => {\n+    sync(secondary, primary, \"secondary\");\n+  };\n+\n+  primary.addEventListener(\"scroll\", onPrimaryScroll, { passive: true });\n+  secondary.addEventListener(\"scroll\", onSecondaryScroll, { passive: true });\n+\n+  return {\n+    destroy() {\n+      primary.removeEventListener(\"scroll\", onPrimaryScroll);\n+      secondary.removeEventListener(\"scroll\", onSecondaryScroll);\n+    },\n+  };\n+}"
+      },
+      {
+        "sha": "cc276ac32015971ecaa77fcfb5ed0eefbb3e8c58",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 0,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -267,6 +267,11 @@ export interface EditorAPI {\n   destroy(): void;\n   on<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;\n   off<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;\n+  /**\n+   * Returns the editor's primary scroll container (CodeMirror `scrollDOM`).\n+   * Hosts use this to wire split-pane preview sync — see `attachSyncScroll`.\n+   */\n+  getScrollElement(): HTMLElement | null;\n   getCoordsAtPos(pos: number): { left: number; right: number; top: number; bottom: number } | null;\n   /**\n    * 返回某个 DOM 节点当前对应的文档偏移（基于 CodeMirror 的 DOM↔文档映射）。"
+      },
+      {
+        "sha": "486685cefa10272f38ac45d32ac6565e0ba7e99e",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -610,6 +610,17 @@ describe(\"createEditor\", () => {\n \n   // ── HTML export ──\n \n+  it(\"returns the scroll container for split-pane hosts\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello\" });\n+\n+    const scrollEl = editor.getScrollElement();\n+    expect(scrollEl).not.toBeNull();\n+    expect(scrollEl?.classList.contains(\"cm-scroller\")).toBe(true);\n+    editor.destroy();\n+    expect(editor.getScrollElement()).toBeNull();\n+  });\n+\n   it(\"exports markdown to semantic HTML\", () => {\n     const container = document.createElement(\"div\");\n     const editor = createEditor({"
+      },
+      {
+        "sha": "9c7d82d38b6cbe84ccd4c5aa97544beae5f104e8",
+        "filename": "packages/core/test/sync-scroll.test.ts",
+        "status": "added",
+        "additions": 101,
+        "deletions": 0,
+        "changes": 101,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Ftest%2Fsync-scroll.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/121907b7be5a4de7e4dc1907be1ad445c7a6bbb7/packages%2Fcore%2Ftest%2Fsync-scroll.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Fsync-scroll.test.ts?ref=121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+        "patch": "@@ -0,0 +1,101 @@\n+import { describe, expect, it } from \"vitest\";\n+\n+import {\n+  applyScrollRatio,\n+  attachSyncScroll,\n+  computeScrollRatio,\n+} from \"../src/sync-scroll\";\n+\n+function mockScrollElement(\n+  scrollHeight: number,\n+  clientHeight: number,\n+  scrollTop = 0\n+): HTMLElement {\n+  const el = document.createElement(\"div\");\n+  Object.defineProperty(el, \"scrollHeight\", { configurable: true, value: scrollHeight });\n+  Object.defineProperty(el, \"clientHeight\", { configurable: true, value: clientHeight });\n+  let top = scrollTop;\n+  Object.defineProperty(el, \"scrollTop\", {\n+    configurable: true,\n+    get: () => top,\n+    set: (value: number) => {\n+      top = value;\n+    },\n+  });\n+  return el;\n+}\n+\n+describe(\"computeScrollRatio\", () => {\n+  it(\"returns 0 when content fits without scrolling\", () => {\n+    const el = mockScrollElement(100, 100, 0);\n+    expect(computeScrollRatio(el)).toBe(0);\n+  });\n+\n+  it(\"returns normalized ratio for partial scroll\", () => {\n+    const el = mockScrollElement(300, 100, 100);\n+    expect(computeScrollRatio(el)).toBeCloseTo(0.5);\n+  });\n+\n+  it(\"returns 1 at the bottom\", () => {\n+    const el = mockScrollElement(500, 100, 400);\n+    expect(computeScrollRatio(el)).toBeCloseTo(1);\n+  });\n+});\n+\n+describe(\"applyScrollRatio\", () => {\n+  it(\"maps ratio back to scrollTop\", () => {\n+    const el = mockScrollElement(500, 100);\n+    applyScrollRatio(el, 0.25);\n+    expect(el.scrollTop).toBeCloseTo(100);\n+  });\n+\n+  it(\"clamps out-of-range ratios\", () => {\n+    const el = mockScrollElement(500, 100);\n+    applyScrollRatio(el, 1.5);\n+    expect(el.scrollTop).toBeCloseTo(400);\n+    applyScrollRatio(el, -0.2);\n+    expect(el.scrollTop).toBe(0);\n+  });\n+\n+  it(\"round-trips with computeScrollRatio\", () => {\n+    const el = mockScrollElement(800, 200, 150);\n+    const ratio = computeScrollRatio(el);\n+    const target = mockScrollElement(1200, 200);\n+    applyScrollRatio(target, ratio);\n+    expect(computeScrollRatio(target)).toBeCloseTo(ratio);\n+  });\n+});\n+\n+describe(\"attachSyncScroll\", () => {\n+  it(\"mirrors scroll from primary to secondary\", () => {\n+    const primary = mockScrollElement(400, 100, 150);\n+    const secondary = mockScrollElement(800, 100);\n+    const handle = attachSyncScroll({ primary, secondary });\n+\n+    primary.dispatchEvent(new Event(\"scroll\"));\n+    expect(computeScrollRatio(secondary)).toBeCloseTo(computeScrollRatio(primary));\n+\n+    handle.destroy();\n+  });\n+\n+  it(\"mirrors scroll from secondary to primary\", () => {\n+    const primary = mockScrollElement(600, 100);\n+    const secondary = mockScrollElement(900, 100, 300);\n+    const handle = attachSyncScroll({ primary, secondary });\n+\n+    secondary.dispatchEvent(new Event(\"scroll\"));\n+    expect(computeScrollRatio(primary)).toBeCloseTo(computeScrollRatio(secondary));\n+\n+    handle.destroy();\n+  });\n+\n+  it(\"stops syncing after destroy\", () => {\n+    const primary = mockScrollElement(400, 100, 200);\n+    const secondary = mockScrollElement(800, 100);\n+    const handle = attachSyncScroll({ primary, secondary });\n+\n+    handle.destroy();\n+    primary.dispatchEvent(new Event(\"scroll\"));\n+    expect(secondary.scrollTop).toBe(0);\n+  });\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=100",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "pr_number": 61,
+  "title": "feat(core,react,vue): add onReady callback and getSelectedText() API",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:38:38Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "580c32938d3b8b2d9c3cf78f4ec1a57d59dc6b7a",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "580c32938d3b8b2d9c3cf78f4ec1a57d59dc6b7a",
+      "message": "feat(core,react,vue): add onReady callback and getSelectedText() API\n\nAdd two P0 roadmap features:\n\n- `onReady` callback on `EditorConfig` — fires once after the CM6 view\n  and initial AST are fully constructed, passing the `EditorAPI` so hosts\n  don't need to capture `createEditor`'s return value separately.\n\n- `getSelectedText()` on `EditorAPI` — returns the text within the\n  current selection (empty string for a cursor).\n\nBoth React and Vue bindings now forward `onReady` through their\n`useEditor` / composable hooks and support container pass-through props\n(`className`/`style` for React, `class`/`style` for Vue) on the\n`<Editor />` component.\n\nCo-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>",
+      "date": "2026-06-11T09:39:02Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 0,
+      "changes": 14
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 81,
+      "deletions": 0,
+      "changes": 81
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 4,
+      "changes": 8
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 1,
+      "changes": 9
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 1,
+      "changes": 31
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 3,
+      "changes": 21
+    },
+    {
+      "filename": "packages/vue/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 1,
+      "changes": 9
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 1,
+      "changes": 37
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=61",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

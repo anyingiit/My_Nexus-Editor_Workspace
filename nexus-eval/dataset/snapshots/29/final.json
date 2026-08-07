@@ -1,0 +1,278 @@
+{
+  "pr_number": 29,
+  "title": "feat(react, vue): add Editor component and useEditor hook with onReady callback",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T08:07:54Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "1886ba02ab4608f3c83bf417f05f33d6e9160877",
+  "merge_commit_sha": "4c095365a7e7da2dcfa7d24815fc94c449213fe2",
+  "base_sha": "06ebeff8120c2dbde87ff9206a7f9fd921f70088",
+  "commits": [
+    {
+      "sha": "985dfd7f2129d3a363413281228208000bb03118",
+      "message": "feat(react, vue): add Editor component and useEditor hook with onReady callback\n\n- Introduced the `<Editor />` component for both React and Vue, allowing users to mount a CodeMirror instance with customizable props.\n- Implemented the `useEditor` hook to facilitate custom layouts, providing a `containerRef` for user-defined elements.\n- Added `onReady` callback to notify when the editor instance is ready for use.\n- Updated README files for both React and Vue packages with installation instructions and usage examples.\n- Enhanced type definitions to support new props and ensure better integration with TypeScript.",
+      "date": "2026-05-22T05:21:29Z"
+    },
+    {
+      "sha": "1886ba02ab4608f3c83bf417f05f33d6e9160877",
+      "message": "Merge branch 'floatboatai:main' into main",
+      "date": "2026-05-28T06:52:13Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/react/README.md",
+      "status": "added",
+      "additions": 55,
+      "deletions": 0,
+      "changes": 55
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 4,
+      "changes": 45
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 2,
+      "changes": 15
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 44,
+      "deletions": 0,
+      "changes": 44
+    },
+    {
+      "filename": "packages/vue/README.md",
+      "status": "added",
+      "additions": 59,
+      "deletions": 0,
+      "changes": 59
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 106,
+      "deletions": 4,
+      "changes": 110
+    },
+    {
+      "filename": "packages/vue/src/index.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 2,
+      "changes": 15
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 2,
+      "changes": 8
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 56,
+      "deletions": 0,
+      "changes": 56
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "1df47779cc67409931a4cfa1c1dfddaaa942b1b1",
+        "filename": "packages/react/README.md",
+        "status": "added",
+        "additions": 55,
+        "deletions": 0,
+        "changes": 55,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2FREADME.md?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -0,0 +1,55 @@\n+# @floatboat/nexus-react\n+\n+React bindings for [Nexus-Editor](https://github.com/floatboatai/Nexus-Editor): `useEditor` and `<Editor />`.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-react @floatboat/nexus-core\n+```\n+\n+## `<Editor />`\n+\n+The component mounts a CodeMirror instance into an outer wrapper `div`. Editor options match `createEditor` (except `container`). Host styling and accessibility attributes are forwarded to that wrapper.\n+\n+```tsx\n+import { Editor } from \"@floatboat/nexus-react\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n+\n+export default function App() {\n+  return (\n+    <Editor\n+      className=\"nexus-host\"\n+      style={{ minHeight: 320 }}\n+      data-testid=\"editor\"\n+      initialValue=\"# Hello\"\n+      onReady={(editor: EditorAPI) => {\n+        console.log(editor.getDocument());\n+      }}\n+      onChange={(doc) => console.log(doc)}\n+    />\n+  );\n+}\n+```\n+\n+- **`onReady`** — called once after the editor is created on first mount.\n+- **Container props** — `className`, `style`, `id`, `role`, `data-*`, `aria-*`, and other standard `div` attributes (except `children` / `ref`).\n+\n+## `useEditor`\n+\n+For custom layouts, call the hook and attach `containerRef` to your own element:\n+\n+```tsx\n+import { useEditor } from \"@floatboat/nexus-react\";\n+\n+function CustomEditor() {\n+  const { containerRef, editor } = useEditor({\n+    initialValue: \"# Hello\",\n+    onReady: (instance) => instance.focus()\n+  });\n+\n+  return <div ref={containerRef} className=\"nexus-host\" />;\n+}\n+```\n+\n+`editor` is `null` until the first mount completes; prefer `onReady` when you need the instance immediately after creation."
+      },
+      {
+        "sha": "4cc769f38269e58dd5bf435abff85db34edb50f5",
+        "filename": "packages/react/src/editor.tsx",
+        "status": "modified",
+        "additions": 41,
+        "deletions": 4,
+        "changes": 45,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Feditor.tsx?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -1,9 +1,46 @@\n import { useEditor } from \"./use-editor\";\n \n-import type { UseEditorConfig } from \"./types\";\n+import type { EditorProps } from \"./types\";\n \n-export function Editor(props: UseEditorConfig) {\n-  const { containerRef } = useEditor(props);\n+export function Editor({\n+  initialValue,\n+  parser,\n+  parseDelayMs,\n+  livePreview,\n+  plugins,\n+  theme,\n+  locale,\n+  tabSize,\n+  direction,\n+  indentGuides,\n+  readOnly,\n+  slashMenuLimit,\n+  onChange,\n+  onFocus,\n+  onBlur,\n+  onAssetUpload,\n+  onReady,\n+  ...divProps\n+}: EditorProps) {\n+  const { containerRef } = useEditor({\n+    initialValue,\n+    parser,\n+    parseDelayMs,\n+    livePreview,\n+    plugins,\n+    theme,\n+    locale,\n+    tabSize,\n+    direction,\n+    indentGuides,\n+    readOnly,\n+    slashMenuLimit,\n+    onChange,\n+    onFocus,\n+    onBlur,\n+    onAssetUpload,\n+    onReady\n+  });\n \n-  return <div ref={containerRef} />;\n+  return <div ref={containerRef} {...divProps} />;\n }"
+      },
+      {
+        "sha": "0627ac32ed54eb166c28e98569efae23b664260e",
+        "filename": "packages/react/src/index.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 1,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Findex.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -1,3 +1,7 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type {\n+  EditorProps,\n+  UseEditorConfig,\n+  UseEditorResult\n+} from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "bf3f4201e885ede90dfdd759f042ab406eddb249",
+        "filename": "packages/react/src/types.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 2,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Ftypes.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -2,9 +2,20 @@ import type {\n   EditorAPI,\n   EditorConfig\n } from \"@floatboat/nexus-core\";\n-import type { RefObject } from \"react\";\n+import type { HTMLAttributes, RefObject } from \"react\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export type UseEditorConfig = Omit<EditorConfig, \"container\"> & {\n+  /** Called once after the editor is created on first mount. */\n+  onReady?: (editor: EditorAPI) => void;\n+};\n+\n+/** DOM attrs that share names with EditorConfig callbacks are omitted from container passthrough. */\n+type EditorContainerAttributes = Omit<\n+  HTMLAttributes<HTMLDivElement>,\n+  \"children\" | \"ref\" | \"onChange\" | \"onFocus\" | \"onBlur\"\n+>;\n+\n+export type EditorProps = UseEditorConfig & EditorContainerAttributes;\n \n export interface UseEditorResult {\n   containerRef: RefObject<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "48474a729e5e73d99822796c9dafef920612ef39",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 1,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -18,13 +18,15 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n+    const { onReady, ...editorConfig } = configRef.current;\n     const instance = createEditor({\n       container,\n-      ...configRef.current\n+      ...editorConfig\n     });\n \n     editorRef.current = instance;\n     setEditor(instance);\n+    onReady?.(instance);\n \n     return () => {\n       instance.destroy();"
+      },
+      {
+        "sha": "6b97536a9aeb12d2aa772ecfd1404d401aed40a1",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 44,
+        "deletions": 0,
+        "changes": 44,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -1,3 +1,4 @@\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n import { render } from \"@testing-library/react\";\n import { useEffect } from \"react\";\n import { describe, expect, it } from \"vitest\";\n@@ -37,4 +38,47 @@ describe(\"@floatboat/nexus-react\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady with a usable EditorAPI instance\", () => {\n+    let ready: EditorAPI | null = null;\n+\n+    render(\n+      <Editor\n+        initialValue=\"start\"\n+        onReady={(editor) => {\n+          ready = editor;\n+          editor.setDocument(\"ready\");\n+        }}\n+      />\n+    );\n+\n+    expect(ready).not.toBeNull();\n+    expect(ready!.getDocument()).toBe(\"ready\");\n+  });\n+\n+  it(\"passes className to the wrapper div\", () => {\n+    const { container } = render(<Editor className=\"host\" />);\n+\n+    expect(container.querySelector(\".host\")).not.toBeNull();\n+  });\n+\n+  it(\"calls onReady from useEditor on first mount\", () => {\n+    let ready: EditorAPI | null = null;\n+\n+    function Harness() {\n+      const { containerRef } = useEditor({\n+        initialValue: \"hook\",\n+        onReady: (editor) => {\n+          ready = editor;\n+        }\n+      });\n+\n+      return <div ref={containerRef} />;\n+    }\n+\n+    render(<Harness />);\n+\n+    expect(ready).not.toBeNull();\n+    expect(ready!.getDocument()).toBe(\"hook\");\n+  });\n });"
+      },
+      {
+        "sha": "9418f3a25be70c6e14373fdc186572a7f83dce05",
+        "filename": "packages/vue/README.md",
+        "status": "added",
+        "additions": 59,
+        "deletions": 0,
+        "changes": 59,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2FREADME.md?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -0,0 +1,59 @@\n+# @floatboat/nexus-vue\n+\n+Vue 3 bindings for [Nexus-Editor](https://github.com/floatboatai/Nexus-Editor): `useEditor` and `<Editor />`.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-vue @floatboat/nexus-core\n+```\n+\n+## `<Editor />`\n+\n+The component mounts a CodeMirror instance into an outer wrapper `div`. Editor options are declared as component props; host styling and accessibility attributes use fallthrough attrs on the same wrapper.\n+\n+```vue\n+<script setup lang=\"ts\">\n+import { Editor } from \"@floatboat/nexus-vue\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n+\n+function handleReady(editor: EditorAPI) {\n+  console.log(editor.getDocument());\n+}\n+</script>\n+\n+<template>\n+  <Editor\n+    class=\"nexus-host\"\n+    style=\"min-height: 320px\"\n+    data-testid=\"editor\"\n+    initial-value=\"# Hello\"\n+    :on-ready=\"handleReady\"\n+    :on-change=\"(doc) => console.log(doc)\"\n+  />\n+</template>\n+```\n+\n+- **`onReady`** — called once after the editor is created on first mount (prop: `on-ready` / `:onReady`).\n+- **Container attrs** — `class`, `style`, `id`, `role`, `data-*`, `aria-*`, and other non-prop attributes on `<Editor>`.\n+\n+## `useEditor`\n+\n+For custom layouts, call the composable and bind `containerRef` to your own element:\n+\n+```vue\n+<script setup lang=\"ts\">\n+import { useEditor } from \"@floatboat/nexus-vue\";\n+\n+const { containerRef, editor } = useEditor({\n+  initialValue: \"# Hello\",\n+  onReady: (instance) => instance.focus()\n+});\n+</script>\n+\n+<template>\n+  <div ref=\"containerRef\" class=\"nexus-host\" />\n+</template>\n+```\n+\n+`editor` stays `null` until the first mount completes; prefer `onReady` when you need the instance right after creation."
+      },
+      {
+        "sha": "c534a1bb17c612028fe2afe9369223410ba8d7da",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 106,
+        "deletions": 4,
+        "changes": 110,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -1,18 +1,120 @@\n-import { defineComponent, h } from \"vue\";\n+import { defineComponent, h, type PropType } from \"vue\";\n \n import { useEditor } from \"./use-editor\";\n \n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n+import type { EditorProps, UseEditorConfig } from \"./types\";\n+\n+const editorPropKeys = [\n+  \"initialValue\",\n+  \"parser\",\n+  \"parseDelayMs\",\n+  \"livePreview\",\n+  \"plugins\",\n+  \"theme\",\n+  \"locale\",\n+  \"tabSize\",\n+  \"direction\",\n+  \"indentGuides\",\n+  \"readOnly\",\n+  \"slashMenuLimit\",\n+  \"onChange\",\n+  \"onFocus\",\n+  \"onBlur\",\n+  \"onAssetUpload\",\n+  \"onReady\"\n+] as const;\n+\n+function pickEditorConfig(props: EditorProps): UseEditorConfig {\n+  const config = {} as UseEditorConfig;\n+\n+  for (const key of editorPropKeys) {\n+    const value = props[key];\n+\n+    if (value !== undefined) {\n+      (config as Record<string, unknown>)[key] = value;\n+    }\n+  }\n+\n+  return config;\n+}\n+\n export const Editor = defineComponent({\n   name: \"NexusEditor\",\n+  inheritAttrs: false,\n   props: {\n     initialValue: {\n       type: String,\n       required: false\n+    },\n+    parser: {\n+      type: Object as PropType<EditorProps[\"parser\"]>,\n+      required: false\n+    },\n+    parseDelayMs: {\n+      type: Number,\n+      required: false\n+    },\n+    livePreview: {\n+      type: [Boolean, Object] as PropType<EditorProps[\"livePreview\"]>,\n+      required: false\n+    },\n+    plugins: {\n+      type: Array as PropType<EditorProps[\"plugins\"]>,\n+      required: false\n+    },\n+    theme: {\n+      type: Object as PropType<EditorProps[\"theme\"]>,\n+      required: false\n+    },\n+    locale: {\n+      type: Object as PropType<EditorProps[\"locale\"]>,\n+      required: false\n+    },\n+    tabSize: {\n+      type: Number,\n+      required: false\n+    },\n+    direction: {\n+      type: String as PropType<EditorProps[\"direction\"]>,\n+      required: false\n+    },\n+    indentGuides: {\n+      type: Boolean,\n+      required: false\n+    },\n+    readOnly: {\n+      type: Boolean,\n+      required: false\n+    },\n+    slashMenuLimit: {\n+      type: Number,\n+      required: false\n+    },\n+    onChange: {\n+      type: Function as PropType<EditorProps[\"onChange\"]>,\n+      required: false\n+    },\n+    onFocus: {\n+      type: Function as PropType<EditorProps[\"onFocus\"]>,\n+      required: false\n+    },\n+    onBlur: {\n+      type: Function as PropType<EditorProps[\"onBlur\"]>,\n+      required: false\n+    },\n+    onAssetUpload: {\n+      type: Function as PropType<EditorProps[\"onAssetUpload\"]>,\n+      required: false\n+    },\n+    onReady: {\n+      type: Function as PropType<(editor: EditorAPI) => void>,\n+      required: false\n     }\n   },\n-  setup(props) {\n-    const { containerRef } = useEditor(props);\n+  setup(props, { attrs }) {\n+    const { containerRef } = useEditor(pickEditorConfig(props as EditorProps));\n \n-    return () => h(\"div\", { ref: containerRef });\n+    return () => h(\"div\", { ref: containerRef, ...attrs });\n   }\n });"
+      },
+      {
+        "sha": "0627ac32ed54eb166c28e98569efae23b664260e",
+        "filename": "packages/vue/src/index.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 1,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Findex.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -1,3 +1,7 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type {\n+  EditorProps,\n+  UseEditorConfig,\n+  UseEditorResult\n+} from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "80b090d0c1123976f4457c19b1d0cbf3d22264b0",
+        "filename": "packages/vue/src/types.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 2,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Ftypes.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -2,9 +2,20 @@ import type {\n   EditorAPI,\n   EditorConfig\n } from \"@floatboat/nexus-core\";\n-import type { Ref, ShallowRef } from \"vue\";\n+import type { HTMLAttributes, Ref, ShallowRef } from \"vue\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export type UseEditorConfig = Omit<EditorConfig, \"container\"> & {\n+  /** Called once after the editor is created on first mount. */\n+  onReady?: (editor: EditorAPI) => void;\n+};\n+\n+/** DOM attrs that share names with EditorConfig callbacks are omitted from container passthrough. */\n+type EditorContainerAttributes = Omit<\n+  HTMLAttributes,\n+  \"children\" | \"ref\" | \"onChange\" | \"onFocus\" | \"onBlur\"\n+>;\n+\n+export type EditorProps = UseEditorConfig & EditorContainerAttributes;\n \n export interface UseEditorResult {\n   containerRef: Ref<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "02eb432e4961e42b54c2161b4b72f7dfdef1c0ac",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 6,
+        "deletions": 2,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -12,10 +12,14 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n-    editor.value = createEditor({\n+    const { onReady, ...editorConfig } = config;\n+    const instance = createEditor({\n       container: containerRef.value,\n-      ...config\n+      ...editorConfig\n     });\n+\n+    editor.value = instance;\n+    onReady?.(instance);\n   });\n \n   onBeforeUnmount(() => {"
+      },
+      {
+        "sha": "cc27260f2975887547c967d574701de811b77163",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 56,
+        "deletions": 0,
+        "changes": 56,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1886ba02ab4608f3c83bf417f05f33d6e9160877/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "patch": "@@ -1,3 +1,4 @@\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n import { mount } from \"@vue/test-utils\";\n import { defineComponent, h, nextTick, onMounted } from \"vue\";\n import { describe, expect, it } from \"vitest\";\n@@ -45,4 +46,59 @@ describe(\"@floatboat/nexus-vue\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady with a usable EditorAPI instance\", async () => {\n+    let ready: EditorAPI | null = null;\n+\n+    mount(Editor, {\n+      props: {\n+        initialValue: \"start\",\n+        onReady: (editor: EditorAPI) => {\n+          ready = editor;\n+          editor.setDocument(\"ready\");\n+        }\n+      }\n+    });\n+\n+    await nextTick();\n+\n+    expect(ready).not.toBeNull();\n+    expect(ready!.getDocument()).toBe(\"ready\");\n+  });\n+\n+  it(\"passes class to the wrapper div via attrs\", async () => {\n+    const wrapper = mount(Editor, {\n+      attrs: {\n+        class: \"host\"\n+      }\n+    });\n+\n+    await nextTick();\n+\n+    expect(wrapper.element.classList.contains(\"host\")).toBe(true);\n+  });\n+\n+  it(\"calls onReady from useEditor on first mount\", async () => {\n+    let ready: EditorAPI | null = null;\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef } = useEditor({\n+          initialValue: \"hook\",\n+          onReady: (editor) => {\n+            ready = editor;\n+          }\n+        });\n+\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    mount(Harness);\n+\n+    await nextTick();\n+\n+    expect(ready).not.toBeNull();\n+    expect(ready!.getDocument()).toBe(\"hook\");\n+  });\n });"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=29",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

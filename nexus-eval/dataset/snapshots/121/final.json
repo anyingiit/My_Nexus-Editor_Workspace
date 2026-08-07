@@ -1,0 +1,114 @@
+{
+  "pr_number": 121,
+  "title": "feat(core): markdown live preview",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-03T11:42:06Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "6fb480cb35a292200c8cced9e124f1b8ff75befd",
+  "merge_commit_sha": "9351f2ea63008fc5cc12ca10cab4ca10d8445809",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "adebb568ae24a3ce4973d5e60536882a6705d9c8",
+      "message": "feat(chore): add markdown-preview scroll sync and unit test",
+      "date": "2026-07-03T10:22:40Z"
+    },
+    {
+      "sha": "6fb480cb35a292200c8cced9e124f1b8ff75befd",
+      "message": "feat(live-preview): implement split-preview scroll sync with full AST parsing",
+      "date": "2026-07-03T10:31:55Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 2,
+      "changes": 39
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/markdown-preview-renderer.ts",
+      "status": "added",
+      "additions": 186,
+      "deletions": 0,
+      "changes": 186
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/split-preview.ts",
+      "status": "added",
+      "additions": 587,
+      "deletions": 0,
+      "changes": 587
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 97,
+      "deletions": 0,
+      "changes": 97
+    },
+    {
+      "filename": "apps/electron-demo/test/markdown-preview-renderer.test.ts",
+      "status": "added",
+      "additions": 62,
+      "deletions": 0,
+      "changes": 62
+    },
+    {
+      "filename": "apps/electron-demo/test/split-preview.test.ts",
+      "status": "added",
+      "additions": 296,
+      "deletions": 0,
+      "changes": 296
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 61,
+      "deletions": 0,
+      "changes": 61
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 44,
+      "deletions": 0,
+      "changes": 44
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=121",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

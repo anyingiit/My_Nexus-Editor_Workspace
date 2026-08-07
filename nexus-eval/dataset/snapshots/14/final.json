@@ -1,0 +1,79 @@
+{
+  "pr_number": 14,
+  "title": "docs(openspec): propose realtime collaboration plugin",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-14T04:54:02Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+  "merge_commit_sha": "e59a4a315694a80d95c2d347d4ad441db17dce24",
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "commits": [
+    {
+      "sha": "38773694dd4b6c80edec715ffc0f78c784d4a7cc",
+      "message": "docs(openspec): propose realtime collaboration plugin",
+      "date": "2026-05-13T10:41:41Z"
+    },
+    {
+      "sha": "d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+      "message": "docs: mark realtime collaboration in progress",
+      "date": "2026-05-13T10:41:45Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "openspec/changes/add-realtime-collaboration/design.md",
+      "status": "added",
+      "additions": 91,
+      "deletions": 0,
+      "changes": 91
+    },
+    {
+      "filename": "openspec/changes/add-realtime-collaboration/proposal.md",
+      "status": "added",
+      "additions": 32,
+      "deletions": 0,
+      "changes": 32
+    },
+    {
+      "filename": "openspec/changes/add-realtime-collaboration/specs/collaboration/spec.md",
+      "status": "added",
+      "additions": 100,
+      "deletions": 0,
+      "changes": 100
+    },
+    {
+      "filename": "openspec/changes/add-realtime-collaboration/tasks.md",
+      "status": "added",
+      "additions": 45,
+      "deletions": 0,
+      "changes": 45
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

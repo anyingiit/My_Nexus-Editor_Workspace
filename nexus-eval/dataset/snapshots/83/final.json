@@ -1,0 +1,297 @@
+{
+  "pr_number": 83,
+  "title": "feat(search): add fuzzy search helpers",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-30T05:28:45Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "ad20e180a2fe89b1589a11d979f130907e357b9d",
+  "merge_commit_sha": "2b226ffe663691ab13c5d220bdc786da8c6f3593",
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "commits": [
+    {
+      "sha": "b1e865a4b4dcc203596659c4eb7727ebbb3cefc2",
+      "message": "feat(search): add fuzzy search helpers",
+      "date": "2026-06-30T02:50:34Z"
+    },
+    {
+      "sha": "ad20e180a2fe89b1589a11d979f130907e357b9d",
+      "message": "feat(search): optimize fuzzy matching and demo search UX",
+      "date": "2026-06-30T04:11:30Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 54,
+      "deletions": 3,
+      "changes": 57
+    },
+    {
+      "filename": "apps/electron-demo/test/search-bar.test.ts",
+      "status": "added",
+      "additions": 93,
+      "deletions": 0,
+      "changes": 93
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search/proposal.md",
+      "status": "added",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search/specs/plugins/spec.md",
+      "status": "added",
+      "additions": 66,
+      "deletions": 0,
+      "changes": 66
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search/tasks.md",
+      "status": "added",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 256,
+      "deletions": 1,
+      "changes": 257
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 125,
+      "deletions": 0,
+      "changes": 125
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "e7f2c5b5ba97c88822c648ba9c8396ac272c334f",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -174,7 +174,7 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n | `@floatboat/nexus-vue` | Vue 3 binding — `useEditor` composable |\n | `@floatboat/nexus-preset-gfm` | GitHub Flavored Markdown preset (tables, strikethrough, task lists) |\n | `@floatboat/nexus-plugin-history` | Undo/redo with `Ctrl+Z` / `Ctrl+Shift+Z` |\n-| `@floatboat/nexus-plugin-search` | Search and replace helpers |\n+| `@floatboat/nexus-plugin-search` | Search, replace, regex, and fuzzy-match helpers |\n | `@floatboat/nexus-plugin-slash` | Slash command detection, ranking, and a vanilla-DOM floating menu UI |\n | `@floatboat/nexus-plugin-toolbar` | Toolbar primitives for formatting commands |\n | `@floatboat/nexus-plugin-math` | Inline / block math rendering (KaTeX) |"
+      },
+      {
+        "sha": "e41de395972472e22d315a090a0d0534a25770f8",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -174,7 +174,7 @@ pnpm dev:electron-demo\n | `@floatboat/nexus-vue` | Vue 3 绑定 —— `useEditor` 组合式函数 |\n | `@floatboat/nexus-preset-gfm` | GitHub Flavored Markdown 预设（表格、删除线、任务列表） |\n | `@floatboat/nexus-plugin-history` | 撤销/重做，支持 `Ctrl+Z` / `Ctrl+Shift+Z` |\n-| `@floatboat/nexus-plugin-search` | 搜索替换辅助函数 |\n+| `@floatboat/nexus-plugin-search` | 搜索、替换、正则与模糊匹配辅助函数 |\n | `@floatboat/nexus-plugin-slash` | 斜杠命令检测、排序与 vanilla DOM 浮层菜单 UI |\n | `@floatboat/nexus-plugin-toolbar` | 工具栏基础组件与格式化命令 |\n | `@floatboat/nexus-plugin-math` | 行内 / 块级数学公式渲染（KaTeX） |"
+      },
+      {
+        "sha": "aa4a8a57c7b79bfe6cfdb33972d17460dd41afdd",
+        "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+        "status": "modified",
+        "additions": 54,
+        "deletions": 3,
+        "changes": 57,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -51,6 +51,15 @@ const COUNT_STYLES = `\n   min-width: 60px;\n `;\n \n+const TOGGLE_STYLES = `\n+  display: inline-flex;\n+  align-items: center;\n+  gap: 4px;\n+  color: var(--nexus-text-muted, #666);\n+  font-size: 12px;\n+  user-select: none;\n+`;\n+\n const CLOSE_BTN_STYLES = `\n   background: none;\n   border: none;\n@@ -71,49 +80,90 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   const findInput = document.createElement(\"input\");\n   findInput.type = \"text\";\n   findInput.placeholder = \"Find...\";\n+  findInput.setAttribute(\"aria-label\", \"Find\");\n+  findInput.dataset.testId = \"search-find-input\";\n   findInput.style.cssText = INPUT_STYLES;\n \n   // Replace input\n   const replaceInput = document.createElement(\"input\");\n   replaceInput.type = \"text\";\n   replaceInput.placeholder = \"Replace...\";\n+  replaceInput.setAttribute(\"aria-label\", \"Replace\");\n+  replaceInput.dataset.testId = \"search-replace-input\";\n   replaceInput.style.cssText = INPUT_STYLES;\n   replaceInput.style.width = \"160px\";\n \n   // Buttons\n   const prevBtn = document.createElement(\"button\");\n+  prevBtn.type = \"button\";\n   prevBtn.textContent = \"\\u2191\"; // ↑\n   prevBtn.title = \"Previous match\";\n+  prevBtn.setAttribute(\"aria-label\", \"Previous match\");\n+  prevBtn.dataset.testId = \"search-previous-button\";\n   prevBtn.style.cssText = BTN_STYLES;\n \n   const nextBtn = document.createElement(\"button\");\n+  nextBtn.type = \"button\";\n   nextBtn.textContent = \"\\u2193\"; // ↓\n   nextBtn.title = \"Next match\";\n+  nextBtn.setAttribute(\"aria-label\", \"Next match\");\n+  nextBtn.dataset.testId = \"search-next-button\";\n   nextBtn.style.cssText = BTN_STYLES;\n \n   const replaceBtn = document.createElement(\"button\");\n+  replaceBtn.type = \"button\";\n   replaceBtn.textContent = \"Replace\";\n+  replaceBtn.title = \"Replace\";\n+  replaceBtn.setAttribute(\"aria-label\", \"Replace\");\n+  replaceBtn.dataset.testId = \"search-replace-button\";\n   replaceBtn.style.cssText = BTN_STYLES;\n \n   const replaceAllBtn = document.createElement(\"button\");\n+  replaceAllBtn.type = \"button\";\n   replaceAllBtn.textContent = \"All\";\n   replaceAllBtn.title = \"Replace all\";\n+  replaceAllBtn.setAttribute(\"aria-label\", \"Replace all\");\n+  replaceAllBtn.dataset.testId = \"search-replace-all-button\";\n   replaceAllBtn.style.cssText = BTN_STYLES;\n \n+  const fuzzyToggle = document.createElement(\"input\");\n+  fuzzyToggle.type = \"checkbox\";\n+  fuzzyToggle.title = \"Use fuzzy subsequence matching\";\n+  fuzzyToggle.setAttribute(\"aria-label\", \"Fuzzy search\");\n+  fuzzyToggle.dataset.testId = \"search-fuzzy-toggle\";\n+\n+  const fuzzyLabel = document.createElement(\"label\");\n+  fuzzyLabel.style.cssText = TOGGLE_STYLES;\n+  fuzzyLabel.append(fuzzyToggle, \"Fuzzy\");\n+\n   // Count label\n   const countLabel = document.createElement(\"span\");\n   countLabel.style.cssText = COUNT_STYLES;\n \n   // Close\n   const closeBtn = document.createElement(\"button\");\n+  closeBtn.type = \"button\";\n   closeBtn.innerHTML = \"&times;\";\n   closeBtn.title = \"Close (Esc)\";\n+  closeBtn.setAttribute(\"aria-label\", \"Close\");\n+  closeBtn.dataset.testId = \"search-close-button\";\n   closeBtn.style.cssText = CLOSE_BTN_STYLES;\n \n   const spacer = document.createElement(\"div\");\n   spacer.style.flex = \"1\";\n \n-  bar.append(findInput, prevBtn, nextBtn, countLabel, replaceInput, replaceBtn, replaceAllBtn, spacer, closeBtn);\n+  bar.append(\n+    findInput,\n+    fuzzyLabel,\n+    prevBtn,\n+    nextBtn,\n+    countLabel,\n+    replaceInput,\n+    replaceBtn,\n+    replaceAllBtn,\n+    spacer,\n+    closeBtn\n+  );\n \n   // State\n   let matches: Array<{ from: number; to: number }> = [];\n@@ -129,7 +179,7 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n       return;\n     }\n     const doc = editor.getDocument();\n-    matches = findSearchMatches(doc, query);\n+    matches = findSearchMatches(doc, query, { fuzzy: fuzzyToggle.checked });\n     if (matches.length === 0) {\n       currentIdx = -1;\n       countLabel.textContent = \"0 results\";\n@@ -178,13 +228,14 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n     const query = findInput.value;\n     if (!query) return;\n     const doc = editor.getDocument();\n-    const newDoc = replaceAllMatches(doc, query, replaceInput.value);\n+    const newDoc = replaceAllMatches(doc, query, replaceInput.value, { fuzzy: fuzzyToggle.checked });\n     editor.setDocument(newDoc);\n     updateMatches();\n   }\n \n   // Event handlers\n   findInput.addEventListener(\"input\", updateMatches);\n+  fuzzyToggle.addEventListener(\"change\", updateMatches);\n   findInput.addEventListener(\"keydown\", (e) => {\n     if (e.key === \"Enter\") { e.shiftKey ? goPrev() : goNext(); e.preventDefault(); }\n     if (e.key === \"Escape\") { close(); }"
+      },
+      {
+        "sha": "8c3f87d12270b0d00952d7b0d60ef46bd921a801",
+        "filename": "apps/electron-demo/test/search-bar.test.ts",
+        "status": "added",
+        "additions": 93,
+        "deletions": 0,
+        "changes": 93,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/apps%2Felectron-demo%2Ftest%2Fsearch-bar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/apps%2Felectron-demo%2Ftest%2Fsearch-bar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fsearch-bar.test.ts?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -0,0 +1,93 @@\n+import { afterEach, describe, expect, it, vi } from \"vitest\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n+import { createSearchBar } from \"../src/renderer/search-bar\";\n+\n+function createMockEditor(initialDoc: string): EditorAPI {\n+  let doc = initialDoc;\n+  let selection = { anchor: 0, head: 0 };\n+\n+  return {\n+    getDocument: () => doc,\n+    getAst: vi.fn(),\n+    setDocument: vi.fn((nextDoc: string) => {\n+      doc = nextDoc;\n+    }),\n+    getSelection: () => selection,\n+    setSelection: vi.fn((anchor: number, head = anchor) => {\n+      selection = { anchor, head };\n+    }),\n+    focus: vi.fn(),\n+    blur: vi.fn(),\n+    destroy: vi.fn(),\n+    on: vi.fn(() => () => undefined)\n+  } as unknown as EditorAPI;\n+}\n+\n+describe(\"createSearchBar\", () => {\n+  afterEach(() => {\n+    document.body.replaceChildren();\n+  });\n+\n+  it(\"keeps fuzzy search opt-in and updates matches when enabled\", () => {\n+    const editor = createMockEditor(\"Nexus Editor\");\n+    const searchBar = createSearchBar(editor);\n+    document.body.append(searchBar.element);\n+    searchBar.open();\n+\n+    const input = searchBar.element.querySelector<HTMLInputElement>(\"[data-test-id='search-find-input']\");\n+    const fuzzyToggle = searchBar.element.querySelector<HTMLInputElement>(\"[data-test-id='search-fuzzy-toggle']\");\n+    expect(input).not.toBeNull();\n+    expect(fuzzyToggle).not.toBeNull();\n+    expect(input?.getAttribute(\"aria-label\")).toBe(\"Find\");\n+    expect(fuzzyToggle?.checked).toBe(false);\n+    expect(fuzzyToggle?.getAttribute(\"aria-label\")).toBe(\"Fuzzy search\");\n+\n+    input!.value = \"nr\";\n+    input!.dispatchEvent(new Event(\"input\", { bubbles: true }));\n+    expect(editor.setSelection).not.toHaveBeenCalled();\n+\n+    fuzzyToggle!.checked = true;\n+    fuzzyToggle!.dispatchEvent(new Event(\"change\", { bubbles: true }));\n+    expect(editor.setSelection).toHaveBeenLastCalledWith(0, 12);\n+\n+    searchBar.destroy();\n+    searchBar.element.remove();\n+  });\n+\n+  it(\"uses fuzzy replacement when the fuzzy toggle is enabled\", () => {\n+    const editor = createMockEditor(\"Nexus Editor\");\n+    const searchBar = createSearchBar(editor);\n+    document.body.append(searchBar.element);\n+    searchBar.open();\n+\n+    const findInput = searchBar.element.querySelector<HTMLInputElement>(\"[data-test-id='search-find-input']\");\n+    const replaceInput = searchBar.element.querySelector<HTMLInputElement>(\"[data-test-id='search-replace-input']\");\n+    const fuzzyToggle = searchBar.element.querySelector<HTMLInputElement>(\"[data-test-id='search-fuzzy-toggle']\");\n+    const replaceButton = searchBar.element.querySelector<HTMLButtonElement>(\n+      \"[data-test-id='search-replace-button']\"\n+    );\n+    const replaceAllButton = searchBar.element.querySelector<HTMLButtonElement>(\n+      \"[data-test-id='search-replace-all-button']\"\n+    );\n+\n+    expect(findInput).not.toBeNull();\n+    expect(replaceInput).not.toBeNull();\n+    expect(fuzzyToggle).not.toBeNull();\n+    expect(replaceButton).not.toBeNull();\n+    expect(replaceAllButton).not.toBeNull();\n+    expect(replaceInput?.getAttribute(\"aria-label\")).toBe(\"Replace\");\n+    expect(replaceButton?.type).toBe(\"button\");\n+    expect(replaceAllButton?.getAttribute(\"aria-label\")).toBe(\"Replace all\");\n+    expect(replaceAllButton?.type).toBe(\"button\");\n+\n+    findInput!.value = \"ne\";\n+    replaceInput!.value = \"NE\";\n+    fuzzyToggle!.checked = true;\n+    replaceAllButton!.click();\n+\n+    expect(editor.setDocument).toHaveBeenLastCalledWith(\"NExus Editor\");\n+\n+    searchBar.destroy();\n+    searchBar.element.remove();\n+  });\n+});"
+      },
+      {
+        "sha": "b0d976cd46b795aa06e87b672e959e2fc2a3601d",
+        "filename": "apps/electron-demo/tsconfig.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/apps%2Felectron-demo%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/apps%2Felectron-demo%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftsconfig.json?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -8,7 +8,8 @@\n       \"@floatboat/nexus-plugin-history\": [\"packages/plugin-history/src/index.ts\"],\n       \"@floatboat/nexus-plugin-search\": [\"packages/plugin-search/src/index.ts\"],\n       \"@floatboat/nexus-plugin-slash\": [\"packages/plugin-slash/src/index.ts\"],\n-      \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"]\n+      \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"]\n     }\n   },\n   \"include\": ["
+      },
+      {
+        "sha": "bd43a4cdbdf649774eeb411a2a5ce5bbdf7f2eb6",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -25,7 +25,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | 2  | Whole-word matching | `plugin-search` | P1 | done | No | `wholeWord` option via `buildSearchPattern` with `\\b` boundaries |\n | 15 | Regex search | `plugin-search` | P1 | done | No | `regexp` option landed alongside whole-word; invalid-regex guarded |\n | 16 | Command / search history | `plugin-search` + `plugin-slash` | P2 | done | Yes | Host-injected storage (no implicit localStorage) — `add-search-query-history` + `add-slash-recent-command-history` |\n-| 17 | Fuzzy search | `plugin-search` | P2 | planned | No | Evaluate fzf-like algorithm vs. third-party lib; needs backtracking matcher |\n+| 17 | Fuzzy search | `plugin-search` | P2 | in-progress | No | Adds dependency-free subsequence ranking, match ranges, and demo search-bar toggle — see `openspec/changes/add-fuzzy-search` |\n | 3  | Slash command sorting + limit | `plugin-slash` | P0 | done | Yes | Landed alongside the floating menu UI — see `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash command floating menu UI | `plugin-slash` + `electron-demo` | P0 | done | Yes | `createSlashMenuUI(editor, options)` — see `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "d46d242462caa5d3f0560462e0f59e7d34af400a",
+        "filename": "openspec/changes/add-fuzzy-search/proposal.md",
+        "status": "added",
+        "additions": 33,
+        "deletions": 0,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/openspec%2Fchanges%2Fadd-fuzzy-search%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/openspec%2Fchanges%2Fadd-fuzzy-search%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search%2Fproposal.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -0,0 +1,33 @@\n+# Change: Add Fuzzy Search Helpers\n+\n+## Why\n+\n+Roadmap #17 calls for fuzzy search in `@floatboat/nexus-plugin-search`. Exact, whole-word, and regex search work well when users know the precise text, but note-taking workflows often need quick subsequence lookup across headings, filenames, and prose where the user remembers only initials or partial characters.\n+\n+## What Changes\n+\n+- Add opt-in fuzzy matching to `findSearchMatches()` via `SearchOptions.fuzzy`.\n+- Return fuzzy match metadata with ranking `score` and contiguous `ranges` for UI highlighting.\n+- Support score-first or document-order sorting through `SearchOptions.sortBy`.\n+- Support `maxMatches` capping after sorting.\n+- Preserve existing exact, whole-word, regex, replace, and CodeMirror search panel behavior by default.\n+- Add fuzzy span replacement to `replaceAllMatches()` for hosts that use the helper outside the CodeMirror panel.\n+- Add a fuzzy toggle to the Electron demo search bar to demonstrate the helper in a visible integration surface.\n+\n+## Non-Goals\n+\n+- No third-party fuzzy-search dependency.\n+- No CodeMirror search panel fuzzy mode in this PR; CodeMirror's native panel remains exact/regex-oriented.\n+- No cross-file vault search UI.\n+- No changes to `packages/core` search or selection APIs.\n+\n+## Impact\n+\n+- Affected specs: `plugins`\n+- Affected roadmap: Roadmap #17 (`Fuzzy search`)\n+- Affected code:\n+  - `packages/plugin-search/src/index.ts`\n+  - `packages/plugin-search/test/plugin-search.test.ts`\n+  - `packages/plugin-search/README.md`\n+  - `apps/electron-demo/src/renderer/search-bar.ts`\n+  - `docs/ROADMAP.md`"
+      },
+      {
+        "sha": "184112531780754e36281e77031cb478396384ae",
+        "filename": "openspec/changes/add-fuzzy-search/specs/plugins/spec.md",
+        "status": "added",
+        "additions": 66,
+        "deletions": 0,
+        "changes": 66,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/openspec%2Fchanges%2Fadd-fuzzy-search%2Fspecs%2Fplugins%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/openspec%2Fchanges%2Fadd-fuzzy-search%2Fspecs%2Fplugins%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search%2Fspecs%2Fplugins%2Fspec.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -0,0 +1,66 @@\n+## ADDED Requirements\n+\n+### Requirement: Fuzzy Search Option\n+\n+`@floatboat/nexus-plugin-search` SHALL provide opt-in fuzzy matching through `findSearchMatches()` without changing the default exact search behavior.\n+\n+#### Scenario: Default exact search is unchanged\n+- **WHEN** a host calls `findSearchMatches(doc, query)` without `fuzzy: true`\n+- **THEN** the helper SHALL return exact matches using the existing case-sensitive, regexp, and whole-word options\n+\n+#### Scenario: Fuzzy search matches subsequences\n+- **WHEN** a host calls `findSearchMatches(doc, query, { fuzzy: true })`\n+- **THEN** the helper SHALL treat the query as a literal subsequence\n+- **AND** it SHALL return matching spans that contain the matched subsequence\n+\n+### Requirement: Fuzzy Match Metadata\n+\n+Fuzzy search results SHALL include score and range metadata so host UIs can rank and highlight fuzzy hits without reparsing the text.\n+\n+#### Scenario: Fuzzy match exposes score\n+- **WHEN** fuzzy search returns a match\n+- **THEN** the match SHALL include a numeric `score`\n+\n+#### Scenario: Fuzzy match exposes ranges\n+- **WHEN** fuzzy search returns a non-contiguous match\n+- **THEN** the match SHALL include `ranges` for the contiguous matched character groups\n+\n+### Requirement: Fuzzy Result Ordering and Limits\n+\n+Fuzzy search SHALL support document-order results by default, score-first ordering when requested, and result capping after ordering.\n+\n+#### Scenario: Document order remains default\n+- **WHEN** a host enables fuzzy search without `sortBy`\n+- **THEN** matches SHALL be returned by their document position\n+\n+#### Scenario: Score ordering ranks better matches first\n+- **WHEN** a host enables fuzzy search with `sortBy: \"score\"`\n+- **THEN** matches with higher fuzzy scores SHALL be returned before lower-scored matches\n+\n+#### Scenario: Max matches caps ordered results\n+- **WHEN** a host provides `maxMatches`\n+- **THEN** the helper SHALL return no more than that many matches after applying the requested ordering\n+\n+### Requirement: Fuzzy Replacement\n+\n+`replaceAllMatches()` SHALL support fuzzy replacement by replacing each fuzzy match span literally while preserving regex capture replacement behavior for non-fuzzy regex search.\n+\n+#### Scenario: Fuzzy replacement replaces spans\n+- **WHEN** a host calls `replaceAllMatches(doc, query, replacement, { fuzzy: true })`\n+- **THEN** each fuzzy match span SHALL be replaced with the replacement text\n+\n+#### Scenario: Regex captures stay scoped to regex search\n+- **WHEN** a host calls `replaceAllMatches()` with `regexp: true` and without `fuzzy: true`\n+- **THEN** existing regex capture-group replacement behavior SHALL remain unchanged\n+\n+### Requirement: Demo Fuzzy Toggle\n+\n+The Electron demo search bar SHALL expose fuzzy matching as an opt-in toggle that demonstrates the helper without changing default demo search behavior.\n+\n+#### Scenario: Demo search remains exact by default\n+- **WHEN** the Electron demo search bar opens\n+- **THEN** fuzzy matching SHALL be disabled by default\n+\n+#### Scenario: Demo search can enable fuzzy matching\n+- **WHEN** the user enables the fuzzy toggle and enters a query\n+- **THEN** the demo search bar SHALL call the search helpers with `fuzzy: true`"
+      },
+      {
+        "sha": "0042f2a220ce39b35fd4bde248b6d041f21397ac",
+        "filename": "openspec/changes/add-fuzzy-search/tasks.md",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/openspec%2Fchanges%2Fadd-fuzzy-search%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/openspec%2Fchanges%2Fadd-fuzzy-search%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search%2Ftasks.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -0,0 +1,27 @@\n+## 1. OpenSpec\n+\n+- [x] 1.1 Create OpenSpec change `add-fuzzy-search`.\n+- [x] 1.2 Define plugin-search fuzzy helper scope and CodeMirror panel non-goals.\n+\n+## 2. Plugin Search Implementation\n+\n+- [x] 2.1 Add typed fuzzy search options and fuzzy match metadata.\n+- [x] 2.2 Implement dependency-free subsequence matching with ranking.\n+- [x] 2.3 Preserve default exact, regex, whole-word, and replacement behavior.\n+- [x] 2.4 Add `maxMatches` and score/document ordering support.\n+- [x] 2.5 Add fuzzy replacement for helper-based replacement flows.\n+\n+## 3. Demo and Docs\n+\n+- [x] 3.1 Add a fuzzy toggle to the Electron demo search bar.\n+- [x] 3.2 Document plugin-search fuzzy options and metadata.\n+- [x] 3.3 Update roadmap status for Roadmap #17.\n+\n+## 4. Verification\n+\n+- [x] 4.1 Add Vitest coverage for fuzzy matching, ranking, case sensitivity, limits, boundaries, and replacement.\n+- [x] 4.2 Run targeted plugin-search Vitest suite.\n+- [x] 4.3 Run plugin-search TypeScript check.\n+- [x] 4.4 Run plugin-search build.\n+- [ ] 4.5 Run `openspec validate add-fuzzy-search --strict` — CLI is not installed in this dev environment; spec format was hand-checked against `openspec/AGENTS.md`.\n+- [ ] 4.6 Run full repo `pnpm test` after full dependency install is available; direct full Vitest run is blocked locally by missing workspace dependencies after `pnpm install` timed out on `app-builder-bin`."
+      },
+      {
+        "sha": "fc9af3d486ecbdfcb50d836142671eaca65ae54b",
+        "filename": "packages/plugin-search/README.md",
+        "status": "added",
+        "additions": 52,
+        "deletions": 0,
+        "changes": 52,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/packages%2Fplugin-search%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/packages%2Fplugin-search%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2FREADME.md?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -0,0 +1,52 @@\n+# @floatboat/nexus-plugin-search\n+\n+Search helpers and a CodeMirror search panel for Nexus Editor.\n+\n+## Usage\n+\n+```ts\n+import {\n+  createSearchPlugin,\n+  findSearchMatches,\n+  replaceAllMatches\n+} from \"@floatboat/nexus-plugin-search\";\n+\n+const plugin = createSearchPlugin();\n+\n+const exact = findSearchMatches(\"Hello hello\", \"hello\");\n+const fuzzy = findSearchMatches(\"Nexus Editor\\nplain note\", \"ne\", {\n+  fuzzy: true,\n+  sortBy: \"score\"\n+});\n+\n+const nextDoc = replaceAllMatches(\"Nexus Editor\", \"ne\", \"NE\", {\n+  fuzzy: true\n+});\n+```\n+\n+## Match Options\n+\n+`findSearchMatches(doc, query, options)` supports:\n+\n+- `caseSensitive`: match exact character casing.\n+- `wholeWord`: require word boundaries around the final match span.\n+- `regexp`: treat `query` as a regular expression for exact search.\n+- `fuzzy`: treat `query` as a literal subsequence and return one best match per line.\n+- `maxMatches`: cap returned matches after sorting.\n+- `sortBy`: `\"position\"` by default, or `\"score\"` for best fuzzy hits first.\n+\n+Fuzzy matches include a `score` and `ranges` metadata:\n+\n+```ts\n+[\n+  {\n+    from: 0,\n+    to: 2,\n+    text: \"Ne\",\n+    score: 1183,\n+    ranges: [{ from: 0, to: 2, text: \"Ne\" }]\n+  }\n+]\n+```\n+\n+The score favors adjacent characters, word or camel-case boundaries, exact-case matches, short spans, and earlier line positions. Regex replacement capture groups are supported only for non-fuzzy regex search; fuzzy replacement replaces the matched span literally."
+      },
+      {
+        "sha": "0cd71cbc71468998a2028ebb999de1a756c3cdc2",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 256,
+        "deletions": 1,
+        "changes": 257,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -21,12 +21,23 @@ export interface SearchMatch {\n   from: number;\n   to: number;\n   text: string;\n+  score?: number;\n+  ranges?: SearchMatchRange[];\n+}\n+\n+export interface SearchMatchRange {\n+  from: number;\n+  to: number;\n+  text: string;\n }\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n   wholeWord?: boolean;\n   regexp?: boolean;\n+  fuzzy?: boolean;\n+  maxMatches?: number;\n+  sortBy?: \"position\" | \"score\";\n }\n \n export interface SearchHistoryStorage {\n@@ -250,6 +261,230 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n   }\n }\n \n+function isWordChar(value: string): boolean {\n+  return /[\\p{L}\\p{N}_]/u.test(value);\n+}\n+\n+function isWordBoundary(value: string, from: number, to: number): boolean {\n+  const before = from <= 0 ? \"\" : value[from - 1] ?? \"\";\n+  const after = to >= value.length ? \"\" : value[to] ?? \"\";\n+  return (!before || !isWordChar(before)) && (!after || !isWordChar(after));\n+}\n+\n+function isFuzzyBoundary(value: string, index: number): boolean {\n+  if (index <= 0) return true;\n+\n+  const previous = value[index - 1] ?? \"\";\n+  const current = value[index] ?? \"\";\n+  if (!isWordChar(previous)) return true;\n+\n+  return /[a-z]/.test(previous) && /[A-Z]/.test(current);\n+}\n+\n+function normalizeChar(value: string, caseSensitive: boolean): string {\n+  return caseSensitive ? value : value.toLowerCase();\n+}\n+\n+interface FuzzyCandidate {\n+  indexes: number[];\n+  score: number;\n+}\n+\n+interface FuzzyCandidateState {\n+  index: number;\n+  prev: FuzzyCandidateState | null;\n+  score: number;\n+}\n+\n+interface FuzzyQuery {\n+  chars: string[];\n+  normalizedChars: string[];\n+  caseSensitive: boolean;\n+}\n+\n+function createFuzzyQuery(query: string, caseSensitive: boolean): FuzzyQuery | null {\n+  if (!query) return null;\n+\n+  const chars = query.split(\"\");\n+  return {\n+    chars,\n+    normalizedChars: chars.map((char) => normalizeChar(char, caseSensitive)),\n+    caseSensitive\n+  };\n+}\n+\n+function fuzzyCandidateIndexes(candidate: FuzzyCandidateState): number[] {\n+  const indexes: number[] = [];\n+  let current: FuzzyCandidateState | null = candidate;\n+\n+  while (current) {\n+    indexes.push(current.index);\n+    current = current.prev;\n+  }\n+\n+  return indexes.reverse();\n+}\n+\n+function findBestFuzzyCandidate(\n+  value: string,\n+  query: FuzzyQuery\n+): FuzzyCandidate | null {\n+  if (!value || query.chars.length > value.length) return null;\n+\n+  const states: Array<FuzzyCandidateState | null> = Array(query.chars.length).fill(null);\n+\n+  for (let index = 0; index < value.length; index += 1) {\n+    const char = value[index] ?? \"\";\n+    const normalizedChar = normalizeChar(char, query.caseSensitive);\n+\n+    for (let queryIndex = query.chars.length - 1; queryIndex >= 0; queryIndex -= 1) {\n+      if (normalizedChar !== query.normalizedChars[queryIndex]) {\n+        continue;\n+      }\n+\n+      const previous = queryIndex === 0 ? null : states[queryIndex - 1];\n+      if (queryIndex > 0 && !previous) continue;\n+\n+      const previousIndex = previous?.index ?? -1;\n+      const gap = previousIndex >= 0 ? index - previousIndex - 1 : 0;\n+      const adjacentBonus = gap === 0 && previousIndex >= 0 ? 80 : 0;\n+      const boundaryBonus = isFuzzyBoundary(value, index) ? 35 : 0;\n+      const exactCaseBonus = char === (query.chars[queryIndex] ?? \"\") ? 10 : 0;\n+      const gapPenalty = previousIndex >= 0 ? Math.min(40, gap * 4) : 0;\n+      const score = (previous?.score ?? 0) + 20 + adjacentBonus + boundaryBonus + exactCaseBonus - gapPenalty;\n+      const current = states[queryIndex];\n+\n+      if (!current || score > current.score) {\n+        states[queryIndex] = { index, prev: previous, score };\n+      }\n+    }\n+  }\n+\n+  const candidate = states[query.chars.length - 1];\n+  if (!candidate) return null;\n+\n+  const indexes = fuzzyCandidateIndexes(candidate);\n+  const first = indexes[0] ?? 0;\n+  const last = indexes[indexes.length - 1] ?? first;\n+  const span = last - first + 1;\n+\n+  return {\n+    indexes,\n+    score: candidate.score + 1000 + query.chars.length * 15 - span * 3 - first\n+  };\n+}\n+\n+function toFuzzyRanges(line: string, lineStart: number, indexes: number[]): SearchMatchRange[] {\n+  const ranges: SearchMatchRange[] = [];\n+  let rangeStart = indexes[0] ?? 0;\n+  let previous = rangeStart;\n+\n+  for (let i = 1; i < indexes.length; i += 1) {\n+    const index = indexes[i] ?? previous;\n+    if (index === previous + 1) {\n+      previous = index;\n+      continue;\n+    }\n+\n+    ranges.push({\n+      from: lineStart + rangeStart,\n+      to: lineStart + previous + 1,\n+      text: line.slice(rangeStart, previous + 1)\n+    });\n+    rangeStart = index;\n+    previous = index;\n+  }\n+\n+  ranges.push({\n+    from: lineStart + rangeStart,\n+    to: lineStart + previous + 1,\n+    text: line.slice(rangeStart, previous + 1)\n+  });\n+\n+  return ranges;\n+}\n+\n+function compareSearchMatches(a: SearchMatch, b: SearchMatch, sortBy: SearchOptions[\"sortBy\"]): number {\n+  if (sortBy === \"score\") {\n+    const scoreDiff = (b.score ?? 0) - (a.score ?? 0);\n+    if (scoreDiff !== 0) return scoreDiff;\n+  }\n+\n+  return a.from - b.from || a.to - b.to;\n+}\n+\n+function resolveMatchLimit(maxMatches: number | undefined): number | null {\n+  if (maxMatches === undefined || !Number.isFinite(maxMatches)) {\n+    return null;\n+  }\n+\n+  return Math.max(0, Math.floor(maxMatches));\n+}\n+\n+function applyMaxMatches(matches: SearchMatch[], limit: number | null): SearchMatch[] {\n+  return limit === null ? matches : matches.slice(0, limit);\n+}\n+\n+function hasReachedMatchLimit(matches: SearchMatch[], limit: number | null): boolean {\n+  return limit !== null && matches.length >= limit;\n+}\n+\n+function orderSearchMatches(matches: SearchMatch[], sortBy: SearchOptions[\"sortBy\"]): SearchMatch[] {\n+  if (sortBy !== \"score\") {\n+    return matches;\n+  }\n+\n+  return matches.sort((a, b) => compareSearchMatches(a, b, sortBy));\n+}\n+\n+function findFuzzySearchMatches(\n+  doc: string,\n+  query: string,\n+  options: SearchOptions = {}\n+): SearchMatch[] {\n+  const sortBy = options.sortBy ?? \"position\";\n+  const limit = resolveMatchLimit(options.maxMatches);\n+  if (limit === 0) return [];\n+\n+  const queryState = createFuzzyQuery(query, options.caseSensitive ?? false);\n+  if (!queryState) return [];\n+\n+  const matches: SearchMatch[] = [];\n+  let lineStart = 0;\n+\n+  while (lineStart <= doc.length) {\n+    const newlineIndex = doc.indexOf(\"\\n\", lineStart);\n+    const lineEnd = newlineIndex === -1 ? doc.length : newlineIndex;\n+    const line = doc.slice(lineStart, lineEnd);\n+    const candidate = findBestFuzzyCandidate(line, queryState);\n+\n+    if (candidate) {\n+      const first = candidate.indexes[0] ?? 0;\n+      const last = candidate.indexes[candidate.indexes.length - 1] ?? first;\n+      const from = lineStart + first;\n+      const to = lineStart + last + 1;\n+\n+      if (!options.wholeWord || isWordBoundary(doc, from, to)) {\n+        matches.push({\n+          from,\n+          to,\n+          text: doc.slice(from, to),\n+          score: candidate.score,\n+          ranges: toFuzzyRanges(line, lineStart, candidate.indexes)\n+        });\n+        if (sortBy === \"position\" && hasReachedMatchLimit(matches, limit)) {\n+          break;\n+        }\n+      }\n+    }\n+\n+    if (newlineIndex === -1) break;\n+    lineStart = newlineIndex + 1;\n+  }\n+\n+  return applyMaxMatches(orderSearchMatches(matches, sortBy), limit);\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -259,10 +494,18 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy) {\n+    return findFuzzySearchMatches(doc, query, options);\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return [];\n   }\n+  const sortBy = options.sortBy ?? \"position\";\n+  const limit = resolveMatchLimit(options.maxMatches);\n+  if (limit === 0) return [];\n+\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n@@ -274,9 +517,12 @@ export function findSearchMatches(\n       to: from + text.length,\n       text\n     });\n+    if (hasReachedMatchLimit(matches, limit)) {\n+      break;\n+    }\n   }\n \n-  return matches;\n+  return applyMaxMatches(matches, limit);\n }\n \n export function replaceAllMatches(\n@@ -289,6 +535,15 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n+  if (options.fuzzy) {\n+    const matches = findFuzzySearchMatches(doc, query, options);\n+    let replaced = doc;\n+    for (const match of matches.slice().sort((a, b) => b.from - a.from)) {\n+      replaced = replaced.slice(0, match.from) + replacement + replaced.slice(match.to);\n+    }\n+    return replaced;\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return doc;"
+      },
+      {
+        "sha": "1c0815ad00226bac0780a429aa9c080cf5799344",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 125,
+        "deletions": 0,
+        "changes": 125,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -193,6 +193,24 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"limits exact matches in document order\", () => {\n+    expect(findSearchMatches(\"alpha alpha alpha\", \"alpha\", { maxMatches: 2 })).toEqual([\n+      { from: 0, to: 5, text: \"alpha\" },\n+      { from: 6, to: 11, text: \"alpha\" }\n+    ]);\n+  });\n+\n+  it(\"treats score sorting as document order for exact matches\", () => {\n+    expect(findSearchMatches(\"alpha alpha alpha\", \"alpha\", { maxMatches: 2, sortBy: \"score\" })).toEqual([\n+      { from: 0, to: 5, text: \"alpha\" },\n+      { from: 6, to: 11, text: \"alpha\" }\n+    ]);\n+  });\n+\n+  it(\"returns no exact matches when maxMatches is zero\", () => {\n+    expect(findSearchMatches(\"alpha alpha\", \"alpha\", { maxMatches: 0 })).toEqual([]);\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n@@ -241,6 +259,113 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports fuzzy subsequence matching by line\", () => {\n+    expect(findSearchMatches(\"Ne\\nnext\\nplain note\", \"ne\", { fuzzy: true })).toEqual([\n+      {\n+        from: 0,\n+        to: 2,\n+        text: \"Ne\",\n+        score: expect.any(Number),\n+        ranges: [{ from: 0, to: 2, text: \"Ne\" }]\n+      },\n+      {\n+        from: 3,\n+        to: 5,\n+        text: \"ne\",\n+        score: expect.any(Number),\n+        ranges: [{ from: 3, to: 5, text: \"ne\" }]\n+      },\n+      {\n+        from: 14,\n+        to: 18,\n+        text: \"note\",\n+        score: expect.any(Number),\n+        ranges: [\n+          { from: 14, to: 15, text: \"n\" },\n+          { from: 17, to: 18, text: \"e\" }\n+        ]\n+      }\n+    ]);\n+  });\n+\n+  it(\"can rank fuzzy matches by score\", () => {\n+    const matches = findSearchMatches(\"Nexus Editor\\nnote extractor\", \"ne\", {\n+      fuzzy: true,\n+      sortBy: \"score\"\n+    });\n+\n+    expect(matches.map((match) => match.text)).toEqual([\"Ne\", \"note e\"]);\n+    expect(matches[0].score).toBeGreaterThan(matches[1].score ?? 0);\n+  });\n+\n+  it(\"honors case-sensitive fuzzy matching\", () => {\n+    expect(findSearchMatches(\"Nexus\\nnext\\nNEON\", \"Ne\", { fuzzy: true, caseSensitive: true })).toEqual([\n+      {\n+        from: 0,\n+        to: 2,\n+        text: \"Ne\",\n+        score: expect.any(Number),\n+        ranges: [{ from: 0, to: 2, text: \"Ne\" }]\n+      }\n+    ]);\n+  });\n+\n+  it(\"limits fuzzy matches after sorting\", () => {\n+    const matches = findSearchMatches(\"Nexus\\nNeedle\\nnote\", \"ne\", {\n+      fuzzy: true,\n+      sortBy: \"score\",\n+      maxMatches: 1\n+    });\n+\n+    expect(matches).toHaveLength(1);\n+    expect(matches[0].text).toBe(\"Ne\");\n+  });\n+\n+  it(\"limits fuzzy matches in document order by default\", () => {\n+    const matches = findSearchMatches(\"Nexus\\nNeedle\\nnote\", \"ne\", {\n+      fuzzy: true,\n+      maxMatches: 2\n+    });\n+\n+    expect(matches.map((match) => match.from)).toEqual([0, 6]);\n+    expect(matches.map((match) => match.text)).toEqual([\"Ne\", \"Ne\"]);\n+  });\n+\n+  it(\"returns no fuzzy matches when maxMatches is zero\", () => {\n+    expect(findSearchMatches(\"Nexus\\nNeedle\\nnote\", \"ne\", { fuzzy: true, maxMatches: 0 })).toEqual([]);\n+  });\n+\n+  it(\"applies whole-word boundaries to fuzzy match spans\", () => {\n+    expect(findSearchMatches(\"a b\\nalphaBeta\", \"ab\", { fuzzy: true, wholeWord: true })).toEqual([\n+      {\n+        from: 0,\n+        to: 3,\n+        text: \"a b\",\n+        score: expect.any(Number),\n+        ranges: [\n+          { from: 0, to: 1, text: \"a\" },\n+          { from: 2, to: 3, text: \"b\" }\n+        ]\n+      }\n+    ]);\n+  });\n+\n+  it(\"replaces fuzzy match spans without regex captures\", () => {\n+    expect(replaceAllMatches(\"Nexus Editor\\nplain note\", \"ne\", \"NE\", { fuzzy: true })).toBe(\n+      \"NExus Editor\\nplain NE\"\n+    );\n+  });\n+\n+  it(\"applies fuzzy replacement limits after requested ordering\", () => {\n+    expect(\n+      replaceAllMatches(\"n------e\\nNe\", \"ne\", \"NE\", {\n+        fuzzy: true,\n+        sortBy: \"score\",\n+        maxMatches: 1\n+      })\n+    ).toBe(\"n------e\\nNE\");\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      },
+      {
+        "sha": "ec03cd695f8c813d720fc8e83be3ed22dc8f36dd",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ad20e180a2fe89b1589a11d979f130907e357b9d/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ad20e180a2fe89b1589a11d979f130907e357b9d/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=ad20e180a2fe89b1589a11d979f130907e357b9d",
+        "patch": "@@ -192,6 +192,10 @@ importers:\n       '@floatboat/nexus-core':\n         specifier: workspace:*\n         version: link:../core\n+    devDependencies:\n+      '@floatboat/nexus-plugin-history':\n+        specifier: workspace:*\n+        version: link:../plugin-history\n \n   packages/plugin-vim:\n     dependencies:"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=83",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

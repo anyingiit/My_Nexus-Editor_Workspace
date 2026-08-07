@@ -1,0 +1,24 @@
+{
+  "pr_number": 127,
+  "title": "fix(core): preserve cells when structurally editing ragged GFM tables",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "changdapeng",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-04T05:00:51Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=127) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "changdapeng",
+      "created_at": "2026-07-04T05:02:16Z",
+      "body": "Before/after of the reproduction table (real browser, real mouse drag of the 年龄 grip onto 职位):\n\n**Before** — ragged header (missing leading pipe) + trailing empty column, rendered as a 4-column widget:\n\n![before drag](https://raw.githubusercontent.com/changdapeng/Nexus-Editor/pr-assets/assets/01-ragged-before-drag.png)\n\n**After** — columns swapped with every cell preserved; all rows normalized with leading/trailing pipes; the adjacent well-formed table byte-identical:\n\n![after drag](https://raw.githubusercontent.com/changdapeng/Nexus-Editor/pr-assets/assets/02-ragged-after-drag.png)"
+    }
+  ]
+}

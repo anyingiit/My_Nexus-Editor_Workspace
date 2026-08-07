@@ -1,0 +1,109 @@
+{
+  "pr_number": 159,
+  "title": "feat(plugin-mermaid): add mermaid diagram rendering plugin",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "5c0453f0f6b0f5ab7c7fd7b96bcfc881c6a830d0",
+  "merge_commit_sha": "542d3c2657f0d6a2fc92848bfa82ce09a2575cb9",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "5c0453f0f6b0f5ab7c7fd7b96bcfc881c6a830d0",
+      "message": "feat(plugin-mermaid): add mermaid diagram rendering plugin\n\n- Add @floatboat/nexus-plugin-mermaid package\n- Render fenced mermaid code blocks as inline SVG diagrams\n- Async rendering with loading placeholder and error handling\n- Hover-to-reveal edit button matching plugin-math UX pattern\n- 18 unit tests covering widget match, async SVG injection,\n  error handling, edit button, destroy, and editor integration\n- Integrate into electron-demo",
+      "date": "2026-07-15T04:52:52Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-mermaid/README.md",
+      "status": "added",
+      "additions": 59,
+      "deletions": 0,
+      "changes": 59
+    },
+    {
+      "filename": "packages/plugin-mermaid/package.json",
+      "status": "added",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "packages/plugin-mermaid/src/index.ts",
+      "status": "added",
+      "additions": 212,
+      "deletions": 0,
+      "changes": 212
+    },
+    {
+      "filename": "packages/plugin-mermaid/test/plugin.test.ts",
+      "status": "added",
+      "additions": 282,
+      "deletions": 0,
+      "changes": 282
+    },
+    {
+      "filename": "packages/plugin-mermaid/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 0,
+      "changes": 12
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=159",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

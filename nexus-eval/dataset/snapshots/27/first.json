@@ -1,0 +1,52 @@
+{
+  "pr_number": 27,
+  "title": "fix(electron): 提升 dev-electron 启动稳定性",
+  "body": "## 修改背景\r\n\r\n在本地启动 Electron demo 过程中，我发现开发态启动流程有两个明显的不稳定点：\r\n\r\n1. 启动 Electron 前只固定等待 2 秒，依赖 Vite 启动速度\r\n2. 如果终端环境中存在 `ELECTRON_RUN_AS_NODE`，Electron 会退化成 Node 进程，导致应用无法正常拉起\r\n\r\n这会让开发启动过程依赖本机环境和时序，稳定性比较差。\r\n\r\n## 本次修改\r\n\r\n我对 `dev-electron.mjs` 做了以下调整：\r\n\r\n1. 将固定等待改为显式等待 Vite dev server 可访问\r\n2. 启动 Electron 时从应用根目录进入，减少入口调用方式带来的脆弱性\r\n3. 在启动前清理 `ELECTRON_RUN_AS_NODE` 等冲突环境变量\r\n4. 增加子进程错误输出，方便定位启动失败原因\r\n\r\n## 效果\r\n\r\n修改后，Electron demo 的开发态启动流程：\r\n- 不再依赖固定等待时间\r\n- 对本地 shell 环境污染更有容错能力\r\n- 启动问题更容易定位\r\n\r\n## 验证\r\n\r\n我做了以下验证：\r\n\r\n- 启动 renderer dev server\r\n- 运行 `npm run --prefix apps/electron-demo dev:electron`\r\n- 确认 Electron 主进程和 renderer 进程能够正常拉起\r\n\r\n## 说明\r\n\r\n这个改动只影响开发态启动流程，不涉及公开 API，也不改变编辑器运行时逻辑。\r\n\r\n\r\n<!--\r\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\r\n  e.g.  feat(toolbar): list toggle for multi-line selection\r\nAllowed scopes — see CONTRIBUTING.md §2\r\n\r\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2\r\n-->\r\n\r\n## Summary / 摘要\r\n\r\n<!-- One sentence summary of the change. / 一句话说明改了什么。 -->\r\n\r\n## Motivation / 背景与动机\r\n\r\n<!-- Why is this change needed? Link issue / roadmap entry / OpenSpec change. -->\r\n<!-- 解决什么问题？关联 issue / roadmap 条目 / OpenSpec change id。 -->\r\n\r\n- Issue:\r\n- Roadmap (docs/ROADMAP.md):\r\n- OpenSpec change:\r\n\r\n## Changes / 变更内容\r\n\r\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\r\n\r\n- `packages/core`:\r\n- `packages/plugin-*`:\r\n- `apps/electron-demo`:\r\n- `openspec/`:\r\n\r\n## Testing / 测试\r\n\r\n<!-- How was this verified? Commands and scenarios covered. -->\r\n<!-- 描述如何验证，附上命令与覆盖的场景。 -->\r\n\r\n- [ ] `pnpm test` passes / 全绿\r\n- [ ] Affected packages build (`pnpm build`) / 受影响包构建通过\r\n- [ ] New / updated vitest cases / 新增或更新的 vitest 用例：\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：\r\n\r\n## Checklist / 自检清单\r\n\r\n- [ ] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n- [ ] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\r\n- [ ] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则\r\n- [ ] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec\r\n- [ ] No secrets / personal vault data committed / 无敏感信息被提交\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\n<!-- Attach screenshots or gifs for visible UI changes. / 改动可见 UI 时请附上截图或 gif。 -->\r\n",
+  "created_at": "2026-05-21T10:53:25Z",
+  "draft": false,
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "head_sha_at_first_review": "19ca3333a9c508a24665441586d8637c0ff7c9bd",
+  "first_review_time": "2026-05-21T10:55:58Z",
+  "commits_at_first_review": [
+    {
+      "sha": "19ca3333a9c508a24665441586d8637c0ff7c9bd",
+      "message": "fix(electron): harden dev startup flow",
+      "date": "2026-05-21T09:38:41Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "f7138074e0d6b0ba00835b33248b9cfcfbb31c6d",
+        "filename": "apps/electron-demo/scripts/dev-electron.mjs",
+        "status": "modified",
+        "additions": 36,
+        "deletions": 5,
+        "changes": 41,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/19ca3333a9c508a24665441586d8637c0ff7c9bd/apps%2Felectron-demo%2Fscripts%2Fdev-electron.mjs",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/19ca3333a9c508a24665441586d8637c0ff7c9bd/apps%2Felectron-demo%2Fscripts%2Fdev-electron.mjs",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fscripts%2Fdev-electron.mjs?ref=19ca3333a9c508a24665441586d8637c0ff7c9bd",
+        "patch": "@@ -1,8 +1,11 @@\n import { spawn } from \"node:child_process\";\n import { createRequire } from \"node:module\";\n+import path from \"node:path\";\n import { build } from \"tsup\";\n+import { fileURLToPath } from \"node:url\";\n \n const require = createRequire(import.meta.url);\n+const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), \"..\");\n \n await build({\n   entry: [\"electron/main.ts\", \"electron/preload.ts\"],\n@@ -14,16 +17,44 @@ await build({\n   silent: true,\n });\n \n-// Wait briefly for Vite dev server (started in parallel by npm-run-all)\n-await new Promise((resolve) => setTimeout(resolve, 2000));\n+const devServerUrl = \"http://localhost:5173\";\n+\n+async function waitForDevServer(url, timeoutMs = 30000) {\n+  const start = Date.now();\n+\n+  while (Date.now() - start < timeoutMs) {\n+    try {\n+      const response = await fetch(url);\n+      if (response.ok) return;\n+    } catch {\n+      // The Vite server is still booting.\n+    }\n+\n+    await new Promise((resolve) => setTimeout(resolve, 500));\n+  }\n+\n+  throw new Error(`Timed out waiting for Vite dev server at ${url}`);\n+}\n+\n+await waitForDevServer(devServerUrl);\n \n const electronPath = require(\"electron\");\n-const child = spawn(String(electronPath), [\"dist-electron/main.js\"], {\n+const childEnv = { ...process.env };\n+delete childEnv.ELECTRON_RUN_AS_NODE;\n+delete childEnv.ELECTRON_NO_ASAR;\n+\n+const child = spawn(String(electronPath), [\".\"], {\n+  cwd: appRoot,\n   stdio: \"inherit\",\n   env: {\n-    ...process.env,\n-    VITE_DEV_SERVER_URL: \"http://localhost:5173\",\n+    ...childEnv,\n+    VITE_DEV_SERVER_URL: devServerUrl,\n   },\n });\n \n+child.on(\"error\", (error) => {\n+  console.error(\"[dev-electron] Failed to start Electron:\", error);\n+  process.exit(1);\n+});\n+\n child.on(\"close\", () => process.exit());"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=27",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

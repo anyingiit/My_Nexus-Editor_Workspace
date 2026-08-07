@@ -1,0 +1,74 @@
+{
+  "pr_number": 178,
+  "title": "feat(core,vue): add onSelectionChange and onSlashMenuChange config callbacks",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+  "merge_commit_sha": "3b6cd66f0885b33d438f43258adfda18ed774eff",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+      "message": "feat(core,vue): add onSelectionChange and onSlashMenuChange config callbacks\n\nAdd onSelectionChange and onSlashMenuChange to EditorConfig, mirroring the\nexisting onChange/onFocus/onBlur pattern. Previously these events were only\naccessible via the event emitter.\n\n- core/types: add onSelectionChange? and onSlashMenuChange? to EditorConfig\n- core/editor: wire callbacks alongside emitter.emit calls\n- core/test/events.test: 5 new tests (cursor move, selection, coexistence)\n- vue/editor: expose as props + emits, bridge config callbacks to Vue events\n- vue/test/editor-vue.test: 2 new tests for Vue emit behavior\n\nCo-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>",
+      "date": "2026-07-23T11:13:49Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 3,
+      "changes": 10
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "packages/core/test/events.test.ts",
+      "status": "modified",
+      "additions": 109,
+      "deletions": 0,
+      "changes": 109
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 2,
+      "changes": 26
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 81,
+      "deletions": 0,
+      "changes": 81
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=178",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

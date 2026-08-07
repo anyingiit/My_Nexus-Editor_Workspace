@@ -1,0 +1,26 @@
+{
+  "pr_number": 24,
+  "title": "feat(toolbar): multi-line list and blockquote toggle",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:38:42Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "xiaoyu953",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:19:57Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=24) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=24) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=24) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:38:40Z",
+      "body": "感谢多行 list/blockquote toggle 🙏 多行列表 toggle 已随 #21 合入 main（`ccbb25f`）。blockquote 多行部分如仍需要，欢迎基于当前 main 单独提一个聚焦 PR。本 PR 与已合并实现重复，故关闭。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；欢迎继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

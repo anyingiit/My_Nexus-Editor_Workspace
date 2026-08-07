@@ -1,0 +1,79 @@
+{
+  "pr_number": 74,
+  "title": "feat(history): undo/redo grouping with isolated table edits",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "16ecb5eed24c9a9c5b9f5d428d0137ad10e66645",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "187d377b00bff523c191e2b65de2c183dd843ec4",
+      "message": "feat(history): expose newGroupDelay and minDepth grouping options\n\nLets hosts tune undo granularity (or disable time-based merging with delay 0) via createHistoryPlugin({ newGroupDelay, minDepth }), wiring through to CodeMirror's history() config.",
+      "date": "2026-06-22T04:35:26Z"
+    },
+    {
+      "sha": "16ecb5eed24c9a9c5b9f5d428d0137ad10e66645",
+      "message": "feat(live-preview): isolate structural table edits as undo groups\n\nStructural table operations (add/delete/move column or row, range clear) rewrite the whole table source in one dispatch; tag each with isolateHistory('full') so a single undo reverts the entire operation instead of merging with adjacent typing or another structural edit. Cell text input keeps default time-based grouping.",
+      "date": "2026-06-22T04:35:26Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 2,
+      "changes": 15
+    },
+    {
+      "filename": "packages/core/test/live-preview-regressions.test.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 2,
+      "changes": 22
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=74",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "pr_number": 157,
+  "title": "feat: 为 Electron 演示应用增加中英文切换",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-18T02:10:13Z",
+  "merged_by": null,
+  "closed_by": "wzy2023",
+  "head_sha_final": "7924845053fee882e5d5b1075f3341b0d2243394",
+  "merge_commit_sha": "adedb1b50e2796b2526c3ccd0a49d9f0a1489a35",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "7924845053fee882e5d5b1075f3341b0d2243394",
+      "message": "feat: 为 Electron 演示应用增加中英文切换",
+      "date": "2026-07-14T14:14:07Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 32,
+      "deletions": 17,
+      "changes": 49
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 12,
+      "changes": 25
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 69,
+      "deletions": 7,
+      "changes": 76
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/i18n.ts",
+      "status": "added",
+      "additions": 371,
+      "deletions": 0,
+      "changes": 371
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/outline-panel.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 2,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 9,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 70,
+      "deletions": 18,
+      "changes": 88
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 16,
+      "changes": 34
+    },
+    {
+      "filename": "apps/electron-demo/test/i18n.test.ts",
+      "status": "added",
+      "additions": 59,
+      "deletions": 0,
+      "changes": 59
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=157",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "pr_number": 179,
+  "title": "feat(wordcount): support aggregated statistics for multi-cursor multiple selections",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "d486fa5d49b010c506eedfbc77acaa3bcd6297ec",
+  "merge_commit_sha": "94abc314839e05718fd83d94baa56f5a8e4121bc",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "df87d49de1b65b72bb5f6a565bd901d3cfed9100",
+      "message": "fix(wordcount): count all multi-cursor selections",
+      "date": "2026-07-23T14:33:48Z"
+    },
+    {
+      "sha": "d486fa5d49b010c506eedfbc77acaa3bcd6297ec",
+      "message": "feat(wordcount): support multi-cursor multi-selection aggregate statistics\n\n- Replace single getSelection() with getSelections() to fetch all cursor ranges\n- Filter empty cursor ranges and deduplicate overlapping selected text\n- Reuse existing countMarkdown to sum chars/words/lines for status bar display\n- Add regression unit test for multi-cursor scenario\n- Fully backward compatible with original single selection logic",
+      "date": "2026-07-23T15:29:09Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-wordcount/src/plugin.ts",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 6,
+      "changes": 34
+    },
+    {
+      "filename": "packages/plugin-wordcount/test/plugin.test.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=179",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

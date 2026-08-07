@@ -1,0 +1,223 @@
+{
+  "pr_number": 30,
+  "title": "feat(react,vue): add controlled document mode to Editor",
+  "body": "## Summary / 摘要\n\n为 `@floatboat/nexus-react` / `@floatboat/nexus-vue` 增加受控文档模式：React 使用 `value` + `onChange`，Vue 使用 `v-model`。父组件可持有 Markdown 正文；用户编辑通过 `onChange` 回传；外部更新时使用 `setDocument(..., { silent: true })`，避免多余的 `onChange`。\n\n## Motivation / 背景与动机\n\n常见场景包括切换笔记、外部回填正文、表单与编辑器联动等，需要由父组件 state 驱动文档。`initialValue` 仅在首次挂载生效，后续 props 变化无法同步到编辑器。\n\nCore 已支持 `setDocument(..., { silent: true })`（例如宿主打开文件时）。本 PR 在 React/Vue 绑定层接上该机制，**不修改** `packages/core`，**不包含** electron-demo 改动。\n\n- Issue: —\n- Roadmap: **§6 #28** 受控文档 `value` / `v-model`（`docs/ROADMAP.md` / `ROADMAP.zh.md`，`in-progress`）；与 **#4** `onReady` 无关\n- OpenSpec: N/A（非破坏性变更，新增可选 props）\n\n## Changes / 变更内容\n\n**packages/react**\n- `UseEditorConfig` 增加可选 `value?: string`\n- `useEditor` 在外部 `value` 变化时 silent `setDocument`，`lastSyncedDocRef` 避免 onChange 循环\n- 新增 `controlled-document.ts` 及单测\n- 新增 `README.md`（受控 / 非受控示例）\n- 扩展 `editor-react.test.tsx`\n\n**packages/vue**\n- `<Editor />` 支持 `modelValue` / `update:modelValue`\n- `useEditor` 通过 `watch` 同步 `modelValue`，与 React 语义一致\n- 新增 `controlled-document.ts`、单测与 `README.md`\n- 扩展 `editor-vue.test.ts`\n\n**docs**\n- 按 Roadmap 维护流程在 §6 登记 **#28**（`in-progress`，备注 PR #30）\n\n## Testing / 测试\n\n```bash\npnpm test\npnpm build\n```\n\n- [x] `pnpm test` passes / 全仓 vitest（含 react/vue controlled 用例）\n- [x] `pnpm build` passes / 各包构建通过\n- [x] 新增 vitest：`controlled-document.test.ts`、`editor-react.test.tsx`、`editor-vue.test.ts` 等\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits / 标题符合规范\n- [x] Public API changes update package README / types\n- [x] Touched `live-preview-table.ts` → N/A\n- [x] New capability / breaking change → N/A（无需 OpenSpec）\n- [x] No secrets / personal vault data committed\n- [x] Roadmap 新增条目 #28 已登记（维护流程 §「新增条目」）\n- [x] Scope 仅限 `packages/react`、`packages/vue`、`docs/ROADMAP*`\n\n## Screenshots / 录屏\n\n<!-- 可选：README 受控示例或 vitest 通过截图 -->\n",
+  "created_at": "2026-05-23T06:35:05Z",
+  "draft": false,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "head_sha_at_first_review": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+  "first_review_time": "2026-05-26T03:14:12Z",
+  "commits_at_first_review": [
+    {
+      "sha": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+      "message": "feat(react,vue): add controlled document mode to Editor bindings\n\nReact `value` + onChange; Vue `modelValue` / v-model. External updates use\nsilent setDocument with lastSynced guard. Pure helpers in controlled-document.ts.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-23T07:44:46Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 1,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "2a85bbcc7e0156a58482e793123373db27054917",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -58,6 +58,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | # | Feature | Package | Priority | Status | Needs OpenSpec | Notes |\n |---|---|---|---|---|---|---|\n | 4 | `<Editor />` container pass-through props + `onReady` callback | `react` (and `vue` in lockstep) | P0 | planned | No | Public API addition; semantics must match across bindings |\n+| 28 | Controlled document `value` / `v-model` | `react` + `vue` | P0 | in-progress | No | PR #30 — parent-owned markdown via silent `setDocument` sync |\n \n ## 7. Collaboration\n "
+      },
+      {
+        "sha": "fc1c1e2ed4839b849c8ff35476522a62463368e4",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -58,6 +58,7 @@\n | # | 功能 | 归属包 | 优先级 | 状态 | 需要 OpenSpec | 备注 |\n |---|---|---|---|---|---|---|\n | 4 | `<Editor />` 容器属性透传 + `onReady` 回调 | `react`（同步补 `vue`） | P0 | planned | 否 | 公共 API 增量，两端语义需一致 |\n+| 28 | 受控文档 `value` / `v-model` | `react` + `vue` | P0 | in-progress | 否 | PR #30 — 父组件驱动 Markdown，`setDocument(..., { silent: true })` 防反馈环 |\n \n ## 7. 协作\n "
+      },
+      {
+        "sha": "3c862590abf09a566322548d672b46a3e7215952",
+        "filename": "packages/react/README.md",
+        "status": "added",
+        "additions": 77,
+        "deletions": 0,
+        "changes": 77,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2FREADME.md?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -0,0 +1,77 @@\n+# @floatboat/nexus-react\n+\n+React bindings for Nexus Editor.\n+\n+## Installation\n+\n+```bash\n+pnpm add @floatboat/nexus-react @floatboat/nexus-core @floatboat/nexus-preset-gfm\n+```\n+\n+## Uncontrolled usage\n+\n+`initialValue` seeds the document once; the editor owns subsequent edits until you call `EditorAPI` methods.\n+\n+```tsx\n+import { Editor } from \"@floatboat/nexus-react\";\n+import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n+\n+export function NoteEditor() {\n+  return (\n+    <Editor\n+      initialValue=\"# Hello\"\n+      plugins={[createGfmPreset()]}\n+      onChange={(doc) => console.log(doc)}\n+    />\n+  );\n+}\n+```\n+\n+## Controlled usage\n+\n+Pass `value` and update it from `onChange` when the parent must own the markdown string (AI rewrite, file switch, form state).\n+\n+```tsx\n+import { useState } from \"react\";\n+import { Editor } from \"@floatboat/nexus-react\";\n+import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n+\n+export function ControlledNoteEditor() {\n+  const [value, setValue] = useState(\"# Hello\");\n+\n+  return (\n+    <Editor\n+      value={value}\n+      plugins={[createGfmPreset()]}\n+      onChange={(doc) => setValue(doc)}\n+    />\n+  );\n+}\n+```\n+\n+External updates to `value` are applied with a silent `setDocument` so the editor does not echo another `onChange` for the same content.\n+\n+## `useEditor` hook\n+\n+Same configuration as `<Editor />`, plus a container ref:\n+\n+```tsx\n+const { containerRef, editor } = useEditor({\n+  value: markdown,\n+  onChange: (doc) => setMarkdown(doc),\n+  plugins: [createGfmPreset()]\n+});\n+\n+return <div ref={containerRef} style={{ minHeight: 240 }} />;\n+```\n+\n+`editor` is `null` until the first mount effect runs.\n+\n+## How external sync works\n+\n+Controlled updates use core `setDocument(text, { silent: true })` so the editor does not emit a duplicate `onChange`. Logic lives in `src/controlled-document.ts` (unit-tested).\n+\n+| Mode | Prop | Parent updates |\n+|------|------|----------------|\n+| Controlled | `value` | Pass new `value`; keep state in sync via `onChange` |\n+| Uncontrolled | `initialValue` | Optional; editor owns edits until you call `EditorAPI` |"
+      },
+      {
+        "sha": "6d422f092f4eaec069ac671f09f6457e4f4ce492",
+        "filename": "packages/react/src/controlled-document.ts",
+        "status": "added",
+        "additions": 22,
+        "deletions": 0,
+        "changes": 22,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Fsrc%2Fcontrolled-document.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Fsrc%2Fcontrolled-document.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fcontrolled-document.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -0,0 +1,22 @@\n+/**\n+ * Pure helpers for React controlled-document sync (tested in isolation).\n+ */\n+\n+export function isControlledDocument(value: string | undefined): boolean {\n+  return value !== undefined;\n+}\n+\n+export function resolveInitialDocument(\n+  value: string | undefined,\n+  initialValue: string | undefined\n+): string {\n+  return value !== undefined ? value : (initialValue ?? \"\");\n+}\n+\n+/** Whether an external `value` prop should trigger silent setDocument. */\n+export function shouldSyncControlledDocument(\n+  next: string,\n+  lastSynced: string | null\n+): boolean {\n+  return lastSynced !== next;\n+}"
+      },
+      {
+        "sha": "7af0c7222854d7a4eda8e6ad720848e39388dfd6",
+        "filename": "packages/react/src/types.ts",
+        "status": "modified",
+        "additions": 8,
+        "deletions": 1,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Ftypes.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -4,7 +4,14 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { RefObject } from \"react\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export type UseEditorConfig = Omit<EditorConfig, \"container\"> & {\n+  /**\n+   * Controlled markdown document. When provided, the parent owns the string and\n+   * should update it from `onChange`. External updates are applied with a silent\n+   * `setDocument` to avoid feedback loops.\n+   */\n+  value?: string;\n+};\n \n export interface UseEditorResult {\n   containerRef: RefObject<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "06f8ebe4a8d792d5233f9546e5655a0e46fa2dbd",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 50,
+        "deletions": 4,
+        "changes": 54,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -1,13 +1,32 @@\n import { createEditor } from \"@floatboat/nexus-core\";\n+import type { Root } from \"mdast\";\n import { useEffect, useRef, useState } from \"react\";\n \n+import { resolveInitialDocument, shouldSyncControlledDocument } from \"./controlled-document\";\n import type { UseEditorConfig, UseEditorResult } from \"./types\";\n \n+function buildCreateConfig(\n+  container: HTMLDivElement,\n+  config: UseEditorConfig,\n+  onDocChange: (doc: string, ast: Root) => void\n+) {\n+  const { value, initialValue, onChange, ...rest } = config;\n+\n+  return {\n+    container,\n+    ...rest,\n+    initialValue: resolveInitialDocument(value, initialValue),\n+    onChange: onDocChange\n+  };\n+}\n+\n export function useEditor(config: UseEditorConfig): UseEditorResult {\n   const containerRef = useRef<HTMLDivElement | null>(null);\n   const editorRef = useRef<ReturnType<typeof createEditor> | null>(null);\n   const [editor, setEditor] = useState<ReturnType<typeof createEditor> | null>(null);\n+  const [, setSyncRevision] = useState(0);\n   const configRef = useRef(config);\n+  const lastSyncedDocRef = useRef<string | null>(null);\n \n   configRef.current = config;\n \n@@ -18,20 +37,47 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n-    const instance = createEditor({\n-      container,\n-      ...configRef.current\n-    });\n+    const onDocChange = (doc: string, ast: Root) => {\n+      lastSyncedDocRef.current = doc;\n+      setSyncRevision((revision) => revision + 1);\n+      configRef.current.onChange?.(doc, ast);\n+    };\n+\n+    const instance = createEditor(buildCreateConfig(container, configRef.current, onDocChange));\n+\n+    lastSyncedDocRef.current = resolveInitialDocument(\n+      configRef.current.value,\n+      configRef.current.initialValue\n+    );\n \n     editorRef.current = instance;\n     setEditor(instance);\n \n     return () => {\n       instance.destroy();\n       editorRef.current = null;\n+      setEditor(null);\n+      lastSyncedDocRef.current = null;\n     };\n   }, []);\n \n+  useEffect(() => {\n+    const instance = editorRef.current;\n+    const { value } = config;\n+\n+    if (!instance || value === undefined) {\n+      return;\n+    }\n+\n+    if (!shouldSyncControlledDocument(value, lastSyncedDocRef.current)) {\n+      return;\n+    }\n+\n+    instance.setDocument(value, { silent: true });\n+    lastSyncedDocRef.current = value;\n+    setSyncRevision((revision) => revision + 1);\n+  }, [config.value, editor]);\n+\n   return {\n     containerRef,\n     editor"
+      },
+      {
+        "sha": "21d4b9c0545fb8edb632103816903914e29f640c",
+        "filename": "packages/react/test/controlled-document.test.ts",
+        "status": "added",
+        "additions": 25,
+        "deletions": 0,
+        "changes": 25,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Ftest%2Fcontrolled-document.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Ftest%2Fcontrolled-document.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Fcontrolled-document.test.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -0,0 +1,25 @@\n+import { describe, expect, it } from \"vitest\";\n+import {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument\n+} from \"../src/controlled-document\";\n+\n+describe(\"controlled-document helpers\", () => {\n+  it(\"detects controlled mode when value is defined\", () => {\n+    expect(isControlledDocument(undefined)).toBe(false);\n+    expect(isControlledDocument(\"\")).toBe(true);\n+  });\n+\n+  it(\"resolves initial document from value or initialValue\", () => {\n+    expect(resolveInitialDocument(\"live\", \"seed\")).toBe(\"live\");\n+    expect(resolveInitialDocument(undefined, \"seed\")).toBe(\"seed\");\n+    expect(resolveInitialDocument(undefined, undefined)).toBe(\"\");\n+  });\n+\n+  it(\"skips sync when last synced doc already matches\", () => {\n+    expect(shouldSyncControlledDocument(\"same\", \"same\")).toBe(false);\n+    expect(shouldSyncControlledDocument(\"next\", \"prev\")).toBe(true);\n+    expect(shouldSyncControlledDocument(\"fresh\", null)).toBe(true);\n+  });\n+});"
+      },
+      {
+        "sha": "9773dd20a7c2502297d1562f7d32ae48658aeeda",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 175,
+        "deletions": 3,
+        "changes": 178,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -1,6 +1,6 @@\n-import { render } from \"@testing-library/react\";\n-import { useEffect } from \"react\";\n-import { describe, expect, it } from \"vitest\";\n+import { render, waitFor } from \"@testing-library/react\";\n+import { useEffect, useState } from \"react\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n \n describe(\"@floatboat/nexus-react\", () => {\n@@ -37,4 +37,176 @@ describe(\"@floatboat/nexus-react\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"uses value as the initial document when controlled\", async () => {\n+    function Harness() {\n+      const { containerRef, editor } = useEditor({ value: \"controlled-start\" });\n+      return (\n+        <div ref={containerRef} data-doc={editor?.getDocument() ?? \"\"} />\n+      );\n+    }\n+\n+    const { container } = render(<Harness />);\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\"[data-doc]\")?.getAttribute(\"data-doc\")).toBe(\n+        \"controlled-start\"\n+      );\n+    });\n+  });\n+\n+  it(\"syncs the editor when the controlled value prop changes\", async () => {\n+    function Harness({ value }: { value: string }) {\n+      const { containerRef, editor } = useEditor({ value, onChange: () => {} });\n+      return (\n+        <div ref={containerRef} data-doc={editor?.getDocument() ?? \"\"} />\n+      );\n+    }\n+\n+    const { container, rerender } = render(<Harness value=\"first\" />);\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\"[data-doc]\")?.getAttribute(\"data-doc\")).toBe(\"first\");\n+    });\n+\n+    rerender(<Harness value=\"second\" />);\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"second\");\n+    });\n+  });\n+\n+  it(\"forwards document changes to onChange in controlled mode\", async () => {\n+    const onChange = vi.fn();\n+\n+    function Harness() {\n+      const { containerRef, editor } = useEditor({\n+        value: \"start\",\n+        onChange\n+      });\n+\n+      useEffect(() => {\n+        if (!editor) {\n+          return;\n+        }\n+\n+        editor.setDocument(\"edited\");\n+      }, [editor]);\n+\n+      return <div ref={containerRef} />;\n+    }\n+\n+    render(<Harness />);\n+\n+    await waitFor(() => {\n+      expect(onChange).toHaveBeenCalled();\n+      const lastCall = onChange.mock.calls.at(-1);\n+      expect(lastCall?.[0]).toBe(\"edited\");\n+    });\n+  });\n+\n+  it(\"skips silent setDocument when controlled value already matches the last change\", async () => {\n+    const silentDocs: string[] = [];\n+\n+    function Harness() {\n+      const [value, setValue] = useState(\"alpha\");\n+      const { containerRef, editor } = useEditor({\n+        value,\n+        onChange: (doc) => setValue(doc)\n+      });\n+\n+      useEffect(() => {\n+        if (!editor) {\n+          return;\n+        }\n+\n+        const original = editor.setDocument.bind(editor);\n+        editor.setDocument = (next, opts) => {\n+          if (opts?.silent === true) {\n+            silentDocs.push(next);\n+          }\n+          return original(next, opts);\n+        };\n+\n+        editor.setDocument(\"beta\");\n+      }, [editor]);\n+\n+      return <div ref={containerRef} />;\n+    }\n+\n+    render(<Harness />);\n+\n+    await waitFor(() => {\n+      expect(silentDocs.filter((doc) => doc === \"beta\")).toHaveLength(0);\n+    });\n+  });\n+\n+  it(\"Editor component syncs when the value prop changes\", async () => {\n+    const { container, rerender } = render(\n+      <Editor value=\"one\" onChange={() => {}} plugins={[]} />\n+    );\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"one\");\n+    });\n+\n+    rerender(<Editor value=\"two\" onChange={() => {}} plugins={[]} />);\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"two\");\n+    });\n+  });\n+\n+  it(\"applies rapid external value updates without leaving stale content\", async () => {\n+    function Harness({ value }: { value: string }) {\n+      const { containerRef } = useEditor({ value, onChange: () => {} });\n+      return <div ref={containerRef} />;\n+    }\n+\n+    const { container, rerender } = render(<Harness value=\"v1\" />);\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"v1\");\n+    });\n+\n+    rerender(<Harness value=\"v2\" />);\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"v2\");\n+    });\n+\n+    rerender(<Harness value=\"v3\" />);\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"v3\");\n+    });\n+  });\n+\n+  it(\"supports readOnly together with a controlled value\", async () => {\n+    const { container } = render(\n+      <Editor value=\"# Locked\" readOnly onChange={() => {}} />\n+    );\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\".cm-line\")?.textContent).toBe(\"# Locked\");\n+    });\n+\n+    expect(container.querySelector(\".cm-content\")?.getAttribute(\"contenteditable\")).toBe(\n+      \"false\"\n+    );\n+  });\n+\n+  it(\"keeps initialValue behavior in uncontrolled mode\", async () => {\n+    function Harness() {\n+      const { containerRef, editor } = useEditor({ initialValue: \"uncontrolled\" });\n+      return (\n+        <div ref={containerRef} data-doc={editor?.getDocument() ?? \"\"} />\n+      );\n+    }\n+\n+    const { container } = render(<Harness />);\n+\n+    await waitFor(() => {\n+      expect(container.querySelector(\"[data-doc]\")?.getAttribute(\"data-doc\")).toBe(\n+        \"uncontrolled\"\n+      );\n+    });\n+  });\n });"
+      },
+      {
+        "sha": "5d38f2103bfcec2a9dba4310b9b8c411ad4a50ae",
+        "filename": "packages/vue/README.md",
+        "status": "added",
+        "additions": 73,
+        "deletions": 0,
+        "changes": 73,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2FREADME.md?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -0,0 +1,73 @@\n+# @floatboat/nexus-vue\n+\n+Vue 3 bindings for Nexus Editor.\n+\n+## Installation\n+\n+```bash\n+pnpm add @floatboat/nexus-vue @floatboat/nexus-core @floatboat/nexus-preset-gfm\n+```\n+\n+## Uncontrolled usage\n+\n+```vue\n+<script setup>\n+import { Editor } from \"@floatboat/nexus-vue\";\n+import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n+</script>\n+\n+<template>\n+  <Editor\n+    initial-value=\"# Hello\"\n+    :plugins=\"[createGfmPreset()]\"\n+    @change=\"(doc) => console.log(doc)\"\n+  />\n+</template>\n+```\n+\n+## Controlled usage (`v-model`)\n+\n+```vue\n+<script setup>\n+import { ref } from \"vue\";\n+import { Editor } from \"@floatboat/nexus-vue\";\n+import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n+\n+const markdown = ref(\"# Hello\");\n+</script>\n+\n+<template>\n+  <Editor v-model=\"markdown\" :plugins=\"[createGfmPreset()]\" />\n+</template>\n+```\n+\n+External updates to `modelValue` sync into the editor with a silent `setDocument` to avoid feedback loops.\n+\n+## `useEditor` composable\n+\n+```vue\n+<script setup>\n+import { useEditor } from \"@floatboat/nexus-vue\";\n+import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n+\n+const markdown = ref(\"# Hello\");\n+\n+const { containerRef, editor } = useEditor(() => ({\n+  modelValue: markdown.value,\n+  onChange: (doc) => {\n+    markdown.value = doc;\n+  },\n+  plugins: [createGfmPreset()]\n+}));\n+</script>\n+\n+<template>\n+  <div ref=\"containerRef\" style=\"min-height: 240px\" />\n+</template>\n+```\n+\n+Pass a getter (or `computed`) so `modelValue` changes are observed after mount.\n+\n+## How external sync works\n+\n+Same as React: silent `setDocument` for external `modelValue` changes; user edits emit `onChange` / `update:modelValue`. See `src/controlled-document.ts` (unit-tested)."
+      },
+      {
+        "sha": "e1dd917fce74e239e0ef09c57107477abad94a85",
+        "filename": "packages/vue/src/controlled-document.ts",
+        "status": "added",
+        "additions": 21,
+        "deletions": 0,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Fcontrolled-document.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Fcontrolled-document.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fcontrolled-document.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -0,0 +1,21 @@\n+/**\n+ * Pure helpers for Vue controlled-document sync (tested in isolation).\n+ */\n+\n+export function isControlledDocument(modelValue: string | undefined): boolean {\n+  return modelValue !== undefined;\n+}\n+\n+export function resolveInitialDocument(\n+  modelValue: string | undefined,\n+  initialValue: string | undefined\n+): string {\n+  return modelValue !== undefined ? modelValue : (initialValue ?? \"\");\n+}\n+\n+export function shouldSyncControlledDocument(\n+  next: string,\n+  lastSynced: string | null\n+): boolean {\n+  return lastSynced !== next;\n+}"
+      },
+      {
+        "sha": "0be080bb1df974ce28047abcb4d00bb7e0fa4ee3",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 3,
+        "changes": 32,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -1,17 +1,43 @@\n-import { defineComponent, h } from \"vue\";\n+import { computed, defineComponent, h } from \"vue\";\n \n import { useEditor } from \"./use-editor\";\n \n+import type { UseEditorConfig } from \"./types\";\n+\n export const Editor = defineComponent({\n   name: \"NexusEditor\",\n   props: {\n+    modelValue: {\n+      type: String,\n+      required: false\n+    },\n     initialValue: {\n       type: String,\n       required: false\n     }\n   },\n-  setup(props) {\n-    const { containerRef } = useEditor(props);\n+  emits: {\n+    \"update:modelValue\": (_value: string) => true\n+  },\n+  setup(props, { emit, attrs }) {\n+    const editorConfig = computed<UseEditorConfig>(() => {\n+      const { modelValue, initialValue } = props;\n+      const { onChange: userOnChange, ...passthrough } = attrs as UseEditorConfig;\n+\n+      return {\n+        ...passthrough,\n+        initialValue,\n+        modelValue,\n+        onChange: (doc, ast) => {\n+          if (modelValue !== undefined) {\n+            emit(\"update:modelValue\", doc);\n+          }\n+          userOnChange?.(doc, ast);\n+        }\n+      };\n+    });\n+\n+    const { containerRef } = useEditor(editorConfig);\n \n     return () => h(\"div\", { ref: containerRef });\n   }"
+      },
+      {
+        "sha": "03d07e40a7ae33a2d139f43e4b363fbf379f174f",
+        "filename": "packages/vue/src/types.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 1,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Ftypes.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -4,7 +4,13 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { Ref, ShallowRef } from \"vue\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export type UseEditorConfig = Omit<EditorConfig, \"container\"> & {\n+  /**\n+   * Controlled markdown document (use with `v-model`). When provided, the\n+   * parent owns the string; external updates use silent `setDocument`.\n+   */\n+  modelValue?: string;\n+};\n \n export interface UseEditorResult {\n   containerRef: Ref<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "36325303591bb29a7034710ab03bc654c0620646",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 64,
+        "deletions": 6,
+        "changes": 70,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -1,26 +1,84 @@\n import { createEditor } from \"@floatboat/nexus-core\";\n-import { onBeforeUnmount, onMounted, ref, shallowRef } from \"vue\";\n+import type { Root } from \"mdast\";\n+import {\n+  onBeforeUnmount,\n+  onMounted,\n+  ref,\n+  shallowRef,\n+  toValue,\n+  watch,\n+  type MaybeRefOrGetter\n+} from \"vue\";\n \n+import { resolveInitialDocument, shouldSyncControlledDocument } from \"./controlled-document\";\n import type { UseEditorConfig, UseEditorResult } from \"./types\";\n \n-export function useEditor(config: UseEditorConfig): UseEditorResult {\n+function buildCreateConfig(\n+  container: HTMLDivElement,\n+  config: UseEditorConfig,\n+  onDocChange: (doc: string, ast: Root) => void\n+) {\n+  const { modelValue, initialValue, onChange, ...rest } = config;\n+\n+  return {\n+    container,\n+    ...rest,\n+    initialValue: resolveInitialDocument(modelValue, initialValue),\n+    onChange: onDocChange\n+  };\n+}\n+\n+export function useEditor(config: MaybeRefOrGetter<UseEditorConfig>): UseEditorResult {\n   const containerRef = ref<HTMLDivElement | null>(null);\n   const editor = shallowRef<ReturnType<typeof createEditor> | null>(null);\n+  const lastSyncedDocRef = ref<string | null>(null);\n+  const syncRevision = ref(0);\n+\n+  const resolveConfig = () => toValue(config);\n \n   onMounted(() => {\n     if (!containerRef.value || editor.value) {\n       return;\n     }\n \n-    editor.value = createEditor({\n-      container: containerRef.value,\n-      ...config\n-    });\n+    const current = resolveConfig();\n+    const onDocChange = (doc: string, ast: Root) => {\n+      lastSyncedDocRef.value = doc;\n+      syncRevision.value += 1;\n+      resolveConfig().onChange?.(doc, ast);\n+    };\n+\n+    editor.value = createEditor(buildCreateConfig(containerRef.value, current, onDocChange));\n+\n+    lastSyncedDocRef.value = resolveInitialDocument(\n+      current.modelValue,\n+      current.initialValue\n+    );\n   });\n \n+  watch(\n+    () => resolveConfig().modelValue,\n+    (value) => {\n+      const instance = editor.value;\n+\n+      if (!instance || value === undefined) {\n+        return;\n+      }\n+\n+      if (!shouldSyncControlledDocument(value, lastSyncedDocRef.value)) {\n+        return;\n+      }\n+\n+      instance.setDocument(value, { silent: true });\n+      lastSyncedDocRef.value = value;\n+      syncRevision.value += 1;\n+    }\n+  );\n+\n   onBeforeUnmount(() => {\n     editor.value?.destroy();\n     editor.value = null;\n+    lastSyncedDocRef.value = null;\n   });\n \n   return {"
+      },
+      {
+        "sha": "6cfc43ac68329dd444df0aa5847a67fb2d921235",
+        "filename": "packages/vue/test/controlled-document.test.ts",
+        "status": "added",
+        "additions": 23,
+        "deletions": 0,
+        "changes": 23,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Ftest%2Fcontrolled-document.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Ftest%2Fcontrolled-document.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Fcontrolled-document.test.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -0,0 +1,23 @@\n+import { describe, expect, it } from \"vitest\";\n+import {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument\n+} from \"../src/controlled-document\";\n+\n+describe(\"controlled-document helpers (vue)\", () => {\n+  it(\"detects controlled mode when modelValue is defined\", () => {\n+    expect(isControlledDocument(undefined)).toBe(false);\n+    expect(isControlledDocument(\"\")).toBe(true);\n+  });\n+\n+  it(\"resolves initial document from modelValue or initialValue\", () => {\n+    expect(resolveInitialDocument(\"live\", \"seed\")).toBe(\"live\");\n+    expect(resolveInitialDocument(undefined, \"seed\")).toBe(\"seed\");\n+  });\n+\n+  it(\"skips sync when last synced doc already matches\", () => {\n+    expect(shouldSyncControlledDocument(\"same\", \"same\")).toBe(false);\n+    expect(shouldSyncControlledDocument(\"next\", \"prev\")).toBe(true);\n+  });\n+});"
+      },
+      {
+        "sha": "85630b2d52ee195ab3116d0fd0f49e0b4f3c31a9",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 163,
+        "deletions": 2,
+        "changes": 165,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ab3a4ae9e6b459a1bb02420d05897d24109a6c5a/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "patch": "@@ -1,6 +1,6 @@\n import { mount } from \"@vue/test-utils\";\n-import { defineComponent, h, nextTick, onMounted } from \"vue\";\n-import { describe, expect, it } from \"vitest\";\n+import { defineComponent, h, nextTick, onMounted, ref } from \"vue\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n \n describe(\"@floatboat/nexus-vue\", () => {\n@@ -45,4 +45,165 @@ describe(\"@floatboat/nexus-vue\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"uses modelValue as the initial document when controlled\", async () => {\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor({ modelValue: \"controlled-start\" });\n+        return () =>\n+          h(\"div\", {\n+            ref: containerRef,\n+            \"data-doc\": editor.value?.getDocument() ?? \"\"\n+          });\n+      }\n+    });\n+\n+    const wrapper = mount(Harness);\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(wrapper.attributes(\"data-doc\")).toBe(\"controlled-start\");\n+    });\n+  });\n+\n+  it(\"syncs the editor when modelValue changes\", async () => {\n+    const Harness = defineComponent({\n+      props: {\n+        modelValue: {\n+          type: String,\n+          required: true\n+        }\n+      },\n+      setup(props) {\n+        const { containerRef } = useEditor(\n+          () => ({\n+            modelValue: props.modelValue,\n+            onChange: () => {}\n+          })\n+        );\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    const wrapper = mount(Harness, { props: { modelValue: \"first\" } });\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"first\");\n+    });\n+\n+    await wrapper.setProps({ modelValue: \"second\" });\n+    await nextTick();\n+\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"second\");\n+    });\n+  });\n+\n+  it(\"forwards document changes through onChange in controlled mode\", async () => {\n+    const onChange = vi.fn();\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor({\n+          modelValue: \"start\",\n+          onChange\n+        });\n+\n+        onMounted(() => {\n+          editor.value?.setDocument(\"edited\");\n+        });\n+\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    mount(Harness);\n+    await nextTick();\n+\n+    await vi.waitFor(() => {\n+      expect(onChange).toHaveBeenCalled();\n+      expect(onChange.mock.calls.at(-1)?.[0]).toBe(\"edited\");\n+    });\n+  });\n+\n+  it(\"supports v-model on the Editor component\", async () => {\n+    const doc = ref(\"alpha\");\n+    const Parent = defineComponent({\n+      setup() {\n+        return () =>\n+          h(Editor, {\n+            modelValue: doc.value,\n+            \"onUpdate:modelValue\": (next: string) => {\n+              doc.value = next;\n+            }\n+          });\n+      }\n+    });\n+\n+    const wrapper = mount(Parent);\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"alpha\");\n+    });\n+\n+    doc.value = \"beta\";\n+    await nextTick();\n+\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"beta\");\n+    });\n+  });\n+\n+  it(\"applies rapid modelValue updates\", async () => {\n+    const Harness = defineComponent({\n+      props: { modelValue: { type: String, required: true } },\n+      setup(props) {\n+        const { containerRef } = useEditor(() => ({\n+          modelValue: props.modelValue,\n+          onChange: () => {}\n+        }));\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    const wrapper = mount(Harness, { props: { modelValue: \"v1\" } });\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"v1\");\n+    });\n+\n+    await wrapper.setProps({ modelValue: \"v2\" });\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"v2\");\n+    });\n+  });\n+\n+  it(\"supports readOnly with v-model\", async () => {\n+    const wrapper = mount(Editor, {\n+      props: {\n+        modelValue: \"# Locked\",\n+        readOnly: true\n+      }\n+    });\n+\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"# Locked\");\n+      expect(wrapper.element.querySelector(\".cm-content\")?.getAttribute(\"contenteditable\")).toBe(\n+        \"false\"\n+      );\n+    });\n+  });\n+\n+  it(\"keeps initialValue behavior in uncontrolled mode\", async () => {\n+    const wrapper = mount(Editor, {\n+      props: {\n+        initialValue: \"uncontrolled\"\n+      }\n+    });\n+\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"uncontrolled\");\n+    });\n+  });\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=30",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

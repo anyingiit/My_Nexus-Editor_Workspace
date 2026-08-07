@@ -1,0 +1,67 @@
+{
+  "pr_number": 139,
+  "title": "feat/search-fuzzy-match",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "13ba8885d06f7f0ce06080fe6329cbfeb705e4cc",
+  "merge_commit_sha": "1d9a9f5a30b6469013826db332606b0c70fce044",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "13ba8885d06f7f0ce06080fe6329cbfeb705e4cc",
+      "message": "feat/search-fuzzy-match",
+      "date": "2026-07-08T06:16:10Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 177,
+      "deletions": 7,
+      "changes": 184
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 95,
+      "deletions": 0,
+      "changes": 95
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 18,
+      "changes": 43
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=139",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

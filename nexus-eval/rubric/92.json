@@ -1,0 +1,25 @@
+{
+  "pr_number": 92,
+  "points": [
+    {
+      "id": 1,
+      "summary": "TypeScript compilation fails due to invalid Range import"
+    },
+    {
+      "id": 2,
+      "summary": "Fuzzy matcher risks combinatorial explosion with repeated characters"
+    },
+    {
+      "id": 3,
+      "summary": "Computation in main interaction chain may freeze UI"
+    },
+    {
+      "id": 4,
+      "summary": "Missing performance and edge-case regression tests"
+    },
+    {
+      "id": 5,
+      "summary": "Change scope too large, needs splitting for verification"
+    }
+  ]
+}

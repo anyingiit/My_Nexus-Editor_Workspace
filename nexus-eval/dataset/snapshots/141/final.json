@@ -1,0 +1,72 @@
+{
+  "pr_number": 141,
+  "title": "feat(search): add fuzzy search mode to search panel",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "f5fd53afae54e05965a68c1d2472099843cd673d",
+  "merge_commit_sha": "936f9cc3726e3177869fbe1530b06828895852be",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "a8295df2a7b46b4ada8f658c8ea8502920c7d107",
+      "message": "fix(toolbar): make blockquote toggle range-aware and atomic",
+      "date": "2026-07-08T10:25:38Z"
+    },
+    {
+      "sha": "f5fd53afae54e05965a68c1d2472099843cd673d",
+      "message": "feat(search): add fuzzy search mode to search panel",
+      "date": "2026-07-08T10:56:55Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 213,
+      "deletions": 16,
+      "changes": 229
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 111,
+      "deletions": 0,
+      "changes": 111
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 15,
+      "changes": 29
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 135,
+      "deletions": 0,
+      "changes": 135
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=141",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

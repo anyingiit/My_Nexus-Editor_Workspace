@@ -1,0 +1,31 @@
+{
+  "pr_number": 27,
+  "title": "fix(electron): 提升 dev-electron 启动稳定性",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-22T12:52:19Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "zhao2805606260",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-21T10:55:58Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=27) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=27) before we can accept your contribution.<br/><hr/>**zhaoyuhang** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=27) it.</sub>"
+    },
+    {
+      "user": "zhao2805606260",
+      "created_at": "2026-05-21T10:57:42Z",
+      "body": "提升 dev-electron 启动稳定性"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-22T12:52:17Z",
+      "body": "### Overall\n\n感谢提交 👋 修 dev-electron 启动稳定性这个方向本身是有意义的——\n- 把固定 `setTimeout(2000)` 换成 `waitForDevServer` 轮询 Vite 是更鲁棒的做法；\n- 清理 `ELECTRON_RUN_AS_NODE` / `ELECTRON_NO_ASAR` 环境变量避免 Electron 退化成 Node 进程，思路也对；\n- 加 child error handler 方便排查。\n\n这些改动我们后续会自己 cherry-pick 或者参考实现，先谢谢你！\n\n不过这个 PR 我会直接 close，主要有两个原因，希望对你后续提 PR 有帮助：\n\n#### 1. 与 Roadmap 不对齐，体量偏小\n\n我们这边把这个仓库当作面试评估的载体，对 PR 的核心要求是「真正交付一个 `docs/ROADMAP.md` 上的能力项」，并且体量、设计、测试、文档配套要相对完整（可以参考 #5 那种「关闭一个 P0 条目 + OpenSpec proposal + 双端 README + 手动验证清单 + sample-vault 引导文档」的完整度）。\n\n当前 PR 只改了一个 dev 脚本（+36 / -5），与 Roadmap 上的核心功能条目不直接对应，也没有新增测试，作为面试评估依据偏轻量。\n\n#### 2. CLA 还没签通过\n\nCLA assistant 提示 commit 邮箱对应的 `zhaoyuhang` 不是 GitHub 用户，需要把这个 commit 邮箱绑定到你的 GitHub 账号（账号 settings → emails → add）后让 CLA bot 重新检查。\n\n#### 建议\n\n从 `docs/ROADMAP.md` 里挑一个 P0 / P1 的能力条目（例如搜索、slash 命令、toolbar、editor API、Vue/React 集成等方向）重新提一个 PR，体量大一些、带测试和 README，那个 PR 我会重新认真评估，欢迎再来 🙌\n\nThanks!\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

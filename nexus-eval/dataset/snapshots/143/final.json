@@ -1,0 +1,102 @@
+{
+  "pr_number": 143,
+  "title": "feat(history): implement undo/redo grouping",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "9f20bfa53c24028e82f91ae97afae09574687952",
+  "merge_commit_sha": "a1d319c6c0fe8550f1329e06058a3879eeb648f6",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "9f20bfa53c24028e82f91ae97afae09574687952",
+      "message": "feat(history): implement undo/redo grouping",
+      "date": "2026-07-09T07:30:28Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".vs/Nexus-Editor/FileContentIndex/3a5a521c-e077-4b65-be9c-82905b0c3c39.vsidx",
+      "status": "added",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": ".vs/Nexus-Editor/v17/.wsuo",
+      "status": "added",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": ".vs/Nexus-Editor/v17/DocumentLayout.json",
+      "status": "added",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": ".vs/ProjectSettings.json",
+      "status": "added",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": ".vs/VSWorkspaceState.json",
+      "status": "added",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": ".vs/slnx.sqlite",
+      "status": "added",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "packages/plugin-history/__tests__/plugin-history.test.ts",
+      "status": "added",
+      "additions": 242,
+      "deletions": 0,
+      "changes": 242
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 63,
+      "deletions": 3,
+      "changes": 66
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 64,
+      "changes": 64
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=143",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

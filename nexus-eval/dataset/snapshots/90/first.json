@@ -1,0 +1,64 @@
+{
+  "pr_number": 90,
+  "title": "fix(search): handle whole-word symbol edges",
+  "body": "## Why\n\nLiteral whole-word search used `\\b...\\b` boundaries for every query. That works for plain words like `cat`, but breaks for symbol-edged literals: standalone `C++` was skipped, while prefixes such as `C++Builder` could be matched.\n\n## What\n\n- Build literal whole-word patterns with edge-aware lookarounds instead of unconditional `\\b` boundaries.\n- Preserve existing regex whole-word behavior.\n- Add regression coverage for `C++` and `#tag` find/replace behavior.\n\n## Testing\n\n- `vitest run` - 34 files / 516 tests passed.\n- `tsup src/index.ts --format esm --dts --clean` in `packages/plugin-search` - build passed.\n- Attempted `pnpm test`, but the local pnpm 11.7.0 wrapper ran an install first and stopped on `ERR_PNPM_IGNORED_BUILDS` before executing tests; the full Vitest suite above was run through the local project binary.\n\n## OpenSpec\n\nNot required: this is a bug fix restoring intended search behavior, not a new capability or public API change.\n\n## AI Assistance\n\n- [x] AI assistance was used for investigation, patch drafting, and PR description preparation; the resulting diff was reviewed and verified with the commands above.",
+  "created_at": "2026-07-01T15:50:13Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "1202fefc70f8e1bccf810f97846bdc915ce3a007",
+  "first_review_time": "2026-07-01T15:50:23Z",
+  "commits_at_first_review": [
+    {
+      "sha": "1202fefc70f8e1bccf810f97846bdc915ce3a007",
+      "message": "fix(search): handle whole-word symbol edges",
+      "date": "2026-07-01T15:37:51Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "40cfc55a1b97c750f90b8fd9ddc81675c4543811",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 26,
+        "deletions": 1,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1202fefc70f8e1bccf810f97846bdc915ce3a007/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1202fefc70f8e1bccf810f97846bdc915ce3a007/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=1202fefc70f8e1bccf810f97846bdc915ce3a007",
+        "patch": "@@ -95,6 +95,8 @@ const DEFAULT_LABELS: SearchPluginLabels = {\n \n const DEFAULT_SEARCH_HISTORY_KEY = \"nexus.search.history\";\n const DEFAULT_SEARCH_HISTORY_MAX_ENTRIES = 20;\n+const WORD_CHAR_CLASS = \"A-Za-z0-9_\";\n+const WORD_CHAR_RE = /^[A-Za-z0-9_]$/;\n \n type SearchHistoryDirection = \"previous\" | \"next\";\n \n@@ -232,6 +234,29 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function escapeCharacterClass(value: string): string {\n+  return value.replace(/[\\\\\\]\\-\\^\\n\\r\\t]/g, (char) => {\n+    if (char === \"\\n\") return \"\\\\n\";\n+    if (char === \"\\r\") return \"\\\\r\";\n+    if (char === \"\\t\") return \"\\\\t\";\n+    return `\\\\${char}`;\n+  });\n+}\n+\n+function wholeWordEdgeClass(char: string): string {\n+  return WORD_CHAR_RE.test(char)\n+    ? WORD_CHAR_CLASS\n+    : `${WORD_CHAR_CLASS}${escapeCharacterClass(char)}`;\n+}\n+\n+function wrapLiteralWholeWordPattern(pattern: string, query: string): string {\n+  const chars = Array.from(query);\n+  const first = chars[0] ?? \"\";\n+  const last = chars[chars.length - 1] ?? \"\";\n+\n+  return `(?<![${wholeWordEdgeClass(first)}])${pattern}(?![${wholeWordEdgeClass(last)}])`;\n+}\n+\n function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp | null {\n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n \n@@ -240,7 +265,7 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n     pattern = options.wholeWord ? `\\\\b(?:${query})\\\\b` : query;\n   } else {\n     const escaped = escapeRegExp(query);\n-    pattern = options.wholeWord ? `\\\\b${escaped}\\\\b` : escaped;\n+    pattern = options.wholeWord ? wrapLiteralWholeWordPattern(escaped, query) : escaped;\n   }\n \n   try {"
+      },
+      {
+        "sha": "fef61be188c130de80143cd08ace37fcadc07347",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 0,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1202fefc70f8e1bccf810f97846bdc915ce3a007/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1202fefc70f8e1bccf810f97846bdc915ce3a007/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=1202fefc70f8e1bccf810f97846bdc915ce3a007",
+        "patch": "@@ -187,6 +187,18 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports whole-word literal queries with symbol edges\", () => {\n+    expect(findSearchMatches(\"C++ C+++ xC++ C++Builder\", \"C++\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"C++\" }\n+    ]);\n+    expect(findSearchMatches(\"#tag x#tag ##tag #tagged\", \"#tag\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 4, text: \"#tag\" }\n+    ]);\n+    expect(replaceAllMatches(\"C++ C+++ xC++\", \"C++\", \"TypeScript\", { wholeWord: true })).toBe(\n+      \"TypeScript C+++ xC++\"\n+    );\n+  });\n+\n   it(\"supports case-sensitive whole-word matching\", () => {\n     expect(findSearchMatches(\"cat Cat CAT\", \"Cat\", { wholeWord: true, caseSensitive: true })).toEqual([\n       { from: 4, to: 7, text: \"Cat\" }"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=90",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

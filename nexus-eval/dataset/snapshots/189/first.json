@@ -1,0 +1,46 @@
+{
+  "pr_number": 189,
+  "title": "test(electron): cover Windows path normalization",
+  "body": "## Summary / 摘要\n\nAdd direct regression coverage for the Windows path-normalization contract across the `LinkIndex` lifecycle.\n\n## Motivation / 背景与动机\n\n- Related issue: #77\n- Complements #79 without touching the sample-vault fixture assertions.\n- `LinkIndex` stores and returns forward-slash paths on every platform, but its unit tests previously used POSIX-style inputs almost exclusively. Direct Windows-style inputs make that production contract explicit and keep future changes to rebuild and incremental mutations from reintroducing separator-dependent behavior.\n- Roadmap: N/A\n- OpenSpec change: N/A (test-only change)\n\n## Changes / 变更内容\n\n- `apps/electron-demo`: add four end-to-end `LinkIndex` regression cases covering rebuild/resolve/backlinks, mixed-separator updates, removal, and rename behavior.\n- No production code, public API, fixture, or dependency changes.\n\n## Testing / 测试\n\n- [x] Full Vitest suite: 34 files, 541 tests passed\n- [x] TypeScript `--noEmit` check passed for all 12 workspace tsconfigs\n- [x] Electron demo production build passed (`tsup` + `vite build`)\n- [x] New cases avoid relying on `Map` insertion order\n- [ ] Manual UI check (not applicable: test-only change)\n\n## Compliance / 合规自检\n\n- [ ] CLA signed — awaiting CLA Assistant confirmation\n- [x] AI disclosure: Codex generated the added regression tests. No functional code was generated or changed; this is a test-only contribution, which is permitted by GOVERNANCE.md §6.2.\n- [x] New dependencies: none\n- [x] No build artifacts committed\n- [x] No secrets, `.env`, or personal vault data committed\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits\n- [x] Public API unchanged\n- [x] `live-preview-table.ts` untouched\n- [x] No new capability or breaking change; OpenSpec is not required\n- [x] Change aligns with GOVERNANCE.md §4\n\n## Screenshots / Recordings\n\nNot applicable; no UI changes.",
+  "created_at": "2026-07-27T07:52:35Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "6eaeb5d8126f656d208176c0f6930cd194f511fd",
+  "first_review_time": "2026-07-27T07:52:51Z",
+  "commits_at_first_review": [],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "5325018f77b5a8734476ecdb56bde16626dd156b",
+        "filename": "apps/electron-demo/test/link-index.test.ts",
+        "status": "modified",
+        "additions": 75,
+        "deletions": 0,
+        "changes": 75,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/6eaeb5d8126f656d208176c0f6930cd194f511fd/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/6eaeb5d8126f656d208176c0f6930cd194f511fd/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts?ref=6eaeb5d8126f656d208176c0f6930cd194f511fd",
+        "patch": "@@ -34,6 +34,81 @@ describe(\"LinkIndex.resolve\", () => {\n   });\n });\n \n+describe(\"LinkIndex — Windows path normalization\", () => {\n+  it(\"normalizes indexed paths across files, resolution, and backlinks\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"C:\\\\vault\\\\Topics\\\\AI.md\", content: \"# AI\" },\n+      { path: \"C:\\\\vault\\\\Daily\\\\Today.md\", content: \"See [[AI]]\" },\n+    ]);\n+\n+    expect(new Set(idx.getAllFiles())).toEqual(\n+      new Set([\"C:/vault/Topics/AI.md\", \"C:/vault/Daily/Today.md\"])\n+    );\n+    expect(idx.resolve(\"AI\", \"C:\\\\vault\\\\Daily\\\\Today.md\")).toBe(\n+      \"C:/vault/Topics/AI.md\"\n+    );\n+    expect(idx.getBacklinks(\"C:\\\\vault\\\\Topics\\\\AI.md\")).toEqual([\n+      expect.objectContaining({\n+        sourcePath: \"C:/vault/Daily/Today.md\",\n+        target: \"AI\",\n+      }),\n+    ]);\n+  });\n+\n+  it(\"treats slash variants as the same file during incremental updates\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"C:\\\\vault\\\\X.md\", content: \"\" },\n+      { path: \"C:\\\\vault\\\\Y.md\", content: \"\" },\n+      { path: \"C:\\\\vault\\\\Source.md\", content: \"[[X]]\" },\n+    ]);\n+\n+    idx.updateFile(\"C:/vault/Source.md\", \"[[Y]]\");\n+\n+    expect(new Set(idx.getAllFiles())).toEqual(\n+      new Set([\"C:/vault/X.md\", \"C:/vault/Y.md\", \"C:/vault/Source.md\"])\n+    );\n+    expect(idx.getBacklinks(\"C:\\\\vault\\\\X.md\")).toEqual([]);\n+    expect(idx.getBacklinks(\"C:/vault/Y.md\")).toEqual([\n+      expect.objectContaining({ sourcePath: \"C:/vault/Source.md\" }),\n+    ]);\n+  });\n+\n+  it(\"accepts either slash style when removing an indexed file\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"C:\\\\vault\\\\Target.md\", content: \"\" },\n+      { path: \"C:\\\\vault\\\\Source.md\", content: \"[[Target]]\" },\n+    ]);\n+\n+    idx.removeFile(\"C:/vault/Source.md\");\n+\n+    expect(idx.getAllFiles()).toEqual([\"C:/vault/Target.md\"]);\n+    expect(idx.getBacklinks(\"C:\\\\vault\\\\Target.md\")).toEqual([]);\n+  });\n+\n+  it(\"normalizes both sides of a rename and preserves outgoing links\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"C:\\\\vault\\\\Target.md\", content: \"\" },\n+      { path: \"C:\\\\vault\\\\Old\\\\Source.md\", content: \"[[Target]]\" },\n+    ]);\n+\n+    idx.renameFile(\"C:/vault/Old/Source.md\", \"C:\\\\vault\\\\New\\\\Source.md\");\n+\n+    expect(new Set(idx.getAllFiles())).toEqual(\n+      new Set([\"C:/vault/Target.md\", \"C:/vault/New/Source.md\"])\n+    );\n+    expect(idx.resolve(\"Source\", \"C:\\\\vault\\\\New\\\\Sibling.md\")).toBe(\n+      \"C:/vault/New/Source.md\"\n+    );\n+    expect(idx.getBacklinks(\"C:/vault/Target.md\")).toEqual([\n+      expect.objectContaining({ sourcePath: \"C:/vault/New/Source.md\" }),\n+    ]);\n+  });\n+});\n+\n describe(\"LinkIndex.backlinks\", () => {\n   it(\"lists inbound references with source path and snippet\", () => {\n     const idx = new LinkIndex();"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=189",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

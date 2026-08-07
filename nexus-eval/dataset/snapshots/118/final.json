@@ -1,0 +1,188 @@
+{
+  "pr_number": 118,
+  "title": "feat(core): scroll sync + user-overridable keybindings",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-03T10:59:55Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "e8704b0315810b86c65c98192cb1f776307db3ba",
+  "merge_commit_sha": "37b951e383dd0276f7550fb35293036de3fcce3a",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "1d6f55b5f74836548600c6212339aa368f04c481",
+      "message": "docs(openspec): propose customizable keymap UI",
+      "date": "2026-07-03T07:24:17Z"
+    },
+    {
+      "sha": "34add58d2169367af52e83e09ba0027d346253ad",
+      "message": "docs(openspec): propose customizable keymap UI",
+      "date": "2026-07-03T07:30:57Z"
+    },
+    {
+      "sha": "5f6d7eb75cab27f5be9869f6ed88600746dfb063",
+      "message": "feat(core): expose scroll APIs for split-view preview sync",
+      "date": "2026-07-03T07:48:17Z"
+    },
+    {
+      "sha": "929e67714418bcb6ffffb1271e514a73cb88bb16",
+      "message": "feat(core): user-overridable keybindings via override layer",
+      "date": "2026-07-03T07:48:38Z"
+    },
+    {
+      "sha": "0512a46457f2328d45b97a54fb50ca701c422a51",
+      "message": "docs(core): document scroll sync + custom keybindings APIs",
+      "date": "2026-07-03T07:48:58Z"
+    },
+    {
+      "sha": "0ddc3f2887767cd835ff44ab818656b8a2d594d1",
+      "message": "feat(electron): add preview panel + keybindings panel demos",
+      "date": "2026-07-03T07:49:32Z"
+    },
+    {
+      "sha": "e8704b0315810b86c65c98192cb1f776307db3ba",
+      "message": "docs(roadmap): mark #13 done and #14 in-progress",
+      "date": "2026-07-03T07:49:49Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 47,
+      "deletions": 1,
+      "changes": 48
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/keybindings-panel.ts",
+      "status": "added",
+      "additions": 350,
+      "deletions": 0,
+      "changes": 350
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/preview-panel.ts",
+      "status": "added",
+      "additions": 177,
+      "deletions": 0,
+      "changes": 177
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/scroll-sync.ts",
+      "status": "added",
+      "additions": 66,
+      "deletions": 0,
+      "changes": 66
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/design.md",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/proposal.md",
+      "status": "added",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64
+    },
+    {
+      "filename": "openspec/changes/add-customizable-keymap-ui/tasks.md",
+      "status": "added",
+      "additions": 39,
+      "deletions": 0,
+      "changes": 39
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "modified",
+      "additions": 70,
+      "deletions": 0,
+      "changes": 70
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 142,
+      "deletions": 30,
+      "changes": 172
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/core/src/keymap-registry.ts",
+      "status": "added",
+      "additions": 157,
+      "deletions": 0,
+      "changes": 157
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 128,
+      "deletions": 0,
+      "changes": 128
+    },
+    {
+      "filename": "packages/core/test/keybindings.test.ts",
+      "status": "added",
+      "additions": 342,
+      "deletions": 0,
+      "changes": 342
+    },
+    {
+      "filename": "packages/core/test/scroll-api.test.ts",
+      "status": "added",
+      "additions": 168,
+      "deletions": 0,
+      "changes": 168
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=118",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

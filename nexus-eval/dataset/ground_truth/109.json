@@ -1,0 +1,26 @@
+{
+  "pr_number": 109,
+  "title": "feat(core): plugin architecture overhaul",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-03T05:52:20Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "guoyanshuo",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T05:06:23Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=109) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T05:52:18Z",
+      "body": "Thanks for the contribution. I reviewed the PR metadata and ran the relevant local checks.\n\nValidation performed:\n\n```text\npnpm exec tsc --noEmit -p packages/core/tsconfig.json\npnpm exec tsc --noEmit -p packages/plugin-wordcount/tsconfig.json\npnpm --filter @floatboat/nexus-core test -- editor\npnpm --filter @floatboat/nexus-plugin-wordcount test\n```\n\nThese local checks passed in an isolated checkout.\n\nHowever, this PR cannot be accepted in its current state because of the following blocking issues:\n\n1. CLA is not signed yet:\n\n```text\nlicense/cla: Contributor License Agreement is not signed yet.\n```\n\n2. This is a large architecture-level plugin lifecycle/runtime-management change, including new runtime APIs such as `usePlugin`, `unusePlugin`, `reloadPlugin`, command/event buses, dependency ordering, diagnostics, and scoped setup facades. The PR itself marks `OpenSpec change: N/A` and notes that an architecture-level OpenSpec proposal should be added later. For this project, a new capability / architecture-level public API change should be accompanied by an OpenSpec proposal before it can be accepted.\n\nClosing this PR for now. Please sign the CLA and reopen or submit a new PR with the required OpenSpec proposal / architecture design record attached.\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

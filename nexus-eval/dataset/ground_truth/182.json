@@ -1,0 +1,19 @@
+{
+  "pr_number": 182,
+  "title": "docs(core): document selection and range editing APIs",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-24T15:18:04Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "xrq03",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-24T14:49:31Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=182) <br/>All committers have signed the CLA."
+    }
+  ]
+}

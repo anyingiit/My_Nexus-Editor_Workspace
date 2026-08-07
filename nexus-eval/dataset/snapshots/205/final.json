@@ -1,0 +1,84 @@
+{
+  "pr_number": 205,
+  "title": "Feature/image upload",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "2a5137144e46305727dac8d7062e06fa75b6b4c0",
+  "merge_commit_sha": "741f9e67405fd370b6530f1fde65a69ea46d68fe",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "d736bc74afcaba489698e47c549f8660421f45a0",
+      "message": "feat(toolbar): 支持宿主自定义图片插入行为\n\n工具栏内置的 insertImage 只能插入占位 markdown，桌面端需要走\n系统文件选择器并把图片落盘到 vault，因此需要一个可替换的注入点。\n\n新增 ToolbarUIOptions.onInsertImage，缺省仍回落到内置 insertImage，\n保证既有 Web 端调用方行为不变。",
+      "date": "2026-08-01T07:41:43Z"
+    },
+    {
+      "sha": "3af1a89f590067239805284230424b333d573918",
+      "message": "feat(electron): 本地图片上传并在编辑器内直接预览\n\n工具栏图片按钮此前只插入占位 markdown，无法上传本机图片。\n\n新增 image:pick IPC：弹出系统文件选择器，把所选图片复制到\nassets/ 目录后回传相对路径。落盘目录按 vault → 当前文件所在目录\n依次回落，两者都不存在时退回图片原始路径，避免未打开 vault 时\n弹框直接静默返回。\n\n配套修正三处使图片能真正渲染出来：\n\n- 回传路径做 encodeURI。live-preview 的图片正则不允许 URL 含空白\n  字符，含空格的文件名会导致整段 markdown 无法被识别为 image 节点，\n  只能显示原始文本。\n- resolveImageSrc 先 decodeURI 还原真实路径再解析，并补齐绝对路径\n  分支（原实现会把绝对路径错误地拼到当前文件目录之后）；vault 之外\n  的路径改由新增的 nexus-vault://local 承载，不再返回浏览器无法\n  加载的裸路径。\n- 插入的 markdown 末尾补一个换行。live-preview 判定光标是否落在图片\n  范围内时 end 是闭区间，光标停在 `)` 之后仍算命中，会保持源码可见。",
+      "date": "2026-08-01T07:41:58Z"
+    },
+    {
+      "sha": "2a5137144e46305727dac8d7062e06fa75b6b4c0",
+      "message": "feat(electron): 图片选中后提供缩放与删除操作条\n\n图片此前只能靠右下角拖拽点调整大小，缺少确定性的档位，也没有\n删除入口，只能手工去源码里删那行 markdown。\n\n点击图片进入选中态，左下角浮出操作条：30% / 50% / 100% 按原始\n宽度换算后写回 `|width`，垃圾桶按钮删除图片。点击图片外或按 Esc\n取消选中。hover 浮层（</> 与拖拽点）行为不变，选中期间不再因移开\n鼠标而隐藏。\n\n拖拽缩放与百分比按钮共用抽出的 writeImageWidth()，避免两处各自\n拼接 alt。naturalWidth 在位图解码完成前为 0，此时回退到布局宽度，\n使刚插入即点击也能生效。\n\n两处与 live-preview 生命周期相关的约束：\n\n- 选中态不在文档里，CM6 不会因它重建 widget，故点击时直接改 DOM；\n  但 `|width` 写回会改变 source 使 eqKey 失效、DOM 被重建，因此把\n  选中的 from 记在 shell 闭包中，重建时据此恢复，保证连续点击\n  30% → 50% 时操作条不会消失。\n- widget 没有 destroy 钩子，document 级的“点击外部/Esc 取消选中”\n  监听采用自清理模式：回调先检查 wrapper.isConnected，已脱离文档\n  就自行解绑，避免监听泄漏。",
+      "date": "2026-08-01T07:55:51Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 50,
+      "deletions": 2,
+      "changes": 52
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 236,
+      "deletions": 31,
+      "changes": 267
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=205",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

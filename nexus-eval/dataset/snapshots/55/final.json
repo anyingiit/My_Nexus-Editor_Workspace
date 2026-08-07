@@ -1,0 +1,74 @@
+{
+  "pr_number": 55,
+  "title": "feat(history): enhance plugin-history with undo grouping, canUndo/canRedo, and comprehensive tests",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "5efce6661295f4ebf17fef442c8c0aeb6e2f50ba",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "5efce6661295f4ebf17fef442c8c0aeb6e2f50ba",
+      "message": "feat(history): enhance plugin-history with undo grouping, canUndo/canRedo, and comprehensive tests\n\n- Add canUndo() and canRedo() to EditorAPI (core types + implementation)\n- Enhance createHistoryPlugin() with config support (minDepth, newGroupDelay)\n- Add groupChange() utility for batching multiple edits as a single undo step\n- Add isHistoryEnabled() utility for detecting plugin presence\n- Install historyStateField for state-field-level undo/redo tracking\n- Write 17 comprehensive tests covering basic undo/redo, canUndo/canRedo,\n  groupChange, isHistoryEnabled, and configuration options\n- Add @codemirror/state as direct dependency",
+      "date": "2026-06-10T06:30:01Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 2,
+      "changes": 32
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 185,
+      "deletions": 4,
+      "changes": 189
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 279,
+      "deletions": 2,
+      "changes": 281
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=55",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

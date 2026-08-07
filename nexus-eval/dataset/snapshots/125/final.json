@@ -1,0 +1,53 @@
+{
+  "pr_number": 125,
+  "title": "fix(vue): ensure onFocus/onBlur/onAssetUpload callbacks use latest reference",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "615904c3b06392fdcde5bcbd93c9f58e50bed1c2",
+  "merge_commit_sha": "2ba389bedb7ff61e3e7fe10524a2ce2f40fbe5d7",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "615904c3b06392fdcde5bcbd93c9f58e50bed1c2",
+      "message": "fix(vue): ensure onFocus/onBlur/onAssetUpload callbacks use latest reference",
+      "date": "2026-07-06T02:55:14Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 15,
+      "changes": 46
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 137,
+      "deletions": 0,
+      "changes": 137
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=125",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "pr_number": 30,
+  "title": "feat(react,vue): add controlled document mode to Editor",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T08:08:09Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "songyipan",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-26T03:14:12Z",
+      "body": "## Review 总结\n\n整体质量很高，可以判定 **PASS**，准备进入面试环节。\n\n### 亮点\n\n- **Roadmap 对齐准确**：明确登记 `§6 #28` 为 P0 / in-progress，并在 `docs/ROADMAP.md` / `ROADMAP.zh.md` 同步更新\n- **架构设计稳健**：抽离 `controlled-document.ts` 为纯函数模块（`isControlledDocument` / `resolveInitialDocument` / `shouldSyncControlledDocument`），与框架运行时解耦，可独立单测\n- **防反馈环机制**：`lastSyncedDocRef` + `silent: true` 双重保护，避免 controlled 模式下 onChange 回流抖动；专门有用例覆盖 (`skips silent setDocument when controlled value already matches the last change`)\n- **双框架语义对称**：React `value`/`onChange` 与 Vue `modelValue`/`v-model` 行为一致，README 中也对照说明\n- **测试覆盖完整**：8+ React 用例覆盖 controlled / uncontrolled / 值切换 / readOnly / rapid update / 初始挂载；Vue 端测试同步\n- **不改 core**：仅在 binding 层接 `setDocument(..., { silent: true })`，破坏面最小化\n- **文档完整**：两个包都补齐 README，包含 controlled / uncontrolled / hook / composable 完整示例，并解释内部机制\n\n### 建议（非阻塞）\n\n1. **演示加分项**：当前仅文字说明，建议补一段 GIF 或 sample-vault 中的最小可交互 demo（如「外部 AI rewrite 回填」场景），让 reviewer 一眼看到 controlled 模式的价值\n2. **`shouldSyncControlledDocument` 命名**：函数返回 `lastSynced !== next` 语义上是「需要同步」，可以考虑改为 `shouldSync` 或加注释说明 `null` 也会返回 true 的边界\n\n### 结论\n\n该 PR 满足 PR review 6 维全部 ≥ 良好（Roadmap A / 实现 A- / 测试 A / 完整性 A / 演示 B+ / 工程 A），符合面试入场标准。已通过 BOSS 联系候选人安排技术面。\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-23T06:35:13Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=30) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T08:04:20Z",
+      "body": "感谢贡献 🙌 已在本地 rebase 到最新 main，跑通 `pnpm typecheck` + `pnpm test` + `pnpm build` 全绿后，以 squash 提交合入主分支：`26de892`（保留你为 author + Co-authored-by）。\n\n为保持 main 线性整洁，这里采用 squash 后手动合并的方式落地，所以 PR 由系统关闭而非显示 merged，但你的提交已经在主分支上了。再次感谢！"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

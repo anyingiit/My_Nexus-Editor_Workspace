@@ -1,0 +1,67 @@
+{
+  "pr_number": 45,
+  "title": "fix(core): resolve timer and listener leaks in table widget, live pre…",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-09T08:33:59Z",
+  "merged_by": null,
+  "closed_by": "GarrisonPJ",
+  "head_sha_final": "b0ae0a9e1efa22cafff89566ef86b4a16af678ed",
+  "merge_commit_sha": "c8f9351589b51ec12337b94850543a4ce1aa7ad6",
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "b0ae0a9e1efa22cafff89566ef86b4a16af678ed",
+      "message": "fix(core): resolve timer and listener leaks in table widget, live preview, and wikilinks\n\nFix 7 bugs across 4 files:\n\nBug 1 (live-preview-table): promote onDocMouseDown to class field so\ndestroy() can remove the document-level mousedown listener.\n\nBug 2-4 (widget-extension, live-preview, wikilinks): store\ncompositionend timeout per EditorView via view.plugin(viewCapture)\ninstead of shared closure — prevents cross-instance timer stomping.\n\nBug 5 (live-preview-table): add LRU eviction (limit 50) to\ntableColumnWidths Map with touch-on-get for true LRU ordering.\n\nBug 6 (live-preview): add LRU eviction (limit 50) to MERMAID_CACHE\nMap with touch-on-get for true LRU ordering.\n\nBug 7 (live-preview-table): store context menu setTimeout ID so\ncleanup() can clearTimeout, preventing dangling document listener\nwhen cleanup runs before timer fires.",
+      "date": "2026-06-02T10:18:41Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 7,
+      "changes": 45
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 5,
+      "changes": 36
+    },
+    {
+      "filename": "packages/core/src/widget-extension.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 1,
+      "changes": 11
+    },
+    {
+      "filename": "packages/core/src/wikilinks.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 3,
+      "changes": 22
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=45",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

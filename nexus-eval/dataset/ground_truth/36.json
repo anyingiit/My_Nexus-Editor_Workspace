@@ -1,0 +1,21 @@
+{
+  "pr_number": 36,
+  "title": "feat(toolbar): multi-line formatting, list marker guard, inline HTML fix",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:39:46Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "741848374",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:39:44Z",
+      "body": "感谢多行格式化 + list marker guard + inline HTML 修复 🙏 但本 PR 与已合并的 #21（多行列表 toggle，`ccbb25f`）在 plugin-toolbar/formatting.ts 上大幅重叠，且含 548 行删除、对当前 main 为 CONFLICTING。建议拆分：把 inline HTML 修复、list marker guard 这些独立小修复各自基于当前 main 提聚焦 PR，多行格式化部分与已合并的 toggle 实现对齐后再提。当前形态无法干净合并，故关闭。\n\n—— 评审基于本轮统一的质量门槛（本地 build/test/typecheck 全绿 + 无已知正确性缺陷 + 核心逻辑有自动化测试）。修好后非常欢迎基于当前 main 重新提交 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}
