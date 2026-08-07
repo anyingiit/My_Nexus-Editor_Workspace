@@ -1,0 +1,26 @@
+{
+  "pr_number": 108,
+  "title": "在 Demo 应用中接入块引用与内容嵌入",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-03T05:46:57Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "wsxnji",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T04:30:41Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=108) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=108) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=108) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T05:46:55Z",
+      "body": "Thanks for the contribution. I reviewed the implementation and ran the relevant local checks.\n\nCode-level validation performed:\n- `pnpm --filter @floatboat/nexus-core test -- block-id transclusion-widget live-preview-ranges` passed.\n- `pnpm exec tsc --noEmit -p packages/core/tsconfig.json` passed.\n- `pnpm exec tsc --noEmit -p apps/electron-demo/tsconfig.json` passed.\n\nHowever, this PR is currently blocked because the CLA check is still pending / not signed:\n\n```text\nlicense/cla: Contributor License Agreement is not signed yet.\n```\n\nSince we cannot accept contributions without a passing CLA check, I am closing this PR for now. Please sign the CLA and reopen or submit a new PR afterwards; the code can then be reviewed for merge readiness again.\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

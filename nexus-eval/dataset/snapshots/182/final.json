@@ -1,0 +1,70 @@
+{
+  "pr_number": 182,
+  "title": "docs(core): document selection and range editing APIs",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-24T15:18:04Z",
+  "merged_by": null,
+  "closed_by": "xrq03",
+  "head_sha_final": "e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+  "merge_commit_sha": "c1170a6411ac845666874e2dbe4be7bc40730496",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "35da3f2640c174be27f1feb5fd0604e179329494",
+      "message": "docs(core): document selection and range editing APIs",
+      "date": "2026-07-24T14:34:10Z"
+    },
+    {
+      "sha": "0a43870f2ccd83d63078184cac30774324f99482",
+      "message": "docs: sync root selection API reference",
+      "date": "2026-07-24T14:34:12Z"
+    },
+    {
+      "sha": "e96f4cbc0e5c30558c3d10f6915a02f083ab0148",
+      "message": "docs: sync Chinese selection API reference",
+      "date": "2026-07-24T14:34:15Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 4,
+      "changes": 21
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 4,
+      "changes": 21
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 6,
+      "changes": 30
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=182",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

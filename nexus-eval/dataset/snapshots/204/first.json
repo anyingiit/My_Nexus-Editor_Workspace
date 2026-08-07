@@ -1,0 +1,136 @@
+{
+  "pr_number": 204,
+  "title": "feat(electron): 添加 AI 上下文复制功能",
+  "body": "## 变更内容\r\n- 在 Electron demo 顶部工具栏新增 `AI` 按钮，用于一键复制当前笔记的 AI 上下文。\r\n- 复制内容包含当前笔记路径、字数统计、选中文本、大纲、已链接提及、未链接提及和 Markdown 原文。\r\n- 通过 Electron preload 暴露剪贴板写入能力，避免依赖不稳定的浏览器剪贴板 API。\r\n\r\n## 为什么这样做\r\n这个改动让 Nexus 的本地 Markdown 笔记库更适合与 AI 助手协作。用户可以快速把当前笔记及其周边上下文交给 ChatGPT、Claude 或其他 AI 工具，而不需要手动整理大纲和反向链接信息。\r\n\r\n## 验证方式\r\n- `corepack pnpm exec vitest run apps/electron-demo/test/ai-context.test.ts apps/electron-demo/test`\r\n- `corepack pnpm test`\r\n- `corepack pnpm -r exec tsc --noEmit`\r\n- `corepack pnpm --filter @floatboat/nexus-electron-demo build`",
+  "created_at": "2026-08-01T07:21:06Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "a54b1083abfb4cd0173b13e008ab92391cb8e045",
+  "first_review_time": "2026-08-01T07:21:19Z",
+  "commits_at_first_review": [
+    {
+      "sha": "a54b1083abfb4cd0173b13e008ab92391cb8e045",
+      "message": "feat(electron): add AI context copy action",
+      "date": "2026-08-01T07:10:32Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "b811cb2d542e8e8d4619a0ec3215e19c0b545235",
+        "filename": "apps/electron-demo/electron/preload.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 1,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fpreload.ts?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -1,4 +1,4 @@\n-import { contextBridge, ipcRenderer } from \"electron\";\n+import { clipboard, contextBridge, ipcRenderer } from \"electron\";\n \n export interface DemoFileHandle {\n   path: string;\n@@ -36,6 +36,9 @@ export interface DemoBridge {\n   openFile(): Promise<DemoFileHandle | null>;\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n+  clipboard: {\n+    writeText(text: string): Promise<void>;\n+  };\n   vault: VaultBridge;\n }\n \n@@ -92,6 +95,11 @@ const bridge: DemoBridge = {\n   saveFileAs(content: string) {\n     return ipcRenderer.invoke(\"demo:save-file-as\", content);\n   },\n+  clipboard: {\n+    async writeText(text: string) {\n+      clipboard.writeText(text);\n+    },\n+  },\n   vault: vaultBridge,\n };\n "
+      },
+      {
+        "sha": "26df96feab3e007535a3b39153a3bf392b1854fd",
+        "filename": "apps/electron-demo/src/renderer/ai-context.ts",
+        "status": "added",
+        "additions": 146,
+        "deletions": 0,
+        "changes": 146,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fai-context.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fai-context.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fai-context.ts?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -0,0 +1,146 @@\n+import type { TocEntry } from \"@floatboat/nexus-core\";\n+import type { BacklinkHit } from \"./link-index\";\n+import { normalizeSlashes } from \"./path-utils\";\n+\n+export interface AIContextStats {\n+  characters: number;\n+  words: number;\n+  lines: number;\n+}\n+\n+export interface BuildAIContextOptions {\n+  activeFile: string | null;\n+  vaultPath: string | null;\n+  document: string;\n+  selectedText: string;\n+  outline: TocEntry[];\n+  stats: AIContextStats;\n+  backlinks: BacklinkHit[];\n+  unlinkedMentions: BacklinkHit[];\n+  maxMentions?: number;\n+  maxOutlineEntries?: number;\n+  maxSnippetLength?: number;\n+}\n+\n+const DEFAULT_MAX_MENTIONS = 8;\n+const DEFAULT_MAX_OUTLINE_ENTRIES = 24;\n+const DEFAULT_MAX_SNIPPET_LENGTH = 140;\n+\n+function basename(path: string): string {\n+  const norm = normalizeSlashes(path);\n+  const slash = norm.lastIndexOf(\"/\");\n+  return slash >= 0 ? norm.slice(slash + 1) : norm;\n+}\n+\n+export function formatContextPath(path: string | null, vaultPath: string | null): string {\n+  if (!path) return \"Untitled\";\n+  const normPath = normalizeSlashes(path);\n+  if (!vaultPath) return normPath;\n+\n+  const normVault = normalizeSlashes(vaultPath).replace(/\\/+$/, \"\");\n+  if (normPath === normVault) return basename(normPath);\n+  if (normPath.startsWith(`${normVault}/`)) return normPath.slice(normVault.length + 1);\n+  return normPath;\n+}\n+\n+function truncate(value: string, maxLength: number): string {\n+  const clean = value.replace(/\\s+/g, \" \").trim();\n+  if (clean.length <= maxLength) return clean;\n+  return `${clean.slice(0, Math.max(0, maxLength - 3)).trimEnd()}...`;\n+}\n+\n+function markdownFenceFor(value: string): string {\n+  const matches = value.match(/`+/g) ?? [];\n+  const longest = matches.reduce((max, match) => Math.max(max, match.length), 0);\n+  return \"`\".repeat(Math.max(3, longest + 1));\n+}\n+\n+function appendFencedMarkdown(lines: string[], value: string, language = \"markdown\"): void {\n+  const fence = markdownFenceFor(value);\n+  lines.push(`${fence}${language}`, value, fence);\n+}\n+\n+function appendOutline(lines: string[], outline: TocEntry[], maxEntries: number): void {\n+  if (outline.length === 0) {\n+    lines.push(\"None\");\n+    return;\n+  }\n+\n+  for (const entry of outline.slice(0, maxEntries)) {\n+    const indent = \"  \".repeat(Math.max(0, entry.level - 1));\n+    lines.push(`${indent}- H${entry.level} ${entry.text}`);\n+  }\n+\n+  if (outline.length > maxEntries) {\n+    lines.push(`... and ${outline.length - maxEntries} more headings`);\n+  }\n+}\n+\n+function appendMentions(\n+  lines: string[],\n+  hits: BacklinkHit[],\n+  vaultPath: string | null,\n+  maxMentions: number,\n+  maxSnippetLength: number\n+): void {\n+  if (hits.length === 0) {\n+    lines.push(\"None\");\n+    return;\n+  }\n+\n+  for (const hit of hits.slice(0, maxMentions)) {\n+    const source = formatContextPath(hit.sourcePath, vaultPath);\n+    const snippet = truncate(hit.snippet || \"(empty)\", maxSnippetLength);\n+    lines.push(`- ${source}: ${snippet}`);\n+  }\n+\n+  if (hits.length > maxMentions) {\n+    lines.push(`... and ${hits.length - maxMentions} more mentions`);\n+  }\n+}\n+\n+export function buildAIContext(options: BuildAIContextOptions): string {\n+  const {\n+    activeFile,\n+    vaultPath,\n+    document,\n+    selectedText,\n+    outline,\n+    stats,\n+    backlinks,\n+    unlinkedMentions,\n+    maxMentions = DEFAULT_MAX_MENTIONS,\n+    maxOutlineEntries = DEFAULT_MAX_OUTLINE_ENTRIES,\n+    maxSnippetLength = DEFAULT_MAX_SNIPPET_LENGTH,\n+  } = options;\n+\n+  const lines: string[] = [\n+    \"# Nexus AI Context\",\n+    \"\",\n+    \"## Active Note\",\n+    `- Path: ${formatContextPath(activeFile, vaultPath)}`,\n+    `- Words: ${stats.words}`,\n+    `- Lines: ${stats.lines}`,\n+    `- Characters: ${stats.characters}`,\n+  ];\n+\n+  const trimmedSelection = selectedText.trim();\n+  if (trimmedSelection) {\n+    lines.push(\"\", \"## Selected Text\");\n+    appendFencedMarkdown(lines, trimmedSelection);\n+  }\n+\n+  lines.push(\"\", \"## Outline\");\n+  appendOutline(lines, outline, maxOutlineEntries);\n+\n+  lines.push(\"\", `## Linked Mentions (${backlinks.length})`);\n+  appendMentions(lines, backlinks, vaultPath, maxMentions, maxSnippetLength);\n+\n+  lines.push(\"\", `## Unlinked Mentions (${unlinkedMentions.length})`);\n+  appendMentions(lines, unlinkedMentions, vaultPath, maxMentions, maxSnippetLength);\n+\n+  lines.push(\"\", \"## Markdown\");\n+  appendFencedMarkdown(lines, document);\n+\n+  return lines.join(\"\\n\");\n+}"
+      },
+      {
+        "sha": "f371edd8d400a79af3018362bfd50b53c1db2b0b",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 37,
+        "deletions": 0,
+        "changes": 37,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -6,6 +6,7 @@ import { createSearchBar, type SearchBar } from \"./search-bar\";\n import { createVaultPanel, type VaultPanel } from \"./vault-panel\";\n import { LinkIndex, parseAnchor, findAnchorPosition } from \"./link-index\";\n import { createBacklinksPanel, type BacklinksPanel } from \"./backlinks-panel\";\n+import { buildAIContext } from \"./ai-context\";\n import { perfStart, perfEnd, installLongTaskWatch } from \"./perf\";\n \n installLongTaskWatch(50);\n@@ -71,6 +72,13 @@ function createAppToolbar(): HTMLElement {\n   searchBtn.style.fontSize = \"14px\";\n   searchBtn.addEventListener(\"click\", () => searchBar.open());\n \n+  const aiContextBtn = document.createElement(\"button\");\n+  aiContextBtn.textContent = \"AI\";\n+  aiContextBtn.title = \"Copy AI context\";\n+  aiContextBtn.addEventListener(\"click\", () => {\n+    void handleCopyAIContext(aiContextBtn);\n+  });\n+\n   const settingsBtn = document.createElement(\"button\");\n   settingsBtn.textContent = \"\\u2699\"; // ⚙\n   settingsBtn.title = \"Settings\";\n@@ -87,6 +95,7 @@ function createAppToolbar(): HTMLElement {\n     outlineBtn,\n     backlinksBtn,\n     searchBtn,\n+    aiContextBtn,\n     settingsBtn\n   );\n   return toolbar;\n@@ -181,6 +190,34 @@ function handleSettings(): void {\n   });\n }\n \n+async function handleCopyAIContext(button: HTMLButtonElement): Promise<void> {\n+  try {\n+    state.error = null;\n+    const activeFile = state.activeFile ?? state.filePath;\n+\n+    const text = buildAIContext({\n+      activeFile,\n+      vaultPath: state.vaultPath,\n+      document: shell.editor.getDocument(),\n+      selectedText: shell.editor.getSelectedText(),\n+      outline: shell.editor.getTableOfContents(),\n+      stats: shell.editor.getDocumentStats(),\n+      backlinks: activeFile ? linkIndex.getBacklinks(activeFile) : [],\n+      unlinkedMentions: activeFile ? linkIndex.getUnlinkedMentions(activeFile) : [],\n+    });\n+\n+    await window.nexusDemo.clipboard.writeText(text);\n+    const previous = button.textContent ?? \"AI\";\n+    button.textContent = \"Copied\";\n+    window.setTimeout(() => {\n+      button.textContent = previous;\n+    }, 1200);\n+  } catch (err) {\n+    state.error = err instanceof Error ? err.message : String(err);\n+  }\n+  renderStatus();\n+}\n+\n function togglePanel(panel: HTMLElement, onShow?: () => void): void {\n   if (panel.style.display === \"none\") {\n     panel.style.display = \"\";"
+      },
+      {
+        "sha": "597f6c1c034a6ccb88845ceb05a236fe80421553",
+        "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -34,6 +34,9 @@ interface DemoBridge {\n   openFile(): Promise<DemoFileHandle | null>;\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n+  clipboard: {\n+    writeText(text: string): Promise<void>;\n+  };\n   vault: VaultBridge;\n }\n "
+      },
+      {
+        "sha": "c402ff715bba7655b9edd983407bfb07e468317a",
+        "filename": "apps/electron-demo/test/ai-context.test.ts",
+        "status": "added",
+        "additions": 86,
+        "deletions": 0,
+        "changes": 86,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Ftest%2Fai-context.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/apps%2Felectron-demo%2Ftest%2Fai-context.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fai-context.test.ts?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -0,0 +1,86 @@\n+import { describe, expect, it } from \"vitest\";\n+import { buildAIContext, formatContextPath } from \"../src/renderer/ai-context\";\n+\n+describe(\"formatContextPath\", () => {\n+  it(\"uses vault-relative paths when possible\", () => {\n+    expect(formatContextPath(\"/vault/Projects/Nexus.md\", \"/vault\")).toBe(\"Projects/Nexus.md\");\n+  });\n+\n+  it(\"falls back to normalized absolute paths outside a vault\", () => {\n+    expect(formatContextPath(\"C:\\\\notes\\\\Nexus.md\", \"D:\\\\vault\")).toBe(\"C:/notes/Nexus.md\");\n+  });\n+\n+  it(\"labels missing files as untitled\", () => {\n+    expect(formatContextPath(null, \"/vault\")).toBe(\"Untitled\");\n+  });\n+});\n+\n+describe(\"buildAIContext\", () => {\n+  it(\"builds a structured context bundle for the active note\", () => {\n+    const context = buildAIContext({\n+      activeFile: \"/vault/Projects/Nexus.md\",\n+      vaultPath: \"/vault\",\n+      document: \"# Nexus\\n\\nCurrent plan\",\n+      selectedText: \"Current plan\",\n+      stats: { characters: 22, words: 3, lines: 3 },\n+      outline: [{ level: 1, text: \"Nexus\", from: 0, to: 7 }],\n+      backlinks: [\n+        {\n+          sourcePath: \"/vault/Daily/Today.md\",\n+          target: \"Nexus\",\n+          from: 4,\n+          to: 13,\n+          snippet: \"Review [[Nexus]] before sending the PR.\",\n+        },\n+      ],\n+      unlinkedMentions: [],\n+    });\n+\n+    expect(context).toContain(\"# Nexus AI Context\");\n+    expect(context).toContain(\"- Path: Projects/Nexus.md\");\n+    expect(context).toContain(\"## Selected Text\");\n+    expect(context).toContain(\"Current plan\");\n+    expect(context).toContain(\"- H1 Nexus\");\n+    expect(context).toContain(\"- Daily/Today.md: Review [[Nexus]] before sending the PR.\");\n+    expect(context).toContain(\"## Markdown\");\n+    expect(context).toContain(\"# Nexus\\n\\nCurrent plan\");\n+  });\n+\n+  it(\"omits empty selected text and caps long mention lists\", () => {\n+    const context = buildAIContext({\n+      activeFile: \"/vault/Nexus.md\",\n+      vaultPath: \"/vault\",\n+      document: \"body\",\n+      selectedText: \"   \",\n+      stats: { characters: 4, words: 1, lines: 1 },\n+      outline: [],\n+      backlinks: [\n+        { sourcePath: \"/vault/1.md\", target: \"Nexus\", from: 0, to: 5, snippet: \"one\" },\n+        { sourcePath: \"/vault/2.md\", target: \"Nexus\", from: 0, to: 5, snippet: \"two\" },\n+      ],\n+      unlinkedMentions: [],\n+      maxMentions: 1,\n+    });\n+\n+    expect(context).not.toContain(\"## Selected Text\");\n+    expect(context).toContain(\"## Outline\\nNone\");\n+    expect(context).toContain(\"- 1.md: one\");\n+    expect(context).toContain(\"... and 1 more mentions\");\n+    expect(context).not.toContain(\"- 2.md: two\");\n+  });\n+\n+  it(\"uses a longer code fence when markdown contains backticks\", () => {\n+    const context = buildAIContext({\n+      activeFile: null,\n+      vaultPath: null,\n+      document: \"```ts\\nconst value = 1;\\n```\",\n+      selectedText: \"\",\n+      stats: { characters: 25, words: 3, lines: 3 },\n+      outline: [],\n+      backlinks: [],\n+      unlinkedMentions: [],\n+    });\n+\n+    expect(context).toContain(\"````markdown\\n```ts\\nconst value = 1;\\n```\\n````\");\n+  });\n+});"
+      },
+      {
+        "sha": "4d16f7626dc43cd731a3354092d833cba7a02a43",
+        "filename": "openspec/changes/add-ai-context-copy/proposal.md",
+        "status": "added",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/openspec%2Fchanges%2Fadd-ai-context-copy%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/openspec%2Fchanges%2Fadd-ai-context-copy%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-ai-context-copy%2Fproposal.md?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -0,0 +1,13 @@\n+# Change: Add AI context copy action\n+\n+## Why\n+The Electron demo already models a local-first Markdown vault with outline and backlink context, but users still need to manually gather that context before asking an AI assistant for help. A one-click context bundle makes the demo better express Nexus as an AI-native writing surface without introducing an external AI dependency.\n+\n+## What Changes\n+- Add an Electron demo toolbar action for copying the active note's AI-ready context.\n+- Include the active note path, document stats, selected text, outline, backlinks, unlinked mentions, and Markdown source.\n+- Keep the feature host-side only: no public core API changes and no network calls.\n+\n+## Impact\n+- Affected specs: `electron-demo`\n+- Affected code: `apps/electron-demo/src/renderer/app.ts`, `apps/electron-demo/src/renderer/ai-context.ts`, `apps/electron-demo/electron/preload.ts`, `apps/electron-demo/src/renderer/bridge.d.ts`"
+      },
+      {
+        "sha": "d4564c6ecee18dc1902c6d1eea657e38b8d8b199",
+        "filename": "openspec/changes/add-ai-context-copy/specs/electron-demo/spec.md",
+        "status": "added",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/openspec%2Fchanges%2Fadd-ai-context-copy%2Fspecs%2Felectron-demo%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/openspec%2Fchanges%2Fadd-ai-context-copy%2Fspecs%2Felectron-demo%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-ai-context-copy%2Fspecs%2Felectron-demo%2Fspec.md?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -0,0 +1,11 @@\n+## ADDED Requirements\n+### Requirement: AI Context Copy\n+The Electron demo SHALL let users copy an AI-ready context bundle for the active Markdown note without calling an external AI service.\n+\n+#### Scenario: Copy active note context\n+- **WHEN** the user activates the AI context toolbar action\n+- **THEN** the clipboard receives a Markdown bundle containing the active note path, document stats, selected text when present, outline entries, linked mentions, unlinked mentions, and the current Markdown source\n+\n+#### Scenario: Use vault-relative source labels\n+- **WHEN** the active note and mention sources are inside the current vault\n+- **THEN** the copied context uses vault-relative paths instead of absolute file paths"
+      },
+      {
+        "sha": "53b282346ab5734998c41ca3958776493ab3f877",
+        "filename": "openspec/changes/add-ai-context-copy/tasks.md",
+        "status": "added",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a54b1083abfb4cd0173b13e008ab92391cb8e045/openspec%2Fchanges%2Fadd-ai-context-copy%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a54b1083abfb4cd0173b13e008ab92391cb8e045/openspec%2Fchanges%2Fadd-ai-context-copy%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-ai-context-copy%2Ftasks.md?ref=a54b1083abfb4cd0173b13e008ab92391cb8e045",
+        "patch": "@@ -0,0 +1,4 @@\n+## 1. Implementation\n+- [x] 1.1 Add AI context formatter for active note metadata\n+- [x] 1.2 Add Electron demo toolbar copy action\n+- [x] 1.3 Add unit coverage for context formatting"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=204",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

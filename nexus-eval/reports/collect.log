@@ -1,0 +1,314 @@
+Loaded 213 PRs from cached list.
+Total PRs: 213 | closed:  110
+[17] done (calls_total=12)
+[18] done (calls_total=24)
+[19] done (calls_total=35)
+[20] done (calls_total=46)
+[21] done (calls_total=57)
+[22] done (calls_total=68)
+[23] done (calls_total=80)
+[24] done (calls_total=91)
+[25] done (calls_total=102)
+[26] done (calls_total=113)
+[27] done (calls_total=124)
+[28] done (calls_total=136)
+[29] done (calls_total=148)
+[30] done (calls_total=159)
+[31] done (calls_total=170)
+[32] done (calls_total=181)
+[33] done (calls_total=192)
+[34] done (calls_total=203)
+[35] done (calls_total=214)
+[36] done (calls_total=225)
+[37] done (calls_total=236)
+[38] done (calls_total=248)
+[39] done (calls_total=259)
+[40] done (calls_total=270)
+[41] done (calls_total=282)
+[42] done (calls_total=293)
+[43] done (calls_total=304)
+[44] done (calls_total=315)
+[45] done (calls_total=326)
+[46] done (calls_total=337)
+[47] done (calls_total=348)
+[48] done (calls_total=359)
+[49] done (calls_total=370)
+[50] done (calls_total=381)
+[51] done (calls_total=392)
+[52] done (calls_total=403)
+[53] done (calls_total=414)
+[54] done (calls_total=425)
+[55] done (calls_total=436)
+[56] done (calls_total=447)
+[57] done (calls_total=458)
+[58] done (calls_total=469)
+[59] done (calls_total=481)
+[60] done (calls_total=492)
+[61] done (calls_total=503)
+[62] done (calls_total=514)
+[63] done (calls_total=525)
+[64] done (calls_total=536)
+[65] done (calls_total=547)
+[66] done (calls_total=558)
+[67] done (calls_total=569)
+[68] done (calls_total=580)
+[69] done (calls_total=591)
+[70] done (calls_total=602)
+[71] done (calls_total=613)
+[72] done (calls_total=624)
+[73] done (calls_total=635)
+[74] done (calls_total=646)
+[75] done (calls_total=657)
+[76] done (calls_total=668)
+[78] done (calls_total=680)
+[79] done (calls_total=691)
+[80] done (calls_total=702)
+[81] done (calls_total=714)
+[82] done (calls_total=725)
+[83] done (calls_total=737)
+[84] done (calls_total=748)
+[85] done (calls_total=759)
+[86] done (calls_total=770)
+[87] done (calls_total=782)
+[88] done (calls_total=794)
+[89] done (calls_total=805)
+[90] done (calls_total=816)
+[91] done (calls_total=827)
+[92] done (calls_total=838)
+[93] done (calls_total=849)
+[94] done (calls_total=860)
+[95] done (calls_total=871)
+[96] done (calls_total=882)
+[97] done (calls_total=894)
+[98] done (calls_total=905)
+[99] done (calls_total=916)
+[100] done (calls_total=927)
+[101] done (calls_total=938)
+[102] done (calls_total=949)
+[103] done (calls_total=960)
+[104] done (calls_total=971)
+[105] done (calls_total=982)
+[106] done (calls_total=993)
+[107] done (calls_total=1004)
+[108] done (calls_total=1015)
+[109] done (calls_total=1026)
+[110] done (calls_total=1037)
+[111] done (calls_total=1048)
+[112] done (calls_total=1059)
+[113] done (calls_total=1070)
+[114] done (calls_total=1081)
+[115] done (calls_total=1092)
+[116] done (calls_total=1103)
+[117] done (calls_total=1114)
+[118] done (calls_total=1125)
+[119] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/119.json'
+[120] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/120.json'
+[121] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/121.json'
+[122] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/122.json'
+[123] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/123.json'
+[124] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/124.json'
+[125] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/125.json'
+[126] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/126.json'
+[127] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/127.json'
+[128] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/128.json'
+[129] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/129.json'
+[130] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/130.json'
+[131] ERROR: PermissionError(13, 'Permission denied')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 289, in main
+    save({"merged": detail["merged"], "state": detail["state"],
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 111, in save
+PermissionError: [Errno 13] Permission denied: '/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/dataset/ground_truth/131.json'
+[132] done (calls_total=1280)
+[133] done (calls_total=1291)
+[134] done (calls_total=1302)
+[135] done (calls_total=1313)
+[136] done (calls_total=1324)
+[137] done (calls_total=1336)
+[138] done (calls_total=1347)
+[139] done (calls_total=1358)
+[140] done (calls_total=1369)
+[141] done (calls_total=1380)
+[142] done (calls_total=1391)
+[143] done (calls_total=1402)
+[144] done (calls_total=1413)
+[145] done (calls_total=1424)
+[146] done (calls_total=1435)
+[147] done (calls_total=1446)
+[148] ERROR: RemoteDisconnected('Remote end closed connection without response')
+Traceback (most recent call last):
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 155, in main
+    reviews = gh.all_pages(f"{base}/reviews")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 90, in all_pages
+    return data
+                
+  File "/home/ubuntu/Workspace/My_Nexus-Editor_Workspace/nexus-eval/harness/collect_prs.py", line 67, in _request
+    })
+       
+  File "/usr/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 515, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 532, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 1392, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 1348, in do_open
+    r = h.getresponse()
+        ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1457, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 305, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+[149] done (calls_total=1463)
+[150] done (calls_total=1474)
+[151] done (calls_total=1485)
+[152] done (calls_total=1496)
+[153] done (calls_total=1507)
+[154] done (calls_total=1518)
+[155] done (calls_total=1529)
+[156] done (calls_total=1540)
+[157] done (calls_total=1551)
+[158] done (calls_total=1562)
+[159] done (calls_total=1573)
+[160] done (calls_total=1585)
+[161] done (calls_total=1596)
+[162] done (calls_total=1607)
+[163] done (calls_total=1619)
+[164] done (calls_total=1630)
+[165] done (calls_total=1641)
+[166] done (calls_total=1652)
+[167] done (calls_total=1663)
+[168] done (calls_total=1674)
+[169] done (calls_total=1685)
+[170] done (calls_total=1697)
+[171] done (calls_total=1709)
+[172] done (calls_total=1721)
+[173] done (calls_total=1732)
+[174] done (calls_total=1744)
+[175] done (calls_total=1755)
+[176] done (calls_total=1766)
+[177] done (calls_total=1777)
+[178] done (calls_total=1788)
+[179] done (calls_total=1799)
+[180] done (calls_total=1810)
+[181] done (calls_total=1822)
+[182] done (calls_total=1833)
+[183] done (calls_total=1844)
+[184] done (calls_total=1855)
+[185] done (calls_total=1866)
+[186] done (calls_total=1877)
+[187] done (calls_total=1888)
+[188] done (calls_total=1899)
+[189] done (calls_total=1910)
+[190] done (calls_total=1921)
+[191] done (calls_total=1932)
+[192] done (calls_total=1943)
+[193] done (calls_total=1954)
+[194] done (calls_total=1965)
+[195] done (calls_total=1977)
+[196] done (calls_total=1988)
+[197] done (calls_total=1999)
+[198] done (calls_total=2010)
+[199] done (calls_total=2021)
+[200] done (calls_total=2033)
+[201] done (calls_total=2044)
+[202] done (calls_total=2056)
+[203] done (calls_total=2067)
+[204] done (calls_total=2078)
+[205] done (calls_total=2089)
+[206] done (calls_total=2100)
+[207] done (calls_total=2111)
+[208] done (calls_total=2122)
+[209] done (calls_total=2133)
+[210] done (calls_total=2144)
+[211] done (calls_total=2155)
+[212] done (calls_total=2166)
+[213] done (calls_total=2177)
+[214] done (calls_total=2188)
+Processing complete. done=199, api_calls=2188

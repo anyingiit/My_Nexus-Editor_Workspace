@@ -1,0 +1,19 @@
+{
+  "pr_number": 39,
+  "title": "test: add three-layer editor quality harness — regression, E2E, and stability gate",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-01T16:07:42Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "libaice",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-01T15:55:19Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=39) <br/>All committers have signed the CLA."
+    }
+  ]
+}

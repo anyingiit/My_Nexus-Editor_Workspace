@@ -1,0 +1,170 @@
+{
+  "pr_number": 44,
+  "title": "test(toolbar,electron): add regression harness, E2E, and stability gate",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-19T11:26:43Z",
+  "merged_by": null,
+  "closed_by": "libaice",
+  "head_sha_final": "165b4a31011c1d6260060c988c8cf08142e40d16",
+  "merge_commit_sha": "83bbcff2b90bf937e488f73e79e7a1c6a6ef7dd6",
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "79bf8f9e4cb5af3835e28b45c9423451b790f7b8",
+      "message": "test(plugin-toolbar): add formatting regression harness",
+      "date": "2026-06-01T10:10:23Z"
+    },
+    {
+      "sha": "315ed99f6160d0cdd6053211efaee43486baba26",
+      "message": "docs: add Bruce agent harness PR plan",
+      "date": "2026-06-01T10:55:14Z"
+    },
+    {
+      "sha": "4fb02397243f8dbaec444da6e1ba1d5b4d6f7ce8",
+      "message": "test(electron-demo): add Playwright renderer E2E harness with bridge mock\n\nAdds a five-scenario Playwright harness that validates the Nexus Editor\nrenderer lifecycle without launching a real Electron process. A typed\nwindow.nexusDemo mock is injected via addInitScript before renderer\nscripts run, replacing the contextBridge shim from electron/preload.ts.\nAll IPC call arguments are recorded in window.__bridgeCalls so tests can\nmake explicit bridge-contract assertions.\n\nScenarios covered\n- editor-boot: CodeMirror mounts, status shows Untitled\n- open-file:   bridge called once, content loaded, status reflects filename\n- dirty-state: keyboard input marks document as [modified]\n- save:        saveFile invoked with correct path, dirty flag cleared\n- search:      Ctrl+F reveals search bar with focused Find input\n\nSupporting changes\n- playwright.config.ts: configures Chromium + Vite webServer, CI retries,\n  and trace-on-first-retry for debugging flaky runs\n- vitest.config.ts: excludes **/e2e/** so vitest does not collect\n  Playwright specs (they use a different test runner)\n- .gitignore: ignores playwright-report/ and test-results/ artifacts\n- pnpm-lock.yaml: adds @playwright/test ^1.49.0 to electron-demo\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>",
+      "date": "2026-06-01T11:05:29Z"
+    },
+    {
+      "sha": "4dbaf8ec10f63e8b4481f0ad344662249b29b69a",
+      "message": "ci: run renderer e2e harness in PR checks",
+      "date": "2026-06-01T11:09:12Z"
+    },
+    {
+      "sha": "28f600f65125677713731e90a7e1e3ccb24ae0a8",
+      "message": "test(e2e): add stability gate — 3× repeat with retries disabled\n\nAdds test:e2e:stability that runs every renderer scenario three times\nsequentially with --retries=0, forming a lightweight flaky-test gate.\nDisabling retries is intentional: a deterministic test must pass on its\nown; automatic retries would mask nondeterminism rather than surface it.\n\nCI now runs two E2E passes in sequence:\n  1. Standard pass  — one run per scenario, retry-on-startup-jitter allowed\n  2. Stability pass — three runs per scenario, retries=0, catches flakes\n\nThe playwright.config.ts reporter emits a JSON artifact in CI so raw\nduration data is preserved for trend analysis without enforcing hard\nlatency thresholds (CI machine variance makes fixed gates unreliable).\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>",
+      "date": "2026-06-01T11:22:19Z"
+    },
+    {
+      "sha": "338e4705543680a4a899aa9f5cdabfcf326055d2",
+      "message": "test(e2e): add workflow eval summary",
+      "date": "2026-06-01T11:52:48Z"
+    },
+    {
+      "sha": "8d6d5ee0cc7096674f378ac07554dee7665a4a74",
+      "message": "test: add advanced E2E scenarios and CI eval reporter",
+      "date": "2026-06-01T11:58:50Z"
+    },
+    {
+      "sha": "4f1abd017811e2f594aa4986c225b2f1015f04e5",
+      "message": "test(e2e): make eval report available locally",
+      "date": "2026-06-01T12:12:27Z"
+    },
+    {
+      "sha": "165b4a31011c1d6260060c988c8cf08142e40d16",
+      "message": "chore: update roadmap status and add test:e2e:headed shortcut\n\n- Mark roadmap items #25 (E2E testing) and #26 (CI/CD polish) as\n  in-progress, linking to PR #39\n- Add test:e2e:headed root shortcut for headed browser recording\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>",
+      "date": "2026-06-02T10:17:06Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/workflows/ci.yml",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/e2e/renderer.spec.ts",
+      "status": "added",
+      "additions": 308,
+      "deletions": 0,
+      "changes": 308
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/playwright.config.ts",
+      "status": "added",
+      "additions": 68,
+      "deletions": 0,
+      "changes": 68
+    },
+    {
+      "filename": "apps/electron-demo/scripts/generate-eval-report.mjs",
+      "status": "added",
+      "additions": 108,
+      "deletions": 0,
+      "changes": 108
+    },
+    {
+      "filename": "docs/Bruce_AGENT_HARNESS_PR_PLAN.zh.md",
+      "status": "added",
+      "additions": 157,
+      "deletions": 0,
+      "changes": 157
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/formatting-regression.test.ts",
+      "status": "added",
+      "additions": 303,
+      "deletions": 0,
+      "changes": 303
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 13,
+      "changes": 51
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 2,
+      "changes": 7
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=44",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

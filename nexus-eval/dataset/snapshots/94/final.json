@@ -1,0 +1,60 @@
+{
+  "pr_number": 94,
+  "title": "fix(toolbar): wrap buttons in narrow containers",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-07T01:33:01Z",
+  "merged_by": null,
+  "closed_by": "lilaizhencn",
+  "head_sha_final": "4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+  "merge_commit_sha": "f82553b504f6f52facd999ca04d645afa9ed82e1",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "4d227112d50d0b991ea68f6e55f1e5fcd87b1462",
+      "message": "fix(toolbar): wrap buttons in narrow containers",
+      "date": "2026-07-02T04:46:48Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=94",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

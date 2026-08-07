@@ -1,0 +1,26 @@
+{
+  "pr_number": 65,
+  "title": "feat(wordcount): add @floatboat/nexus-plugin-wordcount with markdown-aware stats",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T03:36:40Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "alacefield900-sudo",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-17T07:39:28Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=65) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-06-23T03:36:39Z",
+      "body": "Closing this PR after internal review. The change is not suitable to continue as-is for this interview evaluation; please resubmit a clean, focused PR if needed."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

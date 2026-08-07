@@ -1,0 +1,81 @@
+{
+  "pr_number": 207,
+  "title": "fix(electron): preserve edits across debounced saves",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+  "merge_commit_sha": "eb6b52a12ca96e6ec6d884c11c123ea5e163c664",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "d644a762997772ef2e6eb1606ed2aeeaa4b8b7a7",
+      "message": "fix(electron): preserve edits across debounced saves",
+      "date": "2026-08-03T08:53:13Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 7,
+      "changes": 23
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 5,
+      "changes": 16
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/state.ts",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 0,
+      "changes": 34
+    },
+    {
+      "filename": "apps/electron-demo/test/app-handlers.test.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 15,
+      "changes": 34
+    },
+    {
+      "filename": "apps/electron-demo/test/editor-shell.test.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "apps/electron-demo/test/state.test.ts",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 1,
+      "changes": 39
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=207",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

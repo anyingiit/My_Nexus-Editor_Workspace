@@ -1,0 +1,19 @@
+{
+  "pr_number": 148,
+  "title": "feat(core): add offset-based sync-scroll preview primitives",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "Caldalis",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-10T11:00:51Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=148) <br/>All committers have signed the CLA."
+    }
+  ]
+}

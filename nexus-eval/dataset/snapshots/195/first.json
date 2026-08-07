@@ -1,0 +1,57 @@
+{
+  "pr_number": 195,
+  "title": "Fix slash command confirmation creating two undo entries",
+  "body": "## Summary\r\n\r\nPreviously, confirming a slash command (`/bold` + Enter) generated one\r\nundo entry for removing the trigger text and another for applying the\r\nselected command, requiring two Undo operations to fully revert a\r\nsingle user action.\r\n\r\nSlash confirmation now behaves as one logical editing operation and\r\ncan be reverted with a single Undo.\r\n\r\n## Root cause\r\n\r\nSlash confirmation performs two sequential editor mutations:\r\n\r\n- remove the `/query` trigger\r\n- execute the selected command\r\n\r\nThese operations were previously committed as separate editor\r\ntransactions, producing two undo history entries.\r\n\r\nCodeMirror's `dispatch(...specs)` cannot preserve this editing flow,\r\nbecause every `TransactionSpec` is interpreted relative to the same\r\noriginal document, while slash confirmation requires sequential edits.\r\n\r\n## Fix\r\n\r\nIntroduce a small `editor.transact()` helper that groups multiple\r\neditor mutations into one undoable operation.\r\n\r\nThe helper is currently used only by slash command confirmation.\r\n\r\n## Scope\r\n\r\nThis change only affects slash command confirmation.\r\nToolbar, search, table editing, and other editor behaviors remain\r\nunchanged.\r\n\r\n## Verification\r\n\r\n- `pnpm test` → pass (545 tests)\r\n- `pnpm typecheck` → pass\r\n- `pnpm build` → pass\r\n- `git diff --check` → pass\r\n\r\nRegression coverage added for:\r\n\r\n- atomic undo of multi-step editor operations\r\n- nested transaction rejection\r\n- callback exception rollback\r\n- slash command confirmation\r\n- existing toolbar undo behavior\r\n- All existing tests continue to pass.\r\n\r\n## Compliance\r\n\r\n- AI assistance disclosure:\r\n  ChatGPT and OpenCode were used to assist with code exploration,\r\n  implementation discussion, and regression test drafting.\r\n  The final code and this pull request were reviewed before submission.\r\n\r\n- No new dependencies or build artifacts.",
+  "created_at": "2026-07-28T13:22:12Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "5aad0924a8d86d9004ac604195a26684b3353df7",
+  "first_review_time": "2026-07-28T13:23:44Z",
+  "commits_at_first_review": [
+    {
+      "sha": "5aad0924a8d86d9004ac604195a26684b3353df7",
+      "message": "feat(core): add EditorAPI.transact() for atomic multi-mutation undo\n\n- New EditorAPI.transact(fn) method batches multiple mutations into\n  one CM6 dispatch → exactly one undo entry.\n- Intercepts view.dispatch during callback to collect TransactionSpecs.\n- Throws 'Nested transactions are not supported' on nested calls.\n- On callback throw, discards all collected specs and restores dispatch.\n- Computation: replays all {from,to,insert} changes against original doc\n  string buffer, emits single full-document replacement.\n- No modification to existing EditorAPI methods.\n- All 537 existing tests still pass.",
+      "date": "2026-07-28T12:00:08Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "d9195eedb50983d3a1aa6a09e50ae9c556bff848",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 85,
+        "deletions": 1,
+        "changes": 86,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/5aad0924a8d86d9004ac604195a26684b3353df7/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/5aad0924a8d86d9004ac604195a26684b3353df7/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=5aad0924a8d86d9004ac604195a26684b3353df7",
+        "patch": "@@ -1,4 +1,4 @@\n-import { Annotation, EditorSelection, EditorState } from \"@codemirror/state\";\n+import { Annotation, EditorSelection, EditorState, type TransactionSpec } from \"@codemirror/state\";\n \n // Annotation attached to dispatches that load content programmatically (e.g.\n // setDocument from file open) so updateListener can skip the user-edit path —\n@@ -284,6 +284,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   let destroyed = false;\n   let destroying = false;\n   let focused = false;\n+  let transacting = false;\n   let parseTimer: ReturnType<typeof setTimeout> | undefined;\n   let compositionFlushTimer: ReturnType<typeof setTimeout> | undefined;\n   let pendingCompositionMarkdown: string | null = null;\n@@ -921,6 +922,89 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const lines = view.state.doc.lines;\n       return { characters, words, lines };\n     },\n+    transact(fn: () => void): void {\n+      if (destroyed) return;\n+      if (transacting) {\n+        throw new Error(\"Nested transactions are not supported\");\n+      }\n+\n+      transacting = true;\n+      const originalDispatch = view.dispatch.bind(view);\n+      const specs: TransactionSpec[] = [];\n+\n+      view.dispatch = ((spec: TransactionSpec): void => {\n+        specs.push(spec);\n+      }) as unknown as typeof view.dispatch;\n+\n+      try {\n+        fn();\n+      } catch (e) {\n+        transacting = false;\n+        view.dispatch = originalDispatch;\n+        throw e;\n+      }\n+\n+      transacting = false;\n+      view.dispatch = originalDispatch;\n+\n+      if (specs.length === 0) return;\n+\n+      // Replay every collected spec against the original document string to\n+      // compute the net result. All mutators (replaceSelection, replaceRange,\n+      // setDocument) compute their change relative to the current view.state,\n+      // which is frozen during transact (dispatch is intercepted). We apply\n+      // each change spec to a string buffer and track the last selection,\n+      // then emit a single full-document replacement for exactly one undo entry.\n+      let doc = view.state.doc.toString();\n+      let finalSelection: { anchor: number; head: number } | undefined = undefined;\n+      let needsScroll = false;\n+\n+      for (const spec of specs) {\n+        if (spec.changes) {\n+          const changeList = Array.isArray(spec.changes) ? spec.changes : [spec.changes];\n+          for (const c of changeList) {\n+            if (c && typeof c === \"object\" && \"from\" in c) {\n+              const ch = c as { from: number; to?: number; insert?: string };\n+              const from = ch.from;\n+              const to = ch.to ?? from;\n+              const insert = ch.insert ?? \"\";\n+              doc = doc.slice(0, from) + insert + doc.slice(to);\n+            }\n+            // Silently skip non-plain ChangeSpec instances (ChangeSet, etc.).\n+            // All EditorAPI methods produce the plain {from,to,insert} form\n+            // so this is safe in practice.\n+          }\n+        }\n+        if (spec.selection) {\n+          if (\"ranges\" in spec.selection) {\n+            // EditorSelection object\n+            finalSelection = {\n+              anchor: spec.selection.main.anchor,\n+              head: spec.selection.main.head,\n+            };\n+          } else {\n+            // { anchor, head? }\n+            finalSelection = {\n+              anchor: spec.selection.anchor,\n+              head: spec.selection.head ?? spec.selection.anchor,\n+            };\n+          }\n+        }\n+        if (spec.scrollIntoView) needsScroll = true;\n+      }\n+\n+      originalDispatch({\n+        changes: {\n+          from: 0,\n+          to: view.state.doc.length,\n+          insert: doc,\n+        },\n+        selection: finalSelection\n+          ? { anchor: finalSelection.anchor, head: finalSelection.head }\n+          : undefined,\n+        scrollIntoView: needsScroll,\n+      });\n+    },\n     destroy() {\n       if (destroyed || destroying) return;\n       destroying = true;"
+      },
+      {
+        "sha": "8a1e836de4b8f137e2fec521a0e1d3dca399b816",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/5aad0924a8d86d9004ac604195a26684b3353df7/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/5aad0924a8d86d9004ac604195a26684b3353df7/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=5aad0924a8d86d9004ac604195a26684b3353df7",
+        "patch": "@@ -264,6 +264,19 @@ export interface EditorAPI {\n    * 避免在合成过程中调用 setDocument 打断输入。\n    */\n   isComposing(): boolean;\n+  /**\n+   * Execute a set of editor operations as a single undoable unit. All\n+   * mutations — replaceRange, replaceSelection, setDocument, etc. — are\n+   * collected and dispatched as ONE CodeMirror transaction, producing\n+   * exactly ONE undo entry.\n+   *\n+   * - If the callback throws, no changes are applied and any collected\n+   *   specs are discarded.\n+   * - Nested transact() calls throw an Error.\n+   * - The callback receives no arguments; callers capture the editor\n+   *   reference from the surrounding scope.\n+   */\n+  transact(fn: () => void): void;\n   destroy(): void;\n   on<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;\n   off<K extends keyof EditorEventMap>(event: K, handler: EditorEventMap[K]): void;"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

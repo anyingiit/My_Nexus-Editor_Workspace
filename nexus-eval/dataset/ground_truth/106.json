@@ -1,0 +1,24 @@
+{
+  "pr_number": 106,
+  "title": "feat(history): expose grouping options",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "a445315834",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T02:08:04Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=106) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=106) before we can accept your contribution.<br/><hr/>**liujunyong** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=106) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T03:02:33Z",
+      "body": "严格审查结论：通过初筛，建议进入面试环节；本评论不代表合并主分支。\n\n这个 PR 规模很小，但实现方向清楚，代码质量相对稳：\n\n1. 改动聚焦：只针对 `@floatboat/nexus-plugin-history` 暴露 CodeMirror history 的 grouping options，没有顺手改无关模块。\n\n2. 兼容性较好：`createHistoryPlugin(options = {})` 保持原有无参调用方式不变，现有 `createHistoryPlugin()` 调用点不会受影响。\n\n3. API 设计直接：`minDepth`、`newGroupDelay`、`joinToEvent` 都按 CodeMirror history config 透传，类型也从 `Parameters<typeof history>[0]` 推导，避免手写类型漂移。\n\n4. 测试有针对性：新增用例覆盖 `newGroupDelay: 0` 拆分 undo 步，以及 `joinToEvent` 合并非相邻 edits，能验证这次改动的核心行为。\n\n5. 文档有补充：新增 README，说明基础用法、快捷键、`editor.undo()/redo()` 与 grouping options。\n\n需要批评的问题：\n- PR body 基本保留模板，Summary/Motivation/Testing/Compliance 都未认真填写，checkbox 全空；这说明提交流程意识不足。\n- 这是公共 API 小扩展，最好在 PR 描述里说明具体使用场景，例如为什么 host 需要关闭 time-based grouping，避免看起来像单纯透传底层库参数。\n- 测试/构建结果没有在 PR 中体现。\n\n本地验证：\n- `pnpm install --frozen-lockfile` 通过。\n- `pnpm typecheck` 通过。\n- `pnpm test` / `pnpm build` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入实际用例/构建执行。该环境问题不作为本 PR 的扣分点。\n\n候选人判断：建议面试。这个 PR 虽小，但能看出候选人理解 CodeMirror history 的 grouping 机制，改动克制、类型处理正确、测试覆盖到关键行为。面试时建议重点追问：undo grouping 的真实业务场景、CodeMirror transaction/isAdjacent 语义、为什么不在 core EditorAPI 层做更高阶封装，以及 PR 流程/合规意识。\n"
+    }
+  ]
+}

@@ -1,0 +1,408 @@
+{
+  "pr_number": 76,
+  "title": "[codex] Sync LLM Wiki project content",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:39:52Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "ecde81bf4a61541eec05f00453d4dda94ed33cc4",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "708163f6910eb52151a82040c1aa2ad0f8fb684f",
+      "message": "Add LLM Wiki integration",
+      "date": "2026-06-22T17:27:48Z"
+    },
+    {
+      "sha": "ecde81bf4a61541eec05f00453d4dda94ed33cc4",
+      "message": "Sync LLM Wiki project content",
+      "date": "2026-06-22T17:48:44Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "AGENTS.md",
+      "status": "modified",
+      "additions": 68,
+      "deletions": 24,
+      "changes": 92
+    },
+    {
+      "filename": "CLAUDE.md",
+      "status": "modified",
+      "additions": 68,
+      "deletions": 21,
+      "changes": 89
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "modified",
+      "additions": 1114,
+      "deletions": 51,
+      "changes": 1165
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "modified",
+      "additions": 53,
+      "deletions": 1,
+      "changes": 54
+    },
+    {
+      "filename": "apps/electron-demo/electron/llm-wiki.ts",
+      "status": "added",
+      "additions": 1212,
+      "deletions": 0,
+      "changes": 1212
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 266,
+      "deletions": 7,
+      "changes": 273
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 164,
+      "deletions": 0,
+      "changes": 164
+    },
+    {
+      "filename": "apps/electron-demo/llm-wiki/.env.example",
+      "status": "added",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/llm-wiki/README.md",
+      "status": "added",
+      "additions": 57,
+      "deletions": 0,
+      "changes": 57
+    },
+    {
+      "filename": "apps/electron-demo/llm-wiki/llm_wiki.py",
+      "status": "added",
+      "additions": 1379,
+      "deletions": 0,
+      "changes": 1379
+    },
+    {
+      "filename": "apps/electron-demo/llm-wiki/requirements.txt",
+      "status": "added",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/llm-wiki/schema.md",
+      "status": "added",
+      "additions": 62,
+      "deletions": 0,
+      "changes": 62
+    },
+    {
+      "filename": "apps/electron-demo/llm-wiki/test_llm_wiki.py",
+      "status": "added",
+      "additions": 889,
+      "deletions": 0,
+      "changes": 889
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 1,
+      "changes": 15
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 350,
+      "deletions": 17,
+      "changes": 367
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/ask-wiki-panel.ts",
+      "status": "added",
+      "additions": 131,
+      "deletions": 0,
+      "changes": 131
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 112,
+      "deletions": 0,
+      "changes": 112
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/llm-wiki-queue-panel.ts",
+      "status": "added",
+      "additions": 153,
+      "deletions": 0,
+      "changes": 153
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 171,
+      "deletions": 3,
+      "changes": 174
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 210,
+      "deletions": 0,
+      "changes": 210
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 1,
+      "changes": 12
+    },
+    {
+      "filename": "apps/electron-demo/test/app-handlers.test.ts",
+      "status": "modified",
+      "additions": 134,
+      "deletions": 5,
+      "changes": 139
+    },
+    {
+      "filename": "apps/electron-demo/test/llm-wiki.test.ts",
+      "status": "added",
+      "additions": 1742,
+      "deletions": 0,
+      "changes": 1742
+    },
+    {
+      "filename": "apps/electron-demo/test/sample-vault.test.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 13,
+      "changes": 38
+    },
+    {
+      "filename": "docs/LLM_WIKI_CHANGES.zh.md",
+      "status": "added",
+      "additions": 186,
+      "deletions": 0,
+      "changes": 186
+    },
+    {
+      "filename": "docs/superpowers/plans/2026-04-15-core-ast-pipeline.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 349,
+      "changes": 349
+    },
+    {
+      "filename": "docs/superpowers/plans/2026-04-15-live-preview-phase-1.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 375,
+      "changes": 375
+    },
+    {
+      "filename": "docs/superpowers/specs/2026-04-15-electron-demo-design.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 179,
+      "changes": 179
+    },
+    {
+      "filename": "openspec/AGENTS.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 456,
+      "changes": 456
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/design.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 60,
+      "changes": 60
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/proposal.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 16,
+      "changes": 16
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/specs/editor-core/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 53,
+      "changes": 53
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/specs/live-preview/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 94,
+      "changes": 94
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/specs/plugins/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 56,
+      "changes": 56
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/specs/theming/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 54,
+      "changes": 54
+    },
+    {
+      "filename": "openspec/changes/add-missing-features/tasks.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 33,
+      "changes": 33
+    },
+    {
+      "filename": "openspec/changes/add-note-vault/design.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 54,
+      "changes": 54
+    },
+    {
+      "filename": "openspec/changes/add-note-vault/proposal.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 31,
+      "changes": 31
+    },
+    {
+      "filename": "openspec/changes/add-note-vault/specs/note-vault/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 152,
+      "changes": 152
+    },
+    {
+      "filename": "openspec/changes/add-note-vault/tasks.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 36,
+      "changes": 36
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/design.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 120,
+      "changes": 120
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/proposal.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 58,
+      "changes": 58
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/specs/editor-core/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 73,
+      "changes": 73
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/specs/slash-menu/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 181,
+      "changes": 181
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/tasks.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 52,
+      "changes": 52
+    },
+    {
+      "filename": "openspec/changes/add-wikilinks/design.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 89,
+      "changes": 89
+    },
+    {
+      "filename": "openspec/changes/add-wikilinks/proposal.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 48,
+      "changes": 48
+    },
+    {
+      "filename": "openspec/changes/add-wikilinks/specs/live-preview/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 81,
+      "changes": 81
+    },
+    {
+      "filename": "openspec/changes/add-wikilinks/specs/note-vault/spec.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 91,
+      "changes": 91
+    },
+    {
+      "filename": "openspec/changes/add-wikilinks/tasks.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 40,
+      "changes": 40
+    },
+    {
+      "filename": "openspec/project.md",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 31,
+      "changes": 31
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=76",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

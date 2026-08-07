@@ -1,0 +1,88 @@
+{
+  "pr_number": 80,
+  "title": "fix(react,vue): pass multiCursor prop through to createEditor",
+  "body": "## Summary\n\nThe `<Editor multiCursor>` prop was silently ignored in both React and Vue bindings — it never reached the editor engine.\n\n## Motivation\n\n- The OpenSpec `add-core-multi-cursor` (proposal.md:35) stated \"React/Vue bindings need no code change\" — correct when `UseEditorConfig = Omit<EditorConfig, \"container\">` meant all config flowed through automatically.\n- When `onReady` and `value`/`modelValue` were added, both component wrappers switched to explicit destructuring of every prop. `multiCursor` was left out and fell into `...divProps`/`...attrs`, getting spread onto the container `<div>` as an invalid HTML attribute.\n- Direct `useEditor({ multiCursor: true })` callers are unaffected.\n\n## Changes\n\n| File | Change |\n|---|---|\n| `packages/react/src/editor.tsx` | +2 lines — destructure `multiCursor` and forward to `useEditor()` |\n| `packages/vue/src/editor.ts` | +5 lines — add to `editorPropKeys` array and `props` definition |\n| `packages/react/test/editor-react.test.tsx` | +64 lines — 2 tests |\n| `packages/vue/test/editor-vue.test.ts` | +65 lines — 2 tests |\n\n## Testing\n\n- [x] `pnpm test` — **518 tests pass** (34 test files, 0 failures)\n- [x] `tsc --noEmit` — zero errors\n- [x] `tsup build` (react + vue) — both pass\n- [x] 4 new vitest cases: prop forwarding, default-off, DOM leak guard (×2 frameworks)\n\n## Compliance\n\n- [x] CLA signed\n- [x] No AI-generated functional code (manual diagnosis + fix)\n- [x] No new dependencies\n- [x] No build artifacts committed\n- [x] React/Vue in lockstep (CONTRIBUTING.md §5)\n- [x] No OpenSpec needed — bug fix restoring intended behavior\n\n## Before / After\n\n```tsx\n// Before — prop silently ignored, leaked into DOM\n<Editor multiCursor />\n// Rendered: <div multicursor=\"true\">  ← invalid HTML attribute\n\n// After — prop reaches createEditor\n<Editor multiCursor />\n// Editor runs multiCursorExtension(), DOM is clean\n```",
+  "created_at": "2026-06-28T12:17:49Z",
+  "draft": false,
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "head_sha_at_first_review": "f304d52b326eee782f7cac91f49fb5a407f64c25",
+  "first_review_time": "2026-06-28T12:17:57Z",
+  "commits_at_first_review": [
+    {
+      "sha": "f304d52b326eee782f7cac91f49fb5a407f64c25",
+      "message": "fix(react,vue): pass multiCursor prop through to createEditor\n\nThe React <Editor> and Vue <Editor> components explicitly destructure\nEditorConfig props before forwarding them to useEditor()/createEditor(),\nbut multiCursor was missing from both destructuring lists.\n\nWhen a user passed <Editor multiCursor>, the prop fell into the\ncontainer-div attribute spread (...divProps / ...attrs) instead of\nbeing forwarded to the editor engine. The core engine (editor.ts:497)\ncorrectly wires it, and direct useEditor() callers are unaffected.\n\nAdd multiCursor to the React destructuring + useEditor() call, to the\nVue editorPropKeys array + props definition, and add four regression\ntests (two per framework) verifying:\n  - the prop enables multi-selection through the component boundary\n  - omitting it defaults to single-selection\n  - the prop does NOT leak into the DOM as an HTML attribute",
+      "date": "2026-06-28T12:05:44Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "a00ee82f74b1274d44e4a3076246baaaa68a36e1",
+        "filename": "packages/react/src/editor.tsx",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Feditor.tsx?ref=f304d52b326eee782f7cac91f49fb5a407f64c25",
+        "patch": "@@ -15,6 +15,7 @@ export function Editor({\n   direction,\n   indentGuides,\n   readOnly,\n+  multiCursor,\n   slashMenuLimit,\n   onChange,\n   onFocus,\n@@ -36,6 +37,7 @@ export function Editor({\n     direction,\n     indentGuides,\n     readOnly,\n+    multiCursor,\n     slashMenuLimit,\n     onChange,\n     onFocus,"
+      },
+      {
+        "sha": "60e15037b7ce476bf4e70bbd45ed24d9e9171130",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 64,
+        "deletions": 0,
+        "changes": 64,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=f304d52b326eee782f7cac91f49fb5a407f64c25",
+        "patch": "@@ -237,6 +237,70 @@ describe(\"@floatboat/nexus-react\", () => {\n     );\n   });\n \n+  it(\"forwards multiCursor to createEditor, enabling multi-selection\", async () => {\n+    let ready: EditorAPI | null = null;\n+\n+    const { container } = render(\n+      <Editor\n+        initialValue=\"hello world\"\n+        multiCursor\n+        onReady={(editor) => {\n+          ready = editor;\n+        }}\n+      />\n+    );\n+\n+    await waitFor(() => {\n+      expect(ready).not.toBeNull();\n+    });\n+\n+    ready!.setSelections([\n+      { anchor: 0, head: 5 },\n+      { anchor: 6, head: 11 },\n+    ]);\n+\n+    const { ranges } = ready!.getSelections();\n+    expect(ranges).toHaveLength(2);\n+    expect(ranges).toEqual([\n+      { anchor: 0, head: 5 },\n+      { anchor: 6, head: 11 },\n+    ]);\n+\n+    // multiCursor must NOT leak into the DOM — it was destructured\n+    // out of divProps and forwarded to useEditor().\n+    const editorContainer = container.querySelector(\".cm-editor\")?.parentElement;\n+    expect(editorContainer?.hasAttribute(\"multiCursor\")).toBe(false);\n+\n+    ready!.destroy();\n+  });\n+\n+  it(\"uses single-selection by default when multiCursor is omitted\", async () => {\n+    let ready: EditorAPI | null = null;\n+\n+    render(\n+      <Editor\n+        initialValue=\"hello world\"\n+        onReady={(editor) => {\n+          ready = editor;\n+        }}\n+      />\n+    );\n+\n+    await waitFor(() => {\n+      expect(ready).not.toBeNull();\n+    });\n+\n+    ready!.setSelections([\n+      { anchor: 0, head: 5 },\n+      { anchor: 6, head: 11 },\n+    ]);\n+\n+    const { ranges } = ready!.getSelections();\n+    expect(ranges).toHaveLength(1);\n+\n+    ready!.destroy();\n+  });\n+\n   it(\"keeps initialValue behavior in uncontrolled mode\", async () => {\n     function Harness() {\n       const { containerRef, editor } = useEditor({ initialValue: \"uncontrolled\" });"
+      },
+      {
+        "sha": "09fdf3e2208bdfd9ced00540b5e2ea0cdfc9b189",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 0,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=f304d52b326eee782f7cac91f49fb5a407f64c25",
+        "patch": "@@ -17,6 +17,7 @@ const editorPropKeys = [\n   \"direction\",\n   \"indentGuides\",\n   \"readOnly\",\n+  \"multiCursor\",\n   \"slashMenuLimit\",\n   \"onChange\",\n   \"onFocus\",\n@@ -91,6 +92,10 @@ export const Editor = defineComponent({\n       type: Boolean,\n       required: false\n     },\n+    multiCursor: {\n+      type: Boolean,\n+      required: false\n+    },\n     slashMenuLimit: {\n       type: Number,\n       required: false"
+      },
+      {
+        "sha": "6a7bc6b411f6eaed77236c8f0e596deef6597e6e",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 65,
+        "deletions": 0,
+        "changes": 65,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/f304d52b326eee782f7cac91f49fb5a407f64c25/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=f304d52b326eee782f7cac91f49fb5a407f64c25",
+        "patch": "@@ -250,6 +250,71 @@ describe(\"@floatboat/nexus-vue\", () => {\n     });\n   });\n \n+  it(\"forwards multiCursor to createEditor, enabling multi-selection\", async () => {\n+    let ready: EditorAPI | null = null;\n+\n+    const wrapper = mount(Editor, {\n+      props: {\n+        initialValue: \"hello world\",\n+        multiCursor: true,\n+        onReady: (editor: EditorAPI) => {\n+          ready = editor;\n+        }\n+      }\n+    });\n+\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(ready).not.toBeNull();\n+    });\n+\n+    ready!.setSelections([\n+      { anchor: 0, head: 5 },\n+      { anchor: 6, head: 11 },\n+    ]);\n+\n+    const { ranges } = ready!.getSelections();\n+    expect(ranges).toHaveLength(2);\n+    expect(ranges).toEqual([\n+      { anchor: 0, head: 5 },\n+      { anchor: 6, head: 11 },\n+    ]);\n+\n+    // multiCursor must NOT leak into the DOM — it is a declared prop\n+    // (inheritAttrs: false, so non-prop attrs go to the container div).\n+    expect(wrapper.element.hasAttribute(\"multiCursor\")).toBe(false);\n+\n+    ready!.destroy();\n+  });\n+\n+  it(\"uses single-selection by default when multiCursor is omitted\", async () => {\n+    let ready: EditorAPI | null = null;\n+\n+    mount(Editor, {\n+      props: {\n+        initialValue: \"hello world\",\n+        onReady: (editor: EditorAPI) => {\n+          ready = editor;\n+        }\n+      }\n+    });\n+\n+    await nextTick();\n+    await vi.waitFor(() => {\n+      expect(ready).not.toBeNull();\n+    });\n+\n+    ready!.setSelections([\n+      { anchor: 0, head: 5 },\n+      { anchor: 6, head: 11 },\n+    ]);\n+\n+    const { ranges } = ready!.getSelections();\n+    expect(ranges).toHaveLength(1);\n+\n+    ready!.destroy();\n+  });\n+\n   it(\"keeps initialValue behavior in uncontrolled mode\", async () => {\n     const wrapper = mount(Editor, {\n       props: {"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=80",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

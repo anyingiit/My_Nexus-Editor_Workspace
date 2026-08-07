@@ -1,0 +1,165 @@
+{
+  "pr_number": 31,
+  "title": "feat: implement all P1 roadmap features",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T06:15:28Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9",
+  "merge_commit_sha": "ecd7e4680fcb3a4a6a2c5c2a23c77e6c771cfddc",
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9",
+      "message": "feat: implement all P1 roadmap features\n\n- #6 multi-cursor support (allowMultipleSelections, addCursor API)\n- #8 undo/redo grouping (isolateHistory, groupChanges API)\n- #9 widget API standardization (eq/updateDOM/estimatedHeight/block)\n- #15 regex search (regexp toggle in search plugin and UI)\n- #21 electron bundle optimization (manualChunks code splitting)\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+      "date": "2026-05-26T06:03:31Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 3,
+      "changes": 18
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 6,
+      "changes": 8
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 47,
+      "deletions": 4,
+      "changes": 51
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 1,
+      "changes": 21
+    },
+    {
+      "filename": "packages/core/src/widget-extension.ts",
+      "status": "modified",
+      "additions": 58,
+      "deletions": 52,
+      "changes": 110
+    },
+    {
+      "filename": "packages/core/test/events.test.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/test/multi-cursor.test.ts",
+      "status": "added",
+      "additions": 115,
+      "deletions": 0,
+      "changes": 115
+    },
+    {
+      "filename": "packages/core/test/widgets.test.ts",
+      "status": "modified",
+      "additions": 151,
+      "deletions": 0,
+      "changes": 151
+    },
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 45,
+      "deletions": 4,
+      "changes": 49
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 161,
+      "deletions": 0,
+      "changes": 161
+    },
+    {
+      "filename": "packages/plugin-math/src/index.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 17,
+      "changes": 20
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 2,
+      "changes": 20
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 12,
+      "changes": 53
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=31",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

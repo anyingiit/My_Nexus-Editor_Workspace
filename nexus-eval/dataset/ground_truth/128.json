@@ -1,0 +1,19 @@
+{
+  "pr_number": 128,
+  "title": "fix(core): resolve table widget offsets and source at interaction time",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "changdapeng",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-04T05:01:07Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=128) <br/>All committers have signed the CLA."
+    }
+  ]
+}

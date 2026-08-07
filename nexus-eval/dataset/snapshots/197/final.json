@@ -1,0 +1,310 @@
+{
+  "pr_number": 197,
+  "title": "feat(paste): add HTML-to-Markdown paste conversion plugin",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "28c68ff18ddae92711b148d0736ade9d088b74f3",
+  "merge_commit_sha": "88d1d592424a3628e83264be1f5489e6d8eb656a",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "48c4baaf49c8a1ec4786e4ac17d496a23a02db10",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/design.md",
+      "date": "2026-07-28T14:24:01Z"
+    },
+    {
+      "sha": "03dc3f1b152aa718b787659888b2d8954185dd48",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/proposal.md",
+      "date": "2026-07-28T14:24:03Z"
+    },
+    {
+      "sha": "e8ee84e6258975ad00cf205125a195a5fb25a872",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/tasks.md",
+      "date": "2026-07-28T14:24:04Z"
+    },
+    {
+      "sha": "43f576acc9978169a87cdec47ca353cf3489ae78",
+      "message": "feat(paste): add openspec/changes/add-plugin-paste/specs/paste/spec.md",
+      "date": "2026-07-28T14:24:06Z"
+    },
+    {
+      "sha": "49b51af41b2305c39a174060aa7bee24075d5696",
+      "message": "feat(paste): add packages/plugin-paste/README.md",
+      "date": "2026-07-28T14:24:08Z"
+    },
+    {
+      "sha": "df5968da8e513a650e029b366549ab32dad6a6cd",
+      "message": "feat(paste): add packages/plugin-paste/package.json",
+      "date": "2026-07-28T14:24:11Z"
+    },
+    {
+      "sha": "0f38c472854daf024e951e454b2df1610e9bff01",
+      "message": "feat(paste): add packages/plugin-paste/tsconfig.json",
+      "date": "2026-07-28T14:24:13Z"
+    },
+    {
+      "sha": "e4541e177377903860dc6e2a0a81946e2f34f8eb",
+      "message": "feat(paste): add packages/plugin-paste/src/convert.ts",
+      "date": "2026-07-28T14:24:15Z"
+    },
+    {
+      "sha": "6cf040fd1e603009df83bc38119c292f8fe16e7b",
+      "message": "feat(paste): add packages/plugin-paste/src/index.ts",
+      "date": "2026-07-28T14:24:17Z"
+    },
+    {
+      "sha": "46c18be904cf4056ca39b14f41ed9f6e37e8d12c",
+      "message": "feat(paste): add packages/plugin-paste/src/plugin.ts",
+      "date": "2026-07-28T14:24:19Z"
+    },
+    {
+      "sha": "cd3d14fe1d567c200e4c8a1d5b3db6821f116b5b",
+      "message": "feat(paste): add packages/plugin-paste/src/turndown-plugin-gfm.d.ts",
+      "date": "2026-07-28T14:24:20Z"
+    },
+    {
+      "sha": "a80f37c28be31bc2b4e56359a25bc7caaa9d9e32",
+      "message": "feat(paste): add packages/plugin-paste/test/convert.test.ts",
+      "date": "2026-07-28T14:24:23Z"
+    },
+    {
+      "sha": "9c143a5ad0d3536433e0adf42c794ad33a44c092",
+      "message": "feat(paste): add packages/plugin-paste/test/e2e-paste.test.ts",
+      "date": "2026-07-28T14:24:24Z"
+    },
+    {
+      "sha": "6ce0422cc37e4f10226c55aa4a365ca6cf9629ed",
+      "message": "feat(paste): add packages/plugin-paste/test/plugin.test.ts",
+      "date": "2026-07-28T14:24:27Z"
+    },
+    {
+      "sha": "f336e0cf4726bb031b11cb874c1dd59017071b29",
+      "message": "feat(paste): register plugin in CONTRIBUTING.md",
+      "date": "2026-07-28T14:24:59Z"
+    },
+    {
+      "sha": "2a402208718902d05c9d3bf234027693e4845180",
+      "message": "feat(paste): register plugin in CONTRIBUTING.zh.md",
+      "date": "2026-07-28T14:25:02Z"
+    },
+    {
+      "sha": "8debe211ae9d6fe780454d1e2d031090f22c959d",
+      "message": "feat(paste): register plugin in README.md",
+      "date": "2026-07-28T14:25:09Z"
+    },
+    {
+      "sha": "b7ddfb20a91e5028bffe61340e40dff5e26d1c93",
+      "message": "feat(paste): register plugin in README.zh.md",
+      "date": "2026-07-28T14:25:11Z"
+    },
+    {
+      "sha": "2fc795dd2bcb0b935f6e9933e478b912c27c7132",
+      "message": "feat(paste): register plugin in docs/ROADMAP.md",
+      "date": "2026-07-28T14:25:14Z"
+    },
+    {
+      "sha": "11bb6bc970cd7a709f0e1895103491fb43615d1f",
+      "message": "feat(paste): register plugin in docs/ROADMAP.zh.md",
+      "date": "2026-07-28T14:25:17Z"
+    },
+    {
+      "sha": "f835ddb7b529fbf42c7abb8a68e4fcf08e19f9fa",
+      "message": "feat(paste): register plugin in package.json",
+      "date": "2026-07-28T14:25:20Z"
+    },
+    {
+      "sha": "10ff1b181d59fe43ef591faa1a988c322e615c0f",
+      "message": "feat(paste): register plugin in tsconfig.base.json",
+      "date": "2026-07-28T14:25:23Z"
+    },
+    {
+      "sha": "28c68ff18ddae92711b148d0736ade9d088b74f3",
+      "message": "feat(paste): register plugin in vitest.config.ts",
+      "date": "2026-07-28T14:25:26Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "CONTRIBUTING.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "openspec/changes/add-plugin-paste/design.md",
+      "status": "added",
+      "additions": 106,
+      "deletions": 0,
+      "changes": 106
+    },
+    {
+      "filename": "openspec/changes/add-plugin-paste/proposal.md",
+      "status": "added",
+      "additions": 78,
+      "deletions": 0,
+      "changes": 78
+    },
+    {
+      "filename": "openspec/changes/add-plugin-paste/specs/paste/spec.md",
+      "status": "added",
+      "additions": 152,
+      "deletions": 0,
+      "changes": 152
+    },
+    {
+      "filename": "openspec/changes/add-plugin-paste/tasks.md",
+      "status": "added",
+      "additions": 126,
+      "deletions": 0,
+      "changes": 126
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-paste/README.md",
+      "status": "added",
+      "additions": 95,
+      "deletions": 0,
+      "changes": 95
+    },
+    {
+      "filename": "packages/plugin-paste/package.json",
+      "status": "added",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "packages/plugin-paste/src/convert.ts",
+      "status": "added",
+      "additions": 149,
+      "deletions": 0,
+      "changes": 149
+    },
+    {
+      "filename": "packages/plugin-paste/src/index.ts",
+      "status": "added",
+      "additions": 12,
+      "deletions": 0,
+      "changes": 12
+    },
+    {
+      "filename": "packages/plugin-paste/src/plugin.ts",
+      "status": "added",
+      "additions": 85,
+      "deletions": 0,
+      "changes": 85
+    },
+    {
+      "filename": "packages/plugin-paste/src/turndown-plugin-gfm.d.ts",
+      "status": "added",
+      "additions": 12,
+      "deletions": 0,
+      "changes": 12
+    },
+    {
+      "filename": "packages/plugin-paste/test/convert.test.ts",
+      "status": "added",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "packages/plugin-paste/test/e2e-paste.test.ts",
+      "status": "added",
+      "additions": 122,
+      "deletions": 0,
+      "changes": 122
+    },
+    {
+      "filename": "packages/plugin-paste/test/plugin.test.ts",
+      "status": "added",
+      "additions": 171,
+      "deletions": 0,
+      "changes": 171
+    },
+    {
+      "filename": "packages/plugin-paste/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=197",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "pr_number": 192,
+  "title": "fix(search): reject empty-match regex patterns",
+  "body": "Summary\r\nReject regex patterns that can match the empty string to avoid unstable search/replace behavior.\r\nAdd regression coverage for empty-match regex queries.\r\n\r\nTest plan\r\n [x] packages/plugin-search/test/plugin-search.test.ts\r\n [x] tsc --noEmit",
+  "created_at": "2026-07-28T12:04:23Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "999dd8484a315516268815c19ab8a822bd253e98",
+  "first_review_time": "2026-07-28T12:04:49Z",
+  "commits_at_first_review": [
+    {
+      "sha": "999dd8484a315516268815c19ab8a822bd253e98",
+      "message": "fix(search): reject empty-match regex patterns\n\nPrevent zero-length regex queries from producing unstable search results and add coverage for the empty-match guard.",
+      "date": "2026-07-28T11:48:39Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "86b65fa87f40ef1f200c1e9d42f38642f7b62f21",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 1,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/999dd8484a315516268815c19ab8a822bd253e98/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/999dd8484a315516268815c19ab8a822bd253e98/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=999dd8484a315516268815c19ab8a822bd253e98",
+        "patch": "@@ -623,6 +623,15 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function patternCanMatchEmptyString(pattern: RegExp): boolean {\n+  try {\n+    const probe = new RegExp(pattern.source, pattern.flags.replace(/g/g, \"\"));\n+    return probe.test(\"\");\n+  } catch {\n+    return false;\n+  }\n+}\n+\n function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp | null {\n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n \n@@ -635,7 +644,8 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n   }\n \n   try {\n-    return new RegExp(pattern, flags);\n+    const compiled = new RegExp(pattern, flags);\n+    return patternCanMatchEmptyString(compiled) ? null : compiled;\n   } catch {\n     return null;\n   }"
+      },
+      {
+        "sha": "c102e65c23a62b761374837c43fc63c8dfe7aced",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 0,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/999dd8484a315516268815c19ab8a822bd253e98/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/999dd8484a315516268815c19ab8a822bd253e98/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=999dd8484a315516268815c19ab8a822bd253e98",
+        "patch": "@@ -289,6 +289,11 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     expect(findSearchMatches(\"hello world\", \"[invalid(\", { regexp: true })).toEqual([]);\n   });\n \n+  it(\"rejects regex patterns that can match the empty string\", () => {\n+    expect(findSearchMatches(\"hello world\", \"^\", { regexp: true })).toEqual([]);\n+    expect(replaceAllMatches(\"hello world\", \"^\", \"x\", { regexp: true })).toBe(\"hello world\");\n+  });\n+\n   it(\"replaces with regex capture groups\", () => {\n     expect(replaceAllMatches(\"foo bar baz\", \"(\\\\w+)\", \"[$1]\", { regexp: true })).toBe(\"[foo] [bar] [baz]\");\n   });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=192",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

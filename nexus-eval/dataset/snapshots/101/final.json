@@ -1,0 +1,212 @@
+{
+  "pr_number": 101,
+  "title": "feat(wc): add <nexus-editor> Web Component wrapper (@floatboat/nexus-wc, ROADMAP #22)",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "b857449e8ff53728efaa64ff06a1a4978952b115",
+  "merge_commit_sha": "3a2dd30cfe96651bb2ec8f3d8ce16ad70fb935f9",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "fdc1b87850d010178a6e97c36c98b645c91b9ab8",
+      "message": "docs(openspec): propose add-wc-editor-element change\n\nProposal, design, spec deltas and task list for the <nexus-editor>\nWeb Component wrapper (ROADMAP #22). Re-lands the capability attempted\nin PR #49 with the review findings addressed; validated with\nopenspec validate --strict.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-02T07:36:40Z"
+    },
+    {
+      "sha": "b857449e8ff53728efaa64ff06a1a4978952b115",
+      "message": "feat(wc): add <nexus-editor> custom element wrapper\n\nNew @floatboat/nexus-wc package implementing OpenSpec\nadd-wc-editor-element: light-DOM custom element with scalar config via\nobserved attributes, rich config via properties (property wins),\ncontrolled-document value sync mirroring the React/Vue helpers,\nmicrotask-coalesced editor rebuild for post-mount config changes\n(preserves document/selection/focus, re-emits nexus-ready), deferred\ndestroy so same-task reparenting keeps the live editor, and composed\nbubbling nexus-* events.\n\nWorkspace wiring: tsconfig.base path, vitest alias, root build script\nordered after core, lockfile importer, wc commit scope, ROADMAP #22 →\nin-progress, Web Component quick-start in both READMEs.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-02T07:36:40Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "CONTRIBUTING.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 1,
+      "changes": 22
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 1,
+      "changes": 22
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "openspec/changes/add-wc-editor-element/design.md",
+      "status": "added",
+      "additions": 169,
+      "deletions": 0,
+      "changes": 169
+    },
+    {
+      "filename": "openspec/changes/add-wc-editor-element/proposal.md",
+      "status": "added",
+      "additions": 117,
+      "deletions": 0,
+      "changes": 117
+    },
+    {
+      "filename": "openspec/changes/add-wc-editor-element/specs/wc-editor-element/spec.md",
+      "status": "added",
+      "additions": 140,
+      "deletions": 0,
+      "changes": 140
+    },
+    {
+      "filename": "openspec/changes/add-wc-editor-element/tasks.md",
+      "status": "added",
+      "additions": 96,
+      "deletions": 0,
+      "changes": 96
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/wc/README.md",
+      "status": "added",
+      "additions": 116,
+      "deletions": 0,
+      "changes": 116
+    },
+    {
+      "filename": "packages/wc/package.json",
+      "status": "added",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "packages/wc/src/attributes.ts",
+      "status": "added",
+      "additions": 73,
+      "deletions": 0,
+      "changes": 73
+    },
+    {
+      "filename": "packages/wc/src/controlled-document.ts",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "packages/wc/src/element.ts",
+      "status": "added",
+      "additions": 316,
+      "deletions": 0,
+      "changes": 316
+    },
+    {
+      "filename": "packages/wc/src/index.ts",
+      "status": "added",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/wc/test/attributes.test.ts",
+      "status": "added",
+      "additions": 59,
+      "deletions": 0,
+      "changes": 59
+    },
+    {
+      "filename": "packages/wc/test/controlled-document.test.ts",
+      "status": "added",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": "packages/wc/test/element.test.ts",
+      "status": "added",
+      "additions": 326,
+      "deletions": 0,
+      "changes": 326
+    },
+    {
+      "filename": "packages/wc/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=101",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

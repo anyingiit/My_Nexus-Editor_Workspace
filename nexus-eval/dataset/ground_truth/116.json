@@ -1,0 +1,43 @@
+{
+  "pr_number": 116,
+  "title": "feat(core): scroll-synced split preview via sourceMap export (ROADMAP #13)",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "zaizailxm",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "APPROVED",
+      "submitted_at": "2026-07-03T07:53:55Z",
+      "body": "Reviewed PR #116.\n\nThis is a substantial implementation of ROADMAP #13: scroll-synced split preview using source-offset anchors rather than naive percentage syncing. The scope matches the roadmap entry, and the PR correctly documents that OpenSpec is not required for this item.\n\nValidation performed in an isolated checkout:\n\n```text\npnpm exec tsc --noEmit -p packages/core/tsconfig.json\npnpm exec tsc --noEmit -p apps/electron-demo/tsconfig.json\npnpm exec tsc --noEmit -p packages/react/tsconfig.json\npnpm exec tsc --noEmit -p packages/vue/tsconfig.json\npnpm --filter @floatboat/nexus-core test -- scroll-sync export-html-source-map --reporter=verbose\npnpm --filter @floatboat/nexus-core test -- --runInBand\n```\n\nThese checks passed.\n\nReview notes:\n\n- CLA is passing.\n- `exportHTML({ sourceMap: true })` preserves the default non-source-map behavior while stamping rendered blocks with source offsets for sync consumers.\n- `createScrollSync()` has sensible bidirectional mapping primitives, rAF-coalescing, cached anchor invalidation, hidden-preview short-circuiting, and teardown of editor/DOM/window listeners.\n- The demo integration keeps the preview hidden by default, re-renders only when needed, refreshes after silent file loads, applies shared theme CSS variables, and destroys listeners cleanly.\n- Tests cover source-map generation, mapping edge cases, editor scroll APIs, and preview pane lifecycle behavior.\n\nOne local environment note: `pnpm --filter @floatboat/nexus-electron-demo test -- preview-pane --reporter=verbose` could not start because Rollup's macOS optional native package failed to load under this local environment/code-signature setup. This is the same Rollup optional-dependency/native loading issue seen in prior reviews and is not evidence of a PR code failure; the electron-demo TypeScript check passed, and the preview-pane test source itself was reviewed.\n\nConclusion: approved from code-review perspective.\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T06:57:39Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=116) <br/>All committers have signed the CLA."
+    }
+  ],
+  "golden_decision": "approve",
+  "gt_basis": "earliest admin decision review",
+  "admin_review": {
+    "user": "redreamality",
+    "state": "APPROVED",
+    "submitted_at": "2026-07-03T07:53:55Z",
+    "commit_id": "697efb1a6339366080d9d3c6aed65483fcd5af4e",
+    "author_association": "COLLABORATOR",
+    "evidence": {
+      "user": "redreamality",
+      "author_association": "COLLABORATOR",
+      "admin_by_association": true,
+      "admin_by_direct_push_weak": true,
+      "direct_push_count": 2,
+      "basis": "both"
+    }
+  }
+}

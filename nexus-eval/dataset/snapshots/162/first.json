@@ -1,0 +1,192 @@
+{
+  "pr_number": 162,
+  "title": "feat(history): configurable undo depth + test(toolbar): coverage + refactor(core): shared helpers + docs",
+  "body": "## What\r\n1. 给 plugin-history 增加 minDepth 和 newGroupDelay 配置项\r\n2. 给 plugin-toolbar 补充 toggleBlockquote、insertCodeBlock、insertImage、insertHorizontalRule 的测试覆盖\r\n3. 把 React/Vue 重复的 controlled-document 工具函数提取到 core\r\n4. 给 EventEmitter 增加 once() 方法\r\n5. 更新 README 文档，记录 createHistoryPlugin 配置项\r\n\r\n## Why\r\n1. plugin-history 当前硬编码调用 CM6 history()，没有任何配置项。Roadmap P1 标记了 \"Undo/redo grouping\" 为 planned，本 PR 是实现它的第一步。\r\n2. toolbar 的测试文件覆盖了 bold、italic、link、heading、list 等功能，但 blockquote、code block、image、hr 四个函数完全没有测试。\r\n3. React 和 Vue 的 controlled-document.ts 有三个完全一样的函数，提取到 core 可以避免维护时改一漏一。\r\n4. EventEmitter 是核心类，on/off/emit/clear 都有了，但缺少 once() 这个通用 API。\r\n5. 改了公共接口但没更新文档，不符合项目规范。\r\n\r\n## How\r\n### history\r\n- 新增 `HistoryPluginOptions` 接口（minDepth, newGroupDelay）\r\n- `createHistoryPlugin` 接受可选 options 参数并转发给 CM6 `history()`\r\n- 向后兼容：不传参数时行为不变\r\n- 新增 2 个测试验证配置生效\r\n\r\n### toolbar\r\n- 为 `toggleBlockquote` 新增 3 个测试\r\n- 为 `insertCodeBlock` 新增 2 个测试\r\n- 为 `insertImage` 新增 2 个测试\r\n- 为 `insertHorizontalRule` 新增 1 个测试\r\n\r\n### core (refactor)\r\n- 新建 `packages/core/src/controlled-document.ts`，包含三个共享函数\r\n- React 和 Vue 包改为从 core 导入再导出，保持向后兼容\r\n\r\n### core (feat)\r\n- EventEmitter 新增 `once()` 方法，触发一次后自动移除监听\r\n\r\n### docs\r\n- README.md 和 README.zh.md 新增 createHistoryPlugin 配置项文档\r\n\r\n## AI Disclosure\r\n本 PR 使用 AI 辅助工具（Claude）进行代码生成和审查。\r\n\r\n## Checklist\r\n- [x] Conventional Commits title\r\n- [x] CLA signed\r\n- [x] Tests added, `pnpm test` passes\r\n- [x] `pnpm build` succeeds\r\n- [x] No new dependencies added\r\n- [x] Public API changes update README",
+  "created_at": "2026-07-15T14:42:25Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "1f8603c97faf901c3fc00a0898f163eee55b20b8",
+  "first_review_time": "2026-07-15T14:42:57Z",
+  "commits_at_first_review": [
+    {
+      "sha": "1fb8683dee346b488814133cd6626ca9ef9aaafd",
+      "message": "feat(history): add configurable minDepth and newGroupDelay",
+      "date": "2026-07-15T13:40:54Z"
+    },
+    {
+      "sha": "d1169f672e42473635a712f8807a06e1fc10ab65",
+      "message": "test(toolbar): add coverage for blockquote, code block, image, and hr",
+      "date": "2026-07-15T13:41:35Z"
+    },
+    {
+      "sha": "9eb27c973fe3227ed81579ef8c2298bb05ad0d63",
+      "message": "refactor(core): extract shared controlled-document helpers from react and vue",
+      "date": "2026-07-15T13:56:52Z"
+    },
+    {
+      "sha": "940c0f2944cc30428d5af5d09ddb75b0a8fbbff6",
+      "message": "feat(core): add once() method to EventEmitter",
+      "date": "2026-07-15T14:23:30Z"
+    },
+    {
+      "sha": "1f8603c97faf901c3fc00a0898f163eee55b20b8",
+      "message": "docs: document createHistoryPlugin options",
+      "date": "2026-07-15T14:30:46Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 5,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "d5f3111ecf1fc762690aeb8f2c51c7a4e67759c1",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -253,6 +253,30 @@ const myPlugin: NexusPlugin = {\n \n </details>\n \n+<details>\n+<summary><b>Plugin Options</b> — configurable plugin behavior</summary>\n+\n+#### `createHistoryPlugin(options?)`\n+\n+| Option | Type | Default | Description |\n+|--------|------|---------|-------------|\n+| `minDepth` | `number` | 200 | Minimum number of undo entries to keep in history |\n+| `newGroupDelay` | `number` | 500 | Delay (ms) before consecutive edits are grouped into one undo step |\n+\n+```ts\n+import { createHistoryPlugin } from \"@floatboat/nexus-plugin-history\";\n+\n+// Default — CM6 defaults\n+const editor = createEditor({ plugins: [createHistoryPlugin()] });\n+\n+// Custom — limit undo depth, faster grouping\n+const editor = createEditor({\n+  plugins: [createHistoryPlugin({ minDepth: 100, newGroupDelay: 300 })],\n+});\n+```\n+\n+</details>\n+\n ---\n \n ## 🛠️ Development"
+      },
+      {
+        "sha": "bc20e45b4e986664d2340d663e510b3d3567adff",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -253,6 +253,30 @@ const myPlugin: NexusPlugin = {\n \n </details>\n \n+<details>\n+<summary><b>插件配置</b> —— 可配置的插件行为</summary>\n+\n+#### `createHistoryPlugin(options?)`\n+\n+| 参数 | 类型 | 默认值 | 说明 |\n+|------|------|--------|------|\n+| `minDepth` | `number` | 200 | 撤销历史保留的最少条目数 |\n+| `newGroupDelay` | `number` | 500 | 连续编辑合并为同一撤销组的间隔（毫秒） |\n+\n+```ts\n+import { createHistoryPlugin } from \"@floatboat/nexus-plugin-history\";\n+\n+// 默认 — CM6 默认值\n+const editor = createEditor({ plugins: [createHistoryPlugin()] });\n+\n+// 自定义 — 限制撤销深度，加快分组\n+const editor = createEditor({\n+  plugins: [createHistoryPlugin({ minDepth: 100, newGroupDelay: 300 })],\n+});\n+```\n+\n+</details>\n+\n ---\n \n ## 🛠️ 开发"
+      },
+      {
+        "sha": "f1aaef9457892a5c44572291d8d293877880d001",
+        "filename": "packages/core/src/controlled-document.ts",
+        "status": "added",
+        "additions": 17,
+        "deletions": 0,
+        "changes": 17,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Fsrc%2Fcontrolled-document.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Fsrc%2Fcontrolled-document.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Fcontrolled-document.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -0,0 +1,17 @@\n+export function isControlledDocument(modelValue: string | undefined): boolean {\n+  return modelValue !== undefined;\n+}\n+\n+export function resolveInitialDocument(\n+  modelValue: string | undefined,\n+  initialValue: string | undefined\n+): string {\n+  return modelValue !== undefined ? modelValue : (initialValue ?? \"\");\n+}\n+\n+export function shouldSyncControlledDocument(\n+  next: string,\n+  lastSynced: string | null\n+): boolean {\n+  return lastSynced !== next;\n+}"
+      },
+      {
+        "sha": "3d2a271942d8b5e1a013ee25d8348b088a887372",
+        "filename": "packages/core/src/event-emitter.ts",
+        "status": "modified",
+        "additions": 8,
+        "deletions": 0,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Fsrc%2Fevent-emitter.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Fsrc%2Fevent-emitter.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Fevent-emitter.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -26,4 +26,12 @@ export class EventEmitter<EventMap extends { [K in keyof EventMap]: (...args: an\n   clear(): void {\n     this.listeners.clear();\n   }\n+\n+  once<K extends keyof EventMap>(event: K, handler: EventMap[K]): void {\n+  const wrapper = ((...args: any[]) => {\n+    this.off(event, wrapper);\n+    (handler as (...a: any[]) => void)(...args);\n+  }) as EventMap[K];\n+  this.on(event, wrapper);\n+}\n }"
+      },
+      {
+        "sha": "94c0e258c8a16a7fb7ce233e0a430c36d0336ac9",
+        "filename": "packages/core/src/index.ts",
+        "status": "modified",
+        "additions": 6,
+        "deletions": 0,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Findex.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -56,3 +56,9 @@ export type {\n   WidgetDefinition,\n   WidgetRenderContext\n } from \"./types\";\n+\n+export {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument,\n+}from \"./controlled-document\";\n\\ No newline at end of file"
+      },
+      {
+        "sha": "28488f85c3d76110a2457cd4dc12a22c90db0c21",
+        "filename": "packages/core/test/events.test.ts",
+        "status": "modified",
+        "additions": 41,
+        "deletions": 1,
+        "changes": 42,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Ftest%2Fevents.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fcore%2Ftest%2Fevents.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Fevents.test.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -1,5 +1,4 @@\n import { describe, expect, it, vi } from \"vitest\";\n-\n import { createEditor } from \"../src/index\";\n \n describe(\"event system\", () => {\n@@ -238,3 +237,44 @@ describe(\"slashMenuChange\", () => {\n     editor.destroy();\n   });\n });\n+\n+describe(\"once\", () => {\n+  it(\"fires handler only once\", () => {\n+    const container = document.createElement(\"div\");\n+    const handler = vi.fn();\n+    const editor = createEditor({ container, initialValue: \"\" });\n+\n+    editor.once(\"change\", handler);\n+    editor.setDocument(\"first\");\n+    editor.setDocument(\"second\");\n+\n+    expect(handler).toHaveBeenCalledOnce();\n+    editor.destroy();\n+  });\n+\n+  it(\"auto-removes handler after first invocation\", () => {\n+    const container = document.createElement(\"div\");\n+    const handler = vi.fn();\n+    const editor = createEditor({ container, initialValue: \"\" });\n+\n+    editor.once(\"change\", handler);\n+    editor.setDocument(\"test\");\n+\n+    // Trigger change again — handler should not fire\n+    editor.setDocument(\"test again\");\n+    expect(handler).toHaveBeenCalledTimes(1);\n+    editor.destroy();\n+  });\n+\n+  it(\"receives correct arguments on first call\", () => {\n+    const container = document.createElement(\"div\");\n+    const handler = vi.fn();\n+    const editor = createEditor({ container, initialValue: \"\" });\n+\n+    editor.once(\"change\", handler);\n+    editor.setDocument(\"hello\");\n+\n+    expect(handler).toHaveBeenCalledWith(\"hello\", expect.objectContaining({ type: \"root\" }));\n+    editor.destroy();\n+  });\n+});\n\\ No newline at end of file"
+      },
+      {
+        "sha": "4d16a890cc56f5900f6a5627463b0ac7400e37f6",
+        "filename": "packages/plugin-history/src/index.ts",
+        "status": "modified",
+        "additions": 18,
+        "deletions": 3,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fplugin-history%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fplugin-history%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-history%2Fsrc%2Findex.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -3,9 +3,24 @@ import { keymap } from \"@codemirror/view\";\n \n import type { NexusPlugin } from \"@floatboat/nexus-core\";\n \n-export function createHistoryPlugin(): NexusPlugin {\n+export interface HistoryPluginOptions {\n+  /** Minimum depth of undo entries to keep. Maps to CM6 `minDepth`. */\n+  minDepth?: number;\n+  /** Delay in ms before consecutive edits are grouped. Maps to CM6 `newGroupDelay`. */\n+  newGroupDelay?: number;\n+}\n+\n+export function createHistoryPlugin(options?: HistoryPluginOptions): NexusPlugin {\n+  const exts: Parameters<typeof history>[0] | undefined =\n+    options !== undefined\n+      ? {\n+          ...(options.minDepth !== undefined && { minDepth: options.minDepth }),\n+          ...(options.newGroupDelay !== undefined && { newGroupDelay: options.newGroupDelay }),\n+        }\n+      : undefined;\n+\n   return {\n     name: \"plugin-history\",\n-    cmExtensions: [history(), keymap.of(historyKeymap)]\n+    cmExtensions: [history(exts), keymap.of(historyKeymap)],\n   };\n-}\n+}\n\\ No newline at end of file"
+      },
+      {
+        "sha": "121ef49ef56cb53d9c1673fd4fb09e7739f19657",
+        "filename": "packages/plugin-history/test/plugin-history.test.ts",
+        "status": "modified",
+        "additions": 36,
+        "deletions": 0,
+        "changes": 36,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fplugin-history%2Ftest%2Fplugin-history.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fplugin-history%2Ftest%2Fplugin-history.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-history%2Ftest%2Fplugin-history.test.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -62,3 +62,39 @@ describe(\"@floatboat/nexus-plugin-history\", () => {\n     editor.destroy();\n   });\n });\n+\n+\n+\n+describe(\"@floatboat/nexus-plugin-history — options\", () => {\n+\n+  it(\"newGroupDelay groups rapid edits into one undo step\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello\",\n+      plugins: [createHistoryPlugin({ newGroupDelay: 100_000 })],\n+    });\n+\n+    editor.setDocument(\"hello world\");\n+    editor.setDocument(\"hello world!\");\n+\n+    // Both changes should be in one undo group\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+\n+  it(\"default options behave identically to the original plugin\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"start\",\n+      plugins: [createHistoryPlugin()],\n+    });\n+\n+    editor.setDocument(\"end\");\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"start\");\n+    editor.destroy();\n+  });\n+});"
+      },
+      {
+        "sha": "edc6a11542598a4648ce7485bbe2e7e0ad53336b",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 103,
+        "deletions": 0,
+        "changes": 103,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -12,6 +12,10 @@ import {\n   toggleUnorderedList,\n   createToolbarPlugin,\n   createToolbarUI,\n+  toggleBlockquote,\n+  insertCodeBlock,\n+  insertImage,\n+  insertHorizontalRule\n } from \"../src/index\";\n \n describe(\"toggleBold\", () => {\n@@ -606,3 +610,102 @@ describe(\"toggleUnorderedList — atomic undo\", () => {\n     editor.destroy();\n   });\n });\n+\n+\n+describe(\"toggleBlockquote\", () => {\n+  it(\"adds blockquote prefix to current line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello world\" });\n+\n+    editor.setSelection(2);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> hello world\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes blockquote prefix when already present\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"> hello\" });\n+\n+    editor.setSelection(2);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+\n+  it(\"works with multi-line blockquote\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"> line1\\n> line2\" });\n+\n+    editor.setSelection(2);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"line1\\n> line2\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"insertCodeBlock\", () => {\n+  it(\"wraps selected text in triple backticks\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello world\" });\n+\n+    editor.setSelection(6, 11);\n+    insertCodeBlock(editor);\n+\n+    expect(editor.getDocument()).toContain(\"```\");\n+    expect(editor.getDocument()).toContain(\"world\");\n+    editor.destroy();\n+  });\n+\n+  it(\"inserts empty code block when nothing is selected\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"text \" });\n+\n+    editor.setSelection(5, 5);\n+    insertCodeBlock(editor);\n+\n+expect(editor.getDocument()).toContain(\"```\\n\\n```\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"insertImage\", () => {\n+  it(\"inserts markdown image syntax with selected text as alt\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"my photo\" });\n+\n+    editor.setSelection(3, 8);\n+    insertImage(editor);\n+\n+    expect(editor.getDocument()).toBe(\"my ![photo](url)\");\n+    editor.destroy();\n+  });\n+\n+  it(\"uses default alt text when nothing is selected\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"text \" });\n+\n+    editor.setSelection(5, 5);\n+    insertImage(editor);\n+\n+    expect(editor.getDocument()).toBe(\"text ![alt text](url)\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"insertHorizontalRule\", () => {\n+  it(\"inserts horizontal rule at cursor position\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello\" });\n+\n+    editor.setSelection(5);\n+    insertHorizontalRule(editor);\n+\n+    expect(editor.getDocument()).toContain(\"---\");\n+    editor.destroy();\n+  });\n+});\n+"
+      },
+      {
+        "sha": "791c0370dffcf8f87b72d2fb4534ff89101fb924",
+        "filename": "packages/react/src/controlled-document.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 18,
+        "changes": 28,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Freact%2Fsrc%2Fcontrolled-document.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Freact%2Fsrc%2Fcontrolled-document.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fcontrolled-document.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -1,22 +1,14 @@\n /**\n  * Pure helpers for React controlled-document sync (tested in isolation).\n  */\n+import {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument,\n+} from \"@floatboat/nexus-core\";\n \n-export function isControlledDocument(value: string | undefined): boolean {\n-  return value !== undefined;\n-}\n-\n-export function resolveInitialDocument(\n-  value: string | undefined,\n-  initialValue: string | undefined\n-): string {\n-  return value !== undefined ? value : (initialValue ?? \"\");\n-}\n-\n-/** Whether an external `value` prop should trigger silent setDocument. */\n-export function shouldSyncControlledDocument(\n-  next: string,\n-  lastSynced: string | null\n-): boolean {\n-  return lastSynced !== next;\n-}\n+export {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument,\n+};\n\\ No newline at end of file"
+      },
+      {
+        "sha": "82832ec8aad04fbd2671982d72ae08b4d9d4a7f0",
+        "filename": "packages/vue/src/controlled-document.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 16,
+        "changes": 26,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fvue%2Fsrc%2Fcontrolled-document.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/1f8603c97faf901c3fc00a0898f163eee55b20b8/packages%2Fvue%2Fsrc%2Fcontrolled-document.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fcontrolled-document.ts?ref=1f8603c97faf901c3fc00a0898f163eee55b20b8",
+        "patch": "@@ -2,20 +2,14 @@\n  * Pure helpers for Vue controlled-document sync (tested in isolation).\n  */\n \n-export function isControlledDocument(modelValue: string | undefined): boolean {\n-  return modelValue !== undefined;\n-}\n+import {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument,\n+} from \"@floatboat/nexus-core\";\n \n-export function resolveInitialDocument(\n-  modelValue: string | undefined,\n-  initialValue: string | undefined\n-): string {\n-  return modelValue !== undefined ? modelValue : (initialValue ?? \"\");\n-}\n-\n-export function shouldSyncControlledDocument(\n-  next: string,\n-  lastSynced: string | null\n-): boolean {\n-  return lastSynced !== next;\n-}\n+export {\n+  isControlledDocument,\n+  resolveInitialDocument,\n+  shouldSyncControlledDocument,\n+};\n\\ No newline at end of file"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=162",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

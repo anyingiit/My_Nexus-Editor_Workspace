@@ -1,0 +1,293 @@
+{
+  "pr_number": 28,
+  "title": "feat(plugin-search): add fuzzy search mode",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:39:39Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "75c78ff7701f5405de5599cf8d0c967aaefad598",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "4150535aab209a965d42967ae7079230e05c0532",
+      "message": "feat(plugin-search): add fuzzy search mode",
+      "date": "2026-05-22T05:26:01Z"
+    },
+    {
+      "sha": "efffde53a8e82d2bc9410ece3082f2f4e8e7eb6b",
+      "message": "docs(plugin-search): document fuzzy search mode",
+      "date": "2026-05-23T01:35:13Z"
+    },
+    {
+      "sha": "39b2058c7e7a22ca011e89801596663055c84ca3",
+      "message": "feat(electron-demo): expose fuzzy search toggle",
+      "date": "2026-05-23T02:49:05Z"
+    },
+    {
+      "sha": "fed16238822e879b865e93d9f9ec5fe7f1627497",
+      "message": "fix(electron-demo): rank fuzzy search demo matches",
+      "date": "2026-05-23T03:00:49Z"
+    },
+    {
+      "sha": "75c78ff7701f5405de5599cf8d0c967aaefad598",
+      "message": "fix(plugin-search): bound fuzzy match gaps",
+      "date": "2026-05-23T03:05:33Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/sample-vault/fuzzy-demo.md",
+      "status": "added",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/index.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 53,
+      "deletions": 3,
+      "changes": 56
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search-mode/design.md",
+      "status": "added",
+      "additions": 102,
+      "deletions": 0,
+      "changes": 102
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search-mode/proposal.md",
+      "status": "added",
+      "additions": 47,
+      "deletions": 0,
+      "changes": 47
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search-mode/specs/plugins/spec.md",
+      "status": "added",
+      "additions": 58,
+      "deletions": 0,
+      "changes": 58
+    },
+    {
+      "filename": "openspec/changes/add-fuzzy-search-mode/tasks.md",
+      "status": "added",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 110,
+      "deletions": 0,
+      "changes": 110
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 175,
+      "deletions": 7,
+      "changes": 182
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 94,
+      "deletions": 0,
+      "changes": 94
+    }
+  ],
+  "compare_final": {
+    "status": "diverged",
+    "ahead_by": 5,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "f8f30cef62fb3faa9a7cd9551959f08f51ab9948",
+        "filename": "apps/electron-demo/sample-vault/fuzzy-demo.md",
+        "status": "added",
+        "additions": 33,
+        "deletions": 0,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/apps%2Felectron-demo%2Fsample-vault%2Ffuzzy-demo.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/apps%2Felectron-demo%2Fsample-vault%2Ffuzzy-demo.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsample-vault%2Ffuzzy-demo.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -0,0 +1,33 @@\n+# Fuzzy search demo\n+\n+Back to [[index]].\n+\n+This note gives the search panel a few predictable targets for fuzzy matching.\n+Open search with `Ctrl+F` or `Cmd+F`, enable **Fuzzy**, then try the compact\n+queries below.\n+\n+## Try these\n+\n+| Query | Expected match |\n+|---|---|\n+| `nxe` | Nexus Editor |\n+| `fb` | Floatboat |\n+| `mkd` | Markdown |\n+| `sps` | Search panel settings |\n+\n+## Targets\n+\n+Nexus Editor keeps Markdown as the source of truth.\n+\n+Floatboat builds local-first authoring tools.\n+\n+Markdown documents should stay readable outside the editor.\n+\n+Search panel settings include match case, regexp, by word, and fuzzy mode.\n+\n+## Notes\n+\n+- Fuzzy search is ordered: `nxe` matches `Nexus Editor`, but `exn` does not.\n+- Fuzzy search is line-local and bounded in the panel, so a short query will\n+  not jump across long spans to create a surprising match.\n+- The `Match case` toggle still applies when fuzzy mode is enabled."
+      },
+      {
+        "sha": "dd92c324a4cfef0a67ae2d193ec71fdb202fba64",
+        "filename": "apps/electron-demo/sample-vault/index.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/apps%2Felectron-demo%2Fsample-vault%2Findex.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/apps%2Felectron-demo%2Fsample-vault%2Findex.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsample-vault%2Findex.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -31,6 +31,7 @@ show a long list.\n ## Editor shortcuts\n \n - [[slash-demo]] — type `/` anywhere to open the floating command menu\n+- [[fuzzy-demo]] - try fuzzy search queries such as `nxe` for `Nexus Editor`\n \n ## Edge cases\n "
+      },
+      {
+        "sha": "9dcdd8ab953d3a97991a76a3000fc652d1398ef8",
+        "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+        "status": "modified",
+        "additions": 53,
+        "deletions": 3,
+        "changes": 56,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsearch-bar.ts?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -1,5 +1,5 @@\n import type { EditorAPI } from \"@floatboat/nexus-core\";\n-import { findSearchMatches, replaceAllMatches } from \"@floatboat/nexus-plugin-search\";\n+import { findSearchMatches, replaceAllMatches, type FuzzySearchMatch } from \"@floatboat/nexus-plugin-search\";\n \n export interface SearchBar {\n   element: HTMLElement;\n@@ -51,6 +51,15 @@ const COUNT_STYLES = `\n   min-width: 60px;\n `;\n \n+const OPTION_STYLES = `\n+  display: inline-flex;\n+  align-items: center;\n+  gap: 4px;\n+  color: var(--nexus-text, #24292e);\n+  font-size: 12px;\n+  white-space: nowrap;\n+`;\n+\n const CLOSE_BTN_STYLES = `\n   background: none;\n   border: none;\n@@ -104,6 +113,13 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   const countLabel = document.createElement(\"span\");\n   countLabel.style.cssText = COUNT_STYLES;\n \n+  const fuzzyInput = document.createElement(\"input\");\n+  fuzzyInput.type = \"checkbox\";\n+  fuzzyInput.dataset.testId = \"electron-search-fuzzy-toggle\";\n+  const fuzzyLabel = document.createElement(\"label\");\n+  fuzzyLabel.style.cssText = OPTION_STYLES;\n+  fuzzyLabel.append(fuzzyInput, \"Fuzzy\");\n+\n   // Close\n   const closeBtn = document.createElement(\"button\");\n   closeBtn.innerHTML = \"&times;\";\n@@ -113,13 +129,36 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   const spacer = document.createElement(\"div\");\n   spacer.style.flex = \"1\";\n \n-  bar.append(findInput, prevBtn, nextBtn, countLabel, replaceInput, replaceBtn, replaceAllBtn, spacer, closeBtn);\n+  bar.append(\n+    findInput,\n+    fuzzyLabel,\n+    prevBtn,\n+    nextBtn,\n+    countLabel,\n+    replaceInput,\n+    replaceBtn,\n+    replaceAllBtn,\n+    spacer,\n+    closeBtn\n+  );\n \n   // State\n   let matches: Array<{ from: number; to: number }> = [];\n   let currentIdx = -1;\n   let visible = false;\n \n+  function rankedFuzzyMatches(doc: string, query: string): Array<{ from: number; to: number }> {\n+    const ranked = findSearchMatches(doc, query, { fuzzy: true }) as FuzzySearchMatch[];\n+    ranked.sort((a, b) => b.score - a.score || a.from - b.from);\n+\n+    const bestScore = ranked[0]?.score;\n+    if (bestScore === undefined) {\n+      return [];\n+    }\n+\n+    return ranked.filter((match) => match.score >= bestScore - 12);\n+  }\n+\n   function updateMatches() {\n     const query = findInput.value;\n     if (!query) {\n@@ -129,10 +168,13 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n       return;\n     }\n     const doc = editor.getDocument();\n-    matches = findSearchMatches(doc, query);\n+    matches = fuzzyInput.checked ? rankedFuzzyMatches(doc, query) : findSearchMatches(doc, query);\n     if (matches.length === 0) {\n       currentIdx = -1;\n       countLabel.textContent = \"0 results\";\n+    } else if (fuzzyInput.checked) {\n+      currentIdx = 0;\n+      highlightCurrent();\n     } else {\n       // Find nearest match to current cursor\n       const { anchor } = editor.getSelection();\n@@ -165,6 +207,7 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   }\n \n   function doReplace() {\n+    if (fuzzyInput.checked) return;\n     if (currentIdx < 0 || currentIdx >= matches.length) return;\n     const m = matches[currentIdx];\n     const doc = editor.getDocument();\n@@ -175,6 +218,7 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n   }\n \n   function doReplaceAll() {\n+    if (fuzzyInput.checked) return;\n     const query = findInput.value;\n     if (!query) return;\n     const doc = editor.getDocument();\n@@ -185,6 +229,12 @@ export function createSearchBar(editor: EditorAPI): SearchBar {\n \n   // Event handlers\n   findInput.addEventListener(\"input\", updateMatches);\n+  fuzzyInput.addEventListener(\"change\", () => {\n+    replaceInput.disabled = fuzzyInput.checked;\n+    replaceBtn.disabled = fuzzyInput.checked;\n+    replaceAllBtn.disabled = fuzzyInput.checked;\n+    updateMatches();\n+  });\n   findInput.addEventListener(\"keydown\", (e) => {\n     if (e.key === \"Enter\") { e.shiftKey ? goPrev() : goNext(); e.preventDefault(); }\n     if (e.key === \"Escape\") { close(); }"
+      },
+      {
+        "sha": "4ebba346dabb497f2f2986f7d7e8bd280c879369",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -25,7 +25,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | 2  | Whole-word matching | `plugin-search` | P1 | planned | No | Extension of existing search options |\n | 15 | Regex search | `plugin-search` | P1 | in-progress | No | Watch escape edge cases — PR #9 in review |\n | 16 | Command / search history | `plugin-search` + `plugin-slash` | P2 | planned | Yes | Needs persistence (localStorage or host-injected) |\n-| 17 | Fuzzy search | `plugin-search` | P2 | planned | No | Evaluate fzf-like algorithm vs. third-party lib |\n+| 17 | Fuzzy search | `plugin-search` | P2 | done | Yes | Dependency-free ordered subsequence mode - see `openspec/changes/add-fuzzy-search-mode` |\n | 3  | Slash command sorting + limit | `plugin-slash` | P0 | done | Yes | Landed alongside the floating menu UI — see `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash command floating menu UI | `plugin-slash` + `electron-demo` | P0 | done | Yes | `createSlashMenuUI(editor, options)` — see `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "5a02ad40851b9fe9ddb75d341c84b2df6caa72a4",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -25,7 +25,7 @@\n | 2  | whole-word 匹配 | `plugin-search` | P1 | planned | 否 | 现有 search 选项扩展 |\n | 15 | 正则搜索 | `plugin-search` | P1 | in-progress | 否 | 注意转义边界用例 —— PR #9 review 中 |\n | 16 | 历史命令 / 搜索记忆 | `plugin-search` + `plugin-slash` | P2 | planned | 是 | 需要持久化层（localStorage 或宿主注入） |\n-| 17 | 模糊搜索 | `plugin-search` | P2 | planned | 否 | 评估 fzf-like 算法 vs. 第三方 lib |\n+| 17 | 模糊搜索 | `plugin-search` | P2 | done | 是 | 无依赖有序子序列模式 —— 见 `openspec/changes/add-fuzzy-search-mode` |\n | 3  | Slash 命令排序与 limit | `plugin-slash` | P0 | done | 是 | 与浮层菜单 UI 一并落地 —— 见 `openspec/changes/add-slash-menu-ui` |\n | 27 | Slash 命令浮层菜单 UI | `plugin-slash` + `electron-demo` | P0 | done | 是 | `createSlashMenuUI(editor, options)` —— 见 `openspec/changes/add-slash-menu-ui` |\n "
+      },
+      {
+        "sha": "5ef02d906e740566584b67a004f365a21297b102",
+        "filename": "openspec/changes/add-fuzzy-search-mode/design.md",
+        "status": "added",
+        "additions": 102,
+        "deletions": 0,
+        "changes": 102,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fdesign.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -0,0 +1,102 @@\n+# Design - Fuzzy Search Mode\n+\n+## Context\n+\n+`@floatboat/nexus-plugin-search` wraps CodeMirror's search extension with a\n+Nexus-styled panel and a few pure helpers (`findSearchMatches`,\n+`replaceAllMatches`) for hosts that want search behaviour outside the editor\n+view. CodeMirror's built-in query supports literal and regexp matching, but it\n+does not expose a first-class fuzzy query mode.\n+\n+Roadmap item #17 asks for fuzzy search and explicitly calls out evaluating an\n+fzf-like algorithm versus a third-party library. This implementation keeps the\n+change dependency-free and uses a small ordered-subsequence matcher.\n+\n+## Goals / Non-Goals\n+\n+### Goals\n+\n+- Add fuzzy matching without changing the default literal search behaviour.\n+- Preserve existing search panel controls and keyboard shortcuts.\n+- Keep panel input human-readable: the field should show `nxe`, not the\n+  generated regexp.\n+- Provide a reusable pure helper API with match offsets, matched indices, and a\n+  score that host UIs can sort or display later.\n+- Avoid cross-line fuzzy matches so a short query cannot accidentally span a\n+  large document section.\n+\n+### Non-Goals\n+\n+- Introduce a third-party fuzzy library.\n+- Replace CodeMirror's search extension or reimplement its navigation state.\n+- Add ranked result lists or per-character match highlighting to the panel UI.\n+- Persist search history.\n+\n+## Decisions\n+\n+### Decision 1: Dependency-free ordered subsequence matcher\n+\n+Adopted: a local matcher that scans each line for ordered query characters.\n+Matches include:\n+\n+- `from` / `to`: range covering the first through last matched character;\n+- `text`: the matched document slice;\n+- `indices`: exact character offsets that satisfied the query;\n+- `score`: a metadata score rewarding shorter spans, word-boundary hits, and\n+  contiguous characters.\n+\n+Rationale:\n+\n+- The implementation is small enough to audit and test.\n+- It avoids adding package weight to a focused search plugin.\n+- The score metadata leaves room for future ranked result UIs without forcing\n+  the current panel to grow a result list.\n+\n+### Decision 2: Compile panel fuzzy queries to line-local regexp\n+\n+Adopted: `createFuzzySearchPattern(\"nxe\")` returns\n+`n[^\\n]{0,16}?x[^\\n]{0,16}?e`. The search panel enables CodeMirror `regexp`\n+mode when the `Fuzzy` checkbox is checked.\n+\n+Rationale:\n+\n+- CodeMirror already owns search state, next/previous navigation, selection,\n+  replacement commands, and match decorations.\n+- A line-local, bounded-gap regexp keeps fuzzy matches from spanning newlines\n+  or surfacing very loose long-span matches.\n+- `escapeRegExp` is applied per query character, so punctuation like `.` or\n+  `[` is treated as literal input.\n+\n+Alternative considered: a custom CodeMirror `SearchQuery.getCursor` path.\n+Rejected for this PR because it would require replacing more of CodeMirror's\n+search machinery and would make the P2 change much larger.\n+\n+### Decision 3: Fuzzy mode disables incompatible query toggles\n+\n+When fuzzy mode is active, the panel disables `Regexp` and `By word`. Fuzzy mode\n+uses generated regexp internally, and whole-word filtering does not map cleanly\n+to subsequence ranges such as `nxe` -> `Nexus Editor`.\n+\n+`Match case` remains active and applies both to the pure fuzzy helper and the\n+compiled panel query.\n+\n+## Risks / Trade-offs\n+\n+| Risk | Mitigation |\n+|---|---|\n+| Generated regexp could treat user punctuation as syntax | Escape every query character before joining with the fuzzy gap pattern. |\n+| Fuzzy regexp could span large portions of the document | Use bounded `[^\\n]{0,16}?` gaps between characters so panel matching is line-local and compact. |\n+| `SearchOptions.fuzzy` and `SearchPluginOptions.fuzzy` could be confused | Document the distinction: helper-level per-call override vs plugin-level panel default. |\n+| Score metadata is unused by the current panel | Keep it documented as host-facing metadata for result list UIs; panel keeps CodeMirror order. |\n+\n+## Migration Plan\n+\n+None. All public API additions are optional and default to existing literal\n+search behaviour.\n+\n+## Open Questions\n+\n+- Should a future search result list sort fuzzy matches by `score` rather than\n+  document order?\n+- Should fuzzy mode eventually highlight the individual matched indices inside\n+  each selected range?"
+      },
+      {
+        "sha": "8b93f363dacec890958a8a1d9d22bd991ef9e3f0",
+        "filename": "openspec/changes/add-fuzzy-search-mode/proposal.md",
+        "status": "added",
+        "additions": 47,
+        "deletions": 0,
+        "changes": 47,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fproposal.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -0,0 +1,47 @@\n+# Change: Add Fuzzy Search Mode\n+\n+## Why\n+\n+Roadmap item #17 calls for fuzzy search in `@floatboat/nexus-plugin-search`.\n+The current plugin only performs literal CodeMirror search, which requires\n+users to type the exact contiguous text they want to find.\n+\n+This change adds an ordered-subsequence search mode so short queries such as\n+`nxe` can locate text such as `Nexus Editor` while keeping the existing search\n+panel and keyboard navigation workflow.\n+\n+## What Changes\n+\n+- `@floatboat/nexus-plugin-search` exports fuzzy helpers:\n+  - `findFuzzySearchMatches(doc, query, options?)`\n+  - `createFuzzySearchPattern(query)`\n+  - `FuzzySearchMatch`\n+- `findSearchMatches(doc, query, { fuzzy: true })` delegates to the fuzzy\n+  matcher while retaining the existing literal behaviour by default.\n+- `createSearchPlugin({ fuzzy: true })` enables fuzzy mode by default in the\n+  search panel.\n+- The search panel gains a `Fuzzy` checkbox. When enabled, the panel compiles\n+  the raw query to a safe line-local regexp for CodeMirror navigation while the\n+  input continues to display the user's original query.\n+- Documentation, roadmap entries, demo vault content, and tests are updated.\n+\n+No breaking changes: fuzzy mode is opt-in and existing search options keep\n+their current defaults.\n+\n+## Impact\n+\n+- Affected specs:\n+  - `plugins` (ADDED: fuzzy search mode for `@floatboat/nexus-plugin-search`)\n+- Affected code:\n+  - `packages/plugin-search/src/index.ts`\n+  - `packages/plugin-search/test/plugin-search.test.ts`\n+  - `packages/plugin-search/README.md`\n+  - `apps/electron-demo/sample-vault/fuzzy-demo.md`\n+  - `apps/electron-demo/sample-vault/index.md`\n+  - `docs/ROADMAP.md`\n+  - `docs/ROADMAP.zh.md`\n+- New dependencies: none.\n+- Out of scope:\n+  - Fuzzy result ranking UI beyond the helper `score` metadata.\n+  - Per-character fuzzy highlight decoration in the editor viewport.\n+  - Persistent search history."
+      },
+      {
+        "sha": "8d03a3bd9daddb22a253308ab322fbaa905ab7c9",
+        "filename": "openspec/changes/add-fuzzy-search-mode/specs/plugins/spec.md",
+        "status": "added",
+        "additions": 58,
+        "deletions": 0,
+        "changes": 58,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fspecs%2Fplugins%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fspecs%2Fplugins%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Fspecs%2Fplugins%2Fspec.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -0,0 +1,58 @@\n+# Plugins Spec - Fuzzy Search Mode\n+\n+## ADDED Requirements\n+\n+### Requirement: provide fuzzy search helpers\n+\n+The `@floatboat/nexus-plugin-search` package SHALL provide dependency-free\n+fuzzy search helpers that treat a query as an ordered subsequence of characters.\n+The helpers SHALL return match ranges in document offsets, the exact matched\n+character indices, and score metadata that rewards compact, boundary-aligned,\n+and contiguous matches.\n+\n+#### Scenario: Ordered subsequence match\n+- **WHEN** a host calls `findFuzzySearchMatches(\"Nexus Editor\", \"nxe\")`\n+- **THEN** the result SHALL include a match covering `Nexus E`\n+- **AND** the match SHALL expose the document indices that satisfied `n`, `x`, and `e`\n+- **AND** the match SHALL expose a numeric `score`\n+\n+#### Scenario: Case-sensitive fuzzy match\n+- **WHEN** a host calls `findFuzzySearchMatches(doc, query, { caseSensitive: true })`\n+- **THEN** only characters with matching case SHALL satisfy the fuzzy query\n+\n+#### Scenario: Common helper opt-in\n+- **WHEN** a host calls `findSearchMatches(doc, query, { fuzzy: true })`\n+- **THEN** the helper SHALL return fuzzy matches\n+- **AND** omitting `fuzzy` SHALL retain the existing literal search behaviour\n+\n+### Requirement: provide fuzzy search panel mode\n+\n+The `@floatboat/nexus-plugin-search` panel SHALL provide an opt-in fuzzy mode.\n+When enabled, the panel SHALL compile the raw user query to a safe line-local\n+regular expression for CodeMirror navigation while continuing to display the\n+raw query text in the input. The generated pattern SHALL keep matches\n+line-local and SHALL bound the gap between adjacent fuzzy characters to avoid\n+very loose long-span matches.\n+\n+#### Scenario: Plugin-level fuzzy default\n+- **WHEN** a host enables `createSearchPlugin({ fuzzy: true })`\n+- **AND** the search panel opens\n+- **THEN** the `Fuzzy` checkbox SHALL be checked by default\n+- **AND** the user SHALL be able to type a compact query such as `nxe`\n+\n+#### Scenario: Raw input is preserved\n+- **WHEN** fuzzy mode is active\n+- **AND** the user types `nxe`\n+- **THEN** the input field SHALL continue to display `nxe`\n+- **AND** CodeMirror SHALL receive a generated line-local regexp query that can match `Nexus Editor`\n+\n+#### Scenario: Incompatible toggles are disabled\n+- **WHEN** fuzzy mode is active\n+- **THEN** the `Regexp` and `By word` toggles SHALL be disabled\n+- **AND** the `Match case` toggle SHALL remain available\n+\n+#### Scenario: Generated pattern is escaped, line-local, and bounded\n+- **WHEN** the query contains regexp syntax characters such as `.`\n+- **THEN** `createFuzzySearchPattern` SHALL escape those characters\n+- **AND** the generated gaps SHALL NOT match newline characters\n+- **AND** the generated gaps SHALL have a finite character limit"
+      },
+      {
+        "sha": "7f2f4c1ebf6d88a8c119dedade1ba0477dfbe847",
+        "filename": "openspec/changes/add-fuzzy-search-mode/tasks.md",
+        "status": "added",
+        "additions": 33,
+        "deletions": 0,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-fuzzy-search-mode%2Ftasks.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -0,0 +1,33 @@\n+# Implementation Tasks\n+\n+## 1. Plugin Search\n+\n+- [x] 1.1 Add `FuzzySearchMatch`, `findFuzzySearchMatches`, and `createFuzzySearchPattern` exports.\n+- [x] 1.2 Extend `SearchOptions` with per-call `fuzzy?: boolean`.\n+- [x] 1.3 Extend `SearchPluginOptions` with plugin-level default `fuzzy?: boolean`.\n+- [x] 1.4 Add a `Fuzzy` checkbox to the search panel and wire it to CodeMirror search state.\n+- [x] 1.5 Disable incompatible regexp / whole-word toggles while fuzzy mode is active.\n+- [x] 1.6 Preserve the raw user input in the search field while fuzzy mode compiles a regexp query internally.\n+\n+## 2. Tests\n+\n+- [x] 2.1 Cover ordered fuzzy matching with indices and score metadata.\n+- [x] 2.2 Cover case-sensitive fuzzy matching.\n+- [x] 2.3 Cover `findSearchMatches(..., { fuzzy: true })`.\n+- [x] 2.4 Cover fuzzy regexp pattern generation and escaping.\n+- [x] 2.5 Cover search panel fuzzy mode defaults, disabled controls, raw input preservation, and navigation.\n+\n+## 3. Documentation and Demo\n+\n+- [x] 3.1 Add `packages/plugin-search/README.md` with fuzzy usage and API notes.\n+- [x] 3.2 Add `apps/electron-demo/sample-vault/fuzzy-demo.md`.\n+- [x] 3.3 Link the demo note from `apps/electron-demo/sample-vault/index.md`.\n+- [x] 3.4 Mark Roadmap item #17 as done and link this OpenSpec change in `docs/ROADMAP.md`.\n+- [x] 3.5 Mirror the Roadmap item #17 status/link update in `docs/ROADMAP.zh.md`.\n+\n+## 4. Verify\n+\n+- [x] 4.1 `corepack pnpm vitest run packages/plugin-search/test/plugin-search.test.ts`\n+- [x] 4.2 `corepack pnpm --filter @floatboat/nexus-plugin-search build`\n+- [x] 4.3 `corepack pnpm -r exec tsc --noEmit`\n+- [ ] 4.4 `openspec validate add-fuzzy-search-mode --strict` - CLI is not installed in this dev environment; spec format hand-linted against `openspec/AGENTS.md`."
+      },
+      {
+        "sha": "d43fd91ef31a21bb76f4f85d34dd2ee4a3f1911f",
+        "filename": "packages/plugin-search/README.md",
+        "status": "added",
+        "additions": 110,
+        "deletions": 0,
+        "changes": 110,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/packages%2Fplugin-search%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/packages%2Fplugin-search%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2FREADME.md?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -0,0 +1,110 @@\n+# @floatboat/nexus-plugin-search\n+\n+CodeMirror-backed search and replace for\n+[Nexus-Editor](https://github.com/floatboatai/Nexus-Editor).\n+\n+The package provides:\n+\n+- a Nexus-styled search panel opened through the standard CodeMirror search\n+  keymap (`Mod-f`, `F3`, `Mod-g`, etc.);\n+- pure helpers for literal, fuzzy, and replacement operations;\n+- stable `data-test-id` selectors for host automation.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-plugin-search @floatboat/nexus-core\n+```\n+\n+## Enable the plugin\n+\n+```ts\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import { createSearchPlugin } from \"@floatboat/nexus-plugin-search\";\n+\n+const editor = createEditor({\n+  container,\n+  initialValue: \"# Nexus Editor\\n\\nSearch this document...\",\n+  plugins: [createSearchPlugin()],\n+});\n+```\n+\n+## Fuzzy search mode\n+\n+Fuzzy search treats the query as an ordered subsequence. For example, `nxe`\n+matches `Nexus Editor` because the characters `n`, `x`, and `e` appear in that\n+order.\n+\n+Enable fuzzy mode by default in the panel:\n+\n+```ts\n+createEditor({\n+  container,\n+  plugins: [\n+    createSearchPlugin({\n+      fuzzy: true,\n+    }),\n+  ],\n+});\n+```\n+\n+When the panel's `Fuzzy` checkbox is active, the input still shows the raw user\n+query (`nxe`). Internally the plugin compiles it to a safe line-local regular\n+expression such as `n[^\\n]{0,16}?x[^\\n]{0,16}?e` so CodeMirror can keep\n+handling navigation, selection, and match highlighting without surfacing very\n+loose long-span matches.\n+\n+Fuzzy mode disables the `Regexp` and `By word` toggles because those options do\n+not map cleanly to subsequence ranges. `Match case` remains available.\n+\n+## Pure helpers\n+\n+```ts\n+import {\n+  createFuzzySearchPattern,\n+  findFuzzySearchMatches,\n+  findSearchMatches,\n+  replaceAllMatches,\n+} from \"@floatboat/nexus-plugin-search\";\n+\n+findSearchMatches(\"Hello hello\", \"hello\");\n+// [{ from: 0, to: 5, text: \"Hello\" }, { from: 6, to: 11, text: \"hello\" }]\n+\n+findSearchMatches(\"Nexus Editor\", \"nxe\", { fuzzy: true });\n+// [{ from: 0, to: 7, text: \"Nexus E\", indices: [0, 2, 6], score: ... }]\n+\n+findFuzzySearchMatches(\"Nexus Editor\", \"nxe\", { caseSensitive: false });\n+\n+createFuzzySearchPattern(\"n.e\");\n+// \"n[^\\\\n]{0,16}?\\\\.[^\\\\n]{0,16}?e\"\n+\n+replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\");\n+// \"dog sdogter dog\"\n+```\n+\n+## Option scopes\n+\n+`SearchPluginOptions.fuzzy` and `SearchOptions.fuzzy` intentionally have the\n+same name but apply at different layers:\n+\n+| Option | Where it applies | Purpose |\n+|---|---|---|\n+| `SearchPluginOptions.fuzzy` | `createSearchPlugin({ fuzzy })` | Sets the search panel's default fuzzy checkbox state. |\n+| `SearchOptions.fuzzy` | `findSearchMatches(doc, query, { fuzzy })` | Chooses fuzzy matching for a single helper call. |\n+\n+## API reference\n+\n+| Export | Purpose |\n+|---|---|\n+| `createSearchPlugin(options?)` | Create the CodeMirror-backed Nexus search plugin. |\n+| `findSearchMatches(doc, query, options?)` | Find literal matches by default, or fuzzy matches when `options.fuzzy` is true. |\n+| `findFuzzySearchMatches(doc, query, options?)` | Find ordered-subsequence matches with `indices` and `score` metadata. |\n+| `createFuzzySearchPattern(query)` | Compile a raw fuzzy query to a line-local escaped regexp pattern. |\n+| `replaceAllMatches(doc, query, replacement, options?)` | Replace all literal matches in a string. |\n+| `SearchMatch` | Basic `{ from, to, text }` match shape. |\n+| `FuzzySearchMatch` | Extends `SearchMatch` with `indices` and `score`. |\n+| `SearchPluginOptions` | Panel options: `top`, `caseSensitive`, `fuzzy`, `highlightSelectionMatches`, `labels`. |\n+\n+See [`docs/ROADMAP.md`](../../docs/ROADMAP.md) item #17 and\n+[`openspec/changes/add-fuzzy-search-mode`](../../openspec/changes/add-fuzzy-search-mode)\n+for the change proposal."
+      },
+      {
+        "sha": "4c9c4984f1e10ebf68d65770e0cccb8254460067",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 175,
+        "deletions": 7,
+        "changes": 182,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -23,8 +23,20 @@ export interface SearchMatch {\n   text: string;\n }\n \n+export interface FuzzySearchMatch extends SearchMatch {\n+  /**\n+   * Character offsets inside the source document that satisfied the fuzzy query.\n+   */\n+  indices: number[];\n+  /**\n+   * Higher values represent tighter matches with more boundary/contiguous hits.\n+   */\n+  score: number;\n+}\n+\n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  fuzzy?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -36,6 +48,11 @@ export interface SearchPluginOptions {\n    * Enable case-sensitive search by default.\n    */\n   caseSensitive?: boolean;\n+  /**\n+   * Enable fuzzy search by default. Fuzzy search treats the query as an\n+   * ordered subsequence, for example \"nxe\" matches \"Nexus Editor\".\n+   */\n+  fuzzy?: boolean;\n   /**\n    * Highlight viewport matches for the current selection.\n    */\n@@ -54,6 +71,7 @@ export interface SearchPluginLabels {\n   matchCase: string;\n   regexp: string;\n   byWord: string;\n+  fuzzy: string;\n   replaceNext: string;\n   replaceAll: string;\n   close: string;\n@@ -70,15 +88,144 @@ const DEFAULT_LABELS: SearchPluginLabels = {\n   matchCase: \"Match case\",\n   regexp: \"Regexp\",\n   byWord: \"By word\",\n+  fuzzy: \"Fuzzy\",\n   replaceNext: \"Replace\",\n   replaceAll: \"Replace all\",\n   close: \"Close\"\n };\n \n+const DEFAULT_FUZZY_GAP = 16;\n+\n function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function normalizeForSearch(value: string, caseSensitive: boolean | undefined): string {\n+  return caseSensitive ? value : value.toLocaleLowerCase();\n+}\n+\n+function isWordBoundary(text: string, index: number): boolean {\n+  if (index === 0) {\n+    return true;\n+  }\n+\n+  const previous = text[index - 1];\n+  const current = text[index];\n+  if (!previous || !current) {\n+    return true;\n+  }\n+\n+  return (\n+    /[\\s()[\\]{}.,:;'\"`_*~#!?/-]/.test(previous) ||\n+    (/[a-z]/.test(previous) && /[A-Z]/.test(current))\n+  );\n+}\n+\n+function scoreFuzzyMatch(text: string, indices: number[], queryLength: number): number {\n+  const from = indices[0] ?? 0;\n+  const to = (indices[indices.length - 1] ?? from) + 1;\n+  let score = queryLength * 20 - (to - from - queryLength) * 2;\n+\n+  for (let i = 0; i < indices.length; i += 1) {\n+    if (isWordBoundary(text, indices[i])) {\n+      score += 8;\n+    }\n+    if (i > 0 && indices[i] === indices[i - 1] + 1) {\n+      score += 10;\n+    }\n+  }\n+\n+  return score;\n+}\n+\n+function findNextFuzzyCandidate(\n+  text: string,\n+  query: string,\n+  from: number,\n+  options: SearchOptions\n+): FuzzySearchMatch | null {\n+  const normalizedText = normalizeForSearch(text, options.caseSensitive);\n+  const normalizedQuery = normalizeForSearch(query, options.caseSensitive);\n+  const first = normalizedQuery[0];\n+\n+  for (let start = from; start < normalizedText.length; start += 1) {\n+    if (normalizedText[start] !== first) {\n+      continue;\n+    }\n+\n+    const indices = [start];\n+    let queryIndex = 1;\n+    let previousIndex = start;\n+    for (\n+      let index = start + 1;\n+      index < normalizedText.length &&\n+      queryIndex < normalizedQuery.length &&\n+      index <= previousIndex + DEFAULT_FUZZY_GAP + 1;\n+      index += 1\n+    ) {\n+      if (normalizedText[index] === normalizedQuery[queryIndex]) {\n+        indices.push(index);\n+        queryIndex += 1;\n+        previousIndex = index;\n+      }\n+    }\n+\n+    if (queryIndex === normalizedQuery.length) {\n+      const matchFrom = indices[0];\n+      const matchTo = indices[indices.length - 1] + 1;\n+      return {\n+        from: matchFrom,\n+        to: matchTo,\n+        text: text.slice(matchFrom, matchTo),\n+        indices,\n+        score: scoreFuzzyMatch(text, indices, normalizedQuery.length)\n+      };\n+    }\n+  }\n+\n+  return null;\n+}\n+\n+export function createFuzzySearchPattern(query: string): string {\n+  return Array.from(query).map(escapeRegExp).join(`[^\\\\n]{0,${DEFAULT_FUZZY_GAP}}?`);\n+}\n+\n+export function findFuzzySearchMatches(\n+  doc: string,\n+  query: string,\n+  options: SearchOptions = {}\n+): FuzzySearchMatch[] {\n+  if (!query) {\n+    return [];\n+  }\n+\n+  const matches: FuzzySearchMatch[] = [];\n+  let lineStart = 0;\n+\n+  for (const line of doc.split(\"\\n\")) {\n+    let offset = 0;\n+    while (offset < line.length) {\n+      const match = findNextFuzzyCandidate(line, query, offset, options);\n+      if (!match) {\n+        break;\n+      }\n+\n+      const from = lineStart + match.from;\n+      matches.push({\n+        ...match,\n+        from,\n+        to: lineStart + match.to,\n+        indices: match.indices.map((index) => lineStart + index)\n+      });\n+      offset = match.to;\n+    }\n+\n+    lineStart += line.length + 1;\n+  }\n+\n+  return matches;\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,6 +235,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy) {\n+    return findFuzzySearchMatches(doc, query, options);\n+  }\n+\n   const flags = options.caseSensitive ? \"g\" : \"gi\";\n   const pattern = new RegExp(escapeRegExp(query), flags);\n   const matches: SearchMatch[] = [];\n@@ -145,6 +296,7 @@ function resolveLabels(view: EditorView, labels: Partial<SearchPluginLabels> | u\n     matchCase: resolveLabel(view, labels, \"matchCase\", DEFAULT_LABELS.matchCase),\n     regexp: resolveLabel(view, labels, \"regexp\", DEFAULT_LABELS.regexp),\n     byWord: resolveLabel(view, labels, \"byWord\", DEFAULT_LABELS.byWord),\n+    fuzzy: resolveLabel(view, labels, \"fuzzy\", DEFAULT_LABELS.fuzzy),\n     replaceNext: resolveLabel(view, labels, \"replaceNext\", DEFAULT_LABELS.replaceNext),\n     replaceAll: resolveLabel(view, labels, \"replaceAll\", DEFAULT_LABELS.replaceAll),\n     close: resolveLabel(view, labels, \"close\", DEFAULT_LABELS.close)\n@@ -324,6 +476,7 @@ class NexusSearchPanel implements Panel {\n   private readonly caseField: HTMLInputElement;\n   private readonly regexpField: HTMLInputElement;\n   private readonly wholeWordField: HTMLInputElement;\n+  private readonly fuzzyField: HTMLInputElement;\n   private readonly labels: SearchPluginLabels;\n   private readonly replaceRow?: HTMLDivElement;\n   private readonly replaceToggle?: IconButtonElements;\n@@ -332,10 +485,10 @@ class NexusSearchPanel implements Panel {\n   constructor(\n     private readonly view: EditorView,\n     readonly top: boolean,\n-    labels: Partial<SearchPluginLabels> | undefined\n+    options: SearchPluginOptions\n   ) {\n     this.query = getSearchQuery(view.state);\n-    const resolvedLabels = resolveLabels(view, labels);\n+    const resolvedLabels = resolveLabels(view, options.labels);\n     this.labels = resolvedLabels;\n \n     this.searchField = this.createTextField(\n@@ -355,6 +508,7 @@ class NexusSearchPanel implements Panel {\n     this.caseField = this.createCheckbox(\"markdown-search-case-toggle\", \"case\", this.query.caseSensitive);\n     this.regexpField = this.createCheckbox(\"markdown-search-regexp-toggle\", \"re\", this.query.regexp);\n     this.wholeWordField = this.createCheckbox(\"markdown-search-word-toggle\", \"word\", this.query.wholeWord);\n+    this.fuzzyField = this.createCheckbox(\"markdown-search-fuzzy-toggle\", \"fuzzy\", options.fuzzy ?? false);\n \n     this.dom = document.createElement(\"div\");\n     this.dom.className = \"cm-search nexus-search-panel\";\n@@ -387,6 +541,7 @@ class NexusSearchPanel implements Panel {\n       createLabel(this.caseField, resolvedLabels.matchCase),\n       createLabel(this.regexpField, resolvedLabels.regexp),\n       createLabel(this.wholeWordField, resolvedLabels.byWord),\n+      createLabel(this.fuzzyField, resolvedLabels.fuzzy),\n       navigationGroup\n     ];\n     if (this.replaceToggle) {\n@@ -423,6 +578,7 @@ class NexusSearchPanel implements Panel {\n     closeButton.setAttribute(\"aria-label\", resolvedLabels.close);\n     closeButton.title = resolvedLabels.close;\n     this.dom.append(closeButton);\n+    this.syncSearchModeControls();\n   }\n \n   update(update: ViewUpdate): void {\n@@ -470,16 +626,20 @@ class NexusSearchPanel implements Panel {\n     input.name = name;\n     input.setAttribute(\"form\", \"\");\n     input.checked = checked;\n-    input.addEventListener(\"change\", () => this.commit());\n+    input.addEventListener(\"change\", () => {\n+      this.syncSearchModeControls();\n+      this.commit();\n+    });\n     return input;\n   }\n \n   private commit(): void {\n+    const fuzzy = this.fuzzyField.checked;\n     const query = new SearchQuery({\n-      search: this.searchField.value,\n+      search: fuzzy ? createFuzzySearchPattern(this.searchField.value) : this.searchField.value,\n       caseSensitive: this.caseField.checked,\n-      regexp: this.regexpField.checked,\n-      wholeWord: this.wholeWordField.checked,\n+      regexp: fuzzy || this.regexpField.checked,\n+      wholeWord: fuzzy ? false : this.wholeWordField.checked,\n       replace: this.replaceField.value\n     });\n \n@@ -531,6 +691,14 @@ class NexusSearchPanel implements Panel {\n     this.caseField.checked = query.caseSensitive;\n     this.regexpField.checked = query.regexp;\n     this.wholeWordField.checked = query.wholeWord;\n+    this.fuzzyField.checked = false;\n+    this.syncSearchModeControls();\n+  }\n+\n+  private syncSearchModeControls(): void {\n+    const fuzzy = this.fuzzyField.checked;\n+    this.regexpField.disabled = fuzzy;\n+    this.wholeWordField.disabled = fuzzy;\n   }\n }\n \n@@ -540,7 +708,7 @@ export function createSearchPlugin(options: SearchPluginOptions = {}): NexusPlug\n       top: options.top ?? true,\n       caseSensitive: options.caseSensitive ?? false,\n       literal: true,\n-      createPanel: (view) => new NexusSearchPanel(view, options.top ?? true, options.labels)\n+      createPanel: (view) => new NexusSearchPanel(view, options.top ?? true, options)\n     }),\n     keymap.of(searchKeymap)\n   ];"
+      },
+      {
+        "sha": "67e62d7412d7de24249838b0f77d9edc5e8333a8",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 94,
+        "deletions": 0,
+        "changes": 94,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/75c78ff7701f5405de5599cf8d0c967aaefad598/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/75c78ff7701f5405de5599cf8d0c967aaefad598/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=75c78ff7701f5405de5599cf8d0c967aaefad598",
+        "patch": "@@ -1,7 +1,9 @@\n import { describe, expect, it } from \"vitest\";\n import { createEditor } from \"@floatboat/nexus-core\";\n import {\n+  createFuzzySearchPattern,\n   createSearchPlugin,\n+  findFuzzySearchMatches,\n   findSearchMatches,\n   replaceAllMatches\n } from \"../src/index\";\n@@ -21,6 +23,36 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"finds ordered fuzzy matches with scoring metadata\", () => {\n+    expect(findFuzzySearchMatches(\"Nexus Editor\\nNext Entry\", \"nxe\")).toEqual([\n+      expect.objectContaining({ from: 0, to: 7, text: \"Nexus E\", indices: [0, 2, 6] }),\n+      expect.objectContaining({ from: 13, to: 19, text: \"Next E\", indices: [13, 15, 18] })\n+    ]);\n+  });\n+\n+  it(\"supports fuzzy search through the common find helper\", () => {\n+    expect(findSearchMatches(\"alpha beta\\nalphabet\", \"abt\", { fuzzy: true })).toEqual([\n+      expect.objectContaining({ from: 0, to: 9, text: \"alpha bet\", indices: [0, 6, 8] }),\n+      expect.objectContaining({ from: 11, to: 19, text: \"alphabet\", indices: [11, 16, 18] })\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive fuzzy search\", () => {\n+    expect(findFuzzySearchMatches(\"Nexus Editor\\nnexus editor\", \"NE\", { caseSensitive: true })).toEqual([\n+      expect.objectContaining({ from: 0, to: 7, text: \"Nexus E\", indices: [0, 6] })\n+    ]);\n+  });\n+\n+  it(\"ignores overly loose fuzzy matches\", () => {\n+    expect(\n+      findFuzzySearchMatches(\"Search panel settings include match case, regexp, by word, and fuzzy mode\", \"nxe\")\n+    ).toEqual([]);\n+  });\n+\n+  it(\"creates a line-local regexp pattern for fuzzy search panel queries\", () => {\n+    expect(createFuzzySearchPattern(\"n.e\")).toBe(\"n[^\\\\n]{0,16}?\\\\.[^\\\\n]{0,16}?e\");\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n@@ -81,6 +113,7 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     const replaceToggle = container.querySelector<HTMLButtonElement>(\n       '[data-test-id=\"markdown-search-toggle-replace\"]'\n     );\n+    const fuzzyToggle = container.querySelector<HTMLInputElement>('[data-test-id=\"markdown-search-fuzzy-toggle\"]');\n     const replaceToggleTooltip = container.querySelector<HTMLElement>(\n       '[data-test-id=\"markdown-search-toggle-replace-tooltip\"]'\n     );\n@@ -95,6 +128,8 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     expect(nextTooltip?.dataset.tooltip).toBe(\"下一个\");\n     expect(nextTooltip?.textContent).toBe(\"下一个\");\n     expect(container.querySelector('[data-test-id=\"markdown-search-find-row\"]')).not.toBeNull();\n+    expect(fuzzyToggle).not.toBeNull();\n+    expect(fuzzyToggle?.checked).toBe(false);\n     expect(replaceToggle?.getAttribute(\"aria-expanded\")).toBe(\"false\");\n     expect(replaceToggle?.getAttribute(\"aria-label\")).toBe(\"Show replace\");\n     expect(replaceToggle?.getAttribute(\"aria-controls\")).toBe(replaceRow?.id);\n@@ -168,6 +203,65 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     container.remove();\n   });\n \n+  it(\"navigates fuzzy panel queries while preserving the raw input text\", () => {\n+    const container = document.createElement(\"div\");\n+    document.body.append(container);\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"Nexus Editor\\nplain text\",\n+      plugins: [createSearchPlugin({ fuzzy: true })]\n+    });\n+\n+    const content = container.querySelector<HTMLElement>(\".cm-content\");\n+    content?.dispatchEvent(\n+      new KeyboardEvent(\"keydown\", {\n+        key: \"f\",\n+        code: \"KeyF\",\n+        metaKey: true,\n+        bubbles: true,\n+        cancelable: true\n+      })\n+    );\n+    if (!container.querySelector('[data-test-id=\"markdown-search-bar\"]')) {\n+      content?.dispatchEvent(\n+        new KeyboardEvent(\"keydown\", {\n+          key: \"f\",\n+          code: \"KeyF\",\n+          ctrlKey: true,\n+          bubbles: true,\n+          cancelable: true\n+        })\n+      );\n+    }\n+\n+    const input = container.querySelector<HTMLInputElement>('[data-test-id=\"markdown-search-input\"]');\n+    const fuzzyToggle = container.querySelector<HTMLInputElement>('[data-test-id=\"markdown-search-fuzzy-toggle\"]');\n+    const regexpToggle = container.querySelector<HTMLInputElement>('[data-test-id=\"markdown-search-regexp-toggle\"]');\n+    const wordToggle = container.querySelector<HTMLInputElement>('[data-test-id=\"markdown-search-word-toggle\"]');\n+    expect(fuzzyToggle?.checked).toBe(true);\n+    expect(regexpToggle?.disabled).toBe(true);\n+    expect(wordToggle?.disabled).toBe(true);\n+\n+    input!.value = \"nxe\";\n+    input!.dispatchEvent(new Event(\"input\", { bubbles: true, cancelable: true }));\n+    input!.dispatchEvent(\n+      new KeyboardEvent(\"keydown\", {\n+        key: \"Enter\",\n+        code: \"Enter\",\n+        bubbles: true,\n+        cancelable: true\n+      })\n+    );\n+\n+    expect(input?.value).toBe(\"nxe\");\n+    const selection = editor.getSelection();\n+    expect(Math.min(selection.anchor, selection.head)).toBe(0);\n+    expect(Math.max(selection.anchor, selection.head)).toBe(7);\n+\n+    editor.destroy();\n+    container.remove();\n+  });\n+\n   it(\"falls back to default tooltip labels when localized labels are blank\", () => {\n     const container = document.createElement(\"div\");\n     document.body.append(container);"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=28",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

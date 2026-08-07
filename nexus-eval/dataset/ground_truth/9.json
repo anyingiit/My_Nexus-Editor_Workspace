@@ -1,0 +1,38 @@
+{
+  "pr_number": 9,
+  "title": "feat(search): support regex queries",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-14T04:53:59Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ChainCoinLab",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "COMMENTED",
+      "submitted_at": "2026-05-13T11:22:26Z",
+      "body": "## Review: PR #9 — feat(search): support regex queries\n\n**Assessment:** This PR adds regex query support to plugin-search. Implementation is clean (+172/-6), tests cover basic regex patterns and edge cases (86 new test lines). Mergeable, no conflicts.\n\n**Concern:** This is from the same author (ChainCoinLab) who also submitted PR #12, #14, and #15. Four PRs from one author in quick succession — the scope of each is relatively small and they appear to be incremental. Not a blocker, but noting for context."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-13T09:16:32Z",
+      "body": "@ChainCoinLab 整体方向对 —— 面板 UI 早就有 `regexp` toggle，但独立 helper `findSearchMatches` / `replaceAllMatches` 一直在硬 `escapeRegExp`，这是真正的缺口。`createSearchPlugin({ regexp: true })` 这条初始 seed 也合理。测试覆盖（字面默认 / regex 命中 / case-sensitive / 无效正则 / 捕获组替换）足够。\n\n三点请处理：\n\n1. **README**。新增了 `regexp` 公共 option，请同步 `packages/plugin-search/README.md`（如不存在则顶层 README 简提一下）。CONTRIBUTING §91 要求。\n2. **`literal: true` 与 `regexp: true` 共存**。CodeMirror 的 `search()` config 里这两个语义重叠 —— `regexp: true` 时 `literal` 被忽略。不算 bug，但建议 `literal: !(options.regexp ?? false)` 写法，意图更清晰。\n3. **无效正则静默吞掉**。`new RegExp` 抛错时 `findSearchMatches` 返回 `[]`、`replaceAllMatches` 返回原文，调用方无法区分\"语法错\"和\"零匹配\"。面板里可接受（用户输入中途常态），但程序化 API 建议至少 `console.warn` 一次，或在 README 里明确文档化\"无效模式视为无匹配\"。ROADMAP #15 备注本身就是 \"Watch escape edge cases\"。\n\n三处处理完即可合并。"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:38:19Z",
+      "body": "### Code review\n\nNo blocking issues — README sync, `literal: !(options.regexp ?? false)`, and `console.warn` on invalid regex from the prior review are all in place.\n\nTwo lower-confidence notes worth a look (not blocking):\n\n- The PR introduces a new public capability (`regexp` option) but doesn't touch `openspec/`. Per the root `CLAUDE.md`, \"Always open @/openspec/AGENTS.md when the request: Introduces new capabilities\" — sibling PRs #13/#14/#15 follow that pattern. For an additive option this may be intentional, but worth confirming with the maintainer.\n\n- In literal (non-regex) mode, `replaceAllMatches` still passes the user's `replacement` directly to `String.prototype.replace`, so `$&`, `$1`, `$$` in literal replacements are interpreted as regex substitution syntax. This is a pre-existing foot-gun, but the new README now documents `$1: $2` capture syntax as regex-only, which makes the literal-mode behavior more surprising. A small escape on literal replacements (e.g. replacing `$` → `$$`) plus a README note would close the gap.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5/packages/plugin-search/src/index.ts#L120-L140\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:53:58Z",
+      "body": "Thanks for the contribution. Closing here to focus your several concurrent PRs into a single review thread.\n\nYou currently have three open PRs (#9, #14, #15). To keep reviewer load manageable, we'd like to focus on **#15** (cloud storage interface) since it's the most architecturally substantive piece — once that lands, smaller features like this regex option are easy to bring back as follow-ups.\n\nThe work in this PR is in good shape (README synced, `literal: !(options.regexp ?? false)`, `console.warn` for invalid patterns, capture-group tests) and should be straightforward to re-open or re-submit after #15 merges. Two minor things to address when you do: (1) consider escaping `$` in literal-mode `replaceAllMatches` replacements so users don't hit the `$&`/`$1` foot-gun, and (2) since this introduces a new capability, sibling PRs follow the OpenSpec pattern — feel free to bundle a small proposal.\n\nThanks again, and looking forward to iterating on #15."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

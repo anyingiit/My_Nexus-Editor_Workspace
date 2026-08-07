@@ -1,0 +1,38 @@
+{
+  "pr_number": 31,
+  "title": "feat: implement all P1 roadmap features",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T06:15:28Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "xinxi1990",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-05-26T03:14:41Z",
+      "body": "## Review 总结\n\nPR 整体覆盖了 P1 Roadmap 全部 5 项功能（#6 / #8 / #9 / #15 / #21），实现广度和体量足够，但目前还**无法进入面试环节**，需要先处理两个阻塞项。\n\n### 阻塞项（必须处理）\n\n1. **❌ CLA 未签署** — `cla-assistant` 状态为 `not_signed`，需要先签署 Contributor License Agreement 才能合入\n   - 链接：https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=31\n\n2. **❌ 与 main 分支冲突（CONFLICTING / DIRTY）** — 自 5/23 提 PR 以来 main 已有其他 PR 合入，需要 rebase 最新 main 并解决冲突后重新 push\n\n### 已识别的亮点（处理完冲突后会进入正式 review）\n\n- 5 个 Roadmap 条目一次性交付，体量 +711/-70\n- `packages/core` 多光标 API + Widget API 重写\n- `packages/plugin-history` `groupChanges` / `joinToEvent` 回调\n- `packages/plugin-search` 正则模式 + `escapeRegExp` 防御\n- `apps/electron-demo` 搜索栏 Regex toggle + vite manualChunks 分包\n- 测试声称 2694 个全绿，包含 multi-cursor / widgets / history / search 多个新文件\n- Conventional Commits 规范、Claude Opus 4.6 协作签名透明\n\n### 需要补充验证（rebase 后我会重新走一遍）\n\n1. **演示**：体量这么大，强烈建议补一个录屏或 GIF（展示多光标 + 正则搜索 + Electron 冷启动改善），这是 PR #5 标杆要求的加分项\n2. **Roadmap 登记**：PR 描述提到 P1 全部条目，但未看到在 `docs/ROADMAP.md` 中把这 5 项 status 改为 `in-progress` / `done`，记得同步登记\n3. **Electron 分包效果**：`manualChunks` 改动建议补一个 before/after 的 bundle 大小对比数据\n\n### 下一步\n\n请按以下顺序处理：\n1. 签署 CLA\n2. `git rebase origin/main` 并解决冲突\n3. （可选）补充演示与 Roadmap 登记\n4. force push 后 @我，我会重新 review\n\n辛苦了。\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-23T10:09:24Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=31) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "xinxi1990",
+      "created_at": "2026-05-26T06:26:10Z",
+      "body": " 1、完成签署 CLA   2、 已完成 rebase，冲突已解决 3、 增加Demo Gif    @ketd 请重新 review。"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T06:15:26Z",
+      "body": "感谢这份覆盖面很广的工作 👏 里面有真材实料——尤其是基于 `joinToEvent` + `forceGroup` 的 undo 分组（roadmap #8），是同类实现里最干净的一个。\n\n不过本 PR 一次性捆了 5 块独立功能（多光标 #6、history 分组 #8、widget API 重写 #9、正则搜索 #15、Electron 分包 #21），跨 4 个包，没法作为一个整体评审或合并：\n\n- 按 `CONTRIBUTING.md` §2「One PR, one concern」，这属于必须拆分的多功能捆绑。\n- 多光标这块按 §3.1 属于新公共 API，需要先走 OpenSpec proposal——本 PR 没有 `openspec/changes/` 条目。而且它只打开了 `allowMultipleSelections`/`drawSelection`，却没有改 `markdown-keymap.ts` / `markdown-autopair.ts`，所以在多光标下 Enter 和 `**`/反引号/`~~` 会对非主光标丢键。这块已经由 #57 完整且带 OpenSpec、带 live-preview/表格交互测试地实现了，建议直接采用 #57。\n\n因此先关闭本 PR。强烈建议把 history `joinToEvent` 那块单独拆成一个聚焦的 #8 PR——它质量足够好，值得独立合并。\n\n🧭 一条提交建议：先开 OpenSpec proposal、一个 PR 一个 concern。新公共 API 在 `openspec/changes/` 里先把设计讲清楚，再分功能落地，能避免「开了开关但没修正确性」这类半成品，也让每块好东西各自顺利合并。\n\n🙌\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

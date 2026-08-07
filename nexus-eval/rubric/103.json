@@ -1,0 +1,25 @@
+{
+  "pr_number": 103,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Handle race between async render and widget lifecycle"
+    },
+    {
+      "id": 2,
+      "summary": "Clarify Mermaid global configuration boundaries across instances"
+    },
+    {
+      "id": 3,
+      "summary": "Strengthen SVG injection security and document securityLevel risks"
+    },
+    {
+      "id": 4,
+      "summary": "Define migration path for core users losing Mermaid support"
+    },
+    {
+      "id": 5,
+      "summary": "Add tests for async races, destruction, config isolation, error recovery"
+    }
+  ]
+}

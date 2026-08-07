@@ -1,0 +1,24 @@
+{
+  "pr_number": 7,
+  "title": "feat(core): add getSelectedText API",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-13T09:19:20Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ChainCoinLab",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-13T09:16:31Z",
+      "body": "@ChainCoinLab 参见 #6 的说明 —— 同一作者针对 ROADMAP #5 同时投了 #6 和 #7，我们以 #8 作为合入基线。这份 PR 比 #6 多了 README 同步（好的一面），但有两个小点顺带说明：\n\n- `Math.min(sel.anchor, sel.head)` / `Math.max(...)` 是多余的 —— CodeMirror `SelectionRange` 的 `from` / `to` 已经是 normalize 后的值，直接用即可（参考本仓库 `getSelection()` 也只读 `anchor` / `head` 不做重排）。\n- 缺 `if (destroyed) return \"\"` 守卫，编辑器 destroy 后调用会异常；本文件其它公开方法都有这个守卫，建议对齐。\n\n建议把 #6 / #7 一起撤掉。再次感谢投入。"
+    },
+    {
+      "user": "ChainCoinLab",
+      "created_at": "2026-05-13T09:19:19Z",
+      "body": "Closing this duplicate PR."
+    }
+  ]
+}

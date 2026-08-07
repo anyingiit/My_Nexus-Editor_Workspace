@@ -1,0 +1,46 @@
+{
+  "pr_number": 79,
+  "title": "fix(electron): normalize test path expectations for Windows compatibility",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "01526cbe11991fa208e67c32151d9f8f9ba3fa34",
+  "merge_commit_sha": "49f40019ef45935e4669e6ae65281eaf9ca602d4",
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "commits": [
+    {
+      "sha": "01526cbe11991fa208e67c32151d9f8f9ba3fa34",
+      "message": "fix(electron): normalize test path expectations for Windows compatibility\n\nOn Windows, path.join() produces backslash-separated paths (\\), but\nLinkIndex.normalizeSlashes always returns forward-slash paths (/).\nThis caused 9 of 15 tests in sample-vault.test.ts to fail on Windows\nwith assertion errors like:\n\n  expected 'C:/.../Topics/AI.md' to be 'C:\\\\...\\\\Topics\\\\AI.md'\n\nThe production code normalization is correct; this aligns all\npath.join() call sites in the test file with that behavior by\nwrapping them with normalizeSlashes(), starting from VAULT_ROOT\nitself so derived paths are consistently forward-slash formatted.\n\nFixes #77\n\nCo-Authored-By: CodeBuddy <codebuddy@tencent.com>",
+      "date": "2026-06-27T10:24:44Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/test/sample-vault.test.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 10,
+      "changes": 20
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=79",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

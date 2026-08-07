@@ -1,0 +1,58 @@
+{
+  "pr_number": 154,
+  "title": "fix(live-preview): use live doc content for table column/row operations",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-14T08:29:48Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "cc33e7ee8aec7c2ce63cf0dba6384162d6eaf269",
+  "merge_commit_sha": "6361a446fd5e1f739fe09a6c0f6451ed44d02a7a",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "4311aeaa1b6d22cb29d01aebf11a42063cd1c95f",
+      "message": "fix: use live doc content for table column/row operations\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-14T07:20:22Z"
+    },
+    {
+      "sha": "cc33e7ee8aec7c2ce63cf0dba6384162d6eaf269",
+      "message": "docs: add PR checklist for Nexus-Editor contributions\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-14T08:13:22Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/PR_CHECKLIST.md",
+      "status": "added",
+      "additions": 123,
+      "deletions": 0,
+      "changes": 123
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 32,
+      "deletions": 13,
+      "changes": 45
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=154",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

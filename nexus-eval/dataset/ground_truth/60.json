@@ -1,0 +1,26 @@
+{
+  "pr_number": 60,
+  "title": "feat(core): add selection controls to setDocument",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T08:02:33Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "yhaosen31-dot",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-11T08:13:47Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=60) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T08:02:24Z",
+      "body": "感谢贡献 🙌 已在本地 rebase 到最新 main，跑通 `pnpm typecheck` + `pnpm test` + `pnpm build` 全绿后，以 squash 提交合入主分支：`818155f`（保留你为 author + Co-authored-by）。\n\n为保持 main 线性整洁，这里采用 squash 后手动合并的方式落地，所以 PR 由系统关闭而非显示 merged，但你的提交已经在主分支上了。再次感谢！"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,98 @@
+{
+  "pr_number": 78,
+  "title": "fix(core): cancel pending emitChange on silent setDocument",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "dd31285043e1b11cb3cef389245d1664b7abe7a0",
+  "merge_commit_sha": "8332f8c301984628c3d15b93368d1aae4fcc149e",
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "commits": [
+    {
+      "sha": "a71b5b37f84b8c7fc4c3a9b806e070984a6156ac",
+      "message": "fix(core): cancel pending emitChange on silent setDocument",
+      "date": "2026-06-23T03:49:36Z"
+    },
+    {
+      "sha": "6dcb5b5b2561ad9c90700623d4dbe2bfe5052573",
+      "message": "Merge branch 'main' into fix-pr78-conflict-resolve",
+      "date": "2026-06-23T15:12:30Z"
+    },
+    {
+      "sha": "35308c63a434e407dd70024db8b951b8c5d22f0b",
+      "message": "fix: stabilize silent setDocument + regression test",
+      "date": "2026-06-24T00:37:12Z"
+    },
+    {
+      "sha": "dd31285043e1b11cb3cef389245d1664b7abe7a0",
+      "message": "Merge branch 'fix/core-stale-debounce-on-silent-load' into fix-pr78-conflict-resolve",
+      "date": "2026-06-24T00:47:58Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 13,
+      "changes": 17
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 4,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "4426677386db141efb304d1e00e0fffda2f5ce22",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 13,
+        "changes": 17,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd31285043e1b11cb3cef389245d1664b7abe7a0/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd31285043e1b11cb3cef389245d1664b7abe7a0/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=dd31285043e1b11cb3cef389245d1664b7abe7a0",
+        "patch": "@@ -283,6 +283,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n   let destroyed = false;\n   let focused = false;\n   let parseTimer: ReturnType<typeof setTimeout> | undefined;\n+  let docVersion = 0;\n   let compositionFlushTimer: ReturnType<typeof setTimeout> | undefined;\n   let pendingCompositionMarkdown: string | null = null;\n   // 组合输入（IME）状态与被推迟的文档回灌。组合输入进行中调用 setDocument 会被\n@@ -347,13 +348,15 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       parseTimer = undefined;\n     }\n \n+    const versionAtSchedule = docVersion; //\n+\n     if (parseDelayMs <= 0) {\n       emitChange(markdown);\n       return;\n     }\n \n     parseTimer = setTimeout(() => {\n-      parseTimer = undefined;\n+      if (versionAtSchedule !== docVersion) return; //\n       emitChange(markdown);\n     }, parseDelayMs);\n   }\n@@ -774,19 +777,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n         scrollIntoView: true\n       });\n     },\n-    setSelections(ranges, mainIndex) {\n-      if (destroyed || ranges.length === 0) {\n-        return;\n-      }\n \n-      view.dispatch({\n-        selection: EditorSelection.create(\n-          ranges.map((range) => EditorSelection.range(range.anchor, range.head ?? range.anchor)),\n-          mainIndex ?? ranges.length - 1\n-        ),\n-        scrollIntoView: true\n-      });\n-    },\n     setDocument(next, opts) {\n       if (destroyed) {\n         return;"
+      },
+      {
+        "sha": "f1c168db0b4ae415c3089bc66ccfb25096b9cfb6",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 21,
+        "deletions": 0,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/dd31285043e1b11cb3cef389245d1664b7abe7a0/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/dd31285043e1b11cb3cef389245d1664b7abe7a0/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=dd31285043e1b11cb3cef389245d1664b7abe7a0",
+        "patch": "@@ -918,3 +918,24 @@ describe(\"createEditor — DOM event hook layer\", () => {\n     editor.destroy();\n   });\n });\n+\n+it(\"silent setDocument should NOT trigger onChange\", async () => {\n+  const container = document.createElement(\"div\");\n+\n+  const editor = createEditor({\n+    container,\n+    parseDelayMs: 10,\n+  });\n+\n+  const calls: any[] = [];\n+\n+  editor.on(\"change\", (doc: any) => {\n+    calls.push(doc);\n+  });\n+\n+  editor.setDocument(\"hello world\", { silent: true });\n+\n+  await new Promise((r) => setTimeout(r, 50));\n+\n+  expect(calls.length).toBe(0);\n+});\n\\ No newline at end of file"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=78",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

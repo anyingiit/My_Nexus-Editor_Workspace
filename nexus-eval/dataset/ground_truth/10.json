@@ -1,0 +1,15 @@
+{
+  "pr_number": 10,
+  "title": "chore(roadmap): mark #5 and #15 as in-progress",
+  "merged": true,
+  "state": "closed",
+  "closed_at": "2026-05-13T09:23:34Z",
+  "merged_at": "2026-05-13T09:23:34Z",
+  "merged_by": "ketd",
+  "user": "ketd",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [],
+  "golden_decision": "approve",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

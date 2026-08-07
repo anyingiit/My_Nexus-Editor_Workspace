@@ -1,0 +1,123 @@
+{
+  "pr_number": 208,
+  "title": "feat(history): add undo grouping controls and exclude silent loads",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "5e8e28c2537c016751e0cb79fa50c8d50461be28",
+  "merge_commit_sha": "6545bc3a92d0b86a1923e2b06fca81eefc12f600",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "5e8e28c2537c016751e0cb79fa50c8d50461be28",
+      "message": "feat(history): add undo grouping controls and exclude silent loads\r\n\r\nExpose configurable CM6 history options plus isolate/notInHistory helpers so hosts can force undo boundaries, and keep silent setDocument/replaceRange off the undo stack so file opens are not Ctrl+Z steps.",
+      "date": "2026-08-04T06:42:28Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 3,
+      "changes": 12
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 7,
+      "changes": 16
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 59,
+      "deletions": 0,
+      "changes": 59
+    },
+    {
+      "filename": "packages/plugin-history/README.md",
+      "status": "added",
+      "additions": 105,
+      "deletions": 0,
+      "changes": 105
+    },
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 99,
+      "deletions": 3,
+      "changes": 102
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 127,
+      "deletions": 1,
+      "changes": 128
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 0,
+      "changes": 16
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=208",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

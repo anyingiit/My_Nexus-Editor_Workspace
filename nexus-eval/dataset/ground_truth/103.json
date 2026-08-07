@@ -1,0 +1,26 @@
+{
+  "pr_number": 103,
+  "title": "feat(mermaid): create @floatboat/nexus-plugin-mermaid package",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T15:28:46Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "Hill-Eagle",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T14:33:35Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=103) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=103) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=103) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T15:28:45Z",
+      "body": "严格审查结论：不通过。\n\n这个 PR 的方向（把 Mermaid 从 core 中抽成独立插件）是合理的，也正确接入了 build、tsconfig path 和 vitest alias；但实现质量还达不到合入标准。\n\n主要问题：\n\n1. 没有处理 Mermaid 异步渲染与 CodeMirror widget 生命周期之间的竞态。widget 在异步 `parse/render` 返回前可能已被销毁或被新源码替换，当前实现需要非常严格地防止旧 SVG 回写到新 DOM，否则会出现 stale render。\n\n2. Mermaid 的全局初始化/配置边界不清。Mermaid 是全局状态较重的库，插件允许 host 配 config，但没有充分说明多 editor、多 plugin instance、不同 theme/securityLevel 并存时的行为。作为独立插件，这个边界必须明确。\n\n3. 安全边界需要更严。Mermaid 输出 SVG，PR 虽然提到 parse-then-render，但对 SVG 注入、securityLevel 默认值、host 自定义 config 放宽后的风险没有足够测试和文档说明。\n\n4. 从 core 抽离 Mermaid 逻辑会影响现有 live-preview 行为，但 PR 没有清楚说明迁移兼容路径：原先 core 用户是否默认失去 Mermaid 支持？应该如何通过 preset 或 plugin 显式恢复？这属于 breaking/behavior change 风险。\n\n5. 测试更多覆盖 happy path/mock path，没有充分覆盖异步竞态、销毁后回写、多实例配置隔离、错误后恢复等关键生命周期问题。\n\n本地验证：`pnpm install --frozen-lockfile` 与 `pnpm typecheck` 通过；`pnpm test` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入用例执行。该环境问题不作为本 PR 的主要扣分点。\n\n建议关闭。候选人如果继续，应先补齐生命周期竞态、安全边界、多实例配置隔离和 core 迁移兼容方案，再提交更小、更可验证的 PR。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

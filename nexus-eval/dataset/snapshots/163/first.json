@@ -1,0 +1,136 @@
+{
+  "pr_number": 163,
+  "title": "feat(autosave): add debounced autosave plugin with tests",
+  "body": "<!--\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\n  e.g.  feat(toolbar): list toggle for multi-line selection\nAllowed scopes — see CONTRIBUTING.md §2.\nProject scope and contribution policy — see GOVERNANCE.md.\n\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2。\n项目范围与贡献政策见 GOVERNANCE.md。\n-->\n\n## Summary / 摘要\n\nAdd `@floatboat/nexus-plugin-autosave`: a debounced auto-save plugin that\npersists the editor's Markdown to a host sink after edits settle.\n\n## Motivation / 背景与动机\n\n<!-- Why is this change needed? Link issue / roadmap entry / OpenSpec change. -->\n\n- Issue:\n- Roadmap (docs/ROADMAP.md): addresses the documented `onChange` debounce pain point\n- OpenSpec change: `add-autosave-plugin`\n\n## Changes / 变更内容\n\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\n\n- `packages/core`:\n- `packages/plugin-*`:\n  - `packages/plugin-autosave` (new): `createAutoSavePlugin({ onSave, delay? })`\n    exports a Nexus plugin that debounces document changes and calls\n    `onSave(markdown)`. `flush()` forces an immediate save; `destroy()`\n    cancels pending work. `delay` defaults to 1000ms (0 = save per change).\n- `apps/electron-demo`:\n- `openspec/`:\n  - `openspec/changes/add-autosave-plugin/` (proposal + tasks + spec delta)\n\n## Testing / 测试\n\n<!-- How was this verified? Commands and scenarios covered. -->\n\n- [x] `pnpm test` passes / 全绿\n- [x] Affected packages build (`pnpm build`) / 受影响包构建通过\n- [x] New / updated vitest cases / 新增或更新的 vitest 用例：\n  - saves latest markdown after the debounce delay\n  - collapses bursts of edits into a single save\n  - does not save before the delay elapses\n  - does not save on attach without an edit\n  - `flush()` forces an immediate save and clears the timer\n  - `destroy()` silences further saves\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：N/A (headless plugin, no UI)\n\n## Compliance / 合规自检\n\n<!-- See GOVERNANCE.md §6 for the full policy. / 完整政策见 GOVERNANCE.md §6。 -->\n\n- [ ] **CLA signed** — first-time contributors will be prompted automatically by the CLA bot / 首次贡献者按 CLA 机器人提示签署\n- [x] **AI Disclosure / AI 披露**：This PR was developed with AI assistance (WorkBuddy) for code drafting. The contributor selected the feature (debounced auto-save, addressing the documented `onChange` debounce pain point), reviewed the implementation line-by-line against the repo's `NexusPlugin` conventions, and verified it via the included Vitest suite (6/6 passing) plus `tsc --noEmit` and `tsup` build before submission. Design decisions (debounce strategy, flush/destroy lifecycle, zero new runtime deps) are understood and can be defended. / 本 PR 在代码起草阶段使用了 AI 辅助（WorkBuddy）。贡献者选定功能、逐行复核实现、并通过自带 6/6 Vitest + 类型检查 + 构建验证后提交；设计决策可解释。\n- [x] **New dependencies** (if any) listed with license & rationale (none if blank):\n      - (none — only `@floatboat/nexus-core` via `workspace:*`)\n- [x] **No build artifacts** committed (`dist/`, `dist-electron/`, compiled `.js` from `.ts`) / 未提交构建产物\n- [x] **No secrets** / `.env` / personal vault data committed / 无敏感信息\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\n- [x] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\n- [ ] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则\n- [x] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec\n- [x] Change aligns with project scope (GOVERNANCE.md §4) / 改动符合 GOVERNANCE.md §4 的项目范围\n\n## Screenshots / Recordings · 截图或录屏 (UI changes)\n\n<!-- Attach screenshots or gifs for visible UI changes. / 改动可见 UI 时请附上截图或 gif。 -->\n",
+  "created_at": "2026-07-17T03:34:19Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "26f1e8b123abae05e46abe5f8e4176918434be12",
+  "first_review_time": "2026-07-17T03:34:26Z",
+  "commits_at_first_review": [
+    {
+      "sha": "26f1e8b123abae05e46abe5f8e4176918434be12",
+      "message": "feat(plugin-autosave): add debounced autosave plugin with tests\n\nAdds a debounced autosave Nexus plugin that persists the current\nMarkdown document via the onChange callback, with flush()/destroy()\nlifecycle and full Vitest coverage. Includes OpenSpec change set.",
+      "date": "2026-07-17T03:33:21Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "b8be983c96115e2d65588f8c10936d761f568dcb",
+        "filename": "openspec/changes/add-autosave-plugin/proposal.md",
+        "status": "added",
+        "additions": 19,
+        "deletions": 0,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/openspec%2Fchanges%2Fadd-autosave-plugin%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/openspec%2Fchanges%2Fadd-autosave-plugin%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-autosave-plugin%2Fproposal.md?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,19 @@\n+# Change: Add debounced auto-save plugin\n+\n+## Why\n+Hosts wiring Nexus-Editor into a notes / CMS backend must persist edits.\n+The core README already warns that `onChange` needs manual debouncing,\n+so every integrator re-implements the same timer dance. A first-party\n+`plugin-autosave` removes that boilerplate and gives one tested,\n+documented primitive.\n+\n+## What Changes\n+- Add `@floatboat/nexus-plugin-autosave` exporting `createAutoSavePlugin`.\n+- Debounces document changes by a configurable `delay` (default 1000ms).\n+- Calls `onSave(markdown)` with the latest source; `flush()` forces an\n+  immediate save; `destroy()` cancels pending work.\n+- No new runtime dependencies (only `@floatboat/nexus-core` via workspace).\n+\n+## Impact\n+- Affected specs: autosave\n+- Affected code: `packages/plugin-autosave`"
+      },
+      {
+        "sha": "5f687f802ee5a6508e6ff7c8433ed8fe0f6eb39a",
+        "filename": "openspec/changes/add-autosave-plugin/specs/autosave/spec.md",
+        "status": "added",
+        "additions": 21,
+        "deletions": 0,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/openspec%2Fchanges%2Fadd-autosave-plugin%2Fspecs%2Fautosave%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/openspec%2Fchanges%2Fadd-autosave-plugin%2Fspecs%2Fautosave%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-autosave-plugin%2Fspecs%2Fautosave%2Fspec.md?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,21 @@\n+## ADDED Requirements\n+\n+### Requirement: Debounced Auto-Save\n+The system SHALL provide a `createAutoSavePlugin` that persists the editor's\n+Markdown source to a host-provided sink after edits settle.\n+\n+#### Scenario: Edits settle then save\n+- **WHEN** the document changes and then stays unchanged for `delay` ms\n+- **THEN** `onSave` is called once with the latest Markdown source\n+\n+#### Scenario: Burst edits collapse\n+- **WHEN** multiple edits occur within one `delay` window\n+- **THEN** only a single `onSave` fires after the window\n+\n+#### Scenario: Manual flush\n+- **WHEN** `flush()` is called while a save is pending\n+- **THEN** `onSave` runs immediately and the pending timer is cancelled\n+\n+#### Scenario: Teardown\n+- **WHEN** `destroy()` is called\n+- **THEN** no further `onSave` fires, even on later edits"
+      },
+      {
+        "sha": "a99c24842eee5dde7f87b5c0a2a79b8628faddfe",
+        "filename": "openspec/changes/add-autosave-plugin/tasks.md",
+        "status": "added",
+        "additions": 10,
+        "deletions": 0,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/openspec%2Fchanges%2Fadd-autosave-plugin%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/openspec%2Fchanges%2Fadd-autosave-plugin%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-autosave-plugin%2Ftasks.md?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,10 @@\n+## 1. Implementation\n+- [ ] 1.1 Scaffold `packages/plugin-autosave` (package.json, src, test, README)\n+- [ ] 1.2 Implement `createAutoSavePlugin` (debounce + flush + destroy)\n+- [ ] 1.3 Write vitest cases (debounce, burst, no-op before delay, flush, destroy)\n+- [ ] 1.4 Document usage in package README\n+\n+## 2. Verification\n+- [ ] 2.1 `pnpm test` passes for the new package\n+- [ ] 2.2 `pnpm build` succeeds for the new package\n+- [ ] 2.3 Manual note: behavior matches docs/ROADMAP pain point (onChange debounce)"
+      },
+      {
+        "sha": "822c7b3ec984adeb9c6934fd746a563ea24d95f0",
+        "filename": "packages/plugin-autosave/README.md",
+        "status": "added",
+        "additions": 58,
+        "deletions": 0,
+        "changes": 58,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-autosave%2FREADME.md?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,58 @@\n+# @floatboat/nexus-plugin-autosave\n+\n+Debounced auto-save for Nexus-Editor. Persist the editor's Markdown\n+source to your own store (localStorage, a backend, IndexedDB, …)\n+once edits settle, instead of re-implementing the `onChange` debounce\n+the core README warns about.\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-plugin-autosave\n+```\n+\n+## Usage\n+\n+```ts\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import {\n+  createAutoSavePlugin,\n+  attachAutoSavePlugin\n+} from \"@floatboat/nexus-plugin-autosave\";\n+\n+const autosave = createAutoSavePlugin({\n+  // `delay` defaults to 1000ms; set to 0 to save on every change.\n+  delay: 800,\n+  onSave: (markdown) => {\n+    localStorage.setItem(\"draft\", markdown);\n+  }\n+});\n+\n+const editor = createEditor({\n+  container,\n+  initialValue: \"# Hello\",\n+  plugins: [autosave]\n+});\n+attachAutoSavePlugin(autosave, editor);\n+\n+// Persist immediately (e.g. on `beforeunload`):\n+window.addEventListener(\"beforeunload\", () => autosave.flush());\n+// Stop saving (e.g. on unmount):\n+autosave.destroy();\n+```\n+\n+## API\n+\n+`createAutoSavePlugin(options)` returns a value that is **both** a\n+Nexus plugin (pass it to `createEditor({ plugins })`) **and** a handle:\n+\n+| Member | Description |\n+|---|---|\n+| `onSave(markdown)` | Required. Called with the latest source after the debounce window. A rejected promise is swallowed. |\n+| `delay?` | Quiet period in ms before `onSave` runs. Default `1000`. `0` saves on every change. |\n+| `flush()` | Force an immediate save of the current document and cancel the pending timer. |\n+| `destroy()` | Stop listening and cancel any pending save. |\n+\n+## License\n+\n+MIT"
+      },
+      {
+        "sha": "8b8baa5575743be5649898ea014fdfac9ea811a1",
+        "filename": "packages/plugin-autosave/package.json",
+        "status": "added",
+        "additions": 28,
+        "deletions": 0,
+        "changes": 28,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-autosave%2Fpackage.json?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,28 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-autosave\",\n+  \"version\": \"0.0.1\",\n+  \"description\": \"Debounced auto-save for Nexus-Editor: persist Markdown to your store after edits settle.\",\n+  \"type\": \"module\",\n+  \"main\": \"./dist/index.js\",\n+  \"types\": \"./dist/index.d.ts\",\n+  \"exports\": {\n+    \".\": {\n+      \"types\": \"./dist/index.d.ts\",\n+      \"import\": \"./dist/index.js\"\n+    }\n+  },\n+  \"files\": [\n+    \"dist\",\n+    \"README.md\"\n+  ],\n+  \"scripts\": {\n+    \"build\": \"tsup src/index.ts --format esm --dts --clean\"\n+  },\n+  \"dependencies\": {\n+    \"@floatboat/nexus-core\": \"workspace:*\"\n+  },\n+  \"publishConfig\": {\n+    \"access\": \"public\",\n+    \"registry\": \"https://registry.npmjs.org/\"\n+  }\n+}"
+      },
+      {
+        "sha": "40ac03e9e5d857f026b9a747f1fdecdf68ec6543",
+        "filename": "packages/plugin-autosave/src/index.ts",
+        "status": "added",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-autosave%2Fsrc%2Findex.ts?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,7 @@\n+export {\n+  createAutoSavePlugin,\n+  attachAutoSavePlugin,\n+  type AutoSaveOptions,\n+  type AutoSaveAPI,\n+  type AutoSavePlugin\n+} from \"./plugin\";"
+      },
+      {
+        "sha": "908901ea335e6bbb94768852ea8800243ba23f3e",
+        "filename": "packages/plugin-autosave/src/plugin.ts",
+        "status": "added",
+        "additions": 117,
+        "deletions": 0,
+        "changes": 117,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Fsrc%2Fplugin.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Fsrc%2Fplugin.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-autosave%2Fsrc%2Fplugin.ts?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,117 @@\n+import type { EditorAPI, NexusPlugin } from \"@floatboat/nexus-core\";\n+\n+export interface AutoSaveOptions {\n+  /**\n+   * Called with the current Markdown source whenever a debounced save\n+   * fires. A rejected promise is swallowed so a failing sink can't\n+   * break the editor's change loop.\n+   */\n+  onSave: (markdown: string) => void | Promise<void>;\n+  /**\n+   * Quiet period in milliseconds after the last edit before `onSave`\n+   * runs. Default: 1000. Set to 0 to save on every change.\n+   */\n+  delay?: number;\n+}\n+\n+export interface AutoSaveAPI {\n+  /** Force an immediate save of the current document. */\n+  flush(): void;\n+  /** Stop listening and cancel any pending save. */\n+  destroy(): void;\n+}\n+\n+export type AutoSavePlugin = NexusPlugin &\n+  AutoSaveAPI & {\n+    /**\n+     * Bind the plugin to an editor instance. Call once after\n+     * `createEditor` returns. Most hosts will prefer the\n+     * {@link attachAutoSavePlugin} free function for readability.\n+     */\n+    attachEditor(editor: EditorAPI): void;\n+  };\n+\n+export function createAutoSavePlugin(options: AutoSaveOptions): AutoSavePlugin {\n+  const delay = Math.max(0, options.delay ?? 1000);\n+  const onSave = options.onSave;\n+\n+  let editor: EditorAPI | null = null;\n+  let destroyed = false;\n+  let timer: ReturnType<typeof setTimeout> | null = null;\n+\n+  const saveNow = (): void => {\n+    if (destroyed || !editor) return;\n+    const markdown = editor.getDocument();\n+    Promise.resolve(onSave(markdown)).catch(() => {});\n+  };\n+\n+  const schedule = (): void => {\n+    if (destroyed) return;\n+    if (timer) clearTimeout(timer);\n+    if (delay === 0) {\n+      saveNow();\n+      return;\n+    }\n+    timer = setTimeout(() => {\n+      timer = null;\n+      saveNow();\n+    }, delay);\n+  };\n+\n+  const onChange = (): void => schedule();\n+\n+  const api: AutoSaveAPI = {\n+    flush() {\n+      if (destroyed || !editor) return;\n+      if (timer) {\n+        clearTimeout(timer);\n+        timer = null;\n+      }\n+      saveNow();\n+    },\n+    destroy() {\n+      if (destroyed) return;\n+      destroyed = true;\n+      if (timer) {\n+        clearTimeout(timer);\n+        timer = null;\n+      }\n+      if (editor) {\n+        try {\n+          editor.off(\"change\", onChange);\n+        } catch {\n+          /* editor may already be torn down */\n+        }\n+        editor = null;\n+      }\n+    }\n+  };\n+\n+  const plugin: AutoSavePlugin = {\n+    name: \"plugin-autosave\",\n+    cmExtensions: [],\n+    ...api,\n+    attachEditor(target: EditorAPI) {\n+      if (editor || destroyed) return;\n+      editor = target;\n+      target.on(\"change\", onChange);\n+    }\n+  };\n+\n+  return plugin;\n+}\n+\n+/**\n+ * Bind an auto-save plugin to an editor instance. Equivalent to\n+ * `plugin.attachEditor(editor)` but reads more naturally at the call\n+ * site:\n+ *\n+ * ```ts\n+ * const autosave = createAutoSavePlugin({ onSave: persist });\n+ * const editor = createEditor({ container, plugins: [autosave] });\n+ * attachAutoSavePlugin(autosave, editor);\n+ * ```\n+ */\n+export function attachAutoSavePlugin(plugin: AutoSavePlugin, editor: EditorAPI): void {\n+  plugin.attachEditor(editor);\n+}"
+      },
+      {
+        "sha": "72e95219204c87cdee42e46e209a8408ecd4bae5",
+        "filename": "packages/plugin-autosave/test/plugin.test.ts",
+        "status": "added",
+        "additions": 131,
+        "deletions": 0,
+        "changes": 131,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Ftest%2Fplugin.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/26f1e8b123abae05e46abe5f8e4176918434be12/packages%2Fplugin-autosave%2Ftest%2Fplugin.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-autosave%2Ftest%2Fplugin.test.ts?ref=26f1e8b123abae05e46abe5f8e4176918434be12",
+        "patch": "@@ -0,0 +1,131 @@\n+import { afterEach, beforeEach, describe, expect, it, vi } from \"vitest\";\n+\n+import { createEditor, type EditorAPI } from \"@floatboat/nexus-core\";\n+\n+import {\n+  attachAutoSavePlugin,\n+  createAutoSavePlugin\n+} from \"../src/plugin\";\n+\n+const flushMicrotasks = () => new Promise<void>((resolve) => queueMicrotask(resolve));\n+\n+describe(\"createAutoSavePlugin\", () => {\n+  let container: HTMLDivElement;\n+  let editor: EditorAPI;\n+\n+  beforeEach(() => {\n+    container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+  });\n+\n+  afterEach(() => {\n+    editor?.destroy();\n+    container.remove();\n+  });\n+\n+  it(\"saves the latest markdown after the debounce delay\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const onSave = vi.fn();\n+      const autosave = createAutoSavePlugin({ onSave, delay: 100 });\n+      editor = createEditor({ container, initialValue: \"a\", plugins: [autosave] });\n+      attachAutoSavePlugin(autosave, editor);\n+      await vi.runAllTimersAsync();\n+\n+      onSave.mockClear();\n+      editor.setDocument(\"a b c\");\n+      expect(onSave).not.toHaveBeenCalled();\n+      await vi.advanceTimersByTimeAsync(120);\n+      expect(onSave).toHaveBeenCalledTimes(1);\n+      expect(onSave).toHaveBeenCalledWith(\"a b c\");\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"collapses bursts of edits into a single save\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const onSave = vi.fn();\n+      const autosave = createAutoSavePlugin({ onSave, delay: 200 });\n+      editor = createEditor({ container, initialValue: \"a\", plugins: [autosave] });\n+      attachAutoSavePlugin(autosave, editor);\n+      await vi.runAllTimersAsync();\n+\n+      onSave.mockClear();\n+      editor.setDocument(\"a b\");\n+      editor.setDocument(\"a b c\");\n+      editor.setDocument(\"a b c d\");\n+      expect(onSave).not.toHaveBeenCalled();\n+      await vi.advanceTimersByTimeAsync(250);\n+      expect(onSave).toHaveBeenCalledTimes(1);\n+      expect(onSave).toHaveBeenCalledWith(\"a b c d\");\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"does not save before the delay elapses\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const onSave = vi.fn();\n+      const autosave = createAutoSavePlugin({ onSave, delay: 500 });\n+      editor = createEditor({ container, initialValue: \"x\", plugins: [autosave] });\n+      attachAutoSavePlugin(autosave, editor);\n+      await vi.runAllTimersAsync();\n+\n+      onSave.mockClear();\n+      editor.setDocument(\"x y\");\n+      await vi.advanceTimersByTimeAsync(200);\n+      expect(onSave).not.toHaveBeenCalled();\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"does not save on attach without an edit\", async () => {\n+    const onSave = vi.fn();\n+    const autosave = createAutoSavePlugin({ onSave });\n+    editor = createEditor({ container, initialValue: \"hello\", plugins: [autosave] });\n+    attachAutoSavePlugin(autosave, editor);\n+    await flushMicrotasks();\n+    expect(onSave).not.toHaveBeenCalled();\n+  });\n+\n+  it(\"flush() forces an immediate save and clears the timer\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const onSave = vi.fn();\n+      const autosave = createAutoSavePlugin({ onSave, delay: 1000 });\n+      editor = createEditor({ container, initialValue: \"a\", plugins: [autosave] });\n+      attachAutoSavePlugin(autosave, editor);\n+      await vi.runAllTimersAsync();\n+\n+      onSave.mockClear();\n+      editor.setDocument(\"a b\");\n+      expect(onSave).not.toHaveBeenCalled();\n+      await autosave.flush();\n+      expect(onSave).toHaveBeenCalledTimes(1);\n+      expect(onSave).toHaveBeenCalledWith(\"a b\");\n+      // pending timer must be cleared so no second save fires later\n+      await vi.advanceTimersByTimeAsync(2000);\n+      expect(onSave).toHaveBeenCalledTimes(1);\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"destroy() silences further saves\", async () => {\n+    const onSave = vi.fn();\n+    const autosave = createAutoSavePlugin({ onSave, delay: 0 });\n+    editor = createEditor({ container, initialValue: \"hello\", plugins: [autosave] });\n+    attachAutoSavePlugin(autosave, editor);\n+    await flushMicrotasks();\n+\n+    onSave.mockClear();\n+    autosave.destroy();\n+    editor.setDocument(\"hello world\");\n+    await flushMicrotasks();\n+    expect(onSave).not.toHaveBeenCalled();\n+  });\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=163",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "pr_number": 140,
+  "title": "fix(toolbar): make blockquote toggle range-aware and atomic",
+  "body": "## Summary / 摘要\r\n\r\nMake `toggleBlockquote()` range-aware and atomic so blockquote toggling behaves consistently with existing list toggles.\r\n\r\n让 `toggleBlockquote()` 支持范围选区和原子更新，使 blockquote 的切换行为与现有列表切换保持一致。\r\n\r\n## Motivation / 背景与动机\r\n\r\n`toggleBlockquote()` previously only operated on the active line and updated the document/selection separately. That made its behavior inconsistent with `toggleOrderedList()` and `toggleUnorderedList()`, which already support multi-line ranges and atomic undo.\r\n\r\n之前的 `toggleBlockquote()` 只处理当前行，并且分开更新文档和选区，这与已经支持多行选区和原子撤销的 `toggleOrderedList()` / `toggleUnorderedList()` 不一致。\r\n\r\n## What Changed / 改动内容\r\n\r\n- make `toggleBlockquote()` apply to every covered line in the current selection\r\n- remove `> ` from all selected lines when they are already quoted\r\n- preserve the existing single-line behavior for collapsed selections\r\n- support reversed selections and range boundaries consistently with other block-level toggles\r\n- switch the implementation to a single atomic range replacement so one undo restores both the document and the selection\r\n\r\n- 让 `toggleBlockquote()` 对当前选区覆盖的所有行生效\r\n- 当所有选中行都已带 `> ` 时，统一移除前缀\r\n- 保留折叠光标场景下的单行行为\r\n- 让反向选区和边界行为与其他块级 toggle 保持一致\r\n- 改为单次原子范围替换，保证一次 undo 同时恢复文档和选区\r\n\r\n## Tests / 测试\r\n\r\n- `pnpm test packages/plugin-toolbar/test/plugin-toolbar.test.ts`\r\n- `pnpm test`\r\n- `pnpm --filter @floatboat/nexus-plugin-toolbar build`\r\n\r\nAdded coverage for:\r\n- single-line blockquote toggle\r\n- multi-line range toggle\r\n- mixed-state, reversed-selection, and boundary behavior\r\n- atomic undo / redo regression cases\r\n\r\n新增覆盖包括：\r\n- 单行 blockquote 切换\r\n- 多行范围切换\r\n- 混合状态、反向选区、边界场景\r\n- 原子 undo / redo 回归用例",
+  "created_at": "2026-07-08T10:29:52Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "a8295df2a7b46b4ada8f658c8ea8502920c7d107",
+  "first_review_time": "2026-07-08T10:30:01Z",
+  "commits_at_first_review": [
+    {
+      "sha": "a8295df2a7b46b4ada8f658c8ea8502920c7d107",
+      "message": "fix(toolbar): make blockquote toggle range-aware and atomic",
+      "date": "2026-07-08T10:25:38Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "4d7ed50391e572c60e9dd7baa6cfefb4e23328a3",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 14,
+        "deletions": 15,
+        "changes": 29,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a8295df2a7b46b4ada8f658c8ea8502920c7d107/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a8295df2a7b46b4ada8f658c8ea8502920c7d107/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=a8295df2a7b46b4ada8f658c8ea8502920c7d107",
+        "patch": "@@ -59,24 +59,23 @@ function applyLines(editor: EditorAPI, lines: LineRange[], newLines: string[]):\n   return true;\n }\n \n-/** Toggle a line prefix (e.g., \"> \" for blockquote). */\n-function toggleLinePrefix(editor: EditorAPI, prefix: string): boolean {\n+export function toggleBlockquote(editor: EditorAPI): boolean {\n   const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const lineStart = doc.lastIndexOf(\"\\n\", anchor - 1) + 1;\n-  const lineEndIdx = doc.indexOf(\"\\n\", anchor);\n-  const lineEnd = lineEndIdx === -1 ? doc.length : lineEndIdx;\n-  const line = doc.slice(lineStart, lineEnd);\n+  const { anchor, head } = editor.getSelection();\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n+  const lines = getLinesInRange(doc, from, to);\n \n-  const newLine = line.startsWith(prefix) ? line.slice(prefix.length) : prefix + line;\n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n-  editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n-  return true;\n-}\n+  const allMarked = lines.every(({ line }) => /^>\\s/.test(line));\n \n-export function toggleBlockquote(editor: EditorAPI): boolean {\n-  return toggleLinePrefix(editor, \"> \");\n+  const newLines = lines.map(({ line }) => {\n+    if (allMarked) {\n+      return line.replace(/^>\\s/, \"\");\n+    }\n+    return line.startsWith(\"> \") ? line : `> ${line}`;\n+  });\n+\n+  return applyLines(editor, lines, newLines);\n }\n \n export function toggleOrderedList(editor: EditorAPI): boolean {"
+      },
+      {
+        "sha": "6425c796c5b8296f51f5663b6ed8dd45c0facab6",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 135,
+        "deletions": 0,
+        "changes": 135,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a8295df2a7b46b4ada8f658c8ea8502920c7d107/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a8295df2a7b46b4ada8f658c8ea8502920c7d107/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=a8295df2a7b46b4ada8f658c8ea8502920c7d107",
+        "patch": "@@ -7,6 +7,7 @@ import {\n   toggleItalic,\n   toggleInlineCode,\n   insertLink,\n+  toggleBlockquote,\n   toggleHeading,\n   toggleOrderedList,\n   toggleUnorderedList,\n@@ -123,6 +124,87 @@ describe(\"toggleHeading\", () => {\n   });\n });\n \n+describe(\"toggleBlockquote — single line (existing behaviour)\", () => {\n+  it(\"adds blockquote marker to current line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello\" });\n+\n+    editor.setSelection(2);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> hello\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes blockquote marker when already present\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"> hello\" });\n+\n+    editor.setSelection(4);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"toggleBlockquote — multi-line selection\", () => {\n+  it(\"adds blockquote markers to every selected line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"foo\\nbar\\nbaz\" });\n+\n+    editor.setSelection(0, 11);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\\n> baz\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes blockquote markers when all selected lines already have one\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"> foo\\n> bar\\n> baz\" });\n+\n+    editor.setSelection(0, 17);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"foo\\nbar\\nbaz\");\n+    editor.destroy();\n+  });\n+\n+  it(\"adds blockquotes when only some lines have markers (mixed -> toggle on)\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"> foo\\nbar\" });\n+\n+    editor.setSelection(0, 9);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\");\n+    editor.destroy();\n+  });\n+\n+  it(\"normalizes reversed selection (head before anchor)\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"foo\\nbar\" });\n+\n+    editor.setSelection(7, 0);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\");\n+    editor.destroy();\n+  });\n+\n+  it(\"does not include the next line when selection ends at its start\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"foo\\nbar\" });\n+\n+    editor.setSelection(0, 4);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\nbar\");\n+    editor.destroy();\n+  });\n+});\n+\n describe(\"toggleUnorderedList — single line (existing behaviour)\", () => {\n   it(\"adds bullet marker to current line\", () => {\n     const container = document.createElement(\"div\");\n@@ -606,3 +688,56 @@ describe(\"toggleUnorderedList — atomic undo\", () => {\n     editor.destroy();\n   });\n });\n+\n+describe(\"toggleBlockquote — atomic undo\", () => {\n+  it(\"Case 1: multi-line toggle -> single undo fully restores document\", () => {\n+    const container = document.createElement(\"div\");\n+    const original = \"foo\\nbar\\nbaz\";\n+    const editor = createEditor({ container, initialValue: original, plugins: [createHistoryPlugin()] });\n+\n+    editor.setSelection(0, 11);\n+    toggleBlockquote(editor);\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\\n> baz\");\n+\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(original);\n+    editor.destroy();\n+  });\n+\n+  it(\"Case 2: toggle -> undo -> redo recovers toggled state in one step\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"foo\\nbar\", plugins: [createHistoryPlugin()] });\n+\n+    editor.setSelection(0, 7);\n+    toggleBlockquote(editor);\n+    editor.undo();\n+    expect(editor.redo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\");\n+    editor.destroy();\n+  });\n+\n+  it(\"Case 3: single-line toggle -> undo restores original\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"hello\", plugins: [createHistoryPlugin()] });\n+\n+    editor.setSelection(2);\n+    toggleBlockquote(editor);\n+    expect(editor.getDocument()).toBe(\"> hello\");\n+\n+    expect(editor.undo()).toBe(true);\n+    expect(editor.getDocument()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+\n+  it(\"Case 4: multi-line toggle -> undo -> second undo returns false\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"foo\\nbar\", plugins: [createHistoryPlugin()] });\n+\n+    editor.setSelection(0, 7);\n+    toggleBlockquote(editor);\n+    editor.undo();\n+\n+    expect(editor.undo()).toBe(false);\n+    editor.destroy();\n+  });\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=140",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

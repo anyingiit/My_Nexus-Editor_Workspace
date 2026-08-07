@@ -1,0 +1,76 @@
+{
+  "pr_number": 124,
+  "title": "fix(electron-demo): 修复 Vault 保存路径边界校验",
+  "body": "## 概述\r\n\r\n修复了 Vault 保存路径校验逻辑，避免具有相同前缀的兄弟目录被错误识别为 Vault 内部路径。\r\n\r\n## 修改内容\r\n\r\n- 新增 `isPathInside` 路径校验工具函数。\r\n- 使用 `isPathInside` 替换原来的 `startsWith` 路径判断。\r\n- 新增单元测试，覆盖以下场景：\r\n  - 相同路径\r\n  - 子目录路径\r\n  - 尾部斜杠\r\n  - Windows 路径分隔符\r\n  - `/vault` 与 `/vault2` 前缀冲突\r\n  - 根目录路径\r\n\r\n## 验证\r\n\r\n已通过以下验证：\r\n\r\n- `pnpm vitest run apps/electron-demo/test/path-utils.test.ts`\r\n- `pnpm typecheck`",
+  "created_at": "2026-07-03T16:11:07Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "edef9c3cdde14275ddef1c7e950750cad7e5899d",
+  "first_review_time": "2026-07-03T16:11:14Z",
+  "commits_at_first_review": [
+    {
+      "sha": "edef9c3cdde14275ddef1c7e950750cad7e5899d",
+      "message": "fix(electron-demo): validate vault save path boundaries",
+      "date": "2026-07-03T15:53:58Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "4fe77279fe30911a3d17993932d68b4aaf322da2",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/edef9c3cdde14275ddef1c7e950750cad7e5899d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/edef9c3cdde14275ddef1c7e950750cad7e5899d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=edef9c3cdde14275ddef1c7e950750cad7e5899d",
+        "patch": "@@ -7,6 +7,7 @@ import { createVaultPanel, type VaultPanel } from \"./vault-panel\";\n import { LinkIndex, parseAnchor, findAnchorPosition } from \"./link-index\";\n import { createBacklinksPanel, type BacklinksPanel } from \"./backlinks-panel\";\n import { perfStart, perfEnd, installLongTaskWatch } from \"./perf\";\n+import { isPathInside } from \"./path-utils\";\n \n installLongTaskWatch(50);\n \n@@ -142,7 +143,7 @@ async function handleSave(): Promise<void> {\n     state.error = null;\n     const targetPath = state.activeFile ?? state.filePath;\n     if (targetPath) {\n-      if (state.vaultPath && targetPath.startsWith(state.vaultPath)) {\n+      if (state.vaultPath && isPathInside(state.vaultPath, targetPath)) {\n         await window.nexusDemo.vault.write(targetPath, state.content);\n       } else {\n         await window.nexusDemo.saveFile(targetPath, state.content);"
+      },
+      {
+        "sha": "0c39395d0281fbfcc0c36940399139c9e1e54a22",
+        "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+        "status": "modified",
+        "additions": 17,
+        "deletions": 1,
+        "changes": 18,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/edef9c3cdde14275ddef1c7e950750cad7e5899d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/edef9c3cdde14275ddef1c7e950750cad7e5899d/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts?ref=edef9c3cdde14275ddef1c7e950750cad7e5899d",
+        "patch": "@@ -6,10 +6,26 @@ export function normalizeSlashes(path: string): string {\n   return path.replace(/\\\\/g, \"/\");\n }\n \n+function trimTrailingSlashes(path: string): string {\n+  if (path === \"/\") return path;\n+  return path.replace(/\\/+$/g, \"\") || \"/\";\n+}\n+\n /**\n  * Join path segments with forward slashes.\n  * Unlike path.join(), always returns forward slashes regardless of platform.\n  */\n export function joinPath(...parts: string[]): string {\n   return parts.join(\"/\").replace(/\\\\/g, \"/\").replace(/\\/+/g, \"/\");\n-}\n\\ No newline at end of file\n+}\n+\n+/**\n+ * Return true when targetPath is basePath itself or a descendant of basePath.\n+ * Uses a slash boundary so sibling-prefix paths like /vault2 do not match /vault.\n+ */\n+export function isPathInside(basePath: string, targetPath: string): boolean {\n+  const base = trimTrailingSlashes(normalizeSlashes(basePath));\n+  const target = trimTrailingSlashes(normalizeSlashes(targetPath));\n+  if (base === \"/\") return target === \"/\" || target.startsWith(\"/\");\n+  return target === base || target.startsWith(`${base}/`);\n+}"
+      },
+      {
+        "sha": "f452b2daffbc2e97068291320e9ff17904a0c675",
+        "filename": "apps/electron-demo/test/path-utils.test.ts",
+        "status": "modified",
+        "additions": 31,
+        "deletions": 2,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/edef9c3cdde14275ddef1c7e950750cad7e5899d/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/edef9c3cdde14275ddef1c7e950750cad7e5899d/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts?ref=edef9c3cdde14275ddef1c7e950750cad7e5899d",
+        "patch": "@@ -1,5 +1,5 @@\n import { describe, expect, it } from \"vitest\";\n-import { normalizeSlashes, joinPath } from \"../src/renderer/path-utils\";\n+import { normalizeSlashes, joinPath, isPathInside } from \"../src/renderer/path-utils\";\n \n describe(\"normalizeSlashes\", () => {\n   it(\"returns path unchanged when already using forward slashes\", () => {\n@@ -67,4 +67,33 @@ describe(\"joinPath\", () => {\n   it(\"handles Windows-style paths as segments\", () => {\n     expect(joinPath(\"foo\\\\bar\", \"baz\")).toBe(\"foo/bar/baz\");\n   });\n-});\n\\ No newline at end of file\n+});\n+\n+describe(\"isPathInside\", () => {\n+  it(\"returns true when the target equals the base path\", () => {\n+    expect(isPathInside(\"/vault\", \"/vault\")).toBe(true);\n+  });\n+\n+  it(\"returns true when the target is inside the base path\", () => {\n+    expect(isPathInside(\"/vault\", \"/vault/folder/note.md\")).toBe(true);\n+  });\n+\n+  it(\"ignores trailing slashes on base and target paths\", () => {\n+    expect(isPathInside(\"/vault/\", \"/vault/folder/\")).toBe(true);\n+    expect(isPathInside(\"/vault/\", \"/vault/\")).toBe(true);\n+  });\n+\n+  it(\"normalizes Windows backslashes before comparing\", () => {\n+    expect(isPathInside(\"C:\\\\vault\", \"C:\\\\vault\\\\folder\\\\note.md\")).toBe(true);\n+  });\n+\n+  it(\"returns false for sibling-prefix paths\", () => {\n+    expect(isPathInside(\"/vault\", \"/vault2/file.md\")).toBe(false);\n+    expect(isPathInside(\"C:\\\\vault\", \"C:\\\\vault2\\\\file.md\")).toBe(false);\n+  });\n+\n+  it(\"treats root as containing absolute descendant paths\", () => {\n+    expect(isPathInside(\"/\", \"/vault/file.md\")).toBe(true);\n+    expect(isPathInside(\"/\", \"/\")).toBe(true);\n+  });\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=124",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

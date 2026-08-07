@@ -1,0 +1,218 @@
+{
+  "pr_number": 66,
+  "title": "feat(toolbar): support multi-line selection for list toggles",
+  "body": "## Summary / 摘要\r\n\r\n实现 ROADMAP #1（多行列表切换）。把 `toggleOrderedList` / `toggleUnorderedList` 从\"只处理 anchor 所在单行\"升级为\"处理选区覆盖的所有行\"，并设计了一套与主流编辑器一致的\"全员一致才取消、否则统一添加\"切换策略。\r\n\r\n## Motivation / 背景与动机\r\n\r\n- Issue: N/A（开放命题面试 PR）\r\n- Roadmap (docs/ROADMAP.md): **#1 多行列表切换**（P1、planned），由本 PR 转为 done\r\n- OpenSpec change: N/A —— 现有公共 API 行为扩展，无破坏性变更\r\n\r\nPR 之前的状态：`toggleOrderedList` / `toggleUnorderedList` 都只读 `editor.getSelection().anchor`，在 `getCurrentLine(doc, anchor)` 里只操作光标所在的那一行。用户即便选中跨多行也只有一行被切换，与所有主流 markdown 编辑器（VS Code、Obsidian、Typora）的行为不一致。本 PR 在不引入新 API、不改变单行场景行为的前提下补完多行支持，并把\"切换方向\"这一关键 UX 决策显式化。\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/plugin-toolbar`:\r\n  - `src/formatting.ts`:\r\n    - 新增 `getSelectedLines(doc, from, to)` —— 返回选区覆盖的全部 `LineInfo[]`，单光标场景自然退化为单行\r\n    - 抽出 `toggleListLines(editor, mode)` —— 两个 toggle 函数共享实现，差异仅在 marker 类型\r\n    - **切换方向策略**：仅当所有非空行都已携带本类标记时才剥离；其它情况（混合 / 全无 / 对方类型）一律统一为\"添加\"\r\n    - **有序列表重新编号**：`counter` 从 1 开始按非空行累加，已有的 `5. ` / `9. ` 标记不会沿用\r\n    - **空行保留**：`line.trim().length === 0` 的行原样穿透，不参与编号也不被加前缀\r\n    - **互转**：检测到 `otherMarker` 则先剥离再加新前缀，避免标记叠加（`1. foo` → `- foo`）\r\n  - 选区恢复：替换完成后将 selection 设为整个新区域 `[firstLineStart, firstLineStart + newRegion.length]`，符合\"我选过这段所以应该继续覆盖这段\"的直觉\r\n- `packages/core`: 无改动 —— 现有 `EditorAPI.getSelection()` / `setSelection()` 已够用\r\n- 其他：无文档 / 配置改动\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes / 全绿 —— **343 / 343 通过**\r\n- [x] Affected package builds (`pnpm --filter @floatboat/nexus-plugin-toolbar build`) 通过\r\n- [x] `pnpm --filter @floatboat/nexus-plugin-toolbar exec tsc --noEmit` 类型检查无报错\r\n- [x] New / updated vitest cases / 新增 vitest 用例 —— `packages/plugin-toolbar/test/plugin-toolbar.test.ts` 新增 **13 cases**：\r\n  - `toggleUnorderedList` 7 cases：\r\n    - adds `- ` to a single line\r\n    - removes `- ` from a single line\r\n    - adds `- ` to every line in a multi-line selection\r\n    - removes `- ` from every line when all lines are bulleted\r\n    - 混合状态统一为添加（mixed → unified add）\r\n    - 有序 → 无序互转（`1. foo` → `- foo`）\r\n    - 空行保留不被 bulleted\r\n  - `toggleOrderedList` 5 cases：\r\n    - 单行添加\r\n    - 多行从 1 起连续编号\r\n    - 全部已编号时整体移除\r\n    - **重新编号**：`5. / 9.` → 去 → 再加 → `1. / 2.`（验证不沿用旧编号）\r\n    - 跳过空行编号\r\n- [x] Manual UI check in electron-demo / electron-demo 手动验证\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits（`feat(toolbar): ...`）\r\n- [x] Public API changes update package README / types —— N/A：`plugin-toolbar` 未提供 README；公共函数签名未变（仍是 `(editor: EditorAPI) => boolean`），仅扩展了内部行为\r\n- [x] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md —— **本 PR 未触及 `live-preview-table.ts`**\r\n- [x] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec —— N/A：行为扩展而非新 capability\r\n- [x] No secrets / personal vault data committed / 无敏感信息被提交\r\n\r\n## 设计说明（评审参考）\r\n\r\n**为什么选\"全员一致才取消\"而不是\"逐行独立 toggle\"？**\r\n\r\n考虑选区里既有 `- foo` 又有 `bar` 的混合场景：\r\n\r\n1. **逐行独立 toggle**：`- foo` 变 `foo`，`bar` 变 `- bar` —— 结果上下颠倒，用户看到一半带 `-` 一半不带，认知负担重，且**再按一次得到同样的混合结果**（永远摆脱不了），与\"toggle\"语义不符\r\n2. **全员一致才取消**（本 PR 采用）：混合状态一律视为\"想统一加 `-`\"，第二次按则因\"全员都有\"而整体去除 —— 行为可预测，两次操作完成一个完整周期\r\n\r\n参考实现：Obsidian Live Preview、VS Code `markdown.extension.editing.toggleList`、Typora 均采用此策略。\r\n\r\n## Out of scope（识别但本 PR 不做）\r\n\r\n- **嵌套列表的缩进保留**：当前实现把 `  - foo` 的前导空格视作普通内容（不会破坏，但也不会智能保留嵌套层级）。完整支持需要在剥离 marker 前先解析缩进、加 marker 时还原 —— 独立设计点，建议另开 issue 跟踪\r\n- **有序列表的自定义起始编号**：始终从 1 起编号。从中间编号开始（如继续上文 `4. / 5. / 6.`）需要额外读取选区上一行的状态\r\n- **task list（`- [ ]`）的多行勾选**：不在 #1 范围内，由独立 roadmap 条目覆盖\r\n- **混合缩进层级的有序 + 无序嵌套**：场景过于复杂，超出\"列表切换\"的语义边界\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\nN/A —— 行为类改动，无新 UI 元素。手动场景示例（可在 electron-demo 验证）：\r\n\r\n```\r\n选中下面三行 → 按\"无序列表\"按钮：\r\nfirst              →   - first\r\nsecond             →   - second\r\nthird              →   - third\r\n\r\n再按一次（全员一致 → 剥离）：\r\n- first            →   first\r\n- second           →   second\r\n- third            →   third\r\n\r\n混合状态选中三行 → 按\"无序列表\"（统一为添加）：\r\n- first            →   - first\r\nsecond             →   - second\r\n- third            →   - third\r\n```",
+  "created_at": "2026-06-17T08:17:19Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+  "first_review_time": "2026-06-17T08:17:33Z",
+  "commits_at_first_review": [
+    {
+      "sha": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+      "message": "feat(search): add whole-word and regex matching to utility functions\n\nAdd `wholeWord` and `regexp` options to `SearchOptions`. Whole-word uses\n\\b boundaries; regex mode passes the query as a raw pattern with graceful\nhandling of invalid expressions (returns empty results).\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T05:37:10Z"
+    },
+    {
+      "sha": "1905df029a6b5a6795d8ea53ed12622647c12173",
+      "message": "feat(react,vue): add onReady callback and container pass-through props\n\nBoth `<Editor />` components now accept `onReady` (called with EditorAPI\nafter initialization), plus `className`/`style`/`id` (React) and\n`class`/`style`/`id` (Vue) forwarded to the container div.\n\nThe `useEditor` hook also supports `onReady` in its config object.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T06:00:40Z"
+    },
+    {
+      "sha": "8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+      "message": "feat(toolbar): support multi-line selection for list toggles\n\nRefactor `toggleOrderedList` and `toggleUnorderedList` to operate on\nevery line covered by the selection. Adopt an all-or-nothing toggle\ndirection: remove markers only when every non-empty line already\ncarries them; otherwise unify by adding. Ordered mode renumbers from 1\nacross the selection, blank lines are skipped, and existing markers of\nthe opposite type are converted in place.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T07:51:56Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 3,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "9ba2cf56e606c24099fc17a3068ed8047833699c",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 4,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -25,6 +25,8 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  wholeWord?: boolean;\n+  regexp?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -79,6 +81,24 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp | null {\n+  const flags = options.caseSensitive ? \"g\" : \"gi\";\n+\n+  let pattern: string;\n+  if (options.regexp) {\n+    pattern = options.wholeWord ? `\\\\b(?:${query})\\\\b` : query;\n+  } else {\n+    const escaped = escapeRegExp(query);\n+    pattern = options.wholeWord ? `\\\\b${escaped}\\\\b` : escaped;\n+  }\n+\n+  try {\n+    return new RegExp(pattern, flags);\n+  } catch {\n+    return null;\n+  }\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,8 +108,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const pattern = buildSearchPattern(query, options);\n+  if (!pattern) {\n+    return [];\n+  }\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n@@ -116,8 +138,11 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n+  const pattern = buildSearchPattern(query, options);\n+  if (!pattern) {\n+    return doc;\n+  }\n+  return doc.replace(pattern, replacement);\n }\n \n function resolveLabel("
+      },
+      {
+        "sha": "0f89abc56ff3fb15680a04253ebc8d1ae9a91d89",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 56,
+        "deletions": 0,
+        "changes": 56,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -21,10 +21,66 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat cats catalog\", \"cat\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat Cat CAT\", \"Cat\", { wholeWord: true, caseSensitive: true })).toEqual([\n+      { from: 4, to: 7, text: \"Cat\" }\n+    ]);\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"replaces only whole-word matches\", () => {\n+    expect(replaceAllMatches(\"cat catalog cat concatenate\", \"cat\", \"dog\", { wholeWord: true })).toBe(\n+      \"dog catalog dog concatenate\"\n+    );\n+  });\n+\n+  it(\"supports regex search\", () => {\n+    expect(findSearchMatches(\"foo123 bar456 baz\", \"\\\\d+\", { regexp: true })).toEqual([\n+      { from: 3, to: 6, text: \"123\" },\n+      { from: 10, to: 13, text: \"456\" }\n+    ]);\n+  });\n+\n+  it(\"supports regex search with groups\", () => {\n+    expect(findSearchMatches(\"2024-01-15 and 2024-12-31\", \"\\\\d{4}-\\\\d{2}-\\\\d{2}\", { regexp: true })).toEqual([\n+      { from: 0, to: 10, text: \"2024-01-15\" },\n+      { from: 15, to: 25, text: \"2024-12-31\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive regex search\", () => {\n+    expect(findSearchMatches(\"Hello hello HELLO\", \"h.llo\", { regexp: true, caseSensitive: true })).toEqual([\n+      { from: 6, to: 11, text: \"hello\" }\n+    ]);\n+  });\n+\n+  it(\"returns empty results for invalid regex\", () => {\n+    expect(findSearchMatches(\"hello world\", \"[invalid(\", { regexp: true })).toEqual([]);\n+  });\n+\n+  it(\"replaces with regex capture groups\", () => {\n+    expect(replaceAllMatches(\"foo bar baz\", \"(\\\\w+)\", \"[$1]\", { regexp: true })).toBe(\"[foo] [bar] [baz]\");\n+  });\n+\n+  it(\"returns original doc for invalid regex in replace\", () => {\n+    expect(replaceAllMatches(\"hello world\", \"[bad(\", \"x\", { regexp: true })).toBe(\"hello world\");\n+  });\n+\n+  it(\"supports regex with whole-word combined\", () => {\n+    expect(findSearchMatches(\"cat cats concatenate\", \"cat|dog\", { regexp: true, wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" }\n+    ]);\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      },
+      {
+        "sha": "e9bd0f387730173e0297f1a5575b922080e99f57",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 101,
+        "deletions": 37,
+        "changes": 138,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -1,13 +1,48 @@\n import type { EditorAPI } from \"@floatboat/nexus-core\";\n \n+const UL_MARKER = /^[-*+]\\s/;\n+const OL_MARKER = /^\\d+\\.\\s/;\n+\n+interface LineInfo {\n+  lineStart: number;\n+  lineEnd: number;\n+  line: string;\n+}\n+\n /** Get the current line containing the anchor position. */\n-function getCurrentLine(doc: string, anchor: number): { lineStart: number; lineEnd: number; line: string } {\n+function getCurrentLine(doc: string, anchor: number): LineInfo {\n   const lineStart = doc.lastIndexOf(\"\\n\", anchor - 1) + 1;\n   const lineEndIdx = doc.indexOf(\"\\n\", anchor);\n   const lineEnd = lineEndIdx === -1 ? doc.length : lineEndIdx;\n   return { lineStart, lineEnd, line: doc.slice(lineStart, lineEnd) };\n }\n \n+/**\n+ * Return every line touched by the [from, to] selection. When the selection\n+ * end sits on a line's leading boundary (right after the previous \\n) and the\n+ * selection is non-empty, we still treat that line as part of the range so\n+ * the caller's intent — \"I dragged across these lines\" — matches the result.\n+ */\n+function getSelectedLines(doc: string, from: number, to: number): LineInfo[] {\n+  const lines: LineInfo[] = [];\n+  let cursor = doc.lastIndexOf(\"\\n\", from - 1) + 1;\n+\n+  while (cursor <= doc.length) {\n+    const nextNewline = doc.indexOf(\"\\n\", cursor);\n+    const lineEnd = nextNewline === -1 ? doc.length : nextNewline;\n+    lines.push({\n+      lineStart: cursor,\n+      lineEnd,\n+      line: doc.slice(cursor, lineEnd)\n+    });\n+\n+    if (lineEnd >= to) break;\n+    cursor = lineEnd + 1;\n+  }\n+\n+  return lines;\n+}\n+\n /** Toggle a line prefix (e.g., \"> \" for blockquote). */\n function toggleLinePrefix(editor: EditorAPI, prefix: string): boolean {\n   const doc = editor.getDocument();\n@@ -31,48 +66,77 @@ export function toggleBlockquote(editor: EditorAPI): boolean {\n   return toggleLinePrefix(editor, \"> \");\n }\n \n-export function toggleOrderedList(editor: EditorAPI): boolean {\n+/**\n+ * Apply a list-marker transform to every line covered by the selection.\n+ * Empty lines are passed through unchanged so blank rows aren't bulleted.\n+ *\n+ * Toggle direction is decided by \"all-or-nothing\": only when *every*\n+ * non-empty line already carries this list's marker do we strip it. Mixed\n+ * states (some marked, some plain, or wrong marker type) all unify to\n+ * \"added\", which matches what users expect when batch-toggling a region.\n+ */\n+function toggleListLines(\n+  editor: EditorAPI,\n+  mode: \"ordered\" | \"unordered\"\n+): boolean {\n   const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const { lineStart, lineEnd, line } = getCurrentLine(doc, anchor);\n-\n-  const olMatch = line.match(/^\\d+\\.\\s/);\n-  let newLine: string;\n-  if (olMatch) {\n-    newLine = line.slice(olMatch[0].length);\n-  } else {\n-    // Remove other list markers if present\n-    const ulMatch = line.match(/^[-*+]\\s/);\n-    const content = ulMatch ? line.slice(ulMatch[0].length) : line;\n-    newLine = \"1. \" + content;\n-  }\n-\n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n+  const { anchor, head } = editor.getSelection();\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n+  const lines = getSelectedLines(doc, from, to);\n+\n+  if (lines.length === 0) return false;\n+\n+  const ownMarker = mode === \"ordered\" ? OL_MARKER : UL_MARKER;\n+  const otherMarker = mode === \"ordered\" ? UL_MARKER : OL_MARKER;\n+  const nonEmpty = lines.filter((l) => l.line.trim().length > 0);\n+\n+  // All non-empty lines carry our marker → remove. Otherwise add.\n+  const allMarked = nonEmpty.length > 0 && nonEmpty.every((l) => ownMarker.test(l.line));\n+  const shouldRemove = allMarked;\n+\n+  const firstLineStart = lines[0].lineStart;\n+  const lastLineEnd = lines[lines.length - 1].lineEnd;\n+  const before = doc.slice(0, firstLineStart);\n+  const after = doc.slice(lastLineEnd);\n+\n+  let counter = 1;\n+  const transformed = lines.map((l) => {\n+    if (l.line.trim().length === 0) return l.line;\n+\n+    if (shouldRemove) {\n+      const match = l.line.match(ownMarker);\n+      return match ? l.line.slice(match[0].length) : l.line;\n+    }\n+\n+    // Adding: strip any existing marker first so we don't stack them.\n+    const ownMatch = l.line.match(ownMarker);\n+    const otherMatch = l.line.match(otherMarker);\n+    const stripped = ownMatch\n+      ? l.line.slice(ownMatch[0].length)\n+      : otherMatch\n+        ? l.line.slice(otherMatch[0].length)\n+        : l.line;\n+\n+    if (mode === \"ordered\") {\n+      return `${counter++}. ${stripped}`;\n+    }\n+    return `- ${stripped}`;\n+  });\n+\n+  const newRegion = transformed.join(\"\\n\");\n+  const newDoc = before + newRegion + after;\n   editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n+  editor.setSelection(firstLineStart, firstLineStart + newRegion.length);\n   return true;\n }\n \n-export function toggleUnorderedList(editor: EditorAPI): boolean {\n-  const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const { lineStart, lineEnd, line } = getCurrentLine(doc, anchor);\n-\n-  const ulMatch = line.match(/^[-*+]\\s/);\n-  let newLine: string;\n-  if (ulMatch) {\n-    newLine = line.slice(ulMatch[0].length);\n-  } else {\n-    // Remove ordered list marker if present\n-    const olMatch = line.match(/^\\d+\\.\\s/);\n-    const content = olMatch ? line.slice(olMatch[0].length) : line;\n-    newLine = \"- \" + content;\n-  }\n+export function toggleOrderedList(editor: EditorAPI): boolean {\n+  return toggleListLines(editor, \"ordered\");\n+}\n \n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n-  editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n-  return true;\n+export function toggleUnorderedList(editor: EditorAPI): boolean {\n+  return toggleListLines(editor, \"unordered\");\n }\n \n export function insertCodeBlock(editor: EditorAPI): boolean {"
+      },
+      {
+        "sha": "ad5d52c3f3af043761681c2307ba0d85e815e409",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 141,
+        "deletions": 0,
+        "changes": 141,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -7,6 +7,8 @@ import {\n   toggleInlineCode,\n   insertLink,\n   toggleHeading,\n+  toggleOrderedList,\n+  toggleUnorderedList,\n   createToolbarPlugin,\n   createToolbarUI,\n } from \"../src/index\";\n@@ -120,6 +122,145 @@ describe(\"toggleHeading\", () => {\n   });\n });\n \n+describe(\"toggleUnorderedList\", () => {\n+  it(\"adds - to a single line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"first\" });\n+\n+    editor.setSelection(2);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- first\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes - from a single line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"- first\" });\n+\n+    editor.setSelection(2);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"first\");\n+    editor.destroy();\n+  });\n+\n+  it(\"adds - to every line in a multi-line selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"first\\nsecond\\nthird\" });\n+\n+    editor.setSelection(0, 18);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- first\\n- second\\n- third\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes - from every line when all lines are bulleted\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"- first\\n- second\\n- third\" });\n+\n+    editor.setSelection(0, 24);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"first\\nsecond\\nthird\");\n+    editor.destroy();\n+  });\n+\n+  it(\"unifies a mixed selection by adding - to all lines\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"- first\\nsecond\\n- third\" });\n+\n+    editor.setSelection(0, 22);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- first\\n- second\\n- third\");\n+    editor.destroy();\n+  });\n+\n+  it(\"converts ordered markers into unordered ones\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"1. first\\n2. second\" });\n+\n+    editor.setSelection(0, 18);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- first\\n- second\");\n+    editor.destroy();\n+  });\n+\n+  it(\"preserves empty lines without bulleting them\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"first\\n\\nthird\" });\n+\n+    editor.setSelection(0, 12);\n+    toggleUnorderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"- first\\n\\n- third\");\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"toggleOrderedList\", () => {\n+  it(\"adds 1. to a single line\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"first\" });\n+\n+    editor.setSelection(2);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. first\");\n+    editor.destroy();\n+  });\n+\n+  it(\"numbers consecutive lines starting from 1\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"first\\nsecond\\nthird\" });\n+\n+    editor.setSelection(0, 18);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. first\\n2. second\\n3. third\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes ordered markers when every line is numbered\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"1. first\\n2. second\\n3. third\" });\n+\n+    editor.setSelection(0, 27);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"first\\nsecond\\nthird\");\n+    editor.destroy();\n+  });\n+\n+  it(\"renumbers from 1 regardless of pre-existing numbers\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"5. first\\n9. second\" });\n+\n+    // Convert away then back to verify renumbering, not just deletion.\n+    editor.setSelection(0, 18);\n+    toggleOrderedList(editor); // removes\n+    editor.setSelection(0, editor.getDocument().length);\n+    toggleOrderedList(editor); // re-adds\n+\n+    expect(editor.getDocument()).toBe(\"1. first\\n2. second\");\n+    editor.destroy();\n+  });\n+\n+  it(\"skips blank lines when numbering\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"first\\n\\nthird\" });\n+\n+    editor.setSelection(0, 12);\n+    toggleOrderedList(editor);\n+\n+    expect(editor.getDocument()).toBe(\"1. first\\n\\n2. third\");\n+    editor.destroy();\n+  });\n+});\n+\n describe(\"createToolbarPlugin\", () => {\n   it(\"returns a plugin with keyboard shortcuts\", () => {\n     const plugin = createToolbarPlugin();"
+      },
+      {
+        "sha": "9a2feafb60544f26bfb66cdd2bd735cb2e13995d",
+        "filename": "packages/react/src/editor.tsx",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 4,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Feditor.tsx?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -1,9 +1,9 @@\n import { useEditor } from \"./use-editor\";\n \n-import type { UseEditorConfig } from \"./types\";\n+import type { EditorProps } from \"./types\";\n \n-export function Editor(props: UseEditorConfig) {\n-  const { containerRef } = useEditor(props);\n+export function Editor({ className, style, id, ...config }: EditorProps) {\n+  const { containerRef } = useEditor(config);\n \n-  return <div ref={containerRef} />;\n+  return <div ref={containerRef} className={className} style={style} id={id} />;\n }"
+      },
+      {
+        "sha": "65c1ca9f5e86783f6e78b2cdd93d78068f08cbcf",
+        "filename": "packages/react/src/index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Findex.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -1,3 +1,3 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type { EditorProps, UseEditorConfig, UseEditorResult } from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "8356c38033dbe8a25ef210c31a8fa538f9a8cac0",
+        "filename": "packages/react/src/types.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 2,
+        "changes": 12,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Ftypes.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -2,9 +2,17 @@ import type {\n   EditorAPI,\n   EditorConfig\n } from \"@floatboat/nexus-core\";\n-import type { RefObject } from \"react\";\n+import type { CSSProperties, RefObject } from \"react\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  onReady?: (editor: EditorAPI) => void;\n+}\n+\n+export interface EditorProps extends UseEditorConfig {\n+  className?: string;\n+  style?: CSSProperties;\n+  id?: string;\n+}\n \n export interface UseEditorResult {\n   containerRef: RefObject<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "0f2518a1ebf48263b39906ed96b018f5be2ea704",
+        "filename": "packages/react/src/use-editor.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 1,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Fuse-editor.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -18,13 +18,16 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n+    const { onReady, ...editorConfig } = configRef.current;\n+\n     const instance = createEditor({\n       container,\n-      ...configRef.current\n+      ...editorConfig\n     });\n \n     editorRef.current = instance;\n     setEditor(instance);\n+    onReady?.(instance);\n \n     return () => {\n       instance.destroy();"
+      },
+      {
+        "sha": "75518abfa9e29bf70385f976fc22cee35eed0ae2",
+        "filename": "packages/react/test/editor-react.test.tsx",
+        "status": "modified",
+        "additions": 23,
+        "deletions": 1,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Freact%2Ftest%2Feditor-react.test.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Ftest%2Feditor-react.test.tsx?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -1,7 +1,8 @@\n import { render } from \"@testing-library/react\";\n import { useEffect } from \"react\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n \n describe(\"@floatboat/nexus-react\", () => {\n   it(\"renders an editor into the provided container through the Editor component\", () => {\n@@ -37,4 +38,25 @@ describe(\"@floatboat/nexus-react\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady with the editor instance after creation\", () => {\n+    const onReady = vi.fn();\n+\n+    render(<Editor initialValue=\"# Ready\" onReady={onReady} />);\n+\n+    expect(onReady).toHaveBeenCalledTimes(1);\n+    const editor: EditorAPI = onReady.mock.calls[0][0];\n+    expect(editor.getDocument()).toBe(\"# Ready\");\n+  });\n+\n+  it(\"passes className, style, and id to the container div\", () => {\n+    const { container } = render(\n+      <Editor initialValue=\"\" className=\"my-editor\" style={{ border: \"1px solid red\" }} id=\"editor-1\" />\n+    );\n+\n+    const div = container.firstElementChild as HTMLElement;\n+    expect(div.className).toContain(\"my-editor\");\n+    expect(div.style.border).toBe(\"1px solid red\");\n+    expect(div.id).toBe(\"editor-1\");\n+  });\n });"
+      },
+      {
+        "sha": "fdac0d783a27bde5a9ac632b6e758559a7af83f0",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 16,
+        "deletions": 3,
+        "changes": 19,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -8,11 +8,24 @@ export const Editor = defineComponent({\n     initialValue: {\n       type: String,\n       required: false\n+    },\n+    class: {\n+      type: String,\n+      required: false\n+    },\n+    style: {\n+      type: [String, Object],\n+      required: false\n+    },\n+    id: {\n+      type: String,\n+      required: false\n     }\n   },\n-  setup(props) {\n-    const { containerRef } = useEditor(props);\n+  setup(props, { attrs }) {\n+    const { class: className, style, id, ...editorProps } = props;\n+    const { containerRef } = useEditor({ ...editorProps, ...attrs } as any);\n \n-    return () => h(\"div\", { ref: containerRef });\n+    return () => h(\"div\", { ref: containerRef, class: className, style, id });\n   }\n });"
+      },
+      {
+        "sha": "65c1ca9f5e86783f6e78b2cdd93d78068f08cbcf",
+        "filename": "packages/vue/src/index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Findex.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -1,3 +1,3 @@\n export { Editor } from \"./editor\";\n-export type { UseEditorConfig, UseEditorResult } from \"./types\";\n+export type { EditorProps, UseEditorConfig, UseEditorResult } from \"./types\";\n export { useEditor } from \"./use-editor\";"
+      },
+      {
+        "sha": "293ec235778d8a9fa42d3ae3029e64dfa70187a5",
+        "filename": "packages/vue/src/types.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 1,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Ftypes.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -4,7 +4,15 @@ import type {\n } from \"@floatboat/nexus-core\";\n import type { Ref, ShallowRef } from \"vue\";\n \n-export type UseEditorConfig = Omit<EditorConfig, \"container\">;\n+export interface UseEditorConfig extends Omit<EditorConfig, \"container\"> {\n+  onReady?: (editor: EditorAPI) => void;\n+}\n+\n+export interface EditorProps extends UseEditorConfig {\n+  class?: string;\n+  style?: string | Record<string, string>;\n+  id?: string;\n+}\n \n export interface UseEditorResult {\n   containerRef: Ref<HTMLDivElement | null>;"
+      },
+      {
+        "sha": "7d79e7f019e26095e43eef4c4134a206e7bb272c",
+        "filename": "packages/vue/src/use-editor.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 2,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Fsrc%2Fuse-editor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Fuse-editor.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -12,10 +12,15 @@ export function useEditor(config: UseEditorConfig): UseEditorResult {\n       return;\n     }\n \n-    editor.value = createEditor({\n+    const { onReady, ...editorConfig } = config;\n+\n+    const instance = createEditor({\n       container: containerRef.value,\n-      ...config\n+      ...editorConfig\n     });\n+\n+    editor.value = instance;\n+    onReady?.(instance);\n   });\n \n   onBeforeUnmount(() => {"
+      },
+      {
+        "sha": "a84d294397b329bfe205011b90c6c75ec74d46c8",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 36,
+        "deletions": 1,
+        "changes": 37,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/8956bdc3b252e609ba3e6c33c001a3cd9072d532/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=8956bdc3b252e609ba3e6c33c001a3cd9072d532",
+        "patch": "@@ -1,7 +1,8 @@\n import { mount } from \"@vue/test-utils\";\n import { defineComponent, h, nextTick, onMounted } from \"vue\";\n-import { describe, expect, it } from \"vitest\";\n+import { describe, expect, it, vi } from \"vitest\";\n import { Editor, useEditor } from \"../src/index\";\n+import type { EditorAPI } from \"@floatboat/nexus-core\";\n \n describe(\"@floatboat/nexus-vue\", () => {\n   it(\"renders an editor into the provided container through the Editor component\", async () => {\n@@ -45,4 +46,38 @@ describe(\"@floatboat/nexus-vue\", () => {\n \n     expect(snapshots).toContain(\"updated\");\n   });\n+\n+  it(\"calls onReady with the editor instance after creation\", async () => {\n+    const onReady = vi.fn();\n+\n+    mount(Editor, {\n+      props: {\n+        initialValue: \"# Ready\",\n+        onReady\n+      } as any\n+    });\n+\n+    await nextTick();\n+\n+    expect(onReady).toHaveBeenCalledTimes(1);\n+    const editor: EditorAPI = onReady.mock.calls[0][0];\n+    expect(editor.getDocument()).toBe(\"# Ready\");\n+  });\n+\n+  it(\"passes class, style, and id to the container div\", async () => {\n+    const wrapper = mount(Editor, {\n+      props: {\n+        initialValue: \"\",\n+        class: \"my-editor\",\n+        style: \"border: 1px solid red\",\n+        id: \"editor-1\"\n+      } as any\n+    });\n+\n+    await nextTick();\n+\n+    expect(wrapper.element.className).toContain(\"my-editor\");\n+    expect((wrapper.element as HTMLElement).style.border).toBe(\"1px solid red\");\n+    expect(wrapper.element.id).toBe(\"editor-1\");\n+  });\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=66",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

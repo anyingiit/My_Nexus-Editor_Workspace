@@ -1,0 +1,64 @@
+{
+  "pr_number": 203,
+  "title": "fix(electron): support Unicode unlinked mentions",
+  "body": "## Summary / 摘要\n\n我是邵梦月，在 Boss 上得到这份作业，提交至此。\n\nFix Electron demo unlinked-mention detection for CJK and other Unicode note names while preserving whole-word behavior for alphabetic scripts.\n\n修复 Electron demo 中中文、日文、韩文及其他 Unicode 笔记名称无法被识别为未链接提及的问题，同时保留字母文字的整词匹配语义。\n\n## Motivation / 背景与动机\n\n`LinkIndex.getUnlinkedMentions()` previously wrapped an escaped note name with JavaScript `\\b` boundaries. JavaScript defines `\\b` around ASCII-style word characters, so note names such as `项目计划` produced no matches at all. Accented names also had inconsistent boundaries, for example `Café` could not be handled with true Unicode word semantics.\n\nThis made the backlinks panel incomplete for multilingual vaults even though the underlying text contained exact note-name mentions.\n\n- Issue: N/A (identified through code review and a failing regression test)\n- Roadmap: N/A (bug fix)\n- OpenSpec: N/A (restores existing behavior; no public API or new capability)\n\n## Changes / 变更内容\n\n- `apps/electron-demo/src/renderer/link-index.ts`\n  - Replace ASCII-only `\\b` matching with case-insensitive Unicode matching.\n  - Add code-point-safe boundary checks for alphabetic and numeric scripts.\n  - Use exact substring semantics when a note name starts or ends with a CJK character, because CJK prose commonly has no whitespace word separators.\n  - Keep regex escaping, wiki-link exclusion, snippets, offsets, and caching behavior unchanged.\n- `apps/electron-demo/test/link-index.test.ts`\n  - Add a CJK regression covering two unseparated `项目计划` mentions.\n  - Add an accented-Latin regression proving `Café` matches independently but not inside `caféine`.\n\n## Testing / 测试\n\nThe CJK regression was verified to fail before the implementation (`0` matches instead of `2`).\n\n- [x] `node_modules/.bin/vitest run` — 34 test files, 539 tests passed\n- [x] `node_modules/.bin/vitest run apps/electron-demo/test/link-index.test.ts apps/electron-demo/test/sample-vault.test.ts` — 51 tests passed\n- [x] `node_modules/.bin/tsc --noEmit -p apps/electron-demo/tsconfig.json`\n- [x] `node_modules/.bin/tsc --noEmit -p packages/core/tsconfig.json`\n- [x] Electron renderer production build — 2,221 modules transformed successfully\n- [x] `git diff --check`\n\n## Compliance / 合规自检\n\n- [ ] **CLA signed** — first-time contributor; will follow the CLA bot prompt\n- [x] **AI disclosure**: AI assistance was used to inspect the repository, identify the Unicode-boundary defect, draft the implementation and regression tests, and review the final diff. I reviewed the behavior and validation results and take responsibility for the submitted change.\n- [x] **New dependencies**: none\n- [x] **No build artifacts committed**\n- [x] **No secrets or personal vault data committed**\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits\n- [x] No public API change\n- [x] `live-preview-table.ts` is not touched\n- [x] Bug fix; no OpenSpec proposal required\n- [x] Change aligns with project scope in `GOVERNANCE.md`\n",
+  "created_at": "2026-08-01T03:50:06Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "985be17993a8ac64aff97112390e7b4ab610beab",
+  "first_review_time": "2026-08-01T03:50:13Z",
+  "commits_at_first_review": [
+    {
+      "sha": "985be17993a8ac64aff97112390e7b4ab610beab",
+      "message": "fix(electron): support Unicode unlinked mentions",
+      "date": "2026-08-01T02:44:35Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "82aa03234911202014e14e15469302672aca2f33",
+        "filename": "apps/electron-demo/src/renderer/link-index.ts",
+        "status": "modified",
+        "additions": 46,
+        "deletions": 2,
+        "changes": 48,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/985be17993a8ac64aff97112390e7b4ab610beab/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/985be17993a8ac64aff97112390e7b4ab610beab/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts?ref=985be17993a8ac64aff97112390e7b4ab610beab",
+        "patch": "@@ -147,6 +147,48 @@ function snippetAround(content: string, from: number, to: number): string {\n   return content.slice(lineStart, lineEnd).trim();\n }\n \n+const UNICODE_WORD_CHAR_RE = /^[\\p{L}\\p{M}\\p{N}\\p{Pc}]$/u;\n+const CJK_CHAR_RE = /^[\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Script=Hangul}]$/u;\n+\n+function codePointAt(value: string, index: number): string {\n+  if (index < 0 || index >= value.length) return \"\";\n+  return String.fromCodePoint(value.codePointAt(index)!);\n+}\n+\n+function codePointBefore(value: string, index: number): string {\n+  if (index <= 0 || index > value.length) return \"\";\n+  let start = index - 1;\n+  const lastUnit = value.charCodeAt(start);\n+  if (lastUnit >= 0xdc00 && lastUnit <= 0xdfff && start > 0) {\n+    const previousUnit = value.charCodeAt(start - 1);\n+    if (previousUnit >= 0xd800 && previousUnit <= 0xdbff) start -= 1;\n+  }\n+  return codePointAt(value, start);\n+}\n+\n+function hasUnicodeMentionBoundaries(\n+  content: string,\n+  from: number,\n+  to: number,\n+  needle: string,\n+): boolean {\n+  const first = codePointAt(needle, 0);\n+  const last = codePointBefore(needle, needle.length);\n+  const before = codePointBefore(content, from);\n+  const after = codePointAt(content, to);\n+\n+  // CJK text commonly has no separators between words, so exact substring\n+  // matches are meaningful there. Other scripts keep Unicode-aware word\n+  // boundaries to avoid matching e.g. \"Café\" inside \"Caféine\".\n+  const startsInsideWord = !CJK_CHAR_RE.test(first)\n+    && UNICODE_WORD_CHAR_RE.test(first)\n+    && UNICODE_WORD_CHAR_RE.test(before);\n+  const endsInsideWord = !CJK_CHAR_RE.test(last)\n+    && UNICODE_WORD_CHAR_RE.test(last)\n+    && UNICODE_WORD_CHAR_RE.test(after);\n+  return !startsInsideWord && !endsInsideWord;\n+}\n+\n /**\n  * Vault-scoped bidirectional wiki-link index.\n  *\n@@ -270,7 +312,8 @@ export class LinkIndex {\n   /**\n    * Find plain-text occurrences of the target file's basename (sans extension)\n    * across every other file in the vault, excluding any occurrence that falls\n-   * inside an existing wiki link. Case-insensitive, word-boundary matched.\n+   * inside an existing wiki link. Matching is case-insensitive and uses\n+   * Unicode-aware boundaries, with exact substring semantics for CJK text.\n    *\n    * Corresponds to Obsidian's \"Unlinked mentions\" section.\n    *\n@@ -291,7 +334,7 @@ export class LinkIndex {\n       return [];\n     }\n     const escaped = needle.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n-    const re = new RegExp(`\\\\b${escaped}\\\\b`, \"gi\");\n+    const re = new RegExp(escaped, \"giu\");\n \n     const out: BacklinkHit[] = [];\n     for (const [source, content] of this.contents) {\n@@ -302,6 +345,7 @@ export class LinkIndex {\n       while ((m = re.exec(content)) !== null) {\n         const start = m.index;\n         const end = start + m[0].length;\n+        if (!hasUnicodeMentionBoundaries(content, start, end, needle)) continue;\n         // Skip if the match falls inside an existing wiki link range.\n         const insideLink = wikiRanges.some((wl) => start >= wl.from && end <= wl.to);\n         if (insideLink) continue;"
+      },
+      {
+        "sha": "2299f70553aa878b5cd12e2a9fe207622dd9aecb",
+        "filename": "apps/electron-demo/test/link-index.test.ts",
+        "status": "modified",
+        "additions": 25,
+        "deletions": 0,
+        "changes": 25,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/985be17993a8ac64aff97112390e7b4ab610beab/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/985be17993a8ac64aff97112390e7b4ab610beab/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Flink-index.test.ts?ref=985be17993a8ac64aff97112390e7b4ab610beab",
+        "patch": "@@ -242,6 +242,31 @@ describe(\"LinkIndex.getUnlinkedMentions\", () => {\n     expect(hits.every((h) => h.sourcePath === \"/v/a.md\")).toBe(true);\n   });\n \n+  it(\"finds CJK note names without relying on ASCII word boundaries\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"/v/项目计划.md\", content: \"\" },\n+      { path: \"/v/a.md\", content: \"今天更新项目计划，明天继续项目计划。\" },\n+    ]);\n+\n+    const hits = idx.getUnlinkedMentions(\"/v/项目计划.md\");\n+\n+    expect(hits).toHaveLength(2);\n+    expect(hits.map((hit) => hit.from)).toEqual([4, 13]);\n+  });\n+\n+  it(\"uses Unicode-aware boundaries for accented note names\", () => {\n+    const idx = new LinkIndex();\n+    idx.rebuild([\n+      { path: \"/v/Café.md\", content: \"\" },\n+      { path: \"/v/a.md\", content: \"Café, caféine, and CAFÉ.\" },\n+    ]);\n+\n+    const hits = idx.getUnlinkedMentions(\"/v/Café.md\");\n+\n+    expect(hits.map((hit) => hit.from)).toEqual([0, 19]);\n+  });\n+\n   it(\"excludes occurrences that fall inside existing wiki links\", () => {\n     const idx = new LinkIndex();\n     idx.rebuild(["
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=203",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

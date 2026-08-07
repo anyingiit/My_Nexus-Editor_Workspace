@@ -1,0 +1,98 @@
+{
+  "pr_number": 177,
+  "title": "feat(search): Unicode-safe fuzzy matching with preview UI",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "b2880df1f26419f8e97646faf1fdbf9b58beddee",
+  "merge_commit_sha": "6fe578785c253a507eb16740ca53c07813140dd4",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "d14000408ebee2f686cb92e1aa08dec3837bc3d6",
+      "message": "feat(search): add fuzzy subsequence matching with scoring\n\nImplements ROADMAP #17 — fuzzy search for the search plugin.\n\n- Add fuzzy.ts: greedy subsequence matcher with position scoring\n  (word-boundary bonus, consecutive-run bonus, gap penalty)\n- Export fuzzyMatch / findFuzzyMatches as standalone pure functions\n- Integrate fuzzy mode into findSearchMatches / replaceAllMatches\n  via a new `fuzzy` option on SearchOptions\n- Add 59 tests covering algorithm correctness, edge cases, and\n  integration with existing literal/regexp/wholeWord modes\n\nThe search plugin previously had no dedicated unit tests for\nfindSearchMatches / replaceAllMatches; this PR also fills that gap.",
+      "date": "2026-07-22T16:32:40Z"
+    },
+    {
+      "sha": "dd33fb7fe87d1d5ec48c96ac2472a836bc664e39",
+      "message": "feat(search): make fuzzy matching code-point aware\n\nAstral-plane characters (emoji, CJK extension blocks, musical\nsymbols) span two UTF-16 code units, and the matcher previously\nindexed text by code unit — so an emoji in the query could never\nmatch, positions could land inside a surrogate pair, and gaps\ncontaining astral characters were priced double.\n\n- Compare and advance by whole code points in greedyMatch and the\n  scan loops; returned offsets stay in UTF-16 code units to match\n  editor selection coordinates (CodeMirror, Monaco, textarea)\n- Treat emoji as word boundaries by testing the full previous code\n  point, so \"👋hello\" scores \"hello\" at a boundary\n- Measure maxGap and gap penalties in code points, not code units\n- Add 12 tests covering emoji/CJK matching, surrogate-pair safety,\n  astral case folding, and boundary scoring",
+      "date": "2026-07-23T09:45:50Z"
+    },
+    {
+      "sha": "b2880df1f26419f8e97646faf1fdbf9b58beddee",
+      "message": "feat(electron): add fuzzy search mode with match preview\n\nSurfaces the fuzzy matcher in the demo app so the feature is\nverifiable by hand, and keeps typing responsive on large documents.\n\n- Fz toggle (or Ctrl/Cmd+Shift+F) switches the search bar to fuzzy\n  subsequence matching; replace-all honours the active mode\n- Preview row renders the current match window with every matched\n  character marked, plus the match score and offsets — subsequence\n  matching becomes visible instead of magic\n- Search input is debounced (80ms) so re-searching never blocks a\n  keystroke; a full fuzzy scan of a 169k-char doc measures ~14ms,\n  inside one frame budget\n- Add 8 integration tests driving the bar against a real editor",
+      "date": "2026-07-23T09:45:51Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 2,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 161,
+      "deletions": 19,
+      "changes": 180
+    },
+    {
+      "filename": "apps/electron-demo/test/search-bar.test.ts",
+      "status": "added",
+      "additions": 164,
+      "deletions": 0,
+      "changes": 164
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy.ts",
+      "status": "added",
+      "additions": 250,
+      "deletions": 0,
+      "changes": 250
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 39,
+      "deletions": 0,
+      "changes": 39
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy.test.ts",
+      "status": "added",
+      "additions": 288,
+      "deletions": 0,
+      "changes": 288
+    },
+    {
+      "filename": "packages/plugin-search/test/search.test.ts",
+      "status": "added",
+      "additions": 156,
+      "deletions": 0,
+      "changes": 156
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=177",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

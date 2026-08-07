@@ -1,0 +1,13 @@
+{
+  "pr_number": 202,
+  "points": [
+    {
+      "id": 1,
+      "summary": "All committers must sign the Contributor License Agreement."
+    },
+    {
+      "id": 2,
+      "summary": "bing-be needs to link commit email to a GitHub account."
+    }
+  ]
+}

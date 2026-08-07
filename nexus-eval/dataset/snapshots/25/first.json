@@ -1,0 +1,69 @@
+{
+  "pr_number": 25,
+  "title": "完成笔试题",
+  "body": "<!--\r\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\r\n  e.g.  feat(toolbar): list toggle for multi-line selection\r\nAllowed scopes — see CONTRIBUTING.md §2\r\n\r\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2\r\n-->\r\n\r\n## Summary / 摘要\r\n\r\n<!-- One sentence summary of the change. / 一句话说明改了什么。 -->\r\n\r\n## Motivation / 背景与动机\r\n\r\n<!-- Why is this change needed? Link issue / roadmap entry / OpenSpec change. -->\r\n<!-- 解决什么问题？关联 issue / roadmap 条目 / OpenSpec change id。 -->\r\n\r\n- Issue:\r\n- Roadmap (docs/ROADMAP.md):\r\n- OpenSpec change:\r\n\r\n## Changes / 变更内容\r\n\r\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\r\n\r\n- `packages/core`:\r\n- `packages/plugin-*`:\r\n- `apps/electron-demo`:\r\n- `openspec/`:\r\n\r\n## Testing / 测试\r\n\r\n<!-- How was this verified? Commands and scenarios covered. -->\r\n<!-- 描述如何验证，附上命令与覆盖的场景。 -->\r\n\r\n- [ ] `pnpm test` passes / 全绿\r\n- [ ] Affected packages build (`pnpm build`) / 受影响包构建通过\r\n- [ ] New / updated vitest cases / 新增或更新的 vitest 用例：\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：\r\n\r\n## Checklist / 自检清单\r\n\r\n- [ ] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n- [ ] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\r\n- [ ] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则\r\n- [ ] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec\r\n- [ ] No secrets / personal vault data committed / 无敏感信息被提交\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\n<!-- Attach screenshots or gifs for visible UI changes. / 改动可见 UI 时请附上截图或 gif。 -->\r\n",
+  "created_at": "2026-05-18T13:13:36Z",
+  "draft": false,
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "head_sha_at_first_review": "60c468d6e385f650f62e4742238ae593bce4691c",
+  "first_review_time": "2026-05-18T13:13:36Z",
+  "commits_at_first_review": [
+    {
+      "sha": "60c468d6e385f650f62e4742238ae593bce4691c",
+      "message": "feat(core): implement getSelectedText API aligning with roadmap",
+      "date": "2026-05-18T08:52:29Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "ec044f2373b80dd99b9f4393ae5d79f5a4f448c9",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/60c468d6e385f650f62e4742238ae593bce4691c/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/60c468d6e385f650f62e4742238ae593bce4691c/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=60c468d6e385f650f62e4742238ae593bce4691c",
+        "patch": "@@ -409,6 +409,19 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const sel = view.state.selection.main;\n       return { anchor: sel.anchor, head: sel.head };\n     },\n+    getSelectedText() {\n+      if (destroyed) return \"\";\n+\n+      const sel = view.state.selection.main;\n+      if (!sel || sel.empty) return \"\";\n+\n+      const docLength = view.state.doc.length;\n+      const from = Math.max(0, Math.min(sel.from, docLength));\n+      const to = Math.max(0, Math.min(sel.to, docLength));\n+      if (from >= to) return \"\";\n+\n+      return view.state.sliceDoc(from, to);\n+    },\n     getSlashCommands() {\n       return slashCommands;\n     },"
+      },
+      {
+        "sha": "d03241212959b30babe0e12a3c25a768fcd1f86f",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/60c468d6e385f650f62e4742238ae593bce4691c/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/60c468d6e385f650f62e4742238ae593bce4691c/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=60c468d6e385f650f62e4742238ae593bce4691c",
+        "patch": "@@ -135,6 +135,7 @@ export interface EditorAPI {\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;\n   getSelection(): { anchor: number; head: number };\n+  getSelectedText(): string;\n   getSlashCommands(): SlashCommandDef[];\n   uploadAsset(file: File): Promise<string | null>;\n   setSelection(anchor: number, head?: number): void;"
+      },
+      {
+        "sha": "624e8e7e5160be4221daafbaed1b5f5cef780cda",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 26,
+        "deletions": 0,
+        "changes": 26,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/60c468d6e385f650f62e4742238ae593bce4691c/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/60c468d6e385f650f62e4742238ae593bce4691c/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=60c468d6e385f650f62e4742238ae593bce4691c",
+        "patch": "@@ -289,6 +289,32 @@ describe(\"createEditor\", () => {\n     editor.destroy();\n   });\n \n+  it(\"returns an empty string from getSelectedText when selection is empty\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello world\"\n+    });\n+\n+    editor.setSelection(3);\n+\n+    expect(editor.getSelectedText()).toBe(\"\");\n+    editor.destroy();\n+  });\n+\n+  it(\"returns selected text from getSelectedText\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello world\"\n+    });\n+\n+    editor.setSelection(0, 5);\n+\n+    expect(editor.getSelectedText()).toBe(\"hello\");\n+    editor.destroy();\n+  });\n+\n   it(\"delegates asset uploads through the configured host hook\", async () => {\n     const container = document.createElement(\"div\");\n     const file = new File([\"image\"], \"image.png\", { type: \"image/png\" });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

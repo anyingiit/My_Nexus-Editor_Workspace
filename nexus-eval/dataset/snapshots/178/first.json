@@ -1,0 +1,100 @@
+{
+  "pr_number": 178,
+  "title": "feat(core,vue): add onSelectionChange and onSlashMenuChange config callbacks",
+  "body": "## Summary\r\n\r\nAdd `onSelectionChange` and `onSlashMenuChange` config callbacks to `EditorConfig`,\r\nmirroring the existing `onChange`/`onFocus`/`onBlur` pattern. Previously these\r\nlifecycle events were only accessible via the event emitter.\r\n\r\n| Package | Change |\r\n|---|---|\r\n| `core/types` | Add `onSelectionChange?` / `onSlashMenuChange?` to `EditorConfig` |\r\n| `core/editor` | Wire callbacks alongside existing `emitter.emit` calls |\r\n| `core/test/events.test` | 5 new tests |\r\n| `vue/editor` | Expose as props + emits, bridge config callbacks to Vue events |\r\n| `vue/test/editor-vue.test` | 2 new tests for Vue emit behavior |\r\n\r\n## Test plan\r\n\r\n- [x] 544/544 tests pass (7 new tests: 5 core + 2 vue)\r\n- [x] Both config callback + event emitter paths verified\r\n- [x] Backwards-compatible, no API breaks, no new deps",
+  "created_at": "2026-07-23T11:18:49Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+  "first_review_time": "2026-07-23T11:19:00Z",
+  "commits_at_first_review": [
+    {
+      "sha": "3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+      "message": "feat(core,vue): add onSelectionChange and onSlashMenuChange config callbacks\n\nAdd onSelectionChange and onSlashMenuChange to EditorConfig, mirroring the\nexisting onChange/onFocus/onBlur pattern. Previously these events were only\naccessible via the event emitter.\n\n- core/types: add onSelectionChange? and onSlashMenuChange? to EditorConfig\n- core/editor: wire callbacks alongside emitter.emit calls\n- core/test/events.test: 5 new tests (cursor move, selection, coexistence)\n- vue/editor: expose as props + emits, bridge config callbacks to Vue events\n- vue/test/editor-vue.test: 2 new tests for Vue emit behavior\n\nCo-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>",
+      "date": "2026-07-23T11:13:49Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "02945686fefcd8c5bb640a6925ce86cba5fd6668",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 3,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+        "patch": "@@ -623,12 +623,14 @@ export function createEditor(config: EditorConfig): EditorAPI {\n \n             if (update.selectionSet) {\n               const selection = update.state.selection;\n-              emitter.emit(\"selectionChange\", {\n+              const selectionState = {\n                 anchor: sel.anchor,\n                 head: sel.head,\n                 ranges: selection.ranges.map((range) => ({ anchor: range.anchor, head: range.head })),\n                 mainIndex: selection.mainIndex,\n-              });\n+              };\n+              config.onSelectionChange?.(selectionState);\n+              emitter.emit(\"selectionChange\", selectionState);\n             }\n \n             if (slashCommands.length > 0) {\n@@ -647,7 +649,9 @@ export function createEditor(config: EditorConfig): EditorAPI {\n                 } catch { /* out of range */ }\n               }\n \n-              emitter.emit(\"slashMenuChange\", { ...state, coords });\n+              const slashState = { ...state, coords };\n+              config.onSlashMenuChange?.(slashState);\n+              emitter.emit(\"slashMenuChange\", slashState);\n             }\n           }\n         }),"
+      },
+      {
+        "sha": "304fa71e2cf639c8062054be046fb349fafcff9d",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 0,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+        "patch": "@@ -113,6 +113,16 @@ export interface EditorConfig {\n   onChange?: (doc: string, ast: Root) => void;\n   onFocus?: () => void;\n   onBlur?: () => void;\n+  /**\n+   * Fires on every cursor move or selection change with full selection state\n+   * (main range, all ranges, main index). Mirrors the `selectionChange` event.\n+   */\n+  onSelectionChange?: (selection: { anchor: number; head: number } & SelectionState) => void;\n+  /**\n+   * Fires whenever the slash-menu state changes — query text, matched commands,\n+   * open/closed, and screen coordinates. Mirrors the `slashMenuChange` event.\n+   */\n+  onSlashMenuChange?: (state: SlashMenuState) => void;\n   /**\n    * 资源上传钩子：粘贴 / 拖拽进来的图片或文件交给宿主落盘 / 上传，返回可供 markdown\n    * 引用的 URL（相对路径或远程地址）。返回 null 表示放弃，编辑器不会插入坏链接。"
+      },
+      {
+        "sha": "a09fb6b3b59e6ca94ffc85011fa8cac15e4578ac",
+        "filename": "packages/core/test/events.test.ts",
+        "status": "modified",
+        "additions": 109,
+        "deletions": 0,
+        "changes": 109,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fcore%2Ftest%2Fevents.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fcore%2Ftest%2Fevents.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Fevents.test.ts?ref=3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+        "patch": "@@ -238,3 +238,112 @@ describe(\"slashMenuChange\", () => {\n     editor.destroy();\n   });\n });\n+\n+describe(\"onSelectionChange config callback\", () => {\n+  it(\"fires on cursor move via setSelection\", () => {\n+    const container = document.createElement(\"div\");\n+    const handler = vi.fn();\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello world\",\n+      onSelectionChange: handler,\n+    });\n+\n+    editor.setSelection(5);\n+\n+    expect(handler).toHaveBeenCalledWith({\n+      anchor: 5,\n+      head: 5,\n+      ranges: [{ anchor: 5, head: 5 }],\n+      mainIndex: 0,\n+    });\n+    editor.destroy();\n+  });\n+\n+  it(\"fires with the expanded range when text is selected\", () => {\n+    const container = document.createElement(\"div\");\n+    const handler = vi.fn();\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello world\",\n+      onSelectionChange: handler,\n+    });\n+\n+    editor.setSelection(6, 11);\n+\n+    expect(handler).toHaveBeenCalledWith({\n+      anchor: 6,\n+      head: 11,\n+      ranges: [{ anchor: 6, head: 11 }],\n+      mainIndex: 0,\n+    });\n+    editor.destroy();\n+  });\n+\n+  it(\"coexists with the event emitter\", () => {\n+    const container = document.createElement(\"div\");\n+    const configHandler = vi.fn();\n+    const eventHandler = vi.fn();\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"hello\",\n+      onSelectionChange: configHandler,\n+    });\n+\n+    editor.on(\"selectionChange\", eventHandler);\n+    editor.setSelection(2);\n+\n+    expect(configHandler).toHaveBeenCalledOnce();\n+    expect(eventHandler).toHaveBeenCalledOnce();\n+    editor.destroy();\n+  });\n+});\n+\n+describe(\"onSlashMenuChange config callback\", () => {\n+  const commands = [\n+    { id: \"heading\", title: \"Heading\" },\n+    { id: \"bold\", title: \"Bold\" },\n+  ];\n+\n+  it(\"fires with open state when slash is typed\", () => {\n+    const container = document.createElement(\"div\");\n+    const handler = vi.fn();\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [{ name: \"test\", slashCommands: commands }],\n+      onSlashMenuChange: handler,\n+    });\n+\n+    editor.setDocument(\"/hea\");\n+    editor.setSelection(4);\n+\n+    expect(handler).toHaveBeenCalled();\n+    const lastCall = handler.mock.calls[handler.mock.calls.length - 1][0];\n+    expect(lastCall.isOpen).toBe(true);\n+    expect(lastCall.query).toBe(\"hea\");\n+    expect(lastCall.commands).toHaveLength(1);\n+    expect(lastCall.commands[0].id).toBe(\"heading\");\n+    editor.destroy();\n+  });\n+\n+  it(\"coexists with the event emitter\", () => {\n+    const container = document.createElement(\"div\");\n+    const configHandler = vi.fn();\n+    const eventHandler = vi.fn();\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [{ name: \"test\", slashCommands: commands }],\n+      onSlashMenuChange: configHandler,\n+    });\n+\n+    editor.on(\"slashMenuChange\", eventHandler);\n+    editor.setDocument(\"/bo\");\n+    editor.setSelection(3);\n+\n+    expect(configHandler).toHaveBeenCalled();\n+    expect(eventHandler).toHaveBeenCalled();\n+    editor.destroy();\n+  });\n+});"
+      },
+      {
+        "sha": "a308639b44af0bbd5aca4eaf2739e54f52e22521",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 24,
+        "deletions": 2,
+        "changes": 26,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+        "patch": "@@ -2,7 +2,7 @@ import { computed, defineComponent, h, type PropType } from \"vue\";\n \n import { useEditor } from \"./use-editor\";\n \n-import type { EditorAPI } from \"@floatboat/nexus-core\";\n+import type { EditorAPI, SlashMenuState, SelectionState } from \"@floatboat/nexus-core\";\n import type { EditorProps, UseEditorConfig } from \"./types\";\n \n const editorPropKeys = [\n@@ -21,6 +21,8 @@ const editorPropKeys = [\n   \"onChange\",\n   \"onFocus\",\n   \"onBlur\",\n+  \"onSelectionChange\",\n+  \"onSlashMenuChange\",\n   \"onAssetUpload\",\n   \"onReady\"\n ] as const;\n@@ -114,16 +116,28 @@ export const Editor = defineComponent({\n     onReady: {\n       type: Function as PropType<(editor: EditorAPI) => void>,\n       required: false\n+    },\n+    onSelectionChange: {\n+      type: Function as PropType<(selection: { anchor: number; head: number } & SelectionState) => void>,\n+      required: false\n+    },\n+    onSlashMenuChange: {\n+      type: Function as PropType<(state: SlashMenuState) => void>,\n+      required: false\n     }\n   },\n   emits: {\n-    \"update:modelValue\": (_value: string) => true\n+    \"update:modelValue\": (_value: string) => true,\n+    selectionChange: (_selection: { anchor: number; head: number } & SelectionState) => true,\n+    slashMenuChange: (_state: SlashMenuState) => true\n   },\n   setup(props, { emit, attrs }) {\n     const editorConfig = computed<UseEditorConfig>(() => {\n       const config = pickEditorConfig(props as EditorProps);\n       const { modelValue } = props;\n       const userOnChange = config.onChange;\n+      const userOnSelectionChange = config.onSelectionChange;\n+      const userOnSlashMenuChange = config.onSlashMenuChange;\n \n       return {\n         ...config,\n@@ -133,6 +147,14 @@ export const Editor = defineComponent({\n             emit(\"update:modelValue\", doc);\n           }\n           userOnChange?.(doc, ast);\n+        },\n+        onSelectionChange: (selection) => {\n+          emit(\"selectionChange\", selection);\n+          userOnSelectionChange?.(selection);\n+        },\n+        onSlashMenuChange: (state) => {\n+          emit(\"slashMenuChange\", state);\n+          userOnSlashMenuChange?.(state);\n         }\n       };\n     });"
+      },
+      {
+        "sha": "545647ded9fe8f6302c7ff28c47684ae3ecf46c7",
+        "filename": "packages/vue/test/editor-vue.test.ts",
+        "status": "modified",
+        "additions": 81,
+        "deletions": 0,
+        "changes": 81,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/3339398fbe251db779cd9a6aea8dbafb7b5d2250/packages%2Fvue%2Ftest%2Feditor-vue.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Ftest%2Feditor-vue.test.ts?ref=3339398fbe251db779cd9a6aea8dbafb7b5d2250",
+        "patch": "@@ -262,4 +262,85 @@ describe(\"@floatboat/nexus-vue\", () => {\n       expect(wrapper.element.querySelector(\".cm-line\")?.textContent).toBe(\"uncontrolled\");\n     });\n   });\n+\n+  it(\"emits selectionChange event on cursor move\", async () => {\n+    const selections: unknown[] = [];\n+    const wrapper = mount(Editor, {\n+      props: {\n+        initialValue: \"hello world\",\n+        onSelectionChange: (sel: unknown) => {\n+          selections.push(sel);\n+        }\n+      }\n+    });\n+\n+    await nextTick();\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor({\n+          initialValue: \"hello world\",\n+          onReady: (api) => {\n+            api.setSelection(6, 11);\n+          }\n+        });\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    const wrapper2 = mount(Harness);\n+    await nextTick();\n+\n+    // Use the standalone useEditor to verify the callback fires\n+    const onSelection = vi.fn();\n+    const Harness2 = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor({\n+          initialValue: \"abc\",\n+          onSelectionChange: onSelection,\n+          onReady: (api) => {\n+            api.setSelection(0, 3);\n+          }\n+        });\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    mount(Harness2);\n+    await nextTick();\n+\n+    expect(onSelection).toHaveBeenCalled();\n+    const call = onSelection.mock.calls[0][0];\n+    expect(call.anchor).toBe(0);\n+    expect(call.head).toBe(3);\n+  });\n+\n+  it(\"calls onSlashMenuChange when slash commands are registered\", async () => {\n+    const handler = vi.fn();\n+    const commands = [{ id: \"h1\", title: \"Heading 1\" }];\n+\n+    const Harness = defineComponent({\n+      setup() {\n+        const { containerRef, editor } = useEditor({\n+          initialValue: \"\",\n+          plugins: [{ name: \"test\", slashCommands: commands }],\n+          onSlashMenuChange: handler,\n+          onReady: (api) => {\n+            api.setDocument(\"/he\");\n+            api.setSelection(3);\n+          }\n+        });\n+        return () => h(\"div\", { ref: containerRef });\n+      }\n+    });\n+\n+    mount(Harness);\n+    await nextTick();\n+\n+    expect(handler).toHaveBeenCalled();\n+    const lastCall = handler.mock.calls[handler.mock.calls.length - 1][0];\n+    expect(lastCall.isOpen).toBe(true);\n+    expect(lastCall.query).toBe(\"he\");\n+    expect(lastCall.commands).toHaveLength(1);\n+  });\n });"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=178",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "pr_number": 136,
+  "title": "feat(search): add fuzzy search helpers",
+  "body": "## Summary / 摘要\r\n\r\nAdd fuzzy matching support to the search plugin headless helpers and document the plugin API.\r\n\r\n## Motivation / 背景与动机\r\n\r\n- Issue:\r\n- Roadmap (docs/ROADMAP.md): P2 mentions fuzzy search.\r\n- OpenSpec change: N/A - scoped search helper/API documentation update, no breaking change.\r\n\r\nThis improves the reusable search helper API without changing the CodeMirror search panel behavior.\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/plugin-search`:\r\n  - Add `SearchOptions.fuzzy` for literal ordered-subsequence search.\r\n  - Support fuzzy matching in `findSearchMatches`.\r\n  - Support fuzzy replacement in `replaceAllMatches`.\r\n  - Keep regexp behavior unchanged when `regexp` and `fuzzy` are both true.\r\n  - Add tests for fuzzy, case-sensitive, whole-word, replace, and regexp precedence.\r\n  - Add package README with usage examples and API notes.\r\n- root scripts:\r\n  - Use `corepack pnpm` in workspace scripts so build/typecheck commands work consistently in environments where bare `pnpm` is not on PATH.\r\n\r\n## Testing / 测试\r\n\r\n- [x] `corepack pnpm vitest run packages/plugin-search/test/plugin-search.test.ts`\r\n- [x] `corepack pnpm typecheck`\r\n- [x] `corepack pnpm test`\r\n- [x] `corepack pnpm build`\r\n- [x] `corepack pnpm build:electron-demo`\r\n\r\n## Compliance / 合规自检\r\n\r\n- [ ] CLA signed\r\n- [x] AI disclosure: implemented with Codex assistance; changes were reviewed and validated locally.\r\n- [x] New dependencies: none.\r\n- [x] No build artifacts committed.\r\n- [x] No secrets / `.env` / personal vault data committed.\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits.\r\n- [x] Public API changes update package README / types.\r\n- [x] Did not touch `live-preview-table.ts`.\r\n- [ ] New capability / breaking change -> OpenSpec proposal linked.\r\n- [x] Change aligns with project scope.\r\n\r\n## Screenshots / Recordings\r\n\r\nN/A - no visible UI changes.",
+  "created_at": "2026-07-07T03:02:20Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+  "first_review_time": "2026-07-07T03:02:27Z",
+  "commits_at_first_review": [
+    {
+      "sha": "d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+      "message": "feat(search): add fuzzy search helpers",
+      "date": "2026-07-07T02:42:18Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "14c588123fce4920da95599cfde460ac75f778e3",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 5,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+        "patch": "@@ -4,12 +4,12 @@\n   \"version\": \"0.0.13\",\n   \"packageManager\": \"pnpm@9.15.4\",\n   \"scripts\": {\n-    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build\",\n-    \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n+    \"build\": \"corepack pnpm --filter \\\"./packages/**\\\" --workspace-concurrency=1 build\",\n+    \"typecheck\": \"corepack pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n-    \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\",\n-    \"build:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo build\",\n-    \"publish:packages\": \"pnpm -r --filter \\\"./packages/*\\\" publish --access public --no-git-checks\"\n+    \"dev:electron-demo\": \"corepack pnpm --filter @floatboat/nexus-electron-demo dev\",\n+    \"build:electron-demo\": \"corepack pnpm --filter @floatboat/nexus-electron-demo build\",\n+    \"publish:packages\": \"corepack pnpm -r --filter \\\"./packages/*\\\" publish --access public --no-git-checks\"\n   },\n   \"devDependencies\": {\n     \"@testing-library/react\": \"^16.3.0\","
+      },
+      {
+        "sha": "4ff3fe3516aba566bdff5f3982e3636bc0fd0c7c",
+        "filename": "packages/plugin-search/README.md",
+        "status": "added",
+        "additions": 59,
+        "deletions": 0,
+        "changes": 59,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/packages%2Fplugin-search%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/packages%2Fplugin-search%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2FREADME.md?ref=d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+        "patch": "@@ -0,0 +1,59 @@\n+# @floatboat/nexus-plugin-search\n+\n+Search panel integration and headless search helpers for\n+[Nexus-Editor](https://github.com/floatboatai/Nexus-Editor).\n+\n+## Install\n+\n+```bash\n+pnpm add @floatboat/nexus-plugin-search @floatboat/nexus-core\n+```\n+\n+## Editor plugin\n+\n+```ts\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import { createSearchPlugin } from \"@floatboat/nexus-plugin-search\";\n+\n+const editor = createEditor({\n+  container,\n+  plugins: [createSearchPlugin()]\n+});\n+```\n+\n+The plugin registers CodeMirror's search panel with Nexus styling,\n+test-friendly attributes, optional query history, replace controls,\n+case-sensitive search, regular expressions, and whole-word matching.\n+\n+## Headless helpers\n+\n+```ts\n+import { findSearchMatches, replaceAllMatches } from \"@floatboat/nexus-plugin-search\";\n+\n+findSearchMatches(\"Nexus note next\", \"ne\", { fuzzy: true });\n+// [\n+//   { from: 0, to: 2, text: \"Ne\" },\n+//   { from: 6, to: 10, text: \"note\" },\n+//   { from: 11, to: 13, text: \"ne\" }\n+// ]\n+\n+replaceAllMatches(\"Nexus note next\", \"ne\", \"X\", { fuzzy: true });\n+// \"Xxus X Xxt\"\n+```\n+\n+`fuzzy: true` applies to literal searches only. It treats the query as\n+an ordered subsequence, returns non-overlapping ranges, honors\n+`caseSensitive` and `wholeWord`, and is ignored when `regexp` is true\n+so regular-expression behavior stays unchanged.\n+\n+## API\n+\n+| Export | Purpose |\n+|---|---|\n+| `createSearchPlugin(options?)` | Registers the editor search panel. |\n+| `findSearchMatches(doc, query, options?)` | Returns match ranges for literal, regexp, whole-word, or fuzzy search. |\n+| `replaceAllMatches(doc, query, replacement, options?)` | Replaces every supported match and returns the next document. |\n+\n+## License\n+\n+MIT"
+      },
+      {
+        "sha": "63a6cabdc6a3ba5f78d5499ccef1a99a2c715b54",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 82,
+        "deletions": 0,
+        "changes": 82,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+        "patch": "@@ -27,6 +27,11 @@ export interface SearchOptions {\n   caseSensitive?: boolean;\n   wholeWord?: boolean;\n   regexp?: boolean;\n+  /**\n+   * Match literal queries as an ordered subsequence, allowing characters\n+   * between query letters. Ignored when `regexp` is true.\n+   */\n+  fuzzy?: boolean;\n }\n \n export interface SearchHistoryStorage {\n@@ -250,6 +255,66 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n   }\n }\n \n+function isWordChar(value: string): boolean {\n+  return /[\\p{Letter}\\p{Number}_]/u.test(value);\n+}\n+\n+function isWholeWordMatch(doc: string, from: number, to: number): boolean {\n+  const before = from > 0 ? doc.slice(from - 1, from) : \"\";\n+  const after = to < doc.length ? doc.slice(to, to + 1) : \"\";\n+  return (!before || !isWordChar(before)) && (!after || !isWordChar(after));\n+}\n+\n+function findFuzzyMatchAt(\n+  doc: string,\n+  source: string,\n+  needle: string,\n+  start: number,\n+): SearchMatch | null {\n+  let queryIndex = 0;\n+  let to = start;\n+\n+  while (to < source.length && queryIndex < needle.length) {\n+    if (source[to] === needle[queryIndex]) {\n+      queryIndex++;\n+    }\n+    to++;\n+  }\n+\n+  if (queryIndex !== needle.length) return null;\n+  return { from: start, to, text: doc.slice(start, to) };\n+}\n+\n+function findFuzzySearchMatches(\n+  doc: string,\n+  query: string,\n+  options: SearchOptions\n+): SearchMatch[] {\n+  const matches: SearchMatch[] = [];\n+  const caseSensitive = options.caseSensitive === true;\n+  const source = caseSensitive ? doc : doc.toLowerCase();\n+  const needle = caseSensitive ? query : query.toLowerCase();\n+  const first = needle[0];\n+  let cursor = 0;\n+\n+  while (cursor < doc.length) {\n+    const start = source.indexOf(first, cursor);\n+    if (start === -1) break;\n+\n+    const match = findFuzzyMatchAt(doc, source, needle, start);\n+    if (!match) break;\n+\n+    if (!options.wholeWord || isWholeWordMatch(doc, match.from, match.to)) {\n+      matches.push(match);\n+      cursor = match.to;\n+    } else {\n+      cursor = start + 1;\n+    }\n+  }\n+\n+  return matches;\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -259,6 +324,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy && !options.regexp) {\n+    return findFuzzySearchMatches(doc, query, options);\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return [];\n@@ -289,6 +358,19 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n+  if (options.fuzzy && !options.regexp) {\n+    const matches = findFuzzySearchMatches(doc, query, options);\n+    if (matches.length === 0) return doc;\n+\n+    let next = \"\";\n+    let cursor = 0;\n+    for (const match of matches) {\n+      next += doc.slice(cursor, match.from) + replacement;\n+      cursor = match.to;\n+    }\n+    return next + doc.slice(cursor);\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return doc;"
+      },
+      {
+        "sha": "69f4cedc766b23a9d769029d14e002b0e8a9090e",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 33,
+        "deletions": 0,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d05248a1e864fcebdf62c98396bb7cdfde7b4b63/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=d05248a1e864fcebdf62c98396bb7cdfde7b4b63",
+        "patch": "@@ -241,6 +241,39 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports fuzzy literal search as ordered subsequence matches\", () => {\n+    expect(findSearchMatches(\"Nexus note next edit\", \"ne\", { fuzzy: true })).toEqual([\n+      { from: 0, to: 2, text: \"Ne\" },\n+      { from: 6, to: 10, text: \"note\" },\n+      { from: 11, to: 13, text: \"ne\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive fuzzy search\", () => {\n+    expect(findSearchMatches(\"Nexus next NE\", \"Ne\", { fuzzy: true, caseSensitive: true })).toEqual([\n+      { from: 0, to: 2, text: \"Ne\" }\n+    ]);\n+  });\n+\n+  it(\"supports whole-word fuzzy search\", () => {\n+    expect(findSearchMatches(\"fb f-b fxb\", \"fb\", { fuzzy: true, wholeWord: true })).toEqual([\n+      { from: 0, to: 2, text: \"fb\" },\n+      { from: 3, to: 6, text: \"f-b\" },\n+      { from: 7, to: 10, text: \"fxb\" }\n+    ]);\n+    expect(findSearchMatches(\"prefixfb\", \"fb\", { fuzzy: true, wholeWord: true })).toEqual([]);\n+  });\n+\n+  it(\"replaces fuzzy matches without overlapping ranges\", () => {\n+    expect(replaceAllMatches(\"Nexus note next\", \"ne\", \"X\", { fuzzy: true })).toBe(\"Xxus X Xxt\");\n+  });\n+\n+  it(\"keeps regexp search semantics when fuzzy is also set\", () => {\n+    expect(findSearchMatches(\"foo123 bar\", \"\\\\d+\", { fuzzy: true, regexp: true })).toEqual([\n+      { from: 3, to: 6, text: \"123\" }\n+    ]);\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=136",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

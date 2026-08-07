@@ -1,0 +1,142 @@
+{
+  "pr_number": 48,
+  "title": "feat(react,vue): add onReady callback and container attribute passthrough",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:37:53Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "ec0a004b41fd2c30bfa6538dd6f2dcdd01ca0013",
+  "merge_commit_sha": null,
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "b9018ae981a07071a4a71c49647fade236636532",
+      "message": "feat(sdk): add getSelectedText() API, Editor container pass-through props and onReady callback\n\nImplements two P0 roadmap items for SDK API completeness:\n\n1. core: add `getSelectedText(): string` to EditorAPI — returns the text\n   within the current selection range, or \"\" when collapsed.\n\n2. react + vue: `<Editor />` now forwards HTML div attributes (className,\n   style, data-*, aria-*) to the container element and accepts an `onReady`\n   callback that fires once with the EditorAPI after initialization.\n\n   - React: filter known editor config keys via EDITOR_PROP_KEYS set,\n     spread remainder onto container div; onReady fires via useEffect.\n   - Vue: declare all editor config props so Vue strips them from $attrs;\n     fallthrough attrs (class, style, data-*) land on the root div\n     automatically; onReady fires via watch(editor, { immediate: true }).\n\nBoth bindings share matching semantics and include new tests covering\ncontainer attribute forwarding, onReady callback, and getSelectedText\nwith empty, forward, and reversed selections.\n\nCloses roadmap items #4 and #5.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+      "date": "2026-06-03T07:40:28Z"
+    },
+    {
+      "sha": "ec0a004b41fd2c30bfa6538dd6f2dcdd01ca0013",
+      "message": "p0等级提交",
+      "date": "2026-06-03T07:45:15Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".claude/settings.local.json",
+      "status": "added",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 93,
+      "deletions": 93,
+      "changes": 186
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 93,
+      "deletions": 93,
+      "changes": 186
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 850,
+      "deletions": 845,
+      "changes": 1695
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 306,
+      "deletions": 304,
+      "changes": 610
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 727,
+      "deletions": 698,
+      "changes": 1425
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 59,
+      "deletions": 9,
+      "changes": 68
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 3,
+      "changes": 6
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 12,
+      "changes": 38
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 69,
+      "deletions": 40,
+      "changes": 109
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 137,
+      "deletions": 18,
+      "changes": 155
+    },
+    {
+      "filename": "packages/vue/src/index.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 3,
+      "changes": 6
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 12,
+      "changes": 37
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 86,
+      "deletions": 48,
+      "changes": 134
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=48",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

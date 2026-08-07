@@ -1,0 +1,95 @@
+{
+  "pr_number": 22,
+  "title": "feat(core): add document structure analyzer with schema validation",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-27T13:08:12Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "90ef6bca91824397e8bf3fd7468782adde5af01b",
+  "merge_commit_sha": "bd67bdf22bc1d8e9a1478b15e25c4d1268c3e849",
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "90ef6bca91824397e8bf3fd7468782adde5af01b",
+      "message": "feat(core): add document structure analyzer with schema validation",
+      "date": "2026-05-14T10:26:06Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 0,
+      "changes": 14
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 0,
+      "changes": 14
+    },
+    {
+      "filename": "openspec/changes/add-document-structure-analyzer/proposal.md",
+      "status": "added",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "openspec/changes/add-document-structure-analyzer/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "openspec/changes/add-document-structure-analyzer/tasks.md",
+      "status": "added",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/src/document-structure.ts",
+      "status": "added",
+      "additions": 347,
+      "deletions": 0,
+      "changes": 347
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "packages/core/test/document-structure.test.ts",
+      "status": "added",
+      "additions": 128,
+      "deletions": 0,
+      "changes": 128
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=22",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

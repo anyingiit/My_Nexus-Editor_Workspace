@@ -1,0 +1,53 @@
+{
+  "pr_number": 138,
+  "title": "feat(plugin-search): add optional fuzzy matching to findSearchMatches",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-07T14:02:55Z",
+  "merged_by": null,
+  "closed_by": "rizgan",
+  "head_sha_final": "cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07",
+  "merge_commit_sha": "96d3cac102200838a26b54b1bec5800b261a345a",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "cb0e2fc64a9833436c9ad4ccd2d0412d42cd2e07",
+      "message": "feat(plugin-search): add optional fuzzy matching to findSearchMatches",
+      "date": "2026-07-07T09:57:41Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 106,
+      "deletions": 0,
+      "changes": 106
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 57,
+      "deletions": 0,
+      "changes": 57
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=138",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

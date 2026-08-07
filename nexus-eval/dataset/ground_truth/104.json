@@ -1,0 +1,26 @@
+{
+  "pr_number": 104,
+  "title": "feat(plugin-ai-assistant): add OpenAI-compatible editor assistant",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T16:01:10Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "LINGYUNXSH",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T15:45:54Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=104) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=104) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=104) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T16:01:08Z",
+      "body": "严格审查结论：不通过。\n\n这个 PR 工作量很大，也能看出候选人尝试做完整 AI assistant/sidebar、OpenAI-compatible provider、工具调用、pending edit 审批流、Electron demo 集成和测试覆盖；但作为可进入主分支的实现，风险过高，不建议合入。\n\n主要问题：\n\n1. 安全边界不合格。AI 配置面板把 API Key 存在 renderer 的 localStorage 中，且 Electron main 暴露了一个可由 renderer 调用的 `ai:chat-completions` 网络桥。虽然限制了 path 必须以 `/chat/completions` 结尾，但仍允许任意 http/https host，并透传 Authorization header。这对桌面应用来说是明显的 secret 管理与网络边界风险，不能以 demo 形态进入主分支。\n\n2. Tool calling 协议实现不标准。`openai-provider.ts` 在多轮工具调用时没有按 OpenAI Chat Completions 的规范回传 assistant `tool_calls` 和 tool role/tool_call_id；而是把 tool 结果降级成 user message。这样很容易造成真实模型上下文不一致，测试 mock 能过不代表真实 OpenAI-compatible API 稳定可用。\n\n3. 隐私与数据外发边界不清。工具集允许 `readDocument` 读取整篇文档，contextProvider 还会带当前文件路径、vault root 等信息。PR 没有足够清晰的用户授权/告知/脱敏边界，也没有 host policy 钩子限制哪些文档、哪些目录、哪些内容可以送到外部模型。\n\n4. 写操作审批流还不够可靠。write tool 会生成 pending operation，apply 时只校验局部 before 文本；但多 pending edit、重叠区间、并发 edits、文档变化后的 operation 失效处理都比较薄。对“AI 编辑器”这种核心功能来说，必须有更强的冲突检测和 preview/diff 体验。\n\n5. PR 范围过大，难以审查。一次性改了 30+ 个文件、约 3.4k 行，包含新插件、Electron IPC、demo UI、OpenSpec、README/CONTRIBUTING 文档、测试等。对于候选人 PR 来说，这种大爆炸式提交不利于判断核心代码质量，也增加回归面。\n\n6. Electron 网络桥和 UI 集成缺少更严格测试。当前测试覆盖了 provider/tool/panel 的 happy path，但没有覆盖 main-process bridge 的安全策略、恶意 baseUrl/header、API Key 持久化风险、真实 provider 多轮 tool_call 兼容性、取消请求/超时/并发发送等关键场景。\n\n本地验证：`pnpm install --frozen-lockfile` 与 `pnpm typecheck` 通过；`pnpm test` / `pnpm build` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入实际用例/构建执行。这个环境问题不作为本 PR 的主要扣分点。\n\n候选人判断：不建议进入下一轮。候选人有一定全栈拼装能力和功能推进能力，但对 AI 功能的安全边界、tool-calling 协议正确性、Electron secret/network 隔离、PR 范围控制的把握不足。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

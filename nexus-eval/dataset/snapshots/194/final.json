@@ -1,0 +1,60 @@
+{
+  "pr_number": 194,
+  "title": "docs: 修复文档中的三处死链接",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "73be859e33d759bf9aa2e7d5caa42a87aed7d16b",
+  "merge_commit_sha": "14df1dfe7f3c8d24331842b4edd18cfbb63dc94d",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "73be859e33d759bf9aa2e7d5caa42a87aed7d16b",
+      "message": "docs: 修复文档中的三处死链接\n\n修复文档中的三处死链接：\n\n- README.md：修正 Roadmap 锚点失效的问题，将链接锚点改为 GitHub 实际生成的锚点格式\n- GOVERNANCE.md：移除“中文版 — TODO”死链接，改为纯文本提示“中文版待补充”\n- packages/plugin-slash/README.md：修正仓库链接地址\n\n以上三处修复均已本地验证，点击后可正常跳转。",
+      "date": "2026-07-28T13:13:54Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "GOVERNANCE.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-slash/README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=194",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

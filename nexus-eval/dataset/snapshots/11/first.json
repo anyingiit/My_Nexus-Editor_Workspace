@@ -1,0 +1,56 @@
+{
+  "pr_number": 11,
+  "title": "fix(electron-demo): add nexus-plugin-slash tsconfig path mapping",
+  "body": "## Summary / 摘要\n\n补一行 `apps/electron-demo/tsconfig.json` 的 `paths` 映射，修 CI 上 main 分支 Typecheck 红：\n\n\\`\\`\\`\nsrc/renderer/editor-shell.ts(11,53): error TS2307: Cannot find module '@floatboat/nexus-plugin-slash'\n\\`\\`\\`\n\n## Root cause / 根因\n\nPR #5（slash 浮层菜单 UI）落地时同步了：\n\n- ✅ \\`apps/electron-demo/package.json\\` 新增 workspace 依赖\n- ✅ \\`apps/electron-demo/vite.config.ts\\` 加 alias\n- ✅ \\`tsconfig.base.json\\` 的全局 \\`paths\\` 表加 entry\n- ❌ **遗漏**：\\`apps/electron-demo/tsconfig.json\\` 自己又重声明了一份 \\`paths\\`，对 TypeScript 来说子 tsconfig 的 \\`paths\\` 是**完全覆盖**而非合并基础配置，所以基础那条 entry 在 demo 这一级不生效。\n\n本地之前可能因为 \\`packages/plugin-slash/dist/\\` 已构建而能解析；CI 全新环境没有 dist，tsc 直接报 TS2307。\n\n## Fix / 修复\n\n\\`apps/electron-demo/tsconfig.json\\` 的 \\`paths\\` 加一行：\n\n\\`\\`\\`json\n\"@floatboat/nexus-plugin-slash\": [\"packages/plugin-slash/src/index.ts\"],\n\\`\\`\\`\n\n## Testing / 测试\n\n- [x] \\`pnpm run typecheck\\` 本地全绿（修前 demo 报 TS2307；修后无 error）\n- [x] Conventional Commits 标题\n\n## 顺带建议（不在本 PR 范围内）\n\ndemo 这份 \\`tsconfig.json\\` 的 \\`paths\\` 与 base 的高度重复，将来新增包很容易再次漏配。可考虑删除子 tsconfig 的 \\`paths\\` 段，完全继承 base —— 但那要 separately verify 没有 demo 特有的解析差异，留给后续 cleanup。\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "created_at": "2026-05-13T09:33:12Z",
+  "draft": false,
+  "base_sha": "40ff0d8392a2c92e25d5b5497e258044ca845be7",
+  "head_sha_at_first_review": "9bcd5610396ebb91c0f23a60d80df10e32321d93",
+  "first_review_time": "2026-05-13T09:33:12Z",
+  "commits_at_first_review": [
+    {
+      "sha": "9bcd5610396ebb91c0f23a60d80df10e32321d93",
+      "message": "fix(electron-demo): add nexus-plugin-slash tsconfig path mapping\n\nPR #5 added the @floatboat/nexus-plugin-slash import and workspace dep\nbut missed the path entry in apps/electron-demo/tsconfig.json. The\ndemo's tsconfig redeclares paths (overriding, not extending the base),\nso tsc fails to resolve the module in CI where dist artifacts are\nabsent.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-05-13T09:32:51Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "413a8e9c9ac87fc442ec20174bc907593e77101b",
+        "filename": "apps/electron-demo/tsconfig.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/9bcd5610396ebb91c0f23a60d80df10e32321d93/apps%2Felectron-demo%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/9bcd5610396ebb91c0f23a60d80df10e32321d93/apps%2Felectron-demo%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftsconfig.json?ref=9bcd5610396ebb91c0f23a60d80df10e32321d93",
+        "patch": "@@ -7,6 +7,7 @@\n       \"@floatboat/nexus-preset-gfm\": [\"packages/preset-gfm/src/index.ts\"],\n       \"@floatboat/nexus-plugin-history\": [\"packages/plugin-history/src/index.ts\"],\n       \"@floatboat/nexus-plugin-search\": [\"packages/plugin-search/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-slash\": [\"packages/plugin-slash/src/index.ts\"],\n       \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"]\n     }\n   },"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  }
+}

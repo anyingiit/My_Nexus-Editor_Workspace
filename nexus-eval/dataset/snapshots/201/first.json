@@ -1,0 +1,64 @@
+{
+  "pr_number": 201,
+  "title": "feat(search): add fuzzy search matching",
+  "body": "## Summary / 摘要\r\n\r\nAdd opt-in fuzzy matching support to `@floatboat/nexus-plugin-search` helper APIs.\r\n\r\n## Motivation / 背景与动机\r\n\r\n- Issue: N/A\r\n- Roadmap (docs/ROADMAP.md): Search / Commands #17 fuzzy search\r\n- OpenSpec change: N/A, roadmap marks this item as not requiring OpenSpec\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/plugin-search`:\r\n  - Add `fuzzy?: boolean` to `SearchOptions`.\r\n  - Add fuzzy matching for `findSearchMatches()` when `fuzzy` is enabled.\r\n  - Keep existing literal and regexp search behavior unchanged by default.\r\n  - Add Vitest coverage for fuzzy, case-sensitive fuzzy, opt-in behavior, and regexp precedence.\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes / 全绿\r\n- [x] Affected packages build (`pnpm build`) / 受影响包构建通过\r\n- [x] New / updated vitest cases / 新增或更新的 vitest 用例：\r\n  - fuzzy matching\r\n  - case-sensitive fuzzy matching\r\n  - fuzzy remains opt-in\r\n  - regexp search ignores fuzzy mode\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：N/A, helper-only change\r\n\r\n## Compliance / 合规自检\r\n\r\n- [ ] **CLA signed** — first-time contributors will be prompted automatically by the CLA bot\r\n- [x] **AI disclosure**: AI assistance was used to implement the helper logic and tests under contributor direction.\r\n- [x] **New dependencies**: none\r\n- [x] **No build artifacts** committed\r\n- [x] **No secrets** / `.env` / personal vault data committed\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits\r\n- [x] Public API changes update package README / types — types updated; this package has no README\r\n- [x] Touched `live-preview-table.ts` → N/A\r\n- [x] New capability / breaking change → OpenSpec proposal linked — N/A per roadmap\r\n- [x] Change aligns with project scope",
+  "created_at": "2026-07-30T10:36:41Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "7e594c46f61357314f2f27788797fde8b47d0b2b",
+  "first_review_time": "2026-07-30T10:36:50Z",
+  "commits_at_first_review": [
+    {
+      "sha": "7e594c46f61357314f2f27788797fde8b47d0b2b",
+      "message": "feat(search): add fuzzy search matching",
+      "date": "2026-07-30T10:28:31Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "4e7a51dd90a13dc183d82532299c052be5295a68",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 54,
+        "deletions": 0,
+        "changes": 54,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7e594c46f61357314f2f27788797fde8b47d0b2b/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7e594c46f61357314f2f27788797fde8b47d0b2b/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=7e594c46f61357314f2f27788797fde8b47d0b2b",
+        "patch": "@@ -35,6 +35,7 @@ export interface SearchOptions {\n   caseSensitive?: boolean;\n   wholeWord?: boolean;\n   regexp?: boolean;\n+  fuzzy?: boolean;\n }\n \n export interface SearchHistoryStorage {\n@@ -641,6 +642,55 @@ function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp\n   }\n }\n \n+function isWordChar(value: string): boolean {\n+  return /[\\p{L}\\p{N}_]/u.test(value);\n+}\n+\n+function isWholeWordBoundary(doc: string, from: number, to: number): boolean {\n+  const before = from > 0 ? doc[from - 1] : \"\";\n+  const after = to < doc.length ? doc[to] : \"\";\n+  return (!before || !isWordChar(before)) && (!after || !isWordChar(after));\n+}\n+\n+function findFuzzySearchMatches(\n+  doc: string,\n+  query: string,\n+  options: SearchOptions = {}\n+): SearchMatch[] {\n+  const matches: SearchMatch[] = [];\n+  const haystack = options.caseSensitive ? doc : doc.toLocaleLowerCase();\n+  const needle = options.caseSensitive ? query : query.toLocaleLowerCase();\n+  let start = 0;\n+\n+  while (start < haystack.length) {\n+    let queryIndex = 0;\n+    let from = -1;\n+    let to = -1;\n+\n+    for (let index = start; index < haystack.length && queryIndex < needle.length; index++) {\n+      if (haystack[index] !== needle[queryIndex]) continue;\n+\n+      if (from < 0) from = index;\n+      queryIndex += 1;\n+      to = index + 1;\n+    }\n+\n+    if (queryIndex !== needle.length || from < 0 || to <= from) break;\n+\n+    if (!options.wholeWord || isWholeWordBoundary(doc, from, to)) {\n+      matches.push({\n+        from,\n+        to,\n+        text: doc.slice(from, to)\n+      });\n+    }\n+\n+    start = Math.max(to, from + 1);\n+  }\n+\n+  return matches;\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -650,6 +700,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n+  if (options.fuzzy && !options.regexp) {\n+    return findFuzzySearchMatches(doc, query, options);\n+  }\n+\n   const pattern = buildSearchPattern(query, options);\n   if (!pattern) {\n     return [];"
+      },
+      {
+        "sha": "063c35c382dc7d85101c6230e2e1690191b2ce01",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 22,
+        "deletions": 0,
+        "changes": 22,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7e594c46f61357314f2f27788797fde8b47d0b2b/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7e594c46f61357314f2f27788797fde8b47d0b2b/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=7e594c46f61357314f2f27788797fde8b47d0b2b",
+        "patch": "@@ -243,6 +243,28 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports fuzzy search\", () => {\n+    expect(findSearchMatches(\"Nexus Editor\", \"nxe\", { fuzzy: true })).toEqual([\n+      { from: 0, to: 7, text: \"Nexus E\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive fuzzy search\", () => {\n+    expect(findSearchMatches(\"Nexus Editor nexus\", \"ne\", { fuzzy: true, caseSensitive: true })).toEqual([\n+      { from: 13, to: 15, text: \"ne\" }\n+    ]);\n+  });\n+\n+  it(\"keeps fuzzy search opt-in\", () => {\n+    expect(findSearchMatches(\"Nexus Editor\", \"nxe\")).toEqual([]);\n+  });\n+\n+  it(\"ignores fuzzy mode for regexp searches\", () => {\n+    expect(findSearchMatches(\"abc123\", \"\\\\d+\", { fuzzy: true, regexp: true })).toEqual([\n+      { from: 3, to: 6, text: \"123\" }\n+    ]);\n+  });\n+\n   it(\"supports whole-word matching\", () => {\n     expect(findSearchMatches(\"cat cats catalog\", \"cat\", { wholeWord: true })).toEqual([\n       { from: 0, to: 3, text: \"cat\" }"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=201",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

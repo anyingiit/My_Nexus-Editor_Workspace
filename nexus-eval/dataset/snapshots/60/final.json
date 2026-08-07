@@ -1,0 +1,81 @@
+{
+  "pr_number": 60,
+  "title": "feat(core): add selection controls to setDocument",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T08:02:33Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "2d1348823565788a05a15fe9efb0165df0c1a371",
+  "merge_commit_sha": "2654be1fbbd960ba7fd8d95717793ce674f63ba7",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "2d1348823565788a05a15fe9efb0165df0c1a371",
+      "message": "feat(core): add selection controls to setDocument",
+      "date": "2026-06-11T07:50:10Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 47,
+      "deletions": 11,
+      "changes": 58
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 27,
+      "deletions": 1,
+      "changes": 28
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 130,
+      "deletions": 1,
+      "changes": 131
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=60",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

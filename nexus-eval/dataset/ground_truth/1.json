@@ -1,0 +1,26 @@
+{
+  "pr_number": 1,
+  "title": "Feat/shaoyongqiang demo",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-12T03:18:25Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "18835972614",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-12T03:18:22Z",
+      "body": "@18835972614 thanks for the contribution. I reviewed this PR against the repository contribution rules and current architecture direction. We will close this PR for now rather than merge it.\n\nMain reasons:\n\n- The PR mixes several unrelated concerns in one branch: Cursor rules, Electron download script, document statistics feature, core public API changes, React UI integration, React version changes, and lockfile updates. This does not follow the “one PR, one concern” rule.\n- `.cursor/rules/*` should not be included in this feature PR. The repo already uses `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, and OpenSpec as the shared guidance layer.\n- The document statistics work introduces new public API / capability in `packages/core`, but there is no OpenSpec proposal linked.\n- `packages/core` is intended to stay headless. Adding DOM UI such as `createStatsPanel()` in core does not fit the project design philosophy.\n- The PR changes React version/dependency behavior while also adding a feature, which should be handled separately if needed.\n- Missing focused tests for the new statistics API and UI behavior.\n- PR title/body should follow the template and Conventional Commits format.\n\nRecommended next steps:\n\n1. Split this into smaller PRs.\n2. First create an OpenSpec proposal for the document statistics capability.\n3. Keep core limited to pure data/API, and place UI in React/Vue/demo/plugin layers.\n4. Remove `.cursor/rules/*` and unrelated dependency/script changes from the feature PR.\n5. Add tests for the stats calculation and any UI integration.\n\nClosing this PR to keep the repository history clean. Please feel free to reopen a smaller, focused PR following the above direction.\n"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-12T03:18:25Z",
+      "body": "Closing as discussed in the review comment above. Please split into focused PRs and add the required OpenSpec/tests before resubmitting."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

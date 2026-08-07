@@ -1,0 +1,154 @@
+{
+  "pr_number": 19,
+  "title": "feat(react,vue): add onReady callback, ref forwarding, and container props",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:37:57Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "678181bde049ba4e3ff26198a51dba627884d27a",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "51f354312eb070ee72b6be707af0e3ed25a25696",
+      "message": "feat(react): add onReady callback, forwardRef, and container props",
+      "date": "2026-05-14T03:12:47Z"
+    },
+    {
+      "sha": "c630dd5d8bae401915b52851baf84cb93fdb47fe",
+      "message": "feat(vue): add onReady callback, ready event, expose, and className prop",
+      "date": "2026-05-14T03:48:03Z"
+    },
+    {
+      "sha": "678181bde049ba4e3ff26198a51dba627884d27a",
+      "message": "docs(openspec): add update-react-vue-sdk change proposal and specs",
+      "date": "2026-05-14T03:48:53Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/update-react-vue-sdk/proposal.md",
+      "status": "added",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "openspec/changes/update-react-vue-sdk/specs/react-sdk/spec.md",
+      "status": "added",
+      "additions": 41,
+      "deletions": 0,
+      "changes": 41
+    },
+    {
+      "filename": "openspec/changes/update-react-vue-sdk/specs/vue-sdk/spec.md",
+      "status": "added",
+      "additions": 42,
+      "deletions": 0,
+      "changes": 42
+    },
+    {
+      "filename": "openspec/changes/update-react-vue-sdk/tasks.md",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "packages/react/README.md",
+      "status": "added",
+      "additions": 86,
+      "deletions": 0,
+      "changes": 86
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 5,
+      "changes": 17
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 2,
+      "changes": 18
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 1,
+      "changes": 5
+    },
+    {
+      "filename": "packages/react/test/use-editor.test.tsx",
+      "status": "added",
+      "additions": 117,
+      "deletions": 0,
+      "changes": 117
+    },
+    {
+      "filename": "packages/vue/README.md",
+      "status": "added",
+      "additions": 99,
+      "deletions": 0,
+      "changes": 99
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 3,
+      "changes": 27
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 1,
+      "changes": 9
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/vue/test/use-editor.test.ts",
+      "status": "added",
+      "additions": 129,
+      "deletions": 0,
+      "changes": 129
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=19",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

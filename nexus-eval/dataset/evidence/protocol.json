@@ -1,0 +1,99 @@
+{
+  "first_review_time_definition": "AGENTS.md 1.2 requires the state at the FIRST review. When a PR has a formal Pull Request review, that review's submitted_at is used and the review's commit_id (when resolvable) pins the exact reviewed SHA. For candidates WITHOUT a formal review, the first-review timestamp is a documented PROXY: the earliest recorded issue/review comment timestamp, else created_at (deviation from the literal 'first formal review' definition is explicit; see first_review_basis counts).",
+  "first_review_basis_counts": {
+    "comment": 83,
+    "created_at": 8,
+    "formal_review": 19
+  },
+  "first_review_basis_counts_universe": "these counts cover the 110 finalized PRs (pre admin-filter). The SCORED universe (66 candidates, author-self-finalized + unrecoverable excluded) has its own per-split counts in dataset/split.json (first_review_basis_counts / literal_first_review_counts).",
+  "scored_universe_literal_first_review_coverage": "19/66 = 28.8% of scored candidates have a literal formal review; remaining 47 use an explicit first_activity_proxy snapshot (never disguised as a literal first review).",
+  "admin_permission_evidence": {
+    "method": "GitHub REST /repos/{repo}/collaborators/{user}/permission and /collaborators were re-attempted with the contributing GitHub App. They return HTTP 403 'Resource not accessible by integration' (also for ketd, redreamality, 2391384896, aoe). No actor's manage permission can be proven.",
+    "permission_endpoint_accessible": false,
+    "probe": {
+      "probed_at_utc": "2026-08-07T05:07:34Z",
+      "collaborators_endpoint_http": 403,
+      "permission_ketd_http": 403,
+      "permission_ketd_body": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/collaborators/collaborators#get-repository-permissions-for-a-user\",\"status\":\"403\"}",
+      "permission_redreamality_http": 403,
+      "permission_redreamality_body": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/collaborators/collaborators#get-repository-permissions-for-a-user\",\"status\":\"403\"}",
+      "permission_2391384896_http": 403,
+      "permission_2391384896_body": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/collaborators/collaborators#get-repository-permissions-for-a-user\",\"status\":\"403\"}",
+      "permission_aoe_http": 403,
+      "permission_aoe_body": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/collaborators/collaborators#get-repository-permissions-for-a-user\",\"status\":\"403\"}",
+      "permission_provable": false
+    },
+    "evidence_level": "per-actor evidence tiers (weak maintainer evidence / final-actor association / distinct-actor) - all non-author-zero unverified for manage permission; author-self-finalized WITHOUT maintainer evidence excluded",
+    "n_finalized_candidates": 110,
+    "n_included": 77,
+    "n_excluded": 33,
+    "n_with_proven_admin_permission": 0,
+    "include_tiers": [
+      "distinct_actor_handled",
+      "final_actor_collaborator_association",
+      "weak_maintainer_evidence"
+    ],
+    "policy": "Scored universe = finalized PRs whose final actor carries maintainer evidence (weak direct-push evidence / final-actor COLLABORATOR+ association) OR is a distinct (non-author) actor (permission unverified). Author-self-finalized PRs are included when the author is an evidenced maintainer, and excluded otherwise. Manage permission remains unprovable (403); evidence tiers are recorded per candidate and never inflated to 'admin'.",
+    "review_association_evidence_v7": "Round 12: every formal review's own author_association is recorded (dataset/evidence/reviews_full_v7.json). A review is admin-candidate-evidence iff its REVIEW ACTOR's association is OWNER/MEMBER/COLLABORATOR OR they are a direct-push weak maintainer. Any other commenter's association never substitutes for the review/final actor. Observed: redreamality=COLLABORATOR, ketd=CONTRIBUTOR (admin only via direct-push weak channel), copilot-pull-request-reviewer[bot]=NONE. Permission API 403 -> neither channel is a proven manage permission; never called strong admin (AGENTS.md 1.1)."
+  },
+  "candidate_filter_rules": [
+    "Candidates = FINALIZED PRs only (merged OR closed_at present).",
+    "A PR with a documented final closing/merging actor is eligible; the actor's permission is unverifiable via the integration token (403), so no PR is asserted to be 'admin-handled' - only 'finalized by an actor'.",
+    "Candidates whose first-review snapshot is NOT a faithful 1.2 state (no formal review AND no code commit predating the first-review proxy time) are EXCLUDED from train/dev/test into 'excluded_unrecoverable_first_review'."
+  ],
+  "recovery": {
+    "recovered_review_commit_id": [
+      5,
+      8,
+      9,
+      12,
+      13,
+      14,
+      16,
+      17,
+      20,
+      21,
+      22,
+      26,
+      28,
+      29,
+      30,
+      31,
+      118,
+      120,
+      121
+    ],
+    "excluded_unrecoverable": [
+      {
+        "pr_number": 23,
+        "reason": "no formal review; earliest-recorded-comment/created_at proxy precedes any code commit -> no reviewable code state at the first-review proxy time; does not satisfy AGENTS.md 1.2",
+        "first_review_time": "2026-05-20T07:20:02Z",
+        "head_sha_first": "7b0893dc294a4105ec3125a953fa418334a7630c"
+      },
+      {
+        "pr_number": 65,
+        "reason": "no formal review; earliest-recorded-comment/created_at proxy precedes any code commit -> no reviewable code state at the first-review proxy time; does not satisfy AGENTS.md 1.2",
+        "first_review_time": "2026-06-17T07:39:28Z",
+        "head_sha_first": "59e141d3300a263369ce6f0431a42f7ca33e3b97"
+      },
+      {
+        "pr_number": 83,
+        "reason": "no formal review; earliest-recorded-comment/created_at proxy precedes any code commit -> no reviewable code state at the first-review proxy time; does not satisfy AGENTS.md 1.2",
+        "first_review_time": "2026-06-29T14:06:58Z",
+        "head_sha_first": "b1e865a4b4dcc203596659c4eb7727ebbb3cefc2"
+      },
+      {
+        "pr_number": 97,
+        "reason": "no formal review; earliest-recorded-comment/created_at proxy precedes any code commit -> no reviewable code state at the first-review proxy time; does not satisfy AGENTS.md 1.2",
+        "first_review_time": "2026-07-02T07:16:37Z",
+        "head_sha_first": "3f568087331c3498a2ac460bc9c9eb6a46a7b3b9"
+      },
+      {
+        "pr_number": 137,
+        "reason": "no formal review; earliest-recorded-comment/created_at proxy precedes any code commit -> no reviewable code state at the first-review proxy time; does not satisfy AGENTS.md 1.2",
+        "first_review_time": "2026-07-07T04:29:28Z",
+        "head_sha_first": "2f1efaa8181318b79112acc06147667b434b8898"
+      }
+    ]
+  }
+}

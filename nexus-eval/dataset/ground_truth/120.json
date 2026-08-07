@@ -1,0 +1,33 @@
+{
+  "pr_number": 120,
+  "title": "feat(core): copy table ranges as HTML",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-03T11:36:02Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "liwenbo0615-beep",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-07-03T11:35:59Z",
+      "body": "感谢提交。这个 PR 的方向是有价值的：表格选区复制同时写入 `text/plain` TSV 和 `text/html` table，能改善粘贴到富文本编辑器/Notion/邮件时的体验；实现集中在 `live-preview-table.ts`，并补了范围选择、列选择、行选择以及单元格富文本保留的测试。\n\n我本地验证结果：\n- `pnpm install --frozen-lockfile` 通过\n- `pnpm exec tsc --noEmit -p packages/core/tsconfig.json` 通过\n- `pnpm --filter @floatboat/nexus-core test -- live-preview --reporter=verbose` 通过\n- `pnpm --filter @floatboat/nexus-core test -- --runInBand` 通过\n- React / Vue 适配包 typecheck 通过\n\n但当前 PR 暂不能通过审核，主要有两个阻塞项：\n\n1. **PR 仍是 Draft**：当前 `isDraft=true`，按流程不能作为可合入 PR 通过。\n2. **CLA 未签署**：CLA assistant 显示 `Contributor License Agreement is not signed yet`，且提交作者邮箱 `Admin@MacBook-Air.local` 没有关联到 GitHub 用户。请使用已绑定 GitHub 的邮箱重新提交/补签 CLA。\n\n候选人判断：功能实现和测试覆盖较完整，工程能力表现不错；但交付流程合规未完成，需要先把 PR 转为 ready for review，并解决 CLA/commit author 邮箱问题后再重新提交。\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T10:28:32Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=120) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=120) before we can accept your contribution.<br/><hr/>**Li wenbo** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=120) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T11:36:01Z",
+      "body": "感谢提交。这个 PR 的方向是有价值的：表格选区复制同时写入 `text/plain` TSV 和 `text/html` table，能改善粘贴到富文本编辑器/Notion/邮件时的体验；实现集中在 `live-preview-table.ts`，并补了范围选择、列选择、行选择以及单元格富文本保留的测试。\n\n我本地验证结果：\n- `pnpm install --frozen-lockfile` 通过\n- `pnpm exec tsc --noEmit -p packages/core/tsconfig.json` 通过\n- `pnpm --filter @floatboat/nexus-core test -- live-preview --reporter=verbose` 通过\n- `pnpm --filter @floatboat/nexus-core test -- --runInBand` 通过\n- React / Vue 适配包 typecheck 通过\n\n但当前 PR 暂不能通过审核，主要有两个阻塞项：\n\n1. **PR 仍是 Draft**：当前 `isDraft=true`，按流程不能作为可合入 PR 通过。\n2. **CLA 未签署**：CLA assistant 显示 `Contributor License Agreement is not signed yet`，且提交作者邮箱 `Admin@MacBook-Air.local` 没有关联到 GitHub 用户。请使用已绑定 GitHub 的邮箱重新提交/补签 CLA。\n\n候选人判断：功能实现和测试覆盖较完整，工程能力表现不错；但交付流程合规未完成，需要先把 PR 转为 ready for review，并解决 CLA/commit author 邮箱问题后再重新提交。"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

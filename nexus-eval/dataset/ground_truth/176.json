@@ -1,0 +1,19 @@
+{
+  "pr_number": 176,
+  "title": "fix(core): align fenced code folding with CommonMark",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "wyuzhi",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-23T09:31:00Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=176) <br/>All committers have signed the CLA."
+    }
+  ]
+}

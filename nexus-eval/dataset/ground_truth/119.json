@@ -1,0 +1,43 @@
+{
+  "pr_number": 119,
+  "title": "fix(toolbar): multi-line toggleBlockquote support matching list toggle pattern",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "alph-cmky",
+  "reviews": [
+    {
+      "user": "redreamality",
+      "state": "APPROVED",
+      "submitted_at": "2026-07-03T10:52:58Z",
+      "body": "Reviewed PR #119.\n\nThis is a focused and well-scoped fix for `toggleBlockquote` multi-line behavior, aligning it with the existing ordered/unordered list toggle implementation style.\n\nValidation performed in an isolated checkout:\n\n```text\npnpm exec tsc --noEmit -p packages/plugin-toolbar/tsconfig.json\npnpm --filter @floatboat/nexus-plugin-toolbar test -- plugin-toolbar --reporter=verbose\npnpm --filter @floatboat/nexus-plugin-toolbar test -- --runInBand\npnpm exec tsc --noEmit -p packages/core/tsconfig.json\n```\n\nThese checks passed.\n\nReview notes:\n\n- CLA is passing.\n- The implementation reuses the existing `getLinesInRange` / `applyLines` pattern used by list toggles instead of introducing a separate path.\n- The PR preserves single-line behavior while adding multi-line support.\n- Mixed selected lines are normalized instead of producing nested `> > text` prefixes.\n- The change keeps the replacement as a single transaction via `replaceRange`, which is important for atomic undo behavior.\n- Test coverage is strong for the size of the change: single-line compatibility, multi-line add/remove, mixed selections, reversed selection, line-boundary behavior, round-trip stability, and undo atomicity.\n\nConclusion: approved from code-review perspective.\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T08:45:00Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=119) <br/>All committers have signed the CLA."
+    }
+  ],
+  "golden_decision": "approve",
+  "gt_basis": "earliest admin decision review",
+  "admin_review": {
+    "user": "redreamality",
+    "state": "APPROVED",
+    "submitted_at": "2026-07-03T10:52:58Z",
+    "commit_id": "2ee7013da61adcd6addafb74bcbb6e94ef812750",
+    "author_association": "COLLABORATOR",
+    "evidence": {
+      "user": "redreamality",
+      "author_association": "COLLABORATOR",
+      "admin_by_association": true,
+      "admin_by_direct_push_weak": true,
+      "direct_push_count": 2,
+      "basis": "both"
+    }
+  }
+}

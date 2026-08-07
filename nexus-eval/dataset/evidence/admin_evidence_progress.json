@@ -1,0 +1,3404 @@
+{
+  "calls": 340,
+  "prs": {
+    "1": {
+      "guessed_author": "18835972614",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-11T13:16:30Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "18835972614",
+          "created_at": "2026-05-12T03:18:24Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "18835972614",
+          "created_at": "2026-05-12T03:18:24Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-12T03:18:26Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "1005487835",
+          "created_at": "2026-05-29T06:55:54Z",
+          "commit_id": "3d63afff9d37a94fe384d0be0e485492189f95ee"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:26Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-12T03:18:22Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-12T03:18:25Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "2": {
+      "guessed_author": "MaLunan",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-11T13:56:53Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "MaLunan",
+          "created_at": "2026-05-12T03:18:45Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "MaLunan",
+          "created_at": "2026-05-12T03:18:46Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-12T03:18:47Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "1005487835",
+          "created_at": "2026-05-29T07:16:08Z",
+          "commit_id": "3d74e6123bb1d89c7a4d6087730ffb7d707bb86f"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:27Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-12T03:18:44Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-12T03:18:46Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "3": {
+      "guessed_author": "ketd",
+      "merged_by": "ketd",
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": true,
+      "created_at": "2026-05-12T03:02:26Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "merged",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:10:04Z",
+          "commit_id": "b569ba086ceff00f37b29e56ed7f795cd7f678ef"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:10:04Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "4": {
+      "guessed_author": "JungleYwl",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-12T14:56:23Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T06:13:15Z",
+          "commit_id": null
+        },
+        {
+          "event": "mentioned",
+          "actor": "ketd",
+          "created_at": "2026-05-13T07:51:22Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T07:51:22Z",
+          "commit_id": null
+        },
+        {
+          "event": "mentioned",
+          "actor": "JungleYwl",
+          "created_at": "2026-05-13T09:06:53Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "JungleYwl",
+          "created_at": "2026-05-13T09:06:53Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:27Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "JungleYwl",
+          "created_at": "2026-05-13T07:51:21Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-13T09:06:52Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "5": {
+      "guessed_author": "2391384896",
+      "merged_by": "ketd",
+      "author_association_author": "COLLABORATOR",
+      "state": "closed",
+      "merged": true,
+      "created_at": "2026-05-13T04:01:45Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-13T06:36:30Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "da66d7addcccb6e99a52512c89a197ca829a3534"
+        }
+      ],
+      "events": [
+        {
+          "event": "merged",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:11:01Z",
+          "commit_id": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:11:01Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:23:36Z",
+          "commit_id": "40ff0d8392a2c92e25d5b5497e258044ca845be7"
+        },
+        {
+          "event": "referenced",
+          "actor": "fengshunli",
+          "created_at": "2026-05-13T10:29:32Z",
+          "commit_id": "433a69b84d9084450b6bd12b6c595a051e1c91c9"
+        },
+        {
+          "event": "referenced",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T10:32:28Z",
+          "commit_id": "a593b47e104d16184f440e06ba00c418baafa28c"
+        },
+        {
+          "event": "referenced",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T10:32:28Z",
+          "commit_id": "9bcd5610396ebb91c0f23a60d80df10e32321d93"
+        },
+        {
+          "event": "referenced",
+          "actor": "fengshunli",
+          "created_at": "2026-05-14T04:50:27Z",
+          "commit_id": "4a0a2cb760aaa40dac5e6115599bab6300806aa7"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:27Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": []
+    },
+    "6": {
+      "guessed_author": "ChainCoinLab",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T07:35:13Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "fengshunli",
+          "created_at": "2026-05-13T09:16:30Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "fengshunli",
+          "created_at": "2026-05-13T09:16:30Z",
+          "commit_id": null
+        },
+        {
+          "event": "mentioned",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:16:30Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:16:30Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:19:20Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-23T10:27:29Z",
+          "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb"
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-26T06:11:12Z",
+          "commit_id": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:19:18Z",
+          "commit_id": "fd09ff84c7124609a2886dc0a46d801a77465fab"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:27Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-13T09:16:28Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ChainCoinLab",
+          "created_at": "2026-05-13T09:19:19Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "7": {
+      "guessed_author": "ChainCoinLab",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T08:52:27Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:16:32Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:16:32Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:19:20Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-13T09:16:31Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ChainCoinLab",
+          "created_at": "2026-05-13T09:19:19Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "8": {
+      "guessed_author": "fengshunli",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T09:08:33Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-13T10:11:10Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "c644d36fe1df9e31bd35a82338b12696b189eeb3"
+        },
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-13T11:22:24Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "433a69b84d9084450b6bd12b6c595a051e1c91c9"
+        }
+      ],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "fengshunli",
+          "created_at": "2026-05-13T09:16:28Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "fengshunli",
+          "created_at": "2026-05-13T09:16:28Z",
+          "commit_id": null
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "fengshunli",
+          "created_at": "2026-05-13T10:29:32Z",
+          "commit_id": "433a69b84d9084450b6bd12b6c595a051e1c91c9"
+        },
+        {
+          "event": "referenced",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T10:32:28Z",
+          "commit_id": "a593b47e104d16184f440e06ba00c418baafa28c"
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "fengshunli",
+          "created_at": "2026-05-14T04:50:28Z",
+          "commit_id": "4a0a2cb760aaa40dac5e6115599bab6300806aa7"
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-23T10:27:30Z",
+          "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb"
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-26T06:11:12Z",
+          "commit_id": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "1005487835",
+          "created_at": "2026-05-29T07:29:55Z",
+          "commit_id": "040b35d3c9f12d58d082d1b632be69c59b3027c0"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:38:35Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:28Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-13T09:16:26Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "fengshunli",
+          "created_at": "2026-05-13T10:34:06Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:38:16Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:36Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:38:33Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "9": {
+      "guessed_author": "ChainCoinLab",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T09:11:40Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "COMMENTED",
+          "submitted_at": "2026-05-13T11:22:26Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5"
+        }
+      ],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:16:34Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T09:16:34Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T10:32:28Z",
+          "commit_id": "a593b47e104d16184f440e06ba00c418baafa28c"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-14T04:53:59Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-23T10:27:30Z",
+          "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb"
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-26T06:11:12Z",
+          "commit_id": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "HerbertGao",
+          "created_at": "2026-06-29T03:10:01Z",
+          "commit_id": "024e56791b3ca75f15a0e69fa42d28e6b03c1488"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-13T09:16:32Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:38:19Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:53:58Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "10": {
+      "guessed_author": "ketd",
+      "merged_by": "ketd",
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": true,
+      "created_at": "2026-05-13T09:21:55Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "merged",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:23:34Z",
+          "commit_id": "40ff0d8392a2c92e25d5b5497e258044ca845be7"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:23:35Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "11": {
+      "guessed_author": "ketd",
+      "merged_by": "ketd",
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": true,
+      "created_at": "2026-05-13T09:33:12Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "merged",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:38:24Z",
+          "commit_id": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T09:38:24Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "12": {
+      "guessed_author": "ChainCoinLab",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T10:28:58Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "COMMENTED",
+          "submitted_at": "2026-05-13T11:22:28Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "ff33917f7b58883414d0460d2afcddb82079b5a9"
+        }
+      ],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "ChainCoinLab",
+          "created_at": "2026-05-13T10:32:28Z",
+          "commit_id": "ff33917f7b58883414d0460d2afcddb82079b5a9"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-14T04:38:57Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:38:46Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:38:56Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "13": {
+      "guessed_author": "hcq104729-commits",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T10:41:48Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "COMMENTED",
+          "submitted_at": "2026-05-13T10:59:36Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "b6448162a57409eb2919cd71d6d98900dd91efc8"
+        },
+        {
+          "user": "ketd",
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-05-13T11:11:46Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "b6448162a57409eb2919cd71d6d98900dd91efc8"
+        },
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-13T11:34:00Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "ebc35321718a6bb85f72322691e1927c3fe51438"
+        }
+      ],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "hcq104729-commits",
+          "created_at": "2026-05-13T11:27:55Z",
+          "commit_id": "dd2b0036f6b94e1ed42fb5d83c496cc01970d2e8"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:38:54Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "Caldalis",
+          "created_at": "2026-07-10T10:46:41Z",
+          "commit_id": "0823e8276a4a741fff4a008a8a09e7a6fd765e77"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T03:53:40Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:29Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:38:52Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "14": {
+      "guessed_author": "ChainCoinLab",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T10:42:13Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "COMMENTED",
+          "submitted_at": "2026-05-13T11:22:29Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6"
+        }
+      ],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-14T04:54:02Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:38:21Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:54:01Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "16": {
+      "guessed_author": "JungleYwl",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T11:18:26Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-13T11:22:22Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "c1c54689df50c1471c3042782084415593011636"
+        }
+      ],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "ketd",
+          "created_at": "2026-05-13T12:06:25Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ketd",
+          "created_at": "2026-05-13T12:06:25Z",
+          "commit_id": null
+        },
+        {
+          "event": "mentioned",
+          "actor": "ketd",
+          "created_at": "2026-05-17T12:17:51Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ketd",
+          "created_at": "2026-05-17T12:17:51Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:35:09Z",
+          "commit_id": "d52be4eb7be4889f3cfcb27922559284fb39169d"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:40:54Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:27Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "JungleYwl",
+          "created_at": "2026-05-13T12:06:23Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:11:55Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "JungleYwl",
+          "created_at": "2026-05-17T12:17:49Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:23Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:40:52Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "17": {
+      "guessed_author": "niubilityzy",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-13T13:32:54Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "COMMENTED",
+          "submitted_at": "2026-05-13T13:49:55Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "bb4a6bbeeb0db76ba27552727078848c8ab843f7"
+        }
+      ],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "niubilityzy",
+          "created_at": "2026-05-13T13:38:05Z",
+          "commit_id": null
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "niubilityzy",
+          "created_at": "2026-05-13T14:04:03Z",
+          "commit_id": "5ddb6a0fea5668bede2af55f85edc63edda72078"
+        },
+        {
+          "event": "mentioned",
+          "actor": "Reviewer",
+          "created_at": "2026-05-13T14:10:22Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "Reviewer",
+          "created_at": "2026-05-13T14:10:22Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:40:47Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:28Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "niubilityzy",
+          "created_at": "2026-05-13T14:10:20Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:17:53Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:21Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:40:45Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "19": {
+      "guessed_author": "HopeBearer",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-14T04:04:56Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:37:57Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "zhoufengsen88-afk",
+          "created_at": "2026-07-23T00:44:33Z",
+          "commit_id": "11bdd2aee8b8bba203118f8773454ad676be3cc4"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-05-14T04:47:15Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:14Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:37:55Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "20": {
+      "guessed_author": "HopeBearer",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-14T06:56:27Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-05-15T06:37:38Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "67a820ebeb095a685ba018b78f14b045d28b9f35"
+        }
+      ],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:38:46Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:12Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:38:44Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "21": {
+      "guessed_author": "caine-21",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-14T09:16:21Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-05-15T06:37:54Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "1a7c8a3307b67bc63c011e033bf5b2850850e51c"
+        }
+      ],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "caine-21",
+          "created_at": "2026-05-15T07:42:44Z",
+          "commit_id": "98618784be614190259bd48a5532039862a4958f"
+        },
+        {
+          "event": "mentioned",
+          "actor": "ketd",
+          "created_at": "2026-05-15T07:46:10Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ketd",
+          "created_at": "2026-05-15T07:46:10Z",
+          "commit_id": null
+        },
+        {
+          "event": "review_requested",
+          "actor": "caine-21",
+          "created_at": "2026-05-20T08:33:14Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-23T10:27:30Z",
+          "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb"
+        },
+        {
+          "event": "referenced",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-26T06:11:12Z",
+          "commit_id": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:23:35Z",
+          "commit_id": "ccbb25ff01131f67ac6ddab651adc4df199c16a9"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:02:17Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "caine-21",
+          "created_at": "2026-05-15T07:46:09Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:08Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:02:02Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "22": {
+      "guessed_author": "Cherry287",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-14T11:08:57Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-15T06:38:06Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "90ef6bca91824397e8bf3fd7468782adde5af01b"
+        }
+      ],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "Cherry287",
+          "created_at": "2026-05-27T13:08:03Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "Cherry287",
+          "created_at": "2026-05-27T13:08:03Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-27T13:08:12Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:04Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-27T13:07:57Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "23": {
+      "guessed_author": "qian1tang",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-15T10:09:05Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "qian1tang",
+          "created_at": "2026-05-22T08:58:40Z",
+          "commit_id": "1434ff2834e48c391af1c456322903110d8077a0"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T06:15:35Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:20:02Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T06:15:32Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "24": {
+      "guessed_author": "xiaoyu953",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-18T08:30:17Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:38:42Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-20T07:19:57Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:38:40Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "25": {
+      "guessed_author": "ygs1425340918-arch",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-18T13:13:36Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ygs1425340918-arch",
+          "created_at": "2026-05-19T01:29:42Z",
+          "commit_id": null
+        },
+        {
+          "event": "reopened",
+          "actor": "ygs1425340918-arch",
+          "created_at": "2026-05-19T01:30:26Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-05-20T07:09:34Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "26": {
+      "guessed_author": "zhao2805606260",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-21T10:39:48Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-05-22T13:04:19Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "51f056c7aa6a9e665ebec0f94c63bcf106279d5f"
+        }
+      ],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "zhao2805606260",
+          "created_at": "2026-05-21T10:48:47Z",
+          "commit_id": null
+        },
+        {
+          "event": "renamed",
+          "actor": "zhao2805606260",
+          "created_at": "2026-05-21T10:49:28Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:38:50Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "zhao2805606260",
+          "created_at": "2026-05-21T10:55:27Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-27T03:15:28Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:38:47Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "27": {
+      "guessed_author": "zhao2805606260",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-21T10:53:25Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-22T12:52:19Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-21T10:55:58Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "zhao2805606260",
+          "created_at": "2026-05-21T10:57:42Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-22T12:52:17Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "28": {
+      "guessed_author": "1814980491-ops",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-22T05:38:39Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-05-22T12:52:17Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "4150535aab209a965d42967ae7079230e05c0532"
+        }
+      ],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "songyipan",
+          "created_at": "2026-05-23T07:15:05Z",
+          "commit_id": "138eb4cf1225b77f7a8a894954cc63758b6deeb9"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-28T05:38:19Z",
+          "commit_id": "2bb9f638e65af8d4ad640dfd57d7f895fe6fb46c"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-28T15:22:38Z",
+          "commit_id": "cb19b54d6d72cd11ca77fab112170e55d2d0df0f"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-31T07:13:34Z",
+          "commit_id": "05d9641a2d81d446a3c23cc8a0f4a91ed86564d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "alacefield900-sudo",
+          "created_at": "2026-06-17T07:48:43Z",
+          "commit_id": "59e141d3300a263369ce6f0431a42f7ca33e3b97"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:39:39Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:28Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-22T05:38:47Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "1814980491-ops",
+          "created_at": "2026-05-23T03:10:49Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:39:37Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "29": {
+      "guessed_author": "MiniMilkfish",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-22T05:59:54Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-22T12:52:17Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "1886ba02ab4608f3c83bf417f05f33d6e9160877"
+        }
+      ],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-28T05:38:19Z",
+          "commit_id": "2bb9f638e65af8d4ad640dfd57d7f895fe6fb46c"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-28T15:22:38Z",
+          "commit_id": "cb19b54d6d72cd11ca77fab112170e55d2d0df0f"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-31T07:13:34Z",
+          "commit_id": "05d9641a2d81d446a3c23cc8a0f4a91ed86564d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:39:42Z",
+          "commit_id": "c55d37d4bb7716d9e58bf2254d994239e2692199"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:58:24Z",
+          "commit_id": "26de892b77f8b62484ceb830fe5f1b21e689b536"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:07:54Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T13:12:28Z",
+          "commit_id": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-22T06:00:00Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:03:53Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "30": {
+      "guessed_author": "songyipan",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-23T06:35:05Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "APPROVED",
+          "submitted_at": "2026-05-26T03:14:12Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a"
+        }
+      ],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "songyipan",
+          "created_at": "2026-05-23T06:43:52Z",
+          "commit_id": null
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "songyipan",
+          "created_at": "2026-05-23T06:44:01Z",
+          "commit_id": "aea1a09dcd2c8bf9237d32a84b4a0f32f641fe15"
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "songyipan",
+          "created_at": "2026-05-23T06:44:44Z",
+          "commit_id": "234d61e14d055f2c9a46af3a382b97820bd2bbeb"
+        },
+        {
+          "event": "referenced",
+          "actor": "songyipan",
+          "created_at": "2026-05-23T07:15:05Z",
+          "commit_id": "138eb4cf1225b77f7a8a894954cc63758b6deeb9"
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "songyipan",
+          "created_at": "2026-05-23T07:45:00Z",
+          "commit_id": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-28T05:38:19Z",
+          "commit_id": "2bb9f638e65af8d4ad640dfd57d7f895fe6fb46c"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-28T15:22:38Z",
+          "commit_id": "cb19b54d6d72cd11ca77fab112170e55d2d0df0f"
+        },
+        {
+          "event": "referenced",
+          "actor": "741848374",
+          "created_at": "2026-05-31T07:13:34Z",
+          "commit_id": "05d9641a2d81d446a3c23cc8a0f4a91ed86564d9"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:58:24Z",
+          "commit_id": "26de892b77f8b62484ceb830fe5f1b21e689b536"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:08:10Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-23T06:35:13Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:04:20Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "31": {
+      "guessed_author": "xinxi1990",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-23T10:09:17Z",
+      "reviews": [
+        {
+          "user": "ketd",
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-05-26T03:14:41Z",
+          "author_association": "CONTRIBUTOR",
+          "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb"
+        }
+      ],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-23T10:27:30Z",
+          "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb"
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "xinxi1990",
+          "created_at": "2026-05-26T06:11:12Z",
+          "commit_id": "2724df9b1d0fd3fab9faa00c5eb56473c185d9d9"
+        },
+        {
+          "event": "mentioned",
+          "actor": "ketd",
+          "created_at": "2026-05-26T06:26:12Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "ketd",
+          "created_at": "2026-05-26T06:26:12Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T06:15:29Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-23T10:09:24Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "xinxi1990",
+          "created_at": "2026-05-26T06:26:10Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T06:15:26Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "32": {
+      "guessed_author": "wangzhiziqiao",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-27T02:47:55Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "wangzhiziqiao",
+          "created_at": "2026-05-27T02:59:19Z",
+          "commit_id": null
+        },
+        {
+          "event": "convert_to_draft",
+          "actor": "wangzhiziqiao",
+          "created_at": "2026-05-27T03:00:39Z",
+          "commit_id": null
+        },
+        {
+          "event": "ready_for_review",
+          "actor": "wangzhiziqiao",
+          "created_at": "2026-05-27T03:18:56Z",
+          "commit_id": null
+        },
+        {
+          "event": "mentioned",
+          "actor": "wangzhiziqiao",
+          "created_at": "2026-05-27T13:07:56Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "wangzhiziqiao",
+          "created_at": "2026-05-27T13:07:56Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-27T13:08:08Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-27T02:48:03Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-27T13:07:54Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "33": {
+      "guessed_author": "FruitJ",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-27T07:04:30Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "FruitJ",
+          "created_at": "2026-05-27T12:58:49Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "FruitJ",
+          "created_at": "2026-05-27T12:58:49Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-05-27T12:59:14Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-27T07:04:38Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-05-27T12:58:47Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "34": {
+      "guessed_author": "ketd",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-27T13:43:14Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:36:42Z",
+          "commit_id": "b8e758b0daf27b23aa77571635e044c0e0544da7"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:37:10Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-27T13:43:41Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:37:09Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "35": {
+      "guessed_author": "741848374",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-28T06:08:09Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "741848374",
+          "created_at": "2026-05-28T15:05:23Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-28T06:08:17Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "36": {
+      "guessed_author": "741848374",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-28T15:24:46Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "741848374",
+          "created_at": "2026-05-31T07:13:35Z",
+          "commit_id": "05d9641a2d81d446a3c23cc8a0f4a91ed86564d9"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:39:46Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:39:44Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "37": {
+      "guessed_author": "1005487835",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-29T06:56:28Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "1005487835",
+          "created_at": "2026-05-29T07:16:54Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-29T07:02:03Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "38": {
+      "guessed_author": "1005487835",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-05-29T07:16:34Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "1005487835",
+          "created_at": "2026-05-29T07:30:17Z",
+          "commit_id": null
+        },
+        {
+          "event": "renamed",
+          "actor": "1005487835",
+          "created_at": "2026-05-29T08:04:03Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:40:39Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-05-29T07:16:47Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:40:37Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "39": {
+      "guessed_author": "libaice",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-01T15:55:11Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "libaice",
+          "created_at": "2026-06-01T16:07:29Z",
+          "commit_id": null
+        },
+        {
+          "event": "reopened",
+          "actor": "libaice",
+          "created_at": "2026-06-01T16:07:34Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "libaice",
+          "created_at": "2026-06-01T16:07:42Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-01T15:55:19Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "41": {
+      "guessed_author": "GarrisonPJ",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T06:57:51Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-02T07:14:17Z",
+          "commit_id": null
+        },
+        {
+          "event": "renamed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-02T07:14:44Z",
+          "commit_id": null
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-02T09:22:20Z",
+          "commit_id": "bc2a985a399dec76152bfa34239e19f02edd7a5f"
+        },
+        {
+          "event": "closed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-09T08:33:58Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-02T06:57:59Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "42": {
+      "guessed_author": "GarrisonPJ",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T07:15:57Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-02T07:16:45Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-09T08:33:58Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "43": {
+      "guessed_author": "GarrisonPJ",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T08:32:09Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-09T08:33:59Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "44": {
+      "guessed_author": "libaice",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T10:23:31Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "libaice",
+          "created_at": "2026-06-19T11:26:43Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-02T10:23:38Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "45": {
+      "guessed_author": "GarrisonPJ",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T10:25:25Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-09T08:33:59Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "46": {
+      "guessed_author": "GarrisonPJ",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T12:12:09Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "mentioned",
+          "actor": "internal",
+          "created_at": "2026-06-02T12:12:11Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "GarrisonPJ",
+          "created_at": "2026-06-09T08:33:59Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": []
+    },
+    "47": {
+      "guessed_author": "dddf-fly",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-02T13:01:47Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:39:42Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-02T13:01:59Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:39:41Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "48": {
+      "guessed_author": "ember-spec",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-03T07:57:04Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:37:54Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-03T07:57:14Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ember-spec",
+          "created_at": "2026-06-03T08:00:58Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:37:51Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "49": {
+      "guessed_author": "qq1209974887",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-03T09:08:35Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:39:50Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-03T09:10:09Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:39:48Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "50": {
+      "guessed_author": "qq1209974887",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-03T09:32:10Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:11:34Z",
+          "commit_id": "bb83c3a3d5af25fa781e1762e1e616ee0f2cba34"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:01:42Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:01:39Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "52": {
+      "guessed_author": "commingling",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-09T15:19:53Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:37:50Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-09T15:20:17Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:37:48Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "53": {
+      "guessed_author": "sesametian",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-09T20:31:30Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T06:15:09Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-09T20:31:38Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T06:15:04Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "54": {
+      "guessed_author": "xishaoguo",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-10T06:22:03Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "xishaoguo",
+          "created_at": "2026-07-05T12:47:27Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-10T06:22:11Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:42:38Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "56": {
+      "guessed_author": "eryue0220",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-10T08:52:08Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "eryue0220",
+          "created_at": "2026-06-18T05:48:22Z",
+          "commit_id": null
+        },
+        {
+          "event": "head_ref_deleted",
+          "actor": "eryue0220",
+          "created_at": "2026-06-18T05:48:26Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-10T08:52:15Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "57": {
+      "guessed_author": "imsai-sh",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-10T09:36:43Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:19:18Z",
+          "commit_id": "fd09ff84c7124609a2886dc0a46d801a77465fab"
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:23:35Z",
+          "commit_id": "ccbb25ff01131f67ac6ddab651adc4df199c16a9"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:01:51Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-10T09:37:01Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:01:48Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "60": {
+      "guessed_author": "yhaosen31-dot",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-11T08:13:32Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:31:06Z",
+          "commit_id": "818155f089c6e9b1cdafd7751a5cddb8b223fc86"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:02:33Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-11T08:13:47Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:02:24Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "61": {
+      "guessed_author": "ruizem292-dev",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-11T10:00:09Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:38:38Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-17T07:45:36Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:38:36Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "62": {
+      "guessed_author": "meihuahua33",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-11T10:50:54Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:40:43Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-11T10:51:07Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:40:41Z",
+          "author_association": "CONTRIBUTOR"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T07:00:42Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "63": {
+      "guessed_author": "BonnyBing",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-11T14:13:55Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:40:51Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-11T14:14:08Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:40:49Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "64": {
+      "guessed_author": "tinyChanges2027",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-12T14:05:15Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:37Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-12T14:05:23Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:36Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "65": {
+      "guessed_author": "alacefield900-sudo",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-17T07:39:20Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "alacefield900-sudo",
+          "created_at": "2026-06-17T07:48:43Z",
+          "commit_id": "59e141d3300a263369ce6f0431a42f7ca33e3b97"
+        },
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:40Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:17:04Z",
+          "commit_id": "d9a6c9a8dd41e04e07b8b3116e1bcbaeba16a3a6"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-17T07:39:28Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:39Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "66": {
+      "guessed_author": "maidangzhu",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-17T08:17:19Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:44Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-17T08:17:33Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:43Z",
+          "author_association": "COLLABORATOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T06:15:19Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "67": {
+      "guessed_author": "maidangzhu",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-17T08:19:05Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:47Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-17T08:19:26Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:46Z",
+          "author_association": "COLLABORATOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T06:15:13Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "68": {
+      "guessed_author": "maidangzhu",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-17T08:20:26Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:51Z",
+          "commit_id": null
+        },
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:33:01Z",
+          "commit_id": "8427e169fc238f1356ad2515d53443e97144f5eb"
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-17T08:20:44Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:50Z",
+          "author_association": "COLLABORATOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:02:38Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "69": {
+      "guessed_author": "Molika68",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-17T18:20:11Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:55Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-17T18:20:20Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:54Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "71": {
+      "guessed_author": "rM0on",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-18T15:49:36Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:35:09Z",
+          "commit_id": "d52be4eb7be4889f3cfcb27922559284fb39169d"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:08:42Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-18T15:49:44Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:03:08Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "72": {
+      "guessed_author": "rM0on",
+      "merged_by": null,
+      "author_association_author": "CONTRIBUTOR",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-18T16:46:29Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "referenced",
+          "actor": "ketd",
+          "created_at": "2026-06-23T07:37:23Z",
+          "commit_id": "6d5f58d41f9ea12bbda962c2193a533406b1e624"
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T08:08:46Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T08:03:33Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "73": {
+      "guessed_author": "chuxiajiurenzhan",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-22T04:52:30Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "chuxiajiurenzhan",
+          "created_at": "2026-06-22T04:55:15Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "ketd",
+          "created_at": "2026-06-23T12:37:46Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-22T04:52:39Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:37:44Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "75": {
+      "guessed_author": "hnan86444-jmz",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-22T09:31:50Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "hnan86444-jmz",
+          "created_at": "2026-06-22T09:35:43Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T03:36:58Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-22T09:32:08Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T03:36:57Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "76": {
+      "guessed_author": "avalanchexi",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-22T17:49:47Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-23T12:39:52Z",
+          "commit_id": null
+        },
+        {
+          "event": "mentioned",
+          "actor": "avalanchexi",
+          "created_at": "2026-06-23T12:56:00Z",
+          "commit_id": null
+        },
+        {
+          "event": "subscribed",
+          "actor": "avalanchexi",
+          "created_at": "2026-06-23T12:56:00Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-22T17:50:04Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-23T12:39:51Z",
+          "author_association": "COLLABORATOR"
+        },
+        {
+          "user": "ketd",
+          "created_at": "2026-06-23T12:55:58Z",
+          "author_association": "CONTRIBUTOR"
+        }
+      ]
+    },
+    "81": {
+      "guessed_author": "HerbertGao",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-29T04:31:49Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "renamed",
+          "actor": "HerbertGao",
+          "created_at": "2026-06-29T10:36:38Z",
+          "commit_id": null
+        },
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-30T05:28:41Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-29T04:31:59Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-30T05:28:39Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "83": {
+      "guessed_author": "hao0401",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-06-29T14:06:42Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "hao0401",
+          "created_at": "2026-06-30T02:51:09Z",
+          "commit_id": "b1e865a4b4dcc203596659c4eb7727ebbb3cefc2"
+        },
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-06-30T05:28:45Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-06-29T14:06:58Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-06-30T05:28:43Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "88": {
+      "guessed_author": "2391384896",
+      "merged_by": "2391384896",
+      "author_association_author": "COLLABORATOR",
+      "state": "closed",
+      "merged": true,
+      "created_at": "2026-07-01T08:37:03Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "merged",
+          "actor": "2391384896",
+          "created_at": "2026-07-01T09:37:44Z",
+          "commit_id": "63667f7604eda0da4fea294db6a1d3a2689d487a"
+        },
+        {
+          "event": "closed",
+          "actor": "2391384896",
+          "created_at": "2026-07-01T09:37:44Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-01T08:37:14Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "91": {
+      "guessed_author": "jinli59656-sys",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-01T16:12:38Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T07:00:51Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-01T16:12:48Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T07:00:44Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "92": {
+      "guessed_author": "voly212",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-01T17:13:20Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T07:00:56Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-01T17:13:27Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T07:00:54Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "93": {
+      "guessed_author": "lilaizhencn",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T04:54:44Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "lilaizhencn",
+          "created_at": "2026-07-07T01:33:01Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T04:54:54Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "94": {
+      "guessed_author": "lilaizhencn",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T04:55:36Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "lilaizhencn",
+          "created_at": "2026-07-07T01:33:01Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T04:55:42Z",
+          "author_association": "NONE"
+        }
+      ]
+    },
+    "96": {
+      "guessed_author": "747857485",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T06:29:09Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T07:01:09Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T06:29:16Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T07:01:06Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "97": {
+      "guessed_author": "yipiezi1",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T07:16:23Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "yipiezi1",
+          "created_at": "2026-07-02T07:31:01Z",
+          "commit_id": "534b28c260cc320dcd3df2b1905b699941be2ab4"
+        },
+        {
+          "event": "head_ref_force_pushed",
+          "actor": "yipiezi1",
+          "created_at": "2026-07-02T07:38:25Z",
+          "commit_id": "a0b50138445fd30bce4bd84f251cf7c4196c8637"
+        },
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T15:27:08Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T07:16:37Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T15:27:06Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "99": {
+      "guessed_author": "gustavlee",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T08:24:37Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T15:27:43Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T08:24:50Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T15:27:39Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "100": {
+      "guessed_author": "ws8634",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T09:07:51Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T15:28:15Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T09:08:04Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T15:28:12Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "102": {
+      "guessed_author": "eagle-tiger",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T14:22:06Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T15:16:57Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T14:22:14Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T15:16:54Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "103": {
+      "guessed_author": "Hill-Eagle",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T14:33:22Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T15:28:46Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T14:33:35Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T15:28:45Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "104": {
+      "guessed_author": "LINGYUNXSH",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-02T15:45:40Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-02T16:01:11Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-02T15:45:54Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-02T16:01:08Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "107": {
+      "guessed_author": "danlylois-code",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-03T04:14:32Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-03T05:46:11Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-03T04:14:39Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-03T05:46:07Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "108": {
+      "guessed_author": "wsxnji",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-03T04:30:34Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-03T05:46:57Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-03T04:30:41Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-03T05:46:55Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "109": {
+      "guessed_author": "guoyanshuo",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-03T05:06:16Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-03T05:52:20Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-03T05:06:23Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-03T05:52:18Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    },
+    "110": {
+      "guessed_author": "liuzhiqiang",
+      "merged_by": null,
+      "author_association_author": "NONE",
+      "state": "closed",
+      "merged": false,
+      "created_at": "2026-07-03T05:07:27Z",
+      "reviews": [],
+      "events": [
+        {
+          "event": "closed",
+          "actor": "redreamality",
+          "created_at": "2026-07-03T05:52:20Z",
+          "commit_id": null
+        }
+      ],
+      "issue_comments": [
+        {
+          "user": "CLAassistant",
+          "created_at": "2026-07-03T05:07:39Z",
+          "author_association": "NONE"
+        },
+        {
+          "user": "redreamality",
+          "created_at": "2026-07-03T05:52:18Z",
+          "author_association": "COLLABORATOR"
+        }
+      ]
+    }
+  }
+}

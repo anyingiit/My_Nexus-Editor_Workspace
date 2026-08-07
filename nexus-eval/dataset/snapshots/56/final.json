@@ -1,0 +1,179 @@
+{
+  "pr_number": 56,
+  "title": "feat(editor): Editor container pass-through props and onReady callback ",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-18T05:48:22Z",
+  "merged_by": null,
+  "closed_by": "eryue0220",
+  "head_sha_final": "36984114ec2560f21a61b551a4dfc50902ceeeb4",
+  "merge_commit_sha": "aee8286c17aab6efb4cce237889270c472bfaef3",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "36984114ec2560f21a61b551a4dfc50902ceeeb4",
+      "message": "align editor props api",
+      "date": "2026-06-10T08:25:00Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 4,
+      "changes": 41
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 3,
+      "changes": 37
+    },
+    {
+      "filename": "docs/ARCHITECTURE.md",
+      "status": "added",
+      "additions": 86,
+      "deletions": 0,
+      "changes": 86
+    },
+    {
+      "filename": "docs/ARCHITECTURE.zh.md",
+      "status": "added",
+      "additions": 309,
+      "deletions": 0,
+      "changes": 309
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/editor-config.ts",
+      "status": "added",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 4,
+      "changes": 45
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 2,
+      "changes": 14
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/react/test/editor-config.test.ts",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 102,
+      "deletions": 0,
+      "changes": 102
+    },
+    {
+      "filename": "packages/vue/src/editor-config.ts",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 79,
+      "deletions": 3,
+      "changes": 82
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 1,
+      "changes": 5
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 2,
+      "changes": 8
+    },
+    {
+      "filename": "packages/vue/test/editor-config.test.ts",
+      "status": "added",
+      "additions": 35,
+      "deletions": 0,
+      "changes": 35
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 101,
+      "deletions": 0,
+      "changes": 101
+    },
+    {
+      "filename": "prd.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=56",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

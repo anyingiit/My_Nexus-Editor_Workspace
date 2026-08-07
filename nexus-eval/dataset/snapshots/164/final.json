@@ -1,0 +1,119 @@
+{
+  "pr_number": 164,
+  "title": "feat(autosave): add debounced autosave plugin with tests",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "59639fcb25e51a52786056079984a9bec5668089",
+  "merge_commit_sha": "533f1023d365280ba67ab564eb8818e22f7f9c9a",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "dcc58421d8e29ced9ee2cb1412ca578ffef10058",
+      "message": "feat(autosave): add debounced autosave plugin with tests\n\nAdds a debounced autosave Nexus plugin that persists the current\nMarkdown document via the onChange callback, with flush()/destroy()\nlifecycle and full Vitest coverage. Includes OpenSpec change set.",
+      "date": "2026-07-17T04:16:46Z"
+    },
+    {
+      "sha": "43f7ca828dc6116b8dbee98377b0d34822b9e229",
+      "message": "fix(autosave): add tsconfig.json to resolve dts build error\n\nThe package was missing a tsconfig.json, so tsup's dts build could\nnot resolve @floatboat/nexus-core exports (needs moduleResolution:\nbundler from tsconfig.base). Added the same tsconfig used by other\nplugins to fix the type declaration build.",
+      "date": "2026-07-17T04:16:46Z"
+    },
+    {
+      "sha": "59639fcb25e51a52786056079984a9bec5668089",
+      "message": "docs(autosave): list nexus-plugin-autosave in package table",
+      "date": "2026-07-17T04:16:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "openspec/changes/add-autosave-plugin/proposal.md",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "openspec/changes/add-autosave-plugin/specs/autosave/spec.md",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "openspec/changes/add-autosave-plugin/tasks.md",
+      "status": "added",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "packages/plugin-autosave/README.md",
+      "status": "added",
+      "additions": 58,
+      "deletions": 0,
+      "changes": 58
+    },
+    {
+      "filename": "packages/plugin-autosave/package.json",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-autosave/src/index.ts",
+      "status": "added",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/plugin-autosave/src/plugin.ts",
+      "status": "added",
+      "additions": 117,
+      "deletions": 0,
+      "changes": 117
+    },
+    {
+      "filename": "packages/plugin-autosave/test/plugin.test.ts",
+      "status": "added",
+      "additions": 131,
+      "deletions": 0,
+      "changes": 131
+    },
+    {
+      "filename": "packages/plugin-autosave/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=164",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

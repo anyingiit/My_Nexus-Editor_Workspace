@@ -1,0 +1,19 @@
+{
+  "pr_number": 44,
+  "title": "test(toolbar,electron): add regression harness, E2E, and stability gate",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-19T11:26:43Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "libaice",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-02T10:23:38Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=44) <br/>All committers have signed the CLA."
+    }
+  ]
+}

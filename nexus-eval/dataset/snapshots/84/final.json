@@ -1,0 +1,188 @@
+{
+  "pr_number": 84,
+  "title": "Feat/code quality toolchain",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "983510494c16fe4986bce4ed3cc53349b4e41e34",
+  "merge_commit_sha": "4efa43ea38a5765ad98068d2b659ae592887131a",
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "commits": [
+    {
+      "sha": "7e991bf99ec6a1fb9ab9b76671e885cb1496e88e",
+      "message": "Add ESLint configuration with TypeScript and Prettier",
+      "date": "2026-06-30T06:05:39Z"
+    },
+    {
+      "sha": "1253ff17549a490315e0ada0ebff9f6a3c28fc2e",
+      "message": "build: add prettier config",
+      "date": "2026-06-30T06:07:12Z"
+    },
+    {
+      "sha": "c289ba2ea129964192a9763a633a7fc285b338f4",
+      "message": "build: update gitignore for pnpm compatibility",
+      "date": "2026-06-30T06:26:18Z"
+    },
+    {
+      "sha": "e0767c7656eea86c2ebb3be21b6876078aaef899",
+      "message": "build: add conventional commits template",
+      "date": "2026-06-30T06:27:43Z"
+    },
+    {
+      "sha": "42e7bd7793e35ad48e830564daa7d9d88feb181b",
+      "message": "Add files via upload",
+      "date": "2026-06-30T06:28:39Z"
+    },
+    {
+      "sha": "0890d778aadb795d2c32b3908dd2ce3aaa25cc56",
+      "message": "build: add husky pre-commit hook",
+      "date": "2026-06-30T06:30:36Z"
+    },
+    {
+      "sha": "72e0d86866ca2ed2e6b291f087118b48d450048b",
+      "message": "build: add husky commit-msg hook",
+      "date": "2026-06-30T06:31:05Z"
+    },
+    {
+      "sha": "967730fbf35e851e693821ef568b134067395937",
+      "message": "build: add eslint config",
+      "date": "2026-06-30T06:35:46Z"
+    },
+    {
+      "sha": "6af907a7daa60a269be8200b3ab2580c85f2933d",
+      "message": "Create CODING_STANDARDS.md",
+      "date": "2026-06-30T06:50:09Z"
+    },
+    {
+      "sha": "49f5e2ef36bb416aabcd6faeb8ad5f180918ea5c",
+      "message": "Update README.md",
+      "date": "2026-06-30T06:51:42Z"
+    },
+    {
+      "sha": "742f6d1d62516cc7156b744458ff6296a71f9a87",
+      "message": "build: add react-specific eslint config",
+      "date": "2026-06-30T06:52:58Z"
+    },
+    {
+      "sha": "b2def7d8d542e731c213c58be3b04859f6fb1b71",
+      "message": "build: add vue-specific eslint config\n\nConfigured ESLint for Vue with specific rules.",
+      "date": "2026-06-30T06:53:32Z"
+    },
+    {
+      "sha": "79d6f5e71090b5b115536fdcd0638f939c223a42",
+      "message": "Update CODING_STANDARDS.md",
+      "date": "2026-06-30T06:57:09Z"
+    },
+    {
+      "sha": "983510494c16fe4986bce4ed3cc53349b4e41e34",
+      "message": "Update README.zh.md",
+      "date": "2026-06-30T07:03:21Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": ".gitmessage",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": ".husky/commit-msg",
+      "status": "added",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": ".husky/pre-commit",
+      "status": "added",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": ".prettierrc.json",
+      "status": "added",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "CODING_STANDARDS.md",
+      "status": "added",
+      "additions": 266,
+      "deletions": 0,
+      "changes": 266
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 33,
+      "deletions": 0,
+      "changes": 33
+    },
+    {
+      "filename": "eslint.config.js",
+      "status": "added",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    },
+    {
+      "filename": "nexus-code-quality-pr.zip",
+      "status": "added",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "packages/react/.eslintrc.json",
+      "status": "added",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "packages/vue/.eslintrc.json",
+      "status": "added",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=84",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

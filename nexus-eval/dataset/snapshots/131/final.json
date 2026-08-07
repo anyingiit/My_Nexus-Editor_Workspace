@@ -1,0 +1,70 @@
+{
+  "pr_number": 131,
+  "title": "feat(search): add fuzzy search with fzy-inspired scoring and position tracking",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "fe2191bbc23c47a54310455bfd4d2e68ffa38c2d",
+  "merge_commit_sha": "670788410d4e3065e57766172fef8c852b6c96de",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "e2ae0975063f137f8fa8b3adce44d3310338d8b9",
+      "message": "feat(search): add fuzzy search support\n\n- Add fuzzy matching to SearchOptions (fzf-style character-by-character)\n\n- Add fuzzy toggle checkbox to search panel UI\n\n- Implement fuzzyToPattern() converting queries to non-greedy regex\n\n- Support case-sensitive fuzzy search\n\n- Escape regex-special characters in fuzzy queries\n\n- Add 12 unit and UI integration tests\n\n- Roadmap: P2 #17",
+      "date": "2026-07-02T03:05:37Z"
+    },
+    {
+      "sha": "728327a2164a85fbfdac0c2fb60dae9b01b6ec16",
+      "message": "feat(search): add fuzzy search with scoring, position tracking, UI toggle and comprehensive test coverage",
+      "date": "2026-07-03T02:53:38Z"
+    },
+    {
+      "sha": "fe2191bbc23c47a54310455bfd4d2e68ffa38c2d",
+      "message": "fix: resolve TS2339 - remove matchedIndices assertion from ScoredSearchMatch test",
+      "date": "2026-07-06T02:32:20Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 363,
+      "deletions": 3,
+      "changes": 366
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 897,
+      "deletions": 0,
+      "changes": 897
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=131",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

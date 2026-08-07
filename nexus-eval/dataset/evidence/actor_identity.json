@@ -1,0 +1,40 @@
+{
+  "generated_at_utc": "2026-08-05T21:46:40Z",
+  "method": "GitHub API /users/{login} + local git author-email audit (deterministic, no LLM)",
+  "repo_owner": {
+    "login": "floatboatai",
+    "id": 263848561,
+    "type": "Organization",
+    "name": "floatboat-ai"
+  },
+  "actors": [
+    {
+      "login": "ketd",
+      "github_user_id": 94940923,
+      "verified": true,
+      "evidence": "git noreply email 94940923+ketd@users.noreply.github.com matches GitHub user id 94940923 (GET /users/ketd); 95 surviving direct-push commits on main; merges/closes PRs (45 final actions)",
+      "weak_maintainer_evidence_direct_pushes": 95
+    },
+    {
+      "login": "redreamality",
+      "github_user_id": 3147776,
+      "verified": true,
+      "evidence": "git commit author name remy <redreamality@gmail.com> matches GitHub user redreamality (id 3147776, name Redreamality); 2 surviving direct-push commits (README revamps); closes 29 PRs",
+      "weak_maintainer_evidence_direct_pushes": 2
+    },
+    {
+      "login": "2391384896",
+      "github_user_id": 56373988,
+      "verified": true,
+      "evidence": "git noreply email 56373988+2391384896@users.noreply.github.com + author name zhenyuliu/振宇 <zhenyulius@163.com> matches GitHub user 2391384896 (name zhenyuliu, bio zhenyulius@163.com); 14 surviving direct-push commits",
+      "weak_maintainer_evidence_direct_pushes": 14
+    },
+    {
+      "login": "aoe",
+      "verified": false,
+      "evidence": "commit author name aoe <aoe@aoedeMac-mini.local>; 1 surviving direct push; login not independently verified via GitHub profile (identity confidence low)",
+      "weak_maintainer_evidence_direct_pushes": 1
+    }
+  ],
+  "note": "All weak-maintainer evidence is per-actor WEAK evidence (surviving mechanically-filtered direct pushes on main). Manage permission is NOT provable (permission API 403). Weak evidence is never reported as proof of admin."
+}

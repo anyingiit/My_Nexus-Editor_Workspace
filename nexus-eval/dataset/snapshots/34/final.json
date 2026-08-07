@@ -1,0 +1,71 @@
+{
+  "pr_number": 34,
+  "title": "chore: add governance doc and PR compliance template",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:37:10Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "91ced5be5b3cdee0779106765e4116549b461738",
+  "merge_commit_sha": "024b2bb4f2fe35eff56c8ae3b77f0cf26a232f0b",
+  "base_sha": "9a887ecbe1bc6c7648a8e54c6b27fecf7385fab1",
+  "commits": [
+    {
+      "sha": "91ced5be5b3cdee0779106765e4116549b461738",
+      "message": "chore: add governance doc and PR compliance template\n\n- Add GOVERNANCE.md covering project ownership, scope policy\n  (no AI / no vendor SDKs / no general UI libs in packages or\n  electron-demo), module ownership, CLA reference, AI-generated\n  code policy, runtime dependency policy, and build-artifact rules.\n- Update PR template with a Compliance section: CLA reminder,\n  AI-assistance disclosure, new-dependency disclosure with\n  license rationale, and explicit checks against committed\n  build artifacts or secrets.\n- Cross-link CONTRIBUTING.md to GOVERNANCE.md and surface the\n  new compliance items in §3.2 PR checklist and §5 Security.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@noreply.anthropic.com>",
+      "date": "2026-05-27T13:42:23Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/PULL_REQUEST_TEMPLATE.md",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 3,
+      "changes": 21
+    },
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "GOVERNANCE.md",
+      "status": "added",
+      "additions": 145,
+      "deletions": 0,
+      "changes": 145
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=34",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  }
+}

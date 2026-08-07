@@ -1,0 +1,130 @@
+{
+  "pr_number": 64,
+  "title": "feat: support default text color configuration for newly input content",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T03:36:36Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "27917b22b26c87292ea37f8e04e8d6c88241222f",
+  "merge_commit_sha": "5bfe5c2fdfc5345c59aabb68a711db9a9a937d33",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "27917b22b26c87292ea37f8e04e8d6c88241222f",
+      "message": "feat: support default text color configuration for newly input content",
+      "date": "2026-06-12T12:56:54Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/color-decoration.ts",
+      "status": "modified",
+      "additions": 55,
+      "deletions": 21,
+      "changes": 76
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 52,
+      "deletions": 5,
+      "changes": 57
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 51,
+      "deletions": 0,
+      "changes": 51
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 5,
+      "changes": 30
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 140,
+      "deletions": 1,
+      "changes": 141
+    },
+    {
+      "filename": "packages/plugin-word-color/README.md",
+      "status": "added",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "packages/plugin-word-color/package.json",
+      "status": "added",
+      "additions": 16,
+      "deletions": 0,
+      "changes": 16
+    },
+    {
+      "filename": "packages/plugin-word-color/src/index.ts",
+      "status": "added",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "packages/plugin-word-color/src/word-color.ts",
+      "status": "added",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "packages/plugin-word-color/tsconfig.json",
+      "status": "added",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 3713,
+      "deletions": 4526,
+      "changes": 8239
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=64",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

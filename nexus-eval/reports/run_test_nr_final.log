@@ -1,0 +1,52 @@
+=== [test] empty (tag=final) ===
+[judge empty test final] existing outputs are from a different AGENTS.md (prior sha e3b0c442); removing stale per-PR outputs
+[judge empty 100] decision=approve ci=pass reasons=3
+[judge empty 102] decision=reject ci=unknown reasons=4
+[judge empty 103] decision=reject ci=unknown reasons=2
+[judge empty 104] decision=reject ci=unknown reasons=3
+[judge empty 107] decision=reject ci=unknown reasons=3
+[judge empty 108] decision=reject ci=unknown reasons=5
+[judge empty 109] decision=approve ci=pass reasons=3
+[judge empty 110] decision=reject ci=unknown reasons=4
+[judge empty 118] decision=reject ci=pass reasons=3
+[judge empty 120] decision=reject ci=unknown reasons=2
+[judge empty 121] decision=reject ci=pass reasons=4
+[judge empty 144] decision=reject ci=unknown reasons=3
+[judge empty 153] decision=reject ci=unknown reasons=4
+[judge empty 154] decision=reject ci=unknown reasons=3
+judge empty on test: 14 PRs
+=== [test] baseline (tag=final) ===
+[judge baseline test final] existing outputs are from a different AGENTS.md (prior sha 0790ec0b); removing stale per-PR outputs
+[judge baseline 100] decision=reject ci=pass reasons=2
+[judge baseline 102] decision=reject ci=unknown reasons=3
+[judge baseline 103] decision=reject ci=unknown reasons=4
+[judge baseline 104] decision=reject ci=unknown reasons=3
+[judge baseline 107] decision=reject ci=unknown reasons=4
+[judge baseline 108] decision=reject ci=unknown reasons=5
+[judge baseline 109] decision=reject ci=pass reasons=2
+[judge baseline 110] decision=reject ci=unknown reasons=4
+[judge baseline 118] decision=reject ci=pass reasons=4
+[judge baseline 120] decision=reject ci=unknown reasons=3
+[judge baseline 121] decision=reject ci=pass reasons=3
+[judge baseline 144] decision=reject ci=unknown reasons=3
+[judge baseline 153] decision=reject ci=unknown reasons=5
+[judge baseline 154] decision=reject ci=unknown reasons=3
+judge baseline on test: 14 PRs
+=== [test] ours (tag=final) ===
+[judge ours test final] existing outputs are from a different AGENTS.md (prior sha cb4c70ac); removing stale per-PR outputs
+[judge ours 100] decision=reject ci=pass reasons=3
+[judge ours 102] decision=reject ci=unknown reasons=2
+[judge ours 103] decision=reject ci=unknown reasons=4
+[judge ours 104] decision=reject ci=unknown reasons=3
+[judge ours 107] decision=reject ci=unknown reasons=5
+[judge ours 108] decision=reject ci=unknown reasons=5
+[judge ours 109] decision=reject ci=pass reasons=2
+[judge ours 110] decision=reject ci=unknown reasons=3
+[judge ours 118] decision=reject ci=pass reasons=3
+[judge ours 120] decision=reject ci=unknown reasons=2
+[judge ours 121] decision=reject ci=pass reasons=3
+[judge ours 144] decision=reject ci=unknown reasons=4
+[judge ours 153] decision=reject ci=unknown reasons=5
+[judge ours 154] decision=reject ci=unknown reasons=4
+judge ours on test: 14 PRs
+TEST DONE (tag=final)

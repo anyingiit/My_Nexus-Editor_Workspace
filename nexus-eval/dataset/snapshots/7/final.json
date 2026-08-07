@@ -1,0 +1,67 @@
+{
+  "pr_number": 7,
+  "title": "feat(core): add getSelectedText API",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-13T09:19:20Z",
+  "merged_by": null,
+  "closed_by": "ChainCoinLab",
+  "head_sha_final": "3ae32de8b517862a16f699144aa5eba44f4255f2",
+  "merge_commit_sha": "e2f3c3f573f003174d88aaf59eaa59c1ca501ea3",
+  "base_sha": "78b7bdfd2f499f5cb570cbfeb9cd38aaacdc3364",
+  "commits": [
+    {
+      "sha": "3ae32de8b517862a16f699144aa5eba44f4255f2",
+      "message": "feat(core): add selected text API",
+      "date": "2026-05-13T08:51:06Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "pr_number": 13,
+  "title": "feat(slash): add priority sort and result limit to slash commands",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:38:54Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "ebc35321718a6bb85f72322691e1927c3fe51438",
+  "merge_commit_sha": "b85fc85c7566b8b1c35738634dd7baf1dc3029d9",
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "59c5709bf3b5920f3999ff70968fad0b264d3a2f",
+      "message": "docs(slash): add slash command sort + limit design spec",
+      "date": "2026-05-13T11:14:20Z"
+    },
+    {
+      "sha": "4c705b44af5b04e3e7b079770993fe0b32c64fb8",
+      "message": "docs(slash): add implementation plan for slash sort + limit",
+      "date": "2026-05-13T11:14:20Z"
+    },
+    {
+      "sha": "cf2d172a18350f9f5502ee35310eb89ca10c5747",
+      "message": "feat(core): add priority field to SlashCommandDef",
+      "date": "2026-05-13T11:17:09Z"
+    },
+    {
+      "sha": "30c9575bf662d4b850675db2fa31e78c69f22bf7",
+      "message": "feat(core): add priority sort and maxResults to filterSlashCommands",
+      "date": "2026-05-13T11:20:20Z"
+    },
+    {
+      "sha": "134cc40ea6831fbb578c7d8015b3347c06e4ec3c",
+      "message": "feat(slash): add priority sort and maxResults to slash plugin",
+      "date": "2026-05-13T11:23:22Z"
+    },
+    {
+      "sha": "dd2b0036f6b94e1ed42fb5d83c496cc01970d2e8",
+      "message": "test(slash): add sort and limit test cases",
+      "date": "2026-05-13T11:26:12Z"
+    },
+    {
+      "sha": "ebc35321718a6bb85f72322691e1927c3fe51438",
+      "message": "docs(slash): add maxResults JSDoc and move design docs to openspec\n\nAdd JSDoc explaining maxResults: 0 and undefined both return all results.\nMove slash sort+limit proposal and tasks from docs/superpowers/ to\nopenspec/changes/add-slash-sort-limit/ per project conventions.",
+      "date": "2026-05-13T11:32:25Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/add-slash-sort-limit/proposal.md",
+      "status": "added",
+      "additions": 78,
+      "deletions": 0,
+      "changes": 78
+    },
+    {
+      "filename": "openspec/changes/add-slash-sort-limit/tasks.md",
+      "status": "added",
+      "additions": 367,
+      "deletions": 0,
+      "changes": 367
+    },
+    {
+      "filename": "packages/core/src/slash-state.ts",
+      "status": "modified",
+      "additions": 37,
+      "deletions": 14,
+      "changes": 51
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 15,
+      "changes": 16
+    },
+    {
+      "filename": "packages/plugin-slash/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+      "status": "modified",
+      "additions": 93,
+      "deletions": 0,
+      "changes": 93
+    }
+  ],
+  "compare_final": {
+    "status": "diverged",
+    "ahead_by": 7,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "5f630f5d86cceba54db453c54b3e98be5be3fd75",
+        "filename": "openspec/changes/add-slash-sort-limit/proposal.md",
+        "status": "added",
+        "additions": 78,
+        "deletions": 0,
+        "changes": 78,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/openspec%2Fchanges%2Fadd-slash-sort-limit%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ebc35321718a6bb85f72322691e1927c3fe51438/openspec%2Fchanges%2Fadd-slash-sort-limit%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-slash-sort-limit%2Fproposal.md?ref=ebc35321718a6bb85f72322691e1927c3fe51438",
+        "patch": "@@ -0,0 +1,78 @@\n+# Slash Command Sorting + Result Limit\n+\n+**Roadmap:** P0 #3\n+**Package:** `core` + `plugin-slash`\n+**Status:** draft\n+\n+## Why\n+\n+Currently slash commands appear in plugin-registration order with no sorting or limit — plugins that register first dominate the menu regardless of relevance. Adding priority-based sorting and an optional result cap makes the slash menu work for real-world use cases with dozens of commands.\n+\n+## What Changes\n+\n+- `SlashCommandDef` gets optional `priority: number` (higher = first, default 0)\n+- `filterSlashCommands()` sorts results by priority desc, then title asc\n+- `filterSlashCommands()` and `computeSlashState()` accept optional `maxResults` to cap output\n+- `plugin-slash` mirrors the core changes\n+\n+## API\n+\n+### Type change (`types.ts`)\n+\n+```typescript\n+export interface SlashCommandDef {\n+  id: string;\n+  title: string;\n+  keywords?: string[];\n+  priority?: number;  // NEW: default 0, higher = first\n+}\n+```\n+\n+### Function signatures (`slash-state.ts`)\n+\n+```typescript\n+export function filterSlashCommands(\n+  commands: SlashCommandDef[],\n+  query: string,\n+  maxResults?: number\n+): SlashCommandDef[]\n+\n+export function computeSlashState(\n+  doc: string,\n+  cursor: number,\n+  commands: SlashCommandDef[],\n+  maxResults?: number\n+): { isOpen: boolean; from: number | null; to: number | null; query: string; commands: SlashCommandDef[] }\n+```\n+\n+### Sort order\n+\n+1. `priority` descending (8 before 3 before 0)\n+2. Same priority → `title` case-insensitive ascending (\"Add\" before \"Bold\" before \"Copy\")\n+\n+### Limit behavior\n+\n+- `maxResults` omitted → all matching results returned (backwards-compatible)\n+- `maxResults: N` → first N commands after filtering + sorting\n+\n+## Files affected\n+\n+| File | Change |\n+|---|---|\n+| `packages/core/src/types.ts` | Add `priority?: number` to `SlashCommandDef` |\n+| `packages/core/src/slash-state.ts` | Add sort logic + `maxResults` param |\n+| `packages/core/src/editor.ts` | Pass `maxResults` through (no behavior change when unset) |\n+| `packages/plugin-slash/src/index.ts` | Mirror core sort/limit logic |\n+\n+## Test plan\n+\n+| # | Scenario |\n+|---|---|\n+| 1 | Commands sort by priority desc |\n+| 2 | Same priority → sort by title asc (case-insensitive) |\n+| 3 | Mixed: priority takes precedence over title |\n+| 4 | maxResults limits output count |\n+| 5 | No maxResults → all results returned |\n+| 6 | Empty command list → empty result |\n+| 7 | Default priority 0 when not set |\n+| 8 | filter + sort + limit, all three compose |"
+      },
+      {
+        "sha": "afb3ad1fe87efcb921f4a9ee5aa2e2f1fb849369",
+        "filename": "openspec/changes/add-slash-sort-limit/tasks.md",
+        "status": "added",
+        "additions": 367,
+        "deletions": 0,
+        "changes": 367,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/openspec%2Fchanges%2Fadd-slash-sort-limit%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ebc35321718a6bb85f72322691e1927c3fe51438/openspec%2Fchanges%2Fadd-slash-sort-limit%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-slash-sort-limit%2Ftasks.md?ref=ebc35321718a6bb85f72322691e1927c3fe51438",
+        "patch": "@@ -0,0 +1,367 @@\n+# Slash Command Sorting + Result Limit Implementation Plan\n+\n+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.\n+\n+**Goal:** Add priority-based sorting and optional result limit to slash command filtering.\n+\n+**Architecture:** `SlashCommandDef` gets optional `priority` (higher = first, default 0). `filterSlashCommands` sorts by priority desc then title asc, and accepts optional `maxResults` to cap output. Both `core/src/slash-state.ts` and `plugin-slash/src/index.ts` get the change.\n+\n+**Tech Stack:** TypeScript (strict), vitest\n+\n+---\n+\n+## File Summary\n+\n+| File | Action |\n+|---|---|\n+| `packages/core/src/types.ts:156-160` | Add `priority?: number` to `SlashCommandDef` |\n+| `packages/core/src/slash-state.ts:30-60` | Add sort + `maxResults` to `filterSlashCommands` and `computeSlashState` |\n+| `packages/plugin-slash/src/index.ts:50-100` | Mirror sort + `maxResults` to its `filterSlashCommands` and `getSlashState` |\n+| `packages/plugin-slash/test/plugin-slash.test.ts:61-71` | Add 8 new test cases |\n+\n+---\n+\n+### Task 1: Add `priority` to `SlashCommandDef`\n+\n+**Files:**\n+- Modify: `packages/core/src/types.ts:156-160`\n+\n+- [ ] **Step 1: Add `priority` field**\n+\n+```typescript\n+export interface SlashCommandDef {\n+  id: string;\n+  title: string;\n+  keywords?: string[];\n+  priority?: number;\n+}\n+```\n+\n+- [ ] **Step 2: Verify build**\n+\n+Run: `pnpm -F @floatboat/nexus-core build`\n+Expected: PASS\n+\n+- [ ] **Step 3: Commit**\n+\n+```bash\n+git add packages/core/src/types.ts\n+git commit -m \"feat(core): add priority field to SlashCommandDef\"\n+```\n+\n+---\n+\n+### Task 2: Add sort + limit to core `filterSlashCommands` and `computeSlashState`\n+\n+**Files:**\n+- Modify: `packages/core/src/slash-state.ts:30-60`\n+\n+- [ ] **Step 1: Replace `filterSlashCommands` with sorted + limited version**\n+\n+Replace lines 30-41 of `packages/core/src/slash-state.ts`:\n+\n+```typescript\n+export function filterSlashCommands(\n+  commands: SlashCommandDef[],\n+  query: string,\n+  maxResults?: number\n+): SlashCommandDef[] {\n+  let result: SlashCommandDef[];\n+\n+  if (query === \"\") {\n+    result = commands;\n+  } else {\n+    const lower = query.toLowerCase();\n+    result = commands.filter((cmd) => {\n+      if (cmd.title.toLowerCase().includes(lower)) return true;\n+      return cmd.keywords?.some((kw) => kw.toLowerCase().includes(lower)) ?? false;\n+    });\n+  }\n+\n+  result = [...result].sort((a, b) => {\n+    const pa = a.priority ?? 0;\n+    const pb = b.priority ?? 0;\n+    if (pa !== pb) return pb - pa; // higher priority first\n+    return a.title.localeCompare(b.title, undefined, { sensitivity: \"base\" });\n+  });\n+\n+  if (maxResults !== undefined && maxResults > 0) {\n+    result = result.slice(0, maxResults);\n+  }\n+\n+  return result;\n+}\n+```\n+\n+- [ ] **Step 2: Update `computeSlashState` to accept and pass through `maxResults`**\n+\n+Replace the function signature and body of `computeSlashState` (lines 43-60):\n+\n+```typescript\n+export function computeSlashState(\n+  doc: string,\n+  cursor: number,\n+  commands: SlashCommandDef[],\n+  maxResults?: number\n+): { isOpen: boolean; from: number | null; to: number | null; query: string; commands: SlashCommandDef[] } {\n+  const match = getSlashMatch(doc, cursor);\n+  if (!match) {\n+    return { isOpen: false, from: null, to: null, query: \"\", commands: [] };\n+  }\n+\n+  return {\n+    isOpen: true,\n+    from: match.from,\n+    to: match.to,\n+    query: match.query,\n+    commands: filterSlashCommands(commands, match.query, maxResults),\n+  };\n+}\n+```\n+\n+- [ ] **Step 3: Verify editor.ts still compiles (no breakage)**\n+\n+Run: `pnpm -F @floatboat/nexus-core build`\n+Expected: PASS\n+\n+- [ ] **Step 4: Commit**\n+\n+```bash\n+git add packages/core/src/slash-state.ts\n+git commit -m \"feat(core): add priority sort and maxResults to filterSlashCommands\"\n+```\n+\n+---\n+\n+### Task 3: Mirror sort + limit in `plugin-slash`\n+\n+**Files:**\n+- Modify: `packages/plugin-slash/src/index.ts:50-100`\n+\n+- [ ] **Step 1: Replace `filterSlashCommands` in plugin-slash**\n+\n+Replace lines 50-67 of `packages/plugin-slash/src/index.ts`:\n+\n+```typescript\n+export function filterSlashCommands(\n+  commands: SlashCommandDef[],\n+  query: string,\n+  maxResults?: number\n+): SlashCommandDef[] {\n+  const normalizedQuery = query.trim().toLowerCase();\n+\n+  let result: SlashCommandDef[];\n+  if (!normalizedQuery) {\n+    result = commands;\n+  } else {\n+    result = commands.filter((command) => {\n+      const haystacks = [command.title, ...(command.keywords ?? [])].map((value) =>\n+        value.toLowerCase()\n+      );\n+      return haystacks.some((value) => value.includes(normalizedQuery));\n+    });\n+  }\n+\n+  result = [...result].sort((a, b) => {\n+    const pa = a.priority ?? 0;\n+    const pb = b.priority ?? 0;\n+    if (pa !== pb) return pb - pa;\n+    return a.title.localeCompare(b.title, undefined, { sensitivity: \"base\" });\n+  });\n+\n+  if (maxResults !== undefined && maxResults > 0) {\n+    result = result.slice(0, maxResults);\n+  }\n+\n+  return result;\n+}\n+```\n+\n+- [ ] **Step 2: Update `getSlashState` to accept and pass through `maxResults`**\n+\n+Replace the `getSlashState` function signature and body (lines 69-93):\n+\n+```typescript\n+export function getSlashState(\n+  doc: string,\n+  cursor: number,\n+  commands: SlashCommandDef[],\n+  maxResults?: number\n+): SlashState {\n+  const match = getSlashMatch(doc, cursor);\n+\n+  if (!match) {\n+    return {\n+      isOpen: false,\n+      from: null,\n+      to: null,\n+      query: \"\",\n+      commands: []\n+    };\n+  }\n+\n+  return {\n+    isOpen: true,\n+    from: match.from,\n+    to: match.to,\n+    query: match.query,\n+    commands: filterSlashCommands(commands, match.query, maxResults)\n+  };\n+}\n+```\n+\n+- [ ] **Step 3: Verify build**\n+\n+Run: `pnpm -F @floatboat/nexus-plugin-slash build`\n+Expected: PASS\n+\n+- [ ] **Step 4: Commit**\n+\n+```bash\n+git add packages/plugin-slash/src/index.ts\n+git commit -m \"feat(slash): add priority sort and maxResults to slash plugin\"\n+```\n+\n+---\n+\n+### Task 4: Write tests for sort and limit\n+\n+**Files:**\n+- Modify: `packages/plugin-slash/test/plugin-slash.test.ts` (append after line 71)\n+\n+- [ ] **Step 1: Add test cases — priority sorting**\n+\n+Append inside the existing `describe` block, after the last test at line 70:\n+\n+```typescript\n+  it(\"sorts commands by priority (higher first)\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\", priority: 1 },\n+      { id: \"b\", title: \"Beta\", priority: 3 },\n+      { id: \"c\", title: \"Gamma\", priority: 2 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"b\", \"c\", \"a\"]);\n+  });\n+\n+  it(\"sorts same-priority commands by title alphabetically\", () => {\n+    const commands = [\n+      { id: \"c\", title: \"Charlie\", priority: 1 },\n+      { id: \"a\", title: \"Alpha\", priority: 1 },\n+      { id: \"b\", title: \"Bravo\", priority: 1 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"a\", \"b\", \"c\"]);\n+  });\n+\n+  it(\"respects priority over title sort\", () => {\n+    const commands = [\n+      { id: \"z\", title: \"Zebra\", priority: 10 },\n+      { id: \"a\", title: \"Alpha\", priority: 0 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"z\", \"a\"]);\n+  });\n+\n+  it(\"treats missing priority as 0\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\" },\n+      { id: \"b\", title: \"Bravo\", priority: 5 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"b\", \"a\"]);\n+  });\n+\n+  it(\"limits results to maxResults\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\", priority: 1 },\n+      { id: \"b\", title: \"Bravo\", priority: 2 },\n+      { id: \"c\", title: \"Charlie\", priority: 3 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\", 2);\n+\n+    expect(result).toHaveLength(2);\n+    expect(result.map((c) => c.id)).toEqual([\"c\", \"b\"]);\n+  });\n+\n+  it(\"returns all results when maxResults is not provided\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\" },\n+      { id: \"b\", title: \"Bravo\" },\n+      { id: \"c\", title: \"Charlie\" },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result).toHaveLength(3);\n+  });\n+\n+  it(\"sorts and limits filtered results (all three compose)\", () => {\n+    const commands = [\n+      { id: \"heading\", title: \"Heading\", priority: 1 },\n+      { id: \"table\", title: \"Table\", priority: 3 },\n+      { id: \"code\", title: \"Code Block\", priority: 2 },\n+      { id: \"link\", title: \"Link\" },\n+      { id: \"list\", title: \"List\", priority: 2 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"l\", 2);\n+\n+    expect(result).toHaveLength(2);\n+    // \"l\" matches: \"Table\" (prio 3), \"Code Block\" (prio 2), \"Link\" (prio 0), \"List\" (prio 2)\n+    // Sorted: Table(3), Code Block(2), List(2), Link(0)\n+    // Limited to 2: Table, Code Block\n+    expect(result.map((c) => c.id)).toEqual([\"table\", \"code\"]);\n+  });\n+\n+  it(\"handles empty command list gracefully\", () => {\n+    const result = filterSlashCommands([], \"\", 5);\n+    expect(result).toEqual([]);\n+  });\n+```\n+\n+- [ ] **Step 2: Run tests to verify they pass**\n+\n+Run: `pnpm -F @floatboat/nexus-plugin-slash test -- --run`\n+Expected: all 13 tests PASS\n+\n+- [ ] **Step 3: Commit**\n+\n+```bash\n+git add packages/plugin-slash/test/plugin-slash.test.ts\n+git commit -m \"test(slash): add sort and limit test cases\"\n+```\n+\n+---\n+\n+### Task 5: Full validation\n+\n+- [ ] **Step 1: Run all tests**\n+\n+```bash\n+pnpm test -- --run\n+```\n+Expected: no new failures (electron-demo path separator failures are pre-existing and unrelated)\n+\n+- [ ] **Step 2: Build all packages**\n+\n+```bash\n+pnpm build\n+```\n+Expected: all packages build successfully\n+\n+- [ ] **Step 3: Check diff**\n+\n+```bash\n+git diff upstream/main --stat\n+```\n+Expected: 4 files changed (types.ts, slash-state.ts, plugin-slash/index.ts, plugin-slash.test.ts)"
+      },
+      {
+        "sha": "6722fb60dfd347e6d05c92eab85cc2502189f714",
+        "filename": "packages/core/src/slash-state.ts",
+        "status": "modified",
+        "additions": 37,
+        "deletions": 14,
+        "changes": 51,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fcore%2Fsrc%2Fslash-state.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fcore%2Fsrc%2Fslash-state.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Fslash-state.ts?ref=ebc35321718a6bb85f72322691e1927c3fe51438",
+        "patch": "@@ -115,16 +115,39 @@ function scoreCommand(\n   return null;\n }\n \n+/**\n+ * Filter and rank slash commands by query relevance and priority.\n+ *\n+ * @param maxResults  Optional cap on returned commands. A value of 0 or\n+ *   `undefined` returns all results (no limit). Use a positive number to\n+ *   restrict output.\n+ */\n export function filterSlashCommands(\n   commands: SlashCommandDef[],\n-  query: string\n+  query: string,\n+  maxResults?: number\n ): SlashCommandDef[] {\n   if (query === \"\") {\n-    // Empty query is the \"menu just opened\" case — keep the registration\n-    // order so the host can choose a \"frequently used first\" layout via\n-    // its plugin order instead of being overridden by an alphabetical\n-    // sort it didn't ask for.\n-    return commands.slice();\n+    const sorted = commands\n+      .map((cmd, index) => ({\n+        cmd,\n+        prio: cmd.priority ?? 0,\n+        index,\n+      }))\n+      .sort((a, b) => {\n+        if (b.prio !== a.prio) return b.prio - a.prio;\n+        const titleCmp = a.cmd.title.localeCompare(b.cmd.title, undefined, {\n+          sensitivity: \"base\",\n+        });\n+        if (titleCmp !== 0) return titleCmp;\n+        return a.index - b.index;\n+      });\n+\n+    let result = sorted.map((s) => s.cmd);\n+    if (maxResults !== undefined && maxResults > 0) {\n+      result = result.slice(0, maxResults);\n+    }\n+    return result;\n   }\n \n   const q = query.toLowerCase();\n@@ -136,18 +159,21 @@ export function filterSlashCommands(\n   }\n \n   scored.sort((a, b) => {\n+    const pa = a.cmd.priority ?? 0;\n+    const pb = b.cmd.priority ?? 0;\n+    if (pa !== pb) return pb - pa;\n     if (b.score !== a.score) return b.score - a.score;\n     if (a.tiebreaker !== b.tiebreaker) return a.tiebreaker - b.tiebreaker;\n-    // Final stability key: alphabetical title, then original registration\n-    // order. Two commands with identical scores AND identical\n-    // tiebreakers (e.g. same length, same offset) will sort by title so\n-    // snapshots stay deterministic across runs.\n     const titleCmp = a.cmd.title.localeCompare(b.cmd.title);\n     if (titleCmp !== 0) return titleCmp;\n     return a.index - b.index;\n   });\n \n-  return scored.map((s) => s.cmd);\n+  let result = scored.map((s) => s.cmd);\n+  if (maxResults !== undefined && maxResults > 0) {\n+    result = result.slice(0, maxResults);\n+  }\n+  return result;\n }\n \n export function computeSlashState(\n@@ -163,9 +189,6 @@ export function computeSlashState(\n \n   const filtered = filterSlashCommands(commands, match.query);\n   const limit = options?.limit ?? DEFAULT_LIMIT;\n-  // A negative limit is treated as \"no cap\" so callers can opt out with\n-  // `{ limit: Infinity }` or `{ limit: -1 }` without us having to invent\n-  // a separate sentinel.\n   const capped = limit < 0 ? filtered : filtered.slice(0, limit);\n \n   return {"
+      },
+      {
+        "sha": "a7bdc4fb4f5a1a218e2ff9f86cec1d348d02f629",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 15,
+        "changes": 16,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=ebc35321718a6bb85f72322691e1927c3fe51438",
+        "patch": "@@ -163,23 +163,9 @@ export interface SlashCommandDef {\n   id: string;\n   title: string;\n   keywords?: string[];\n-  /**\n-   * Optional muted second line shown in the menu UI under the title.\n-   * Hosts that don't render a UI may ignore this field.\n-   */\n   description?: string;\n-  /**\n-   * Optional execution hook invoked by the slash menu UI after the user\n-   * confirms this command. The trigger text (`/query`) is removed by the\n-   * UI before `run` is called, so commands can treat the caret as a\n-   * clean insertion point. Return value is currently advisory — the\n-   * menu always closes on confirm.\n-   *\n-   * Commands without `run` remain valid metadata entries; hosts that\n-   * keep their own id-to-action registry can dispatch via the menu UI's\n-   * `onCommand` override instead.\n-   */\n   run?: (editor: EditorAPI) => boolean | void;\n+  priority?: number;\n }\n \n export interface WidgetDefinition {"
+      },
+      {
+        "sha": "06936f80304ee574109d538cc7581169097563b8",
+        "filename": "packages/plugin-slash/src/index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fplugin-slash%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fplugin-slash%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-slash%2Fsrc%2Findex.ts?ref=ebc35321718a6bb85f72322691e1927c3fe51438",
+        "patch": "@@ -30,6 +30,7 @@ export interface SlashPlugin extends NexusPlugin {\n   slashCommands: SlashCommandDef[];\n }\n \n+ \n export function createSlashPlugin(commands: SlashCommandDef[]): SlashPlugin {\n   return {\n     name: \"plugin-slash\","
+      },
+      {
+        "sha": "2e8a3f0f68b64abe24cf58feb39c7bbbac2aba80",
+        "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+        "status": "modified",
+        "additions": 93,
+        "deletions": 0,
+        "changes": 93,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ebc35321718a6bb85f72322691e1927c3fe51438/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-slash%2Ftest%2Fplugin-slash.test.ts?ref=ebc35321718a6bb85f72322691e1927c3fe51438",
+        "patch": "@@ -98,4 +98,97 @@ describe(\"@floatboat/nexus-plugin-slash\", () => {\n     );\n     expect(filtered[0].run).toBe(run);\n   });\n+\n+  it(\"sorts commands by priority (higher first)\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\", priority: 1 },\n+      { id: \"b\", title: \"Beta\", priority: 3 },\n+      { id: \"c\", title: \"Gamma\", priority: 2 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"b\", \"c\", \"a\"]);\n+  });\n+\n+  it(\"sorts same-priority commands by title alphabetically\", () => {\n+    const commands = [\n+      { id: \"c\", title: \"Charlie\", priority: 1 },\n+      { id: \"a\", title: \"Alpha\", priority: 1 },\n+      { id: \"b\", title: \"Bravo\", priority: 1 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"a\", \"b\", \"c\"]);\n+  });\n+\n+  it(\"respects priority over title sort\", () => {\n+    const commands = [\n+      { id: \"z\", title: \"Zebra\", priority: 10 },\n+      { id: \"a\", title: \"Alpha\", priority: 0 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"z\", \"a\"]);\n+  });\n+\n+  it(\"treats missing priority as 0\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\" },\n+      { id: \"b\", title: \"Bravo\", priority: 5 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result.map((c) => c.id)).toEqual([\"b\", \"a\"]);\n+  });\n+\n+  it(\"limits results to maxResults\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\", priority: 1 },\n+      { id: \"b\", title: \"Bravo\", priority: 2 },\n+      { id: \"c\", title: \"Charlie\", priority: 3 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\", 2);\n+\n+    expect(result).toHaveLength(2);\n+    expect(result.map((c) => c.id)).toEqual([\"c\", \"b\"]);\n+  });\n+\n+  it(\"returns all results when maxResults is not provided\", () => {\n+    const commands = [\n+      { id: \"a\", title: \"Alpha\" },\n+      { id: \"b\", title: \"Bravo\" },\n+      { id: \"c\", title: \"Charlie\" },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"\");\n+\n+    expect(result).toHaveLength(3);\n+  });\n+\n+  it(\"sorts and limits filtered results (all three compose)\", () => {\n+    const commands = [\n+      { id: \"table\", title: \"Table\", priority: 3 },\n+      { id: \"code\", title: \"Code Block\", priority: 2 },\n+      { id: \"link\", title: \"Link\" },\n+      { id: \"list\", title: \"List\", priority: 2 },\n+    ];\n+\n+    const result = filterSlashCommands(commands, \"l\", 2);\n+\n+    expect(result).toHaveLength(2);\n+    // Scoring: \"Link\"(prefix,5000) \"List\"(prefix,5000) \"Table\"(substring,3000) \"Code Block\"(substring,3000)\n+    // Then priority: Table(3,3000) List(2,5000) Code Block(2,3000) Link(0,5000)\n+    // Limited to 2: Table, List\n+    expect(result.map((c) => c.id)).toEqual([\"table\", \"list\"]);\n+  });\n+\n+  it(\"handles empty command list gracefully\", () => {\n+    const result = filterSlashCommands([], \"\", 5);\n+    expect(result).toEqual([]);\n+  });\n });"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=13",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

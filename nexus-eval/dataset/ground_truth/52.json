@@ -1,0 +1,26 @@
+{
+  "pr_number": 52,
+  "title": "feat: add editor container props and onReady",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:37:49Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "commingling",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-09T15:20:17Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=52) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=52) before we can accept your contribution.<br/><hr/>**baoming.liu** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=52) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:37:48Z",
+      "body": "感谢 onReady + 容器属性的实现 🙏 roadmap #4 已由 #29 落地合入 main（`c55d37d`）——它提供了更完整的容器属性透传与双框架对齐。本 PR 功能重复，故关闭。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；非常欢迎你继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,31 @@
+{
+  "pr_number": 76,
+  "title": "[codex] Sync LLM Wiki project content",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:39:52Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "avalanchexi",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-22T17:50:04Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=76) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=76) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=76) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-06-23T12:39:51Z",
+      "body": "Closing after internal review. This PR is too broad and not suitable to continue as-is: it is draft/conflicting, includes generated dist outputs, local/agent config files, and many unrelated docs/OpenSpec/Electron/Python changes. Please resubmit from a clean branch with one focused change and no generated or unrelated files."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:55:58Z",
+      "body": "@avalanchexi 谢谢你花时间整理这套 LLM Wiki 集成，从 Python 服务到 Electron 面板、测试都看得出投入。但这个方向和 Nexus 的定位不符，必须先说清楚，避免你后面继续往这上面投入。\n\n### Nexus 不会引入 LLM / AI 能力\n\n这一点在 [#33（Feat/ai text polish）](https://github.com/floatboatai/Nexus-Editor/pull/33) 里已经详细说过、并据此关闭过一个同类 PR。结论是一致的：\n\n**Nexus 是一个纯粹的、headless、AST 驱动的 Markdown 编辑器引擎**，对标 Tiptap / Lexical / Milkdown —— 只做编辑器本身，被宿主应用集成。LLM 问答 / Wiki 是**宿主应用**的事，不是引擎的事。`docs/ROADMAP.md` 里也没有任何 LLM / AI 条目，本 PR 未走 `CONTRIBUTING.md` §3.1 要求的 OpenSpec 流程，也不符合刚合入的 [`GOVERNANCE.md` §4 范围政策](https://github.com/floatboatai/Nexus-Editor/blob/main/GOVERNANCE.md#4-scope-policy)（即使技术上做得好，超出范围的功能也会被拒绝）。\n\n### 这个 PR 还有几处更严重的问题\n\n1. **改动了 `AGENTS.md`、`CLAUDE.md`、`openspec/AGENTS.md`、`openspec/project.md`** —— 这些是仓库的项目 / 代理指令文件，定义项目本身的规则，不应该被一个功能分支「同步」覆盖。\n2. **整个 `apps/electron-demo/llm-wiki/` Python 子项目**（`llm_wiki.py`、`requirements.txt`、`.env.example`、`test_llm_wiki.py`）—— Nexus 是 TS monorepo，引擎仓库不接受内置某家 LLM 后端的 Python 服务。\n3. **提交了构建产物** `apps/electron-demo/dist-electron/main.js`、`preload.js` —— 违反 `GOVERNANCE.md` §6.4 / `CONTRIBUTING.md` §5（`dist-electron/` 在 `.gitignore` 里，不要 `git add -f`）。\n4. **删除了 3006 行**，包括 `docs/superpowers/plans/*` 等他人的规划 / spec 文件 —— 一个集成 PR 不该顺带删掉这些。\n5. 体量 +8586 / −3006、52 文件，且 CLA 未签。\n\n### 建议\n\n这个 PR 已经关闭。如果你想让 Nexus 对 AI / Wiki 场景更友好，正确路径有两条：\n\n- **在你自己的项目 / fork 里**基于 Nexus 引擎接入 LLM —— 引擎暴露的 `getSelectedText()`、`replaceRange()`、选区读写等原子能力已经在 main 上，宿主层接 LLM 不需要改引擎。\n- 如果你认为引擎**缺少**某个让宿主更易接入 AI 的原子能力（比如某种流式写入 API），欢迎单独走 OpenSpec 流程提一个 **core 层**的提案 —— 我们讨论的是引擎能力，而不是把某家厂商的 SDK 打进仓库。\n\n辛苦了，也希望你能理解这个边界。👍\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,144 @@
+{
+  "pr_number": 30,
+  "title": "feat(react,vue): add controlled document mode to Editor",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T08:08:09Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+      "message": "feat(react,vue): add controlled document mode to Editor bindings\n\nReact `value` + onChange; Vue `modelValue` / v-model. External updates use\nsilent setDocument with lastSynced guard. Pure helpers in controlled-document.ts.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-23T07:44:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/react/README.md",
+      "status": "added",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "packages/react/src/controlled-document.ts",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 1,
+      "changes": 9
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 50,
+      "deletions": 4,
+      "changes": 54
+    },
+    {
+      "filename": "packages/react/test/controlled-document.test.ts",
+      "status": "added",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 175,
+      "deletions": 3,
+      "changes": 178
+    },
+    {
+      "filename": "packages/vue/README.md",
+      "status": "added",
+      "additions": 73,
+      "deletions": 0,
+      "changes": 73
+    },
+    {
+      "filename": "packages/vue/src/controlled-document.ts",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 3,
+      "changes": 32
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 1,
+      "changes": 8
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 64,
+      "deletions": 6,
+      "changes": 70
+    },
+    {
+      "filename": "packages/vue/test/controlled-document.test.ts",
+      "status": "added",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 163,
+      "deletions": 2,
+      "changes": 165
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=30",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

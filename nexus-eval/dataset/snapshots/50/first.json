@@ -1,0 +1,88 @@
+{
+  "pr_number": 50,
+  "title": "fix(electron): Fix the issue of incompatible file paths during execution on the Windows operating system",
+  "body": "Fix the issue of incompatible file paths during execution on the Windows operating system\r\n\r\n## Summary / 摘要\r\n\r\nFix the issue of incompatible file paths during execution on the Windows operating system\r\n\r\n## Motivation / 背景与动机\r\n\r\nEncountered an incompatible file path error when executing the pnpm test command in CMD and PowerShell under Windows 10 system\r\n\r\n## Changes / 变更内容\r\n\r\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\r\n\r\n- `apps/electron-demo/src/renderer/path-utils.ts`: new file\r\n- `apps/electron-demo/test/path-utils.ts`: Fix references\r\n- `apps/electron-demo/test/sample-vault.test.ts`: Fix references\r\n- `apps/electron-demo/test/path-utils.test.ts`: new file\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes / 全绿\r\n- [x] Affected packages build (`pnpm build`) / 受影响包构建通过\r\n- [x] New / updated vitest cases / 新增或更新的 vitest 用例：`apps/electron-demo/test/sample-vault.test.ts`、 `apps/electron-demo/test/path-utils.test.ts`\r\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits\r\n- [ ] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\r\n- [x] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则\r\n- [ ] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec\r\n- [x] No secrets / personal vault data committed / 无敏感信息被提交\r\n",
+  "created_at": "2026-06-03T09:32:10Z",
+  "draft": false,
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "head_sha_at_first_review": "226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+  "first_review_time": "2026-06-23T08:01:39Z",
+  "commits_at_first_review": [
+    {
+      "sha": "226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+      "message": "fix(electron): Fix the issue of incompatible file paths when executing the test command on Windows",
+      "date": "2026-06-01T17:42:31Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "105e31da2b9ed10d33c0971dd3bfc0ad4361ba3f",
+        "filename": "apps/electron-demo/src/renderer/link-index.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 9,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Flink-index.ts?ref=226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+        "patch": "@@ -1,4 +1,5 @@\n import { scanWikiLinks, type WikiLinkMatch } from \"@floatboat/nexus-core\";\n+import { normalizeSlashes, joinPath } from \"./path-utils\";\n \n /** Prefer requestIdleCallback for yielding; fall back to a macrotask otherwise. */\n function yieldToIdle(): Promise<void> {\n@@ -53,15 +54,6 @@ function dirname(p: string): string {\n   return slash >= 0 ? norm.slice(0, slash) : \"\";\n }\n \n-function joinPath(dir: string, rel: string): string {\n-  if (!dir) return rel;\n-  return `${dir}/${rel}`.replace(/\\\\/g, \"/\");\n-}\n-\n-function normalizeSlashes(p: string): string {\n-  return p.replace(/\\\\/g, \"/\");\n-}\n-\n /**\n  * Strip Obsidian-style anchors from a link target:\n  *   \"Foo\"              → \"Foo\""
+      },
+      {
+        "sha": "3a2f87a225c15b3ffa01b13568ca7362b77f955a",
+        "filename": "apps/electron-demo/src/renderer/path-utils.ts",
+        "status": "added",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fpath-utils.ts?ref=226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+        "patch": "@@ -0,0 +1,15 @@\n+/**\n+ * Normalize path slashes to forward slashes (Unix-style).\n+ * Useful for cross-platform path comparisons.\n+ */\n+export function normalizeSlashes(path: string): string {\n+  return path.replace(/\\\\/g, \"/\");\n+}\n+\n+/**\n+ * Join path segments with forward slashes.\n+ * Unlike path.join(), always returns forward slashes regardless of platform.\n+ */\n+export function joinPath(...parts: string[]): string {\n+  return parts.join(\"/\").replace(/\\\\/g, \"/\").replace(/\\/+/g, \"/\");\n+}\n\\ No newline at end of file"
+      },
+      {
+        "sha": "1c2178405b209b5ceb50754c373df1243095dadf",
+        "filename": "apps/electron-demo/test/path-utils.test.ts",
+        "status": "added",
+        "additions": 70,
+        "deletions": 0,
+        "changes": 70,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fpath-utils.test.ts?ref=226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+        "patch": "@@ -0,0 +1,70 @@\n+import { describe, expect, it } from \"vitest\";\n+import { normalizeSlashes, joinPath } from \"../src/renderer/path-utils\";\n+\n+describe(\"normalizeSlashes\", () => {\n+  it(\"returns path unchanged when already using forward slashes\", () => {\n+    expect(normalizeSlashes(\"foo/bar/baz\")).toBe(\"foo/bar/baz\");\n+  });\n+\n+  it(\"converts Windows backslashes to forward slashes\", () => {\n+    expect(normalizeSlashes(\"foo\\\\bar\\\\baz\")).toBe(\"foo/bar/baz\");\n+  });\n+\n+  it(\"converts mixed slashes to forward slashes\", () => {\n+    expect(normalizeSlashes(\"foo/bar\\\\baz/qux\")).toBe(\"foo/bar/baz/qux\");\n+  });\n+\n+  it(\"handles UNC paths\", () => {\n+    expect(normalizeSlashes(\"\\\\\\\\server\\\\share\\\\folder\")).toBe(\"//server/share/folder\");\n+  });\n+\n+  it(\"converts multiple consecutive backslashes to forward slashes\", () => {\n+    expect(normalizeSlashes(\"foo\\\\\\\\bar\\\\\\\\baz\")).toBe(\"foo//bar//baz\");\n+  });\n+\n+  it(\"handles empty string\", () => {\n+    expect(normalizeSlashes(\"\")).toBe(\"\");\n+  });\n+\n+  it(\"handles root path\", () => {\n+    expect(normalizeSlashes(\"\\\\\")).toBe(\"/\");\n+  });\n+});\n+\n+describe(\"joinPath\", () => {\n+  it(\"joins two segments\", () => {\n+    expect(joinPath(\"foo\", \"bar\")).toBe(\"foo/bar\");\n+  });\n+\n+  it(\"joins multiple segments\", () => {\n+    expect(joinPath(\"foo\", \"bar\", \"baz\")).toBe(\"foo/bar/baz\");\n+  });\n+\n+  it(\"normalizes mixed slashes in segments\", () => {\n+    expect(joinPath(\"foo\\\\bar\", \"baz\\\\qux\")).toBe(\"foo/bar/baz/qux\");\n+  });\n+\n+  it(\"handles leading slash in segment\", () => {\n+    expect(joinPath(\"/foo\", \"bar\")).toBe(\"/foo/bar\");\n+  });\n+\n+  it(\"handles trailing slash in segment\", () => {\n+    expect(joinPath(\"foo/\", \"bar\")).toBe(\"foo/bar\");\n+  });\n+\n+  it(\"collapses multiple consecutive slashes\", () => {\n+    expect(joinPath(\"foo//\", \"//bar\")).toBe(\"foo/bar\");\n+  });\n+\n+  it(\"handles single segment\", () => {\n+    expect(joinPath(\"foo\")).toBe(\"foo\");\n+  });\n+\n+  it(\"handles empty segments\", () => {\n+    expect(joinPath(\"foo\", \"\", \"bar\")).toBe(\"foo/bar\");\n+  });\n+\n+  it(\"handles Windows-style paths as segments\", () => {\n+    expect(joinPath(\"foo\\\\bar\", \"baz\")).toBe(\"foo/bar/baz\");\n+  });\n+});\n\\ No newline at end of file"
+      },
+      {
+        "sha": "a40aa80f0d83f4c783fdac60324242b4163cf21a",
+        "filename": "apps/electron-demo/test/sample-vault.test.ts",
+        "status": "modified",
+        "additions": 17,
+        "deletions": 16,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts?ref=226db1f0d1eaccad2e3fbdb90b37e5dd3a7759b6",
+        "patch": "@@ -3,6 +3,7 @@ import { readFile, readdir, stat } from \"node:fs/promises\";\n import path from \"node:path\";\n import { scanWikiLinks } from \"@floatboat/nexus-core\";\n import { LinkIndex, findAnchorPosition, parseAnchor } from \"../src/renderer/link-index\";\n+import { normalizeSlashes } from \"../src/renderer/path-utils\";\n \n const VAULT_ROOT = path.resolve(__dirname, \"../sample-vault\");\n const SUPPORTED = new Set([\".md\", \".markdown\", \".txt\"]);\n@@ -54,7 +55,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n     const idx = await buildIndex();\n     const hub = path.join(VAULT_ROOT, \"index.md\");\n     const hits = idx.getBacklinks(hub);\n-    const sources = new Set(hits.map((h) => path.relative(VAULT_ROOT, h.sourcePath)));\n+    const sources = new Set(hits.map((h) => normalizeSlashes(path.relative(VAULT_ROOT, h.sourcePath))));\n     // README is documentation, not a note that must link in; every *other*\n     // markdown file should.\n     const expected = [\n@@ -71,25 +72,25 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n       \"work/Inbox.md\",\n       \"work/Meeting.md\",\n     ];\n-    for (const e of expected) expect(sources.has(e)).toBe(true);\n+    for (const e of expected) expect(sources.has(normalizeSlashes(e))).toBe(true);\n   });\n \n   it(\"[[AI]] from Daily resolves to Topics/AI.md (globally unique basename)\", async () => {\n     const idx = await buildIndex();\n     const daily = path.join(VAULT_ROOT, \"Daily/2026-04-20.md\");\n-    expect(idx.resolve(\"AI\", daily)).toBe(path.join(VAULT_ROOT, \"Topics/AI.md\"));\n+    expect(idx.resolve(\"AI\", daily)).toBe(normalizeSlashes(path.join(VAULT_ROOT, \"Topics/AI.md\")));\n   });\n \n   it(\"[[Meeting]] from work/Inbox.md resolves to work/Meeting.md (same-dir wins)\", async () => {\n     const idx = await buildIndex();\n     const inbox = path.join(VAULT_ROOT, \"work/Inbox.md\");\n-    expect(idx.resolve(\"Meeting\", inbox)).toBe(path.join(VAULT_ROOT, \"work/Meeting.md\"));\n+    expect(idx.resolve(\"Meeting\", inbox)).toBe(normalizeSlashes(path.join(VAULT_ROOT, \"work/Meeting.md\")));\n   });\n \n   it(\"[[Meeting]] from personal/Diary.md resolves to personal/Meeting.md (symmetric)\", async () => {\n     const idx = await buildIndex();\n     const diary = path.join(VAULT_ROOT, \"personal/Diary.md\");\n-    expect(idx.resolve(\"Meeting\", diary)).toBe(path.join(VAULT_ROOT, \"personal/Meeting.md\"));\n+    expect(idx.resolve(\"Meeting\", diary)).toBe(normalizeSlashes(path.join(VAULT_ROOT, \"personal/Meeting.md\")));\n   });\n \n   it(\"[[Ghost Note]] in ghost-demo.md is unresolved (creates-on-click scenario)\", async () => {\n@@ -133,7 +134,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n       expect(hits).toEqual(\n         expect.arrayContaining([\n           expect.objectContaining({\n-            sourcePath: file.path,\n+            sourcePath: normalizeSlashes(file.path),\n             target: match.target,\n           }),\n         ])\n@@ -144,36 +145,36 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n   it(\"Testing.md shows linked backlinks from current sample-vault references\", async () => {\n     const idx = await buildIndex();\n     const testingPath = path.join(VAULT_ROOT, \"Topics/Testing.md\");\n-    const linked = idx.getBacklinks(testingPath).map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n+    const linked = idx.getBacklinks(testingPath).map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n     expect(linked.length).toBeGreaterThan(0);\n-    expect(linked).toContain(\"Projects/Nexus-Editor.md\");\n+    expect(linked).toContain(normalizeSlashes(\"Projects/Nexus-Editor.md\"));\n   });\n \n   it(\"Bob.md has an unlinked mention in Alice.md (plain text 'Bob' outside brackets)\", async () => {\n     const idx = await buildIndex();\n     const bob = path.join(VAULT_ROOT, \"People/Bob.md\");\n     const mentions = idx.getUnlinkedMentions(bob);\n-    const sources = mentions.map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n-    expect(sources).toContain(\"People/Alice.md\");\n+    const sources = mentions.map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n+    expect(sources).toContain(normalizeSlashes(\"People/Alice.md\"));\n   });\n \n   it(\"AI.md has an unlinked mention in Alice.md and Daily/2026-04-20.md has a linked one\", async () => {\n     const idx = await buildIndex();\n     const ai = path.join(VAULT_ROOT, \"Topics/AI.md\");\n-    const unlinked = idx.getUnlinkedMentions(ai).map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n-    const linked = idx.getBacklinks(ai).map((m) => path.relative(VAULT_ROOT, m.sourcePath));\n-    expect(unlinked).toContain(\"People/Alice.md\"); // plain text \"AI\" in Alice.md\n-    expect(linked).toContain(\"Daily/2026-04-20.md\"); // [[AI]] in the daily\n+    const unlinked = idx.getUnlinkedMentions(ai).map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n+    const linked = idx.getBacklinks(ai).map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n+    expect(unlinked).toContain(normalizeSlashes(\"People/Alice.md\")); // plain text \"AI\" in Alice.md\n+    expect(linked).toContain(normalizeSlashes(\"Daily/2026-04-20.md\")); // [[AI]] in the daily\n   });\n \n   it(\"v2-shaped anchors in Ideas.md resolve to the underlying file, not ghosts\", async () => {\n     const idx = await buildIndex();\n     const ideas = path.join(VAULT_ROOT, \"Projects/Ideas.md\");\n     expect(idx.resolve(\"Projects/Nexus-Editor#Context\", ideas)).toBe(\n-      path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\")\n+      normalizeSlashes(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"))\n     );\n     expect(idx.resolve(\"Projects/Nexus-Editor^some-block\", ideas)).toBe(\n-      path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\")\n+      normalizeSlashes(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"))\n     );\n   });\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=50",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

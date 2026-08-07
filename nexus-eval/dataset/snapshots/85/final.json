@@ -1,0 +1,53 @@
+{
+  "pr_number": 85,
+  "title": "fix: restore workspace install and electron typecheck",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "362f6cad90a860c7ef2f335ad5aed5f59e92ae46",
+  "merge_commit_sha": "9720fd9255e10b931e9a34c2373dd82e22c0da4c",
+  "base_sha": "49bd8ab6391f3573df82ef68d9ddc764625f1f8f",
+  "commits": [
+    {
+      "sha": "362f6cad90a860c7ef2f335ad5aed5f59e92ae46",
+      "message": "fix(electron): restore workspace typecheck wiring",
+      "date": "2026-06-30T13:59:55Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=85",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

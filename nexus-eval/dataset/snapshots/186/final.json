@@ -1,0 +1,165 @@
+{
+  "pr_number": 186,
+  "title": "feat(search,core): add fuzzy search and plugin event bus",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "4d5eb1c4e5be37b4f6a338f089d9b3ff338626a0",
+  "merge_commit_sha": "208708f59b55247a1a24e960ce8945c64b665f8e",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "a8bfcf2a7897cc015cbc2915bd9ffe09ed4c24bb",
+      "message": "docs(openspec): add proposal for fuzzy search",
+      "date": "2026-07-25T13:38:36Z"
+    },
+    {
+      "sha": "a16ca31e491b24d4d359147607b0d20557e215ae",
+      "message": "feat(search): add fuzzy search with buildFuzzyPattern, fuzzyScore, and panel toggle",
+      "date": "2026-07-25T13:41:29Z"
+    },
+    {
+      "sha": "3f6f89c1a897fd122e56f1cc6b0de8ea3f5b3611",
+      "message": "test(search): add fuzzy search unit and integration tests",
+      "date": "2026-07-25T13:43:56Z"
+    },
+    {
+      "sha": "6928efc9a7c9acd18cd55cb0edda959ca16b9619",
+      "message": "feat(search): add match counter indicator to search panel",
+      "date": "2026-07-25T13:45:49Z"
+    },
+    {
+      "sha": "7527286a00b18569c39e1419f7d4cacc9d6008a2",
+      "message": "feat(electron): add fuzzy search toggle to demo search bar",
+      "date": "2026-07-25T13:49:27Z"
+    },
+    {
+      "sha": "423050fd7b1f30b1c2089c4da0f33edf902c0e13",
+      "message": "docs(openspec): add proposal for plugin event bus",
+      "date": "2026-07-25T14:22:13Z"
+    },
+    {
+      "sha": "91a07d4eb6c6b5f97a95e50acd23a85892425618",
+      "message": "feat(core): add plugin event bus with getEventBus, onInit hook, and core events",
+      "date": "2026-07-25T14:25:10Z"
+    },
+    {
+      "sha": "4d5eb1c4e5be37b4f6a338f089d9b3ff338626a0",
+      "message": "test(core): add plugin event bus tests",
+      "date": "2026-07-25T14:26:24Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 4,
+      "changes": 22
+    },
+    {
+      "filename": "openspec/changes/add-plugin-event-bus/proposal.md",
+      "status": "added",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": "openspec/changes/add-plugin-event-bus/specs/core/spec.md",
+      "status": "added",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    },
+    {
+      "filename": "openspec/changes/add-plugin-event-bus/tasks.md",
+      "status": "added",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    },
+    {
+      "filename": "openspec/changes/add-search-fuzzy/proposal.md",
+      "status": "added",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "openspec/changes/add-search-fuzzy/specs/search/spec.md",
+      "status": "added",
+      "additions": 36,
+      "deletions": 0,
+      "changes": 36
+    },
+    {
+      "filename": "openspec/changes/add-search-fuzzy/tasks.md",
+      "status": "added",
+      "additions": 17,
+      "deletions": 0,
+      "changes": 17
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "packages/core/test/events.test.ts",
+      "status": "modified",
+      "additions": 109,
+      "deletions": 0,
+      "changes": 109
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 152,
+      "deletions": 7,
+      "changes": 159
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 153,
+      "deletions": 1,
+      "changes": 154
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=186",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

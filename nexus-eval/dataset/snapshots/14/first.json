@@ -1,0 +1,113 @@
+{
+  "pr_number": 14,
+  "title": "docs(openspec): propose realtime collaboration plugin",
+  "body": "## Summary\n- Add OpenSpec proposal for Roadmap #18 realtime collaboration\n- Document CRDT/Yjs direction, host-owned provider boundary, awareness, lifecycle, and non-goals\n- Mark Roadmap #18 as in progress with OpenSpec linkage\n\n## Scope\n- Proposal/design/spec only\n- No runtime implementation in this PR\n\n## Tasks\n- [x] Scaffold OpenSpec proposal\n- [x] Add technical design doc\n- [x] Add collaboration spec requirements and scenarios\n- [x] Add implementation task list\n- [x] Link Roadmap #18 to the OpenSpec change\n- [x] Run OpenSpec strict validation\n- [ ] Proposal reviewed\n- [ ] Implementation PR opened after approval\n\n## Validation\n- [x] openspec validate add-realtime-collaboration --strict\n\nOpenSpec change: add-realtime-collaboration\nRoadmap: #18 Realtime collaboration",
+  "created_at": "2026-05-13T10:42:13Z",
+  "draft": false,
+  "base_sha": "7cd61f595abc44955a47bd33cb62f6c5c4ef8668",
+  "head_sha_at_first_review": "d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+  "first_review_time": "2026-05-13T11:22:29Z",
+  "commits_at_first_review": [
+    {
+      "sha": "38773694dd4b6c80edec715ffc0f78c784d4a7cc",
+      "message": "docs(openspec): propose realtime collaboration plugin",
+      "date": "2026-05-13T10:41:41Z"
+    },
+    {
+      "sha": "d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+      "message": "docs: mark realtime collaboration in progress",
+      "date": "2026-05-13T10:41:45Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "fe8710fcbd28f5861fab17494111d831c48fd5b6",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "patch": "@@ -63,7 +63,7 @@ This document maps every planned feature to **package ownership / priority / sta\n \n | # | Feature | Package | Priority | Status | Needs OpenSpec | Notes |\n |---|---|---|---|---|---|---|\n-| 18 | Realtime collaboration (OT / CRDT) | new `plugin-collab` | P3 | planned | Yes | Large feature; start with a tech-selection design doc |\n+| 18 | Realtime collaboration (OT / CRDT) | new `plugin-collab` | P3 | in-progress | Yes | See `openspec/changes/add-realtime-collaboration` |\n | 19 | Version history / snapshots | `core` + host storage | P2 | planned | Yes | electron-demo lands the reference impl first |\n | 20 | Shared comments / @mention | new `plugin-annotation` | P3 | planned | Yes | Depends on #18 |\n "
+      },
+      {
+        "sha": "d14b66728e42ea33281e5f5e44490c7422c3837c",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "patch": "@@ -63,7 +63,7 @@\n \n | # | 功能 | 归属包 | 优先级 | 状态 | 需要 OpenSpec | 备注 |\n |---|---|---|---|---|---|---|\n-| 18 | 实时协作（OT / CRDT） | 新包 `plugin-collab` | P3 | planned | 是 | 大特性，先做技术选型 design doc |\n+| 18 | 实时协作（OT / CRDT） | 新包 `plugin-collab` | P3 | in-progress | 是 | 见 `openspec/changes/add-realtime-collaboration` |\n | 19 | 版本历史 / 快照 | `core` + 宿主存储 | P2 | planned | 是 | electron-demo 先落地参考实现 |\n | 20 | 共享注释 / @mention | 新包 `plugin-annotation` | P3 | planned | 是 | 依赖 #18 完成 |\n "
+      },
+      {
+        "sha": "af4a5876c7361704f3c753ee2a1b6e46f498b114",
+        "filename": "openspec/changes/add-realtime-collaboration/design.md",
+        "status": "added",
+        "additions": 91,
+        "deletions": 0,
+        "changes": 91,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fdesign.md?ref=d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "patch": "@@ -0,0 +1,91 @@\n+## Context\n+\n+Realtime collaboration is not just a UI feature. It changes how document changes are represented, merged, attributed, persisted, and replayed. The editor core is intentionally single-document and host-agnostic, so the collaboration layer should be a plugin that composes with CodeMirror state rather than a core rewrite.\n+\n+## Goals / Non-Goals\n+\n+**Goals:**\n+- Multiple clients editing the same logical document converge without manual merge conflicts.\n+- Local edits remain responsive while remote edits arrive asynchronously.\n+- Remote cursor and selection presence can be rendered without taking editor focus.\n+- Hosts own transport, identity, authentication, authorization, and persistence.\n+- The first implementation can be tested without a production server.\n+\n+**Non-Goals:**\n+- Comments, @mentions, annotation threads, or review workflows. Those are Roadmap #20.\n+- Cloud storage or vault sync. That is Roadmap #23.\n+- Version history snapshots. That is Roadmap #19.\n+- Permission models, ACLs, or end-to-end encryption.\n+- A hosted collaboration server maintained by this package.\n+\n+## Decision 1: Use CRDT, not Operational Transform\n+\n+Use a CRDT document model for shared editing. Operational Transform can work well with a central authority, but it requires a stricter server contract and transformation logic across every operation shape. A CRDT model is a better fit for Nexus because the editor is local-first, host-embedded, and likely to support intermittent connections.\n+\n+Proposed implementation target: Yjs.\n+\n+Rationale:\n+- Handles concurrent edits and reconnect replay without a custom OT server.\n+- Has a mature ecosystem for awareness/presence and editor bindings.\n+- Keeps the Nexus plugin focused on integration and API design instead of inventing merge algorithms.\n+\n+## Decision 2: Keep transport host-owned\n+\n+The package should not open sockets itself by default. Instead, it should accept a provider object supplied by the host:\n+\n+```ts\n+export interface CollabProvider {\n+  connect(): void | Promise<void>;\n+  disconnect(): void | Promise<void>;\n+  destroy(): void;\n+  readonly status: \"disconnected\" | \"connecting\" | \"connected\" | \"error\";\n+  onStatusChange(listener: (status: CollabProvider[\"status\"]) => void): () => void;\n+}\n+```\n+\n+The concrete provider may wrap y-websocket, WebRTC, a custom backend, or an in-memory test transport. This keeps auth, tenancy, backend URLs, and persistence out of the editor package.\n+\n+## Decision 3: New package, not core API\n+\n+Create `@floatboat/nexus-plugin-collab`. Do not add collaboration concepts to `@floatboat/nexus-core` unless implementation proves that a small core hook is unavoidable.\n+\n+The core already lets plugins add CodeMirror extensions. Collaboration should be one such extension. Core remains usable for single-user local editors and does not acquire network or CRDT dependencies.\n+\n+## Decision 4: Awareness is optional and separated from document sync\n+\n+Document sync and user presence should be configured separately. Some hosts may want conflict-free shared editing but no visible remote cursors. Others may want presence metadata only after auth resolves user names and colors.\n+\n+Public options should look roughly like:\n+\n+```ts\n+createCollabPlugin({\n+  docId,\n+  provider,\n+  awareness\n+});\n+```\n+\n+`awareness` should expose local user metadata and remote peer changes. Rendering can start with selection decorations and cursor labels.\n+\n+## Decision 5: Define lifecycle and document-loading rules early\n+\n+Collaboration conflicts with naive `editor.setDocument()` usage. The plugin must define:\n+- initial document seeding: only seed an empty shared doc once\n+- remote update application: must not emit host `onChange` loops as local user saves\n+- teardown: unsubscribe provider and awareness listeners on editor destroy\n+- switching documents: destroy the old collaboration session before joining another `docId`\n+\n+## Risks / Trade-offs\n+\n+- CRDT dependency size: Yjs adds bundle weight. Keep the package opt-in and avoid pulling it into core.\n+- Binding maturity: if the preferred CodeMirror binding is stale, we may need a small internal adapter.\n+- Persistence ambiguity: hosts need clear docs that provider persistence is their responsibility.\n+- Undo/redo semantics: collaborative undo differs from local history. The first implementation should document expected behavior and test that local history does not corrupt remote edits.\n+- Live preview/table widgets: remote edits may arrive while widgets are active. Implementation must test editor stability but should not special-case every widget in v1.\n+\n+## Open Questions\n+\n+- Should the package export helper factories for common providers, or only types plus `createCollabPlugin`?\n+- Should collaboration mode disable local `setDocument()` after connect, or allow it as an explicit document reset API?\n+- Should awareness rendering be built in or exposed as data for host-rendered cursors?\n+- Should the demo use a tiny local websocket server, BroadcastChannel, or pure in-memory paired editors for the first smoke test?"
+      },
+      {
+        "sha": "ab314aa4fe25877023bb1b1d739bbe206107a678",
+        "filename": "openspec/changes/add-realtime-collaboration/proposal.md",
+        "status": "added",
+        "additions": 32,
+        "deletions": 0,
+        "changes": 32,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fproposal.md?ref=d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "patch": "@@ -0,0 +1,32 @@\n+# Change: Add Realtime Collaboration Plugin\n+\n+## Why\n+\n+Nexus Editor has local-first editing, vault navigation, wiki links, and plugin APIs, but no multi-user editing model. Roadmap #18 calls for realtime collaboration as a long-term capability. This needs a design-first change because collaboration affects document authority, conflict resolution, cursor presence, persistence, and host infrastructure boundaries.\n+\n+## What Changes\n+\n+- Add a new `@floatboat/nexus-plugin-collab` package centered on CodeMirror 6 collaboration bindings.\n+- Use a CRDT-based model for shared document state. The proposed implementation target is Yjs because it is peer/order tolerant, supports offline replay, and has established CodeMirror integration patterns.\n+- Keep networking host-owned. The plugin accepts a provider adapter instead of bundling a server, websocket endpoint, auth, or storage backend.\n+- Define public types for:\n+  - `CollabProvider` lifecycle and sync events.\n+  - `CollabAwareness` user presence, remote selections, and cursors.\n+  - `createCollabPlugin(options)` for editor integration.\n+- Add an electron-demo-only in-memory or localhost provider as a smoke-test harness, not a production sync backend.\n+- Document non-goals: comments, mentions, permissions, cloud storage, version history, and multi-vault sync.\n+\n+## Impact\n+\n+- Affected specs:\n+  - `collaboration` (new capability)\n+- Affected code in the implementation phase:\n+  - `packages/plugin-collab/` (new package)\n+  - root workspace/package scripts for build and publish inclusion\n+  - `apps/electron-demo` optional demo harness\n+  - `README.md` / `README.zh.md` package table\n+  - `docs/ROADMAP.md` / `docs/ROADMAP.zh.md`\n+- New dependencies in the implementation phase:\n+  - likely `yjs`\n+  - likely a CodeMirror/Yjs binding package or a small internal binding if the external binding is unsuitable\n+- Breaking changes: none intended. Collaboration is opt-in via a new plugin."
+      },
+      {
+        "sha": "2f09203e385e0a3cf9b5408ff997808642ba431a",
+        "filename": "openspec/changes/add-realtime-collaboration/specs/collaboration/spec.md",
+        "status": "added",
+        "additions": 100,
+        "deletions": 0,
+        "changes": 100,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fspecs%2Fcollaboration%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fspecs%2Fcollaboration%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-realtime-collaboration%2Fspecs%2Fcollaboration%2Fspec.md?ref=d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "patch": "@@ -0,0 +1,100 @@\n+# Collaboration Spec\n+\n+## ADDED Requirements\n+\n+### Requirement: Opt-In Collaboration Plugin\n+\n+The system SHALL provide an opt-in `@floatboat/nexus-plugin-collab` package that can be registered as a Nexus plugin without changing single-user editor behavior when the package is not installed.\n+\n+#### Scenario: Editor without collaboration remains local\n+- **WHEN** an editor is created without `createCollabPlugin`\n+- **THEN** document editing, history, parsing, and live preview SHALL behave as they do today\n+- **AND** no collaboration dependencies SHALL be loaded by `@floatboat/nexus-core`\n+\n+#### Scenario: Collaboration plugin registers cleanly\n+- **WHEN** an editor is created with `createCollabPlugin({ docId, provider })`\n+- **THEN** the plugin SHALL attach collaboration extensions for that document id\n+- **AND** the editor SHALL remain editable before and after the provider connects\n+\n+### Requirement: Host-Owned Provider Boundary\n+\n+The collaboration package SHALL accept a host-supplied provider object for transport, identity, authentication, and persistence. The package SHALL NOT require a Nexus-hosted server.\n+\n+#### Scenario: Provider connection lifecycle\n+- **WHEN** the editor is created with a disconnected provider\n+- **THEN** the plugin SHALL allow the provider to connect\n+- **AND** provider status changes SHALL be observable through the public API\n+\n+#### Scenario: Provider cleanup\n+- **WHEN** the editor is destroyed\n+- **THEN** the plugin SHALL unsubscribe all collaboration listeners\n+- **AND** SHALL disconnect or destroy provider resources according to the provider contract\n+\n+### Requirement: Concurrent Editing Convergence\n+\n+Multiple editors joined to the same collaboration document SHALL converge to the same document text after all local and remote updates are delivered.\n+\n+#### Scenario: Concurrent inserts converge\n+- **GIVEN** two editors are connected to the same `docId`\n+- **WHEN** both editors insert text at overlapping positions before receiving the other's update\n+- **THEN** both editors SHALL eventually contain identical document text\n+- **AND** neither user's inserted text SHALL be silently dropped\n+\n+#### Scenario: Remote update does not echo as a new local change\n+- **GIVEN** an editor receives a remote collaboration update\n+- **WHEN** that update is applied to the local editor state\n+- **THEN** the plugin SHALL NOT rebroadcast it as a new local edit\n+\n+### Requirement: Initial Document Seeding\n+\n+The collaboration plugin SHALL define deterministic initial document seeding so a host can join an existing shared document without overwriting it.\n+\n+#### Scenario: Empty shared document can be seeded\n+- **GIVEN** the shared collaboration document is empty\n+- **WHEN** the host provides initial editor content\n+- **THEN** the plugin MAY seed the shared document once with that content\n+\n+#### Scenario: Existing shared document wins\n+- **GIVEN** the shared collaboration document already has content\n+- **WHEN** a new editor joins with local initial content\n+- **THEN** the shared document content SHALL become the editor content\n+- **AND** the joiner SHALL NOT overwrite the shared document implicitly\n+\n+### Requirement: Awareness and Remote Presence\n+\n+The collaboration plugin SHALL support optional user awareness data and remote selection/cursor rendering without changing the local editor selection.\n+\n+#### Scenario: Remote cursor is rendered\n+- **GIVEN** awareness is enabled\n+- **WHEN** another user moves their cursor\n+- **THEN** the local editor SHALL render that remote cursor or selection\n+- **AND** the local user's selection SHALL remain unchanged\n+\n+#### Scenario: Awareness can be disabled\n+- **WHEN** the plugin is created without awareness options\n+- **THEN** document collaboration SHALL still work\n+- **AND** no remote cursor UI SHALL be rendered\n+\n+### Requirement: Document Switching\n+\n+The collaboration plugin SHALL provide a safe lifecycle for leaving one document and joining another.\n+\n+#### Scenario: Switching document ids tears down old session\n+- **WHEN** the host switches from `docA` to `docB`\n+- **THEN** the plugin SHALL leave or destroy the `docA` session\n+- **AND** subsequent remote updates for `docA` SHALL NOT mutate the editor now joined to `docB`\n+\n+### Requirement: Error and Reconnect Handling\n+\n+Provider errors and reconnects SHALL be visible to the host without making the editor read-only by default.\n+\n+#### Scenario: Provider enters error state\n+- **WHEN** the provider reports an error\n+- **THEN** the host SHALL be able to observe the error/status\n+- **AND** local editing SHALL continue unless the host explicitly disables it\n+\n+#### Scenario: Reconnect applies queued updates\n+- **GIVEN** the provider supports offline queuing\n+- **WHEN** a disconnected editor reconnects\n+- **THEN** queued local updates SHALL sync to peers\n+- **AND** the document SHALL converge after delivery"
+      },
+      {
+        "sha": "2a4f42291896334724488857d71b4486821b2b11",
+        "filename": "openspec/changes/add-realtime-collaboration/tasks.md",
+        "status": "added",
+        "additions": 45,
+        "deletions": 0,
+        "changes": 45,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6/openspec%2Fchanges%2Fadd-realtime-collaboration%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-realtime-collaboration%2Ftasks.md?ref=d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "patch": "@@ -0,0 +1,45 @@\n+## 1. OpenSpec\n+\n+- [ ] 1.1 Review proposal with maintainers and choose the provider boundary.\n+- [ ] 1.2 Decide whether to depend on an existing CodeMirror/Yjs binding or implement a small adapter.\n+- [x] 1.3 Validate `add-realtime-collaboration` with OpenSpec CLI when available.\n+\n+## 2. Package Scaffold\n+\n+- [ ] 2.1 Add `packages/plugin-collab/package.json`, `tsconfig.json`, `src/index.ts`, and tests.\n+- [ ] 2.2 Add the package to root `pnpm build` and publish scripts.\n+- [ ] 2.3 Add README documentation for setup, lifecycle, and host-owned provider requirements.\n+\n+## 3. Collaboration Core\n+\n+- [ ] 3.1 Implement `createCollabPlugin(options)` with CodeMirror extensions for shared document sync.\n+- [ ] 3.2 Define and export `CollabProvider`, `CollabAwareness`, `CollabUser`, and `CollabPluginOptions`.\n+- [ ] 3.3 Ensure local edits are applied immediately and remote updates converge without duplicate local echoes.\n+- [ ] 3.4 Ensure `destroy()`/editor teardown disconnects listeners and provider resources.\n+- [ ] 3.5 Define behavior for switching `docId` and document reseeding.\n+\n+## 4. Awareness / Presence\n+\n+- [ ] 4.1 Track local user metadata and remote peer metadata.\n+- [ ] 4.2 Render remote selections/cursors as decorations.\n+- [ ] 4.3 Avoid stealing focus or changing the local selection when remote presence updates.\n+\n+## 5. Demo Harness\n+\n+- [ ] 5.1 Add an electron-demo smoke path with two editor instances or a local test provider.\n+- [ ] 5.2 Demonstrate concurrent typing convergence.\n+- [ ] 5.3 Demonstrate remote cursor/presence rendering.\n+\n+## 6. Tests\n+\n+- [ ] 6.1 Unit test provider lifecycle and cleanup.\n+- [ ] 6.2 Integration test two editor instances editing the same document.\n+- [ ] 6.3 Test offline/reconnect replay if the chosen provider supports it in-process.\n+- [ ] 6.4 Test collaboration with the history plugin enabled.\n+- [ ] 6.5 Test remote updates while live preview is enabled.\n+\n+## 7. Documentation / Roadmap\n+\n+- [ ] 7.1 Update `README.md` / `README.zh.md` package lists.\n+- [ ] 7.2 Update `docs/ROADMAP.md` / `docs/ROADMAP.zh.md` once implementation status changes.\n+- [ ] 7.3 Document non-goals and provider ownership clearly."
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

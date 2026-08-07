@@ -1,0 +1,53 @@
+{
+  "pr_number": 42,
+  "title": "feat(ci): add Vitest coverage reporting to CI workflow",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-09T08:33:58Z",
+  "merged_by": null,
+  "closed_by": "GarrisonPJ",
+  "head_sha_final": "4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+  "merge_commit_sha": "56364cc62dd3f66bb1d6fab68a7bee65454ec2e8",
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "4bf8d7cd557f70b40ce0b1c71da29862f9b64315",
+      "message": "ci: add Vitest coverage reporting to CI workflow\n\nAdd vitest coverage config (v8 provider, text/json/html reporters),\ntest:coverage script, and upload-artifact step in CI verify job.",
+      "date": "2026-06-02T07:12:52Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/workflows/ci.yml",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 2,
+      "changes": 12
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 1,
+      "changes": 8
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

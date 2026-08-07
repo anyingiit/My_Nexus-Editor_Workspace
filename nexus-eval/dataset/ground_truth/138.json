@@ -1,0 +1,19 @@
+{
+  "pr_number": 138,
+  "title": "feat(plugin-search): add optional fuzzy matching to findSearchMatches",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-07T14:02:55Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "rizgan",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-07T10:08:08Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=138) <br/>All committers have signed the CLA."
+    }
+  ]
+}

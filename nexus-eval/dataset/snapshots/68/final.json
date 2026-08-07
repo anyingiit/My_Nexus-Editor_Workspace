@@ -1,0 +1,53 @@
+{
+  "pr_number": 68,
+  "title": "feat(search): add whole-word and regex matching to utility functions",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T03:36:51Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+  "merge_commit_sha": "01fd8bc4a6b1c314ea7f697038413625bb6a96fa",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+      "message": "feat(search): add whole-word and regex matching to utility functions\n\nAdd `wholeWord` and `regexp` options to `SearchOptions`. Whole-word uses\n\\b boundaries; regex mode passes the query as a raw pattern with graceful\nhandling of invalid expressions (returns empty results).\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T05:37:10Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 4,
+      "changes": 33
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 56,
+      "deletions": 0,
+      "changes": 56
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=68",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

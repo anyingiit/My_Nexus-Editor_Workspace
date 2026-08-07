@@ -1,0 +1,25 @@
+{
+  "pr_number": 96,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Trailing whitespace in frontmatter.test.ts fails git diff --check"
+    },
+    {
+      "id": 2,
+      "summary": "TypeScript error: 'yaml' not in mdast node type union"
+    },
+    {
+      "id": 3,
+      "summary": "Need clear plan for YAML node type and mdast adapter mapping"
+    },
+    {
+      "id": 4,
+      "summary": "Remove process artifacts (PR_SUBMISSION.md, prompts, screenshots) from repo"
+    },
+    {
+      "id": 5,
+      "summary": "High-risk core changes but format/type checks fail; cannot merge"
+    }
+  ]
+}

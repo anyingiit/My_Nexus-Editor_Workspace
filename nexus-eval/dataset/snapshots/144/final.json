@@ -1,0 +1,60 @@
+{
+  "pr_number": 144,
+  "title": "feat(toolbar): add one-click clear format button with separate Tx icon",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-14T08:29:50Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+  "merge_commit_sha": "7e9b44d86e4d72db06eb816262b253a942f7a588",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+      "message": "feat(toolbar): add one-click clear format button with separate Tx icon",
+      "date": "2026-07-09T15:30:10Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/icons.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=144",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

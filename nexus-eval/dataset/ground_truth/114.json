@@ -1,0 +1,19 @@
+{
+  "pr_number": 114,
+  "title": "Feat/core plugin architecture overhaul",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-03T06:43:21Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "guoyanshuo",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T06:42:29Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=114) <br/>All committers have signed the CLA."
+    }
+  ]
+}

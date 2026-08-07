@@ -1,0 +1,67 @@
+{
+  "pr_number": 80,
+  "title": "fix(react,vue): pass multiCursor prop through to createEditor",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "f304d52b326eee782f7cac91f49fb5a407f64c25",
+  "merge_commit_sha": "81d164925616cb92f563730abd8ac956e060a4ab",
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "commits": [
+    {
+      "sha": "f304d52b326eee782f7cac91f49fb5a407f64c25",
+      "message": "fix(react,vue): pass multiCursor prop through to createEditor\n\nThe React <Editor> and Vue <Editor> components explicitly destructure\nEditorConfig props before forwarding them to useEditor()/createEditor(),\nbut multiCursor was missing from both destructuring lists.\n\nWhen a user passed <Editor multiCursor>, the prop fell into the\ncontainer-div attribute spread (...divProps / ...attrs) instead of\nbeing forwarded to the editor engine. The core engine (editor.ts:497)\ncorrectly wires it, and direct useEditor() callers are unaffected.\n\nAdd multiCursor to the React destructuring + useEditor() call, to the\nVue editorPropKeys array + props definition, and add four regression\ntests (two per framework) verifying:\n  - the prop enables multi-selection through the component boundary\n  - omitting it defaults to single-selection\n  - the prop does NOT leak into the DOM as an HTML attribute",
+      "date": "2026-06-28T12:05:44Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 65,
+      "deletions": 0,
+      "changes": 65
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=80",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

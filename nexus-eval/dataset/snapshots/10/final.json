@@ -1,0 +1,57 @@
+{
+  "pr_number": 10,
+  "title": "chore(roadmap): mark #5 and #15 as in-progress",
+  "state": "closed",
+  "merged": true,
+  "merged_at": "2026-05-13T09:23:34Z",
+  "closed_at": "2026-05-13T09:23:34Z",
+  "merged_by": "ketd",
+  "closed_by": "ketd",
+  "head_sha_final": "a593b47e104d16184f440e06ba00c418baafa28c",
+  "merge_commit_sha": "40ff0d8392a2c92e25d5b5497e258044ca845be7",
+  "base_sha": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2",
+  "commits": [
+    {
+      "sha": "a593b47e104d16184f440e06ba00c418baafa28c",
+      "message": "chore(roadmap): mark #5 getSelectedText and #15 regex search as in-progress\n\nBoth items now have active PRs under review (#8 and #9 respectively).\nAligns with maintenance §2 status transitions.\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-05-13T09:21:22Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ]
+  }
+}

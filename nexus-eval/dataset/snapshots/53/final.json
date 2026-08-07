@@ -1,0 +1,127 @@
+{
+  "pr_number": 53,
+  "title": "feat(core): add getSelectedText() API method",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T06:15:09Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+  "merge_commit_sha": "f89066e93f02df6aceaf166199767cd3e63cd690",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "fb8c15b05a746d0336b9401b5956a8d33fcb4bfa",
+      "message": "feat(core): add getSelectedText() API method\n\nAdds getSelectedText() to the EditorAPI interface and implements it\nusing CodeMirror's sliceDoc, which correctly handles both forward\nand reverse selections.\n\n- Added getSelectedText(): string to EditorAPI in types.ts\n- Implemented in editor.ts using view.state.sliceDoc(anchor, head)\n- Added tests covering: empty selection, forward selection, reverse selection\n\nCloses the P0 roadmap item for getSelectedText().",
+      "date": "2026-06-09T18:14:00Z"
+    },
+    {
+      "sha": "d44dd2a1133581f50bf6cdad78f5ae27e9480ee1",
+      "message": "fix(core): handle reverse selection in getSelectedText and add dev notes\n\n- Normalize anchor/head with Math.min/max before calling sliceDoc\n- Add __test_getView() helper for direct selection dispatch in tests\n- Update tests to use EditorView.dispatch() instead of setSelection() (jsdom limitation)\n- Add docs/getSelectedText-dev-notes.md documenting the dev process and gotchas",
+      "date": "2026-06-09T18:47:51Z"
+    },
+    {
+      "sha": "1a1c50054c24e8a13fcec10429a3992565cd7c53",
+      "message": "docs(core): add JSDoc for getSelectedText()",
+      "date": "2026-06-09T18:57:05Z"
+    },
+    {
+      "sha": "4be2d5860c0eb7202cab13ddb60e9c10526d5357",
+      "message": "feat(core): add OpenSpec proposal for getSelectedText() API\n\nAdds OpenSpec change proposal for the new getSelectedText() API method,\nincluding proposal.md, tasks.md, and spec delta for editor-core.",
+      "date": "2026-06-09T19:45:55Z"
+    },
+    {
+      "sha": "aaa20a9f4ee7274f719157d301a606a90d8bdfe0",
+      "message": "docs(core): update README and types for getSelectedText() API\n\n- Add getSelectedText() to API Reference in README.md and README.zh.md\n- Add __test_getView() to EditorAPI interface (internal, for testing)\n- pnpm build passes",
+      "date": "2026-06-09T19:56:29Z"
+    },
+    {
+      "sha": "d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+      "message": "refactor(core): remove __test_getView, use setSelection() in tests\n\n- Removed __test_getView() from EditorAPI interface (types.ts)\n- Removed __test_getView() implementation from editor.ts\n- Updated editor.test.ts to use editor.setSelection() directly\n  instead of accessing internal EditorView via __test_getView\n- All 29 tests pass",
+      "date": "2026-06-09T20:25:02Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "docs/getSelectedText-dev-notes.md",
+      "status": "added",
+      "additions": 116,
+      "deletions": 0,
+      "changes": 116
+    },
+    {
+      "filename": "openspec/changes/add-get-selected-text-api/proposal.md",
+      "status": "added",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "openspec/changes/add-get-selected-text-api/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "openspec/changes/add-get-selected-text-api/tasks.md",
+      "status": "added",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=53",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

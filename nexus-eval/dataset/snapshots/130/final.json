@@ -1,0 +1,67 @@
+{
+  "pr_number": 130,
+  "title": "fix(react,vue): forward multiCursor through Editor components",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "4544a1c480e01e4b5c9fdcbf6d1473f3ea6f270e",
+  "merge_commit_sha": "ffb7828233c858c033d5eb32ffc5ac1846c0d756",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "4544a1c480e01e4b5c9fdcbf6d1473f3ea6f270e",
+      "message": "fix(react,vue): forward multiCursor through Editor components",
+      "date": "2026-07-05T03:37:59Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 1,
+      "changes": 42
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 45,
+      "deletions": 1,
+      "changes": 46
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=130",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

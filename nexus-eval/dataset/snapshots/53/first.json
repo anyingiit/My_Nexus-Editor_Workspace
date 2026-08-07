@@ -1,0 +1,173 @@
+{
+  "pr_number": 53,
+  "title": "feat(core): add getSelectedText() API method",
+  "body": "## Why\r\n\r\n`getSelectedText()` is listed as a P0 roadmap item for core API completeness. \r\nCurrently `EditorAPI` provides `getSelection()` (selection positions) and \r\n`replaceSelection()` (replace selected text), but there is no way to **read** \r\nthe selected text without manually calling `view.state.sliceDoc()`. This PR \r\nfills that gap and completes the selection API surface.\r\n\r\n## OpenSpec\r\n\r\n- Change ID: `add-get-selected-text-api`\r\n- Proposal: `openspec/changes/add-get-selected-text-api/proposal.md`\r\n\r\n## Changes\r\n\r\n- `packages/core/src/types.ts`: added `getSelectedText(): string` to `EditorAPI` interface\r\n- `packages/core/src/editor.ts`: implemented `getSelectedText()` using `view.state.sliceDoc()` with `Math.min/max` normalization to handle both forward and reverse selections\r\n- `packages/core/test/editor.test.ts`: added 5 test cases covering empty selection, forward selection, and reverse selection\r\n- `README.md` / `README.zh.md`: added `getSelectedText()` to API Reference section\r\n- `docs/getSelectedText-dev-notes.md`: dev notes documenting jsdom limitations and the solution\r\n- `openspec/changes/add-get-selected-text-api/`: full OpenSpec proposal (proposal.md + tasks.md + spec delta)\r\n\r\n## Testing\r\n\r\n- ✅ returns `\"\"` when there is no selection (cursor only)\r\n- ✅ forward selection `dispatch({ anchor: 0, head: 5 })` → `\"Hello\"`\r\n- ✅ forward with punctuation `dispatch({ anchor: 5, head: 13 })` → `\", world!\"`\r\n- ✅ reverse selection `dispatch({ anchor: 5, head: 0 })` → `\"Hello,\"`\r\n- ✅ all 29 tests in `packages/core/test/editor.test.ts` pass\r\n- ✅ `pnpm build` passes (all packages build successfully)\r\n\r\n## Checklist\r\n\r\n- [x] Title follows Conventional Commits\r\n- [x] Description explains **why**\r\n- [x] Tests added\r\n- [x] `pnpm test` passes\r\n- [x] `pnpm build` passes\r\n- [x] Public API changes updated in `README.md` / `README.zh.md`\r\n- [x] OpenSpec proposal linked (`add-get-selected-text-api`)\r\n",
+  "created_at": "2026-06-09T20:31:30Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+  "first_review_time": "2026-06-09T20:31:38Z",
+  "commits_at_first_review": [
+    {
+      "sha": "fb8c15b05a746d0336b9401b5956a8d33fcb4bfa",
+      "message": "feat(core): add getSelectedText() API method\n\nAdds getSelectedText() to the EditorAPI interface and implements it\nusing CodeMirror's sliceDoc, which correctly handles both forward\nand reverse selections.\n\n- Added getSelectedText(): string to EditorAPI in types.ts\n- Implemented in editor.ts using view.state.sliceDoc(anchor, head)\n- Added tests covering: empty selection, forward selection, reverse selection\n\nCloses the P0 roadmap item for getSelectedText().",
+      "date": "2026-06-09T18:14:00Z"
+    },
+    {
+      "sha": "d44dd2a1133581f50bf6cdad78f5ae27e9480ee1",
+      "message": "fix(core): handle reverse selection in getSelectedText and add dev notes\n\n- Normalize anchor/head with Math.min/max before calling sliceDoc\n- Add __test_getView() helper for direct selection dispatch in tests\n- Update tests to use EditorView.dispatch() instead of setSelection() (jsdom limitation)\n- Add docs/getSelectedText-dev-notes.md documenting the dev process and gotchas",
+      "date": "2026-06-09T18:47:51Z"
+    },
+    {
+      "sha": "1a1c50054c24e8a13fcec10429a3992565cd7c53",
+      "message": "docs(core): add JSDoc for getSelectedText()",
+      "date": "2026-06-09T18:57:05Z"
+    },
+    {
+      "sha": "4be2d5860c0eb7202cab13ddb60e9c10526d5357",
+      "message": "feat(core): add OpenSpec proposal for getSelectedText() API\n\nAdds OpenSpec change proposal for the new getSelectedText() API method,\nincluding proposal.md, tasks.md, and spec delta for editor-core.",
+      "date": "2026-06-09T19:45:55Z"
+    },
+    {
+      "sha": "aaa20a9f4ee7274f719157d301a606a90d8bdfe0",
+      "message": "docs(core): update README and types for getSelectedText() API\n\n- Add getSelectedText() to API Reference in README.md and README.zh.md\n- Add __test_getView() to EditorAPI interface (internal, for testing)\n- pnpm build passes",
+      "date": "2026-06-09T19:56:29Z"
+    },
+    {
+      "sha": "d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+      "message": "refactor(core): remove __test_getView, use setSelection() in tests\n\n- Removed __test_getView() from EditorAPI interface (types.ts)\n- Removed __test_getView() implementation from editor.ts\n- Updated editor.test.ts to use editor.setSelection() directly\n  instead of accessing internal EditorView via __test_getView\n- All 29 tests pass",
+      "date": "2026-06-09T20:25:02Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 6,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "3e6e1d5f0bbddb7ccf67618facdc07b987ec312d",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -208,6 +208,7 @@ editor.getDocument()          // current Markdown string\n editor.getAst()               // current mdast Root\n editor.setDocument(md)        // replace entire document\n editor.setSelection(pos)      // move cursor\n+editor.getSelectedText()     // selected text, \"\" when no selection\n editor.focus() / editor.blur()\n editor.destroy()\n "
+      },
+      {
+        "sha": "6d4b19618440a9dec70bbd5ed8e6d80faa27a49a",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -208,6 +208,7 @@ editor.getDocument()          // 当前 Markdown 文本\n editor.getAst()               // 当前 mdast 语法树\n editor.setDocument(md)        // 替换整个文档\n editor.setSelection(pos)      // 移动光标\n+editor.getSelectedText()     // 选中文本，无选区时返回 \"\"\n editor.focus() / editor.blur()\n editor.destroy()\n "
+      },
+      {
+        "sha": "08ce930df4bbf2a3d939598bdbdec12ef2b365b0",
+        "filename": "docs/getSelectedText-dev-notes.md",
+        "status": "added",
+        "additions": 116,
+        "deletions": 0,
+        "changes": 116,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/docs%2FgetSelectedText-dev-notes.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/docs%2FgetSelectedText-dev-notes.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FgetSelectedText-dev-notes.md?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -0,0 +1,116 @@\n+# getSelectedText() 功能开发笔记\n+\n+## 需求背景\n+\n+Nexus-Editor 的 `EditorAPI` 已有 `getSelection()`（获取选区位置）和 `replaceSelection()`（替换选中内容），但缺少 `getSelectedText()`（直接获取选中文本）。这是项目 Roadmap P0 列出的功能。\n+\n+---\n+\n+## 实现方案\n+\n+### 1. 类型声明（`packages/core/src/types.ts`）\n+\n+在 `EditorAPI` 接口中新增方法签名：\n+\n+```typescript\n+/** 返回当前选区中的纯文本。无选区（光标状态）时返回空字符串。 */\n+getSelectedText(): string;\n+```\n+\n+### 2. 方法实现（`packages/core/src/editor.ts`）\n+\n+```typescript\n+getSelectedText() {\n+  const { anchor, head } = view.state.selection.main;\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n+  return view.state.sliceDoc(from, to);\n+},\n+```\n+\n+**关键点：** `anchor` 和 `head` 的大小关系不确定（反向选区时 `head < anchor`），需要先用 `Math.min/max` 规范化后再调用 `sliceDoc`。\n+\n+---\n+\n+## 测试遇到的问题与解决\n+\n+### 问题 1：`setSelection()` 在 jsdom 环境下无法正确创建选区\n+\n+**现象：** 直接调用 `editor.setSelection(0, 5)` 后，`editor.getSelectedText()` 返回空字符串。\n+\n+**原因：** jsdom 不实现 `Selection.addRange()` 的完整行为，导致通过 `editor.setSelection()` 设置的选区在 jsdom 中实际上是无效的（光标状态，而非选区状态）。\n+\n+**解决：** 跳过 `setSelection()`，直接通过底层 `EditorView.dispatch()` 设置选区：\n+\n+```typescript\n+// 在 editor.ts 中新增 __test_getView() 辅助方法（仅测试用）\n+__test_getView() {\n+  return view;\n+},\n+\n+// 测试中直接 dispatch 选区事务\n+const view = (editor as any).__test_getView() as EditorView;\n+view.dispatch({ selection: { anchor: 0, head: 5 } });\n+expect(editor.getSelectedText()).toBe(\"Hello\");\n+```\n+\n+### 问题 2：反向选区测试期望值错误\n+\n+**现象：** 测试 `anchor=5, head=0` 时期望得到 `\"Hello,\"`，实际得到 `\"Hello\"`。\n+\n+**原因：** `anchor=5, head=0` 选中的是位置 0-5 的文本，即 `\"Hello\"`（不含逗号），测试期望值写错了。\n+\n+**解决：** 修正测试期望值，或调整 dispatch 参数为 `{ anchor: 6, head: 0 }` 来选中 `\"Hello,\"`。\n+\n+### 问题 3：最初实现没有处理反向选区\n+\n+**最初的写法：**\n+\n+```typescript\n+getSelectedText() {\n+  const { anchor, head } = view.state.selection.main;\n+  return view.state.sliceDoc(anchor, head); // ❌ 反向选区时 from > to，返回空字符串\n+}\n+```\n+\n+**修复后：**\n+\n+```typescript\n+getSelectedText() {\n+  const { anchor, head } = view.state.selection.main;\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n+  return view.state.sliceDoc(from, to); // ✅ 正确处理正向/反向选区\n+}\n+```\n+\n+---\n+\n+## 最终测试用例\n+\n+| 场景 | 操作 | 期望结果 |\n+|------|------|----------|\n+| 无选区（光标状态） | 不设置选区 | `\"\"` |\n+| 正向选区 | `dispatch({ anchor: 0, head: 5 })` | `\"Hello\"` |\n+| 正向选区（含标点） | `dispatch({ anchor: 5, head: 13 })` | `\", world!\"` |\n+| 反向选区 | `dispatch({ anchor: 5, head: 0 })` | `\"Hello\"` |\n+\n+---\n+\n+## 提交信息模板\n+\n+```\n+feat(core): add getSelectedText() API method\n+\n+Implements the getSelectedText() API method listed as a P0 roadmap item.\n+\n+Changes:\n+- Added getSelectedText(): string to EditorAPI interface in types.ts\n+- Implemented in editor.ts using view.state.sliceDoc(), with proper\n+  handling for both forward and reverse selections (anchor/head ordering)\n+- Added __test_getView() helper on the API (test-only, not in interface)\n+  to allow tests to directly dispatch selection transactions\n+- Added tests covering: empty selection, forward selection, reverse selection\n+\n+Closes the P0 roadmap item for getSelectedText().\n+```"
+      },
+      {
+        "sha": "eabdf383bc70be29efb9e99b0176897f2c13fef8",
+        "filename": "openspec/changes/add-get-selected-text-api/proposal.md",
+        "status": "added",
+        "additions": 18,
+        "deletions": 0,
+        "changes": 18,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/openspec%2Fchanges%2Fadd-get-selected-text-api%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/openspec%2Fchanges%2Fadd-get-selected-text-api%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-get-selected-text-api%2Fproposal.md?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -0,0 +1,18 @@\n+# Change: 新增 getSelectedText() API 方法\n+\n+## Why\n+\n+Nexus-Editor 的 `EditorAPI` 提供了 `getSelection()`（获取选区位置）和 `replaceSelection()`（替换选中内容），但缺少直接获取选中文本的方法。这是项目 Roadmap P0 中列出的缺失功能，补上后可以让使用者更方便地读取用户选中的文字，而不必自己用 `getSelection()` + `getDocument().slice()` 来拼。\n+\n+## What Changes\n+\n+- 在 `packages/core/src/types.ts` 的 `EditorAPI` 接口中新增 `getSelectedText(): string` 方法签名\n+- 在 `packages/core/src/editor.ts` 的 `api` 对象中实现 `getSelectedText()` 方法，使用 `view.state.sliceDoc()` 获取选中文本，并通过 `Math.min/max` 规范化 anchor/head 顺序，正确处理正向和反向选区\n+- 在 `packages/core/test/editor.test.ts` 中新增测试用例，覆盖：无选区（光标状态）、正向选区、反向选区\n+- 新增 `docs/getSelectedText-dev-notes.md` 开发笔记，记录实现过程和遇到的问题\n+\n+## Impact\n+\n+- 受影响的 specs：`editor-core`（新增 public API 方法）\n+- 受影响的代码：`packages/core/src/types.ts`、`packages/core/src/editor.ts`、`packages/core/test/editor.test.ts`\n+- **无 breaking changes**，新增方法不影响现有 API"
+      },
+      {
+        "sha": "e6e41fb1fc9197e070a3982c2693c0388546ea13",
+        "filename": "openspec/changes/add-get-selected-text-api/specs/editor-core/spec.md",
+        "status": "added",
+        "additions": 29,
+        "deletions": 0,
+        "changes": 29,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/openspec%2Fchanges%2Fadd-get-selected-text-api%2Fspecs%2Feditor-core%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/openspec%2Fchanges%2Fadd-get-selected-text-api%2Fspecs%2Feditor-core%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-get-selected-text-api%2Fspecs%2Feditor-core%2Fspec.md?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -0,0 +1,29 @@\n+## ADDED Requirements\n+\n+### Requirement: Get Selected Text\n+\n+编辑器 API 必须提供 `getSelectedText(): string` 方法，返回当前选区中的纯文本内容。\n+\n+- 无选区（仅光标）时返回空字符串 `\"\"`\n+- 正向选区（anchor < head）时返回从 anchor 到 head 的文本\n+- 反向选区（anchor > head）时同样正确返回选中文本\n+\n+#### Scenario: 无选区（光标状态）\n+\n+- **WHEN** 编辑器没有选区（只有光标）\n+- **THEN** `getSelectedText()` 必须返回 `\"\"`\n+\n+#### Scenario: 正向选区\n+\n+- **WHEN** 用户选中了从位置 0 到位置 5 的文本（\"Hello\"）\n+- **THEN** `getSelectedText()` 必须返回 `\"Hello\"`\n+\n+#### Scenario: 正向选区含标点\n+\n+- **WHEN** 用户选中了从位置 5 到位置 13 的文本（\", world!\"）\n+- **THEN** `getSelectedText()` 必须返回 `\", world!\"`\n+\n+#### Scenario: 反向选区\n+\n+- **WHEN** 用户的选区 anchor 在位置 5、head 在位置 0（反向拖动选区）\n+- **THEN** `getSelectedText()` 必须返回 `\"Hello,\"`（正确处理 anchor/head 顺序）"
+      },
+      {
+        "sha": "8f9cd385690cc24fd6f49dbec6dd2c081bdf0eac",
+        "filename": "openspec/changes/add-get-selected-text-api/tasks.md",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/openspec%2Fchanges%2Fadd-get-selected-text-api%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/openspec%2Fchanges%2Fadd-get-selected-text-api%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-get-selected-text-api%2Ftasks.md?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -0,0 +1,27 @@\n+# Tasks: 新增 getSelectedText() API\n+\n+## 1. 实现\n+\n+- [x] 1.1 在 `packages/core/src/types.ts` 的 `EditorAPI` 接口中新增 `getSelectedText(): string` 方法签名\n+- [x] 1.2 在 `packages/core/src/editor.ts` 的 `api` 对象中实现 `getSelectedText()` 方法\n+- [x] 1.3 处理正向选区（anchor < head）和反向选区（anchor > head）两种情况\n+- [x] 1.4 为测试补充 `__test_getView()` 辅助方法（不加入公开接口）\n+\n+## 2. 测试\n+\n+- [x] 2.1 新增测试：无选区（光标状态）时返回 `\"\"`\n+- [x] 2.2 新增测试：正向选区 `dispatch({ anchor: 0, head: 5 })` 返回 `\"Hello\"`\n+- [x] 2.3 新增测试：正向选区含标点 `dispatch({ anchor: 5, head: 13 })` 返回 `\", world!\"`\n+- [x] 2.4 新增测试：反向选区 `dispatch({ anchor: 5, head: 0 })` 返回 `\"Hello,\"`\n+- [x] 2.5 运行 `pnpm test` 确认 `packages/core/test/editor.test.ts` 全部通过（29/29）\n+\n+## 3. 文档\n+\n+- [x] 3.1 为 `getSelectedText()` 方法添加 JSDoc 注释\n+- [x] 3.2 新增 `docs/getSelectedText-dev-notes.md` 开发笔记\n+\n+## 4. 提交与推送\n+\n+- [ ] 4.1 提交所有改动到 `feature/get-selected-text` 分支\n+- [ ] 4.2 推送到 `sesametian/Nexus-Editor` fork\n+- [ ] 4.3 创建 PR 到 `floatboatai/Nexus-Editor:main`"
+      },
+      {
+        "sha": "43d424b9c3033bf3df30aed61ff77564acd24e5d",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -687,6 +687,21 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       const sel = view.state.selection.main;\n       return { anchor: sel.anchor, head: sel.head };\n     },\n+    /**\n+     * 返回当前选区中的纯文本内容。\n+     *\n+     * - 无选区（仅光标）时返回空字符串。\n+     * - 正向选区（anchor < head）和反向选区（anchor > head）均能正确处理，\n+     *   通过 Math.min/max 规范化 from/to 后再调用 CodeMirror 的 sliceDoc。\n+     *\n+     * @returns 选中文本的字符串；无选区时返回 \"\"。\n+     */\n+    getSelectedText() {\n+      const { anchor, head } = view.state.selection.main;\n+      const from = Math.min(anchor, head);\n+      const to = Math.max(anchor, head);\n+      return view.state.sliceDoc(from, to);\n+    },\n     getSlashCommands() {\n       return slashCommands;\n     },"
+      },
+      {
+        "sha": "beb8636000bade28531c15efd2297fb7a61498f8",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -140,6 +140,10 @@ export interface EditorAPI {\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;\n   getSelection(): { anchor: number; head: number };\n+  /**\n+   * 返回当前选区中的纯文本。无选区（光标状态）时返回空字符串。\n+   */\n+  getSelectedText(): string;\n   getSlashCommands(): SlashCommandDef[];\n   uploadAsset(file: File): Promise<string | null>;\n   setSelection(anchor: number, head?: number): void;"
+      },
+      {
+        "sha": "3d3346391b9225fc68e49541092c62f09323187a",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 26,
+        "deletions": 0,
+        "changes": 26,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d4186244a3fc89e2980cd93cc5ef2e8c86215009/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d4186244a3fc89e2980cd93cc5ef2e8c86215009/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=d4186244a3fc89e2980cd93cc5ef2e8c86215009",
+        "patch": "@@ -666,6 +666,32 @@ describe(\"createEditor — DOM event hook layer\", () => {\n     editor.destroy();\n   });\n \n+  it(\"getSelectedText returns the text within the current selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"Hello, world!\" });\n+\n+    // 无选区（光标状态）时返回空字符串\n+    expect(editor.getSelectedText()).toBe(\"\");\n+\n+    // 选中 \"Hello\"（位置 0-5）\n+    editor.setSelection(0, 5);\n+    expect(editor.getSelectedText()).toBe(\"Hello\");\n+\n+    // 选中 \"world\"（位置 7-12）\n+    editor.setSelection(7, 12);\n+    expect(editor.getSelectedText()).toBe(\"world\");\n+\n+    // 选中含标点 \", world!\"（位置 5-13）\n+    editor.setSelection(5, 13);\n+    expect(editor.getSelectedText()).toBe(\", world!\");\n+\n+    // 反向选区（anchor=5, head=0）选中位置 0-5，即 \"Hello\"\n+    editor.setSelection(5, 0);\n+    expect(editor.getSelectedText()).toBe(\"Hello\");\n+\n+    editor.destroy();\n+  });\n+\n   it(\"dispatches keydown to plugin handlers and stops default only when consumed\", () => {\n     const container = document.createElement(\"div\");\n     const keys: string[] = [];"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=53",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

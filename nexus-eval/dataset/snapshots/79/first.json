@@ -1,0 +1,46 @@
+{
+  "pr_number": 79,
+  "title": "fix(electron): normalize test path expectations for Windows compatibility",
+  "body": "## Why\nFixes #77\n\nOn Windows, `path.join()` produces backslash-separated paths (`\\`), but\n`LinkIndex.normalizeSlashes` always returns forward-slash paths (`/`). This\ncaused 9 of 15 tests in `sample-vault.test.ts` to fail on Windows with\nassertion errors like:\n\n```\nexpected 'C:/.../Topics/AI.md' to be 'C:\\\\...\\\\Topics\\\\AI.md'\n```\n\nThe production code's normalization is correct; this aligns all test\nexpectations with that behavior by wrapping every `path.join()` call site\nwith `normalizeSlashes()`, starting from `VAULT_ROOT` itself so derived\npaths are consistently forward-slash formatted.\n\n## What\n- Normalize `VAULT_ROOT` at declaration time\n- Wrap all `path.join()` inputs with `normalizeSlashes()`\n- No changes to production code\n\n## Checklist\n- [x] Title follows Conventional Commits\n- [x] All tests pass (514/514)\n- [x] No changes to public API or production code\n- [x] Single responsibility — only fixes test path format",
+  "created_at": "2026-06-27T10:10:47Z",
+  "draft": false,
+  "base_sha": "e7c105c4e6ebf07fa1a2a4dc8d9a50ab85fb4acf",
+  "head_sha_at_first_review": "01526cbe11991fa208e67c32151d9f8f9ba3fa34",
+  "first_review_time": "2026-06-27T10:10:54Z",
+  "commits_at_first_review": [],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "240052c36df0f059a94b13e830022e00c00dd2d4",
+        "filename": "apps/electron-demo/test/sample-vault.test.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 10,
+        "changes": 20,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/01526cbe11991fa208e67c32151d9f8f9ba3fa34/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/01526cbe11991fa208e67c32151d9f8f9ba3fa34/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftest%2Fsample-vault.test.ts?ref=01526cbe11991fa208e67c32151d9f8f9ba3fa34",
+        "patch": "@@ -5,7 +5,7 @@ import { scanWikiLinks } from \"@floatboat/nexus-core\";\n import { LinkIndex, findAnchorPosition, parseAnchor } from \"../src/renderer/link-index\";\n import { normalizeSlashes } from \"../src/renderer/path-utils\";\n \n-const VAULT_ROOT = path.resolve(__dirname, \"../sample-vault\");\n+const VAULT_ROOT = normalizeSlashes(path.resolve(__dirname, \"../sample-vault\"));\n const SUPPORTED = new Set([\".md\", \".markdown\", \".txt\"]);\n const SKIP_DIRS = new Set([\"node_modules\", \".git\"]);\n \n@@ -47,13 +47,13 @@ async function readFixtureFiles(): Promise<Array<{ path: string; content: string\n  */\n describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n   it(\"the vault directory exists and contains the hub\", async () => {\n-    const st = await stat(path.join(VAULT_ROOT, \"index.md\"));\n+    const st = await stat(normalizeSlashes(path.join(VAULT_ROOT, \"index.md\")));\n     expect(st.isFile()).toBe(true);\n   });\n \n   it(\"every note links back to index.md (hub topology)\", async () => {\n     const idx = await buildIndex();\n-    const hub = path.join(VAULT_ROOT, \"index.md\");\n+    const hub = normalizeSlashes(path.join(VAULT_ROOT, \"index.md\"));\n     const hits = idx.getBacklinks(hub);\n     const sources = new Set(hits.map((h) => normalizeSlashes(path.relative(VAULT_ROOT, h.sourcePath))));\n     // README is documentation, not a note that must link in; every *other*\n@@ -104,7 +104,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n     const idx = await buildIndex();\n     // NotALink should not be resolvable via any rule — it must never appear\n     // as a valid target because the scanner skipped it.\n-    expect(idx.resolve(\"NotALink\", path.join(VAULT_ROOT, \"ghost-demo.md\"))).toBeNull();\n+    expect(idx.resolve(\"NotALink\", normalizeSlashes(path.join(VAULT_ROOT, \"ghost-demo.md\")))).toBeNull();\n     // And no file's forward edges include a \"NotALink\" target.\n     for (const source of idx.getAllFiles()) {\n       const hits = idx.getBacklinks(source);\n@@ -144,23 +144,23 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n \n   it(\"Testing.md shows linked backlinks from current sample-vault references\", async () => {\n     const idx = await buildIndex();\n-    const testingPath = path.join(VAULT_ROOT, \"Topics/Testing.md\");\n+    const testingPath = normalizeSlashes(path.join(VAULT_ROOT, \"Topics/Testing.md\"));\n     const linked = idx.getBacklinks(testingPath).map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n     expect(linked.length).toBeGreaterThan(0);\n     expect(linked).toContain(normalizeSlashes(\"Projects/Nexus-Editor.md\"));\n   });\n \n   it(\"Bob.md has an unlinked mention in Alice.md (plain text 'Bob' outside brackets)\", async () => {\n     const idx = await buildIndex();\n-    const bob = path.join(VAULT_ROOT, \"People/Bob.md\");\n+    const bob = normalizeSlashes(path.join(VAULT_ROOT, \"People/Bob.md\"));\n     const mentions = idx.getUnlinkedMentions(bob);\n     const sources = mentions.map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n     expect(sources).toContain(normalizeSlashes(\"People/Alice.md\"));\n   });\n \n   it(\"AI.md has an unlinked mention in Alice.md and Daily/2026-04-20.md has a linked one\", async () => {\n     const idx = await buildIndex();\n-    const ai = path.join(VAULT_ROOT, \"Topics/AI.md\");\n+    const ai = normalizeSlashes(path.join(VAULT_ROOT, \"Topics/AI.md\"));\n     const unlinked = idx.getUnlinkedMentions(ai).map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n     const linked = idx.getBacklinks(ai).map((m) => normalizeSlashes(path.relative(VAULT_ROOT, m.sourcePath)));\n     expect(unlinked).toContain(normalizeSlashes(\"People/Alice.md\")); // plain text \"AI\" in Alice.md\n@@ -169,7 +169,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n \n   it(\"v2-shaped anchors in Ideas.md resolve to the underlying file, not ghosts\", async () => {\n     const idx = await buildIndex();\n-    const ideas = path.join(VAULT_ROOT, \"Projects/Ideas.md\");\n+    const ideas = normalizeSlashes(path.join(VAULT_ROOT, \"Projects/Ideas.md\"));\n     expect(idx.resolve(\"Projects/Nexus-Editor#Context\", ideas)).toBe(\n       normalizeSlashes(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"))\n     );\n@@ -179,7 +179,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n   });\n \n   it(\"#Context anchor in Ideas.md points into the real Context heading of Nexus-Editor.md\", async () => {\n-    const nexus = path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\");\n+    const nexus = normalizeSlashes(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"));\n     const content = await readFile(nexus, \"utf-8\");\n     const { anchor } = parseAnchor(\"Projects/Nexus-Editor#Context\");\n     expect(anchor).not.toBeNull();\n@@ -190,7 +190,7 @@ describe(\"sample-vault fixture — end-to-end wiki-link behavior\", () => {\n   });\n \n   it(\"^some-block anchor in Ideas.md points into the tagged paragraph\", async () => {\n-    const nexus = path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\");\n+    const nexus = normalizeSlashes(path.join(VAULT_ROOT, \"Projects/Nexus-Editor.md\"));\n     const content = await readFile(nexus, \"utf-8\");\n     const { anchor } = parseAnchor(\"Projects/Nexus-Editor^some-block\");\n     expect(anchor).not.toBeNull();"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=79",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

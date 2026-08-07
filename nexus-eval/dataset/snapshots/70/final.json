@@ -1,0 +1,60 @@
+{
+  "pr_number": 70,
+  "title": "feat(core): improve markdown list editing keymap",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "e97a2fcf035c351a5030e5849381485e7a0fef45",
+  "merge_commit_sha": "5a396dece910308eea340986141ade274f5cb0f5",
+  "base_sha": "b8e758b0daf27b23aa77571635e044c0e0544da7",
+  "commits": [
+    {
+      "sha": "e97a2fcf035c351a5030e5849381485e7a0fef45",
+      "message": "feat(core): improve markdown list editing keymap",
+      "date": "2026-06-23T12:53:30Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/markdown-keymap.ts",
+      "status": "modified",
+      "additions": 178,
+      "deletions": 29,
+      "changes": 207
+    },
+    {
+      "filename": "packages/core/test/markdown-keymap.test.ts",
+      "status": "modified",
+      "additions": 215,
+      "deletions": 1,
+      "changes": 216
+    },
+    {
+      "filename": "packages/core/test/multi-cursor.test.ts",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 0,
+      "changes": 48
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=70",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

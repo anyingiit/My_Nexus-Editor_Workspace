@@ -1,0 +1,19 @@
+{
+  "pr_number": 183,
+  "title": "fix(electron): preserve UNC roots in path joins",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-25T06:39:01Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "xrq03",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-24T15:15:52Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=183) <br/>All committers have signed the CLA."
+    }
+  ]
+}

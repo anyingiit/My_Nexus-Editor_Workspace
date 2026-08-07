@@ -1,0 +1,53 @@
+{
+  "pr_number": 156,
+  "title": "fix(live-preview): use live doc content for table column/row operations",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "8548da60fc166f5aee61488a5c4364e71f032ecd",
+  "merge_commit_sha": "fd8522fc2e94273ae65129c3677b33872c157e5f",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "8548da60fc166f5aee61488a5c4364e71f032ecd",
+      "message": "fix(live-preview): use live doc content for table column/row operations\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-15T09:43:38Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 73,
+      "deletions": 11,
+      "changes": 84
+    },
+    {
+      "filename": "packages/core/test/live-preview-table-ops.test.ts",
+      "status": "added",
+      "additions": 242,
+      "deletions": 0,
+      "changes": 242
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=156",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

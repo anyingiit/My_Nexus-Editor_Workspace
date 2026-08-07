@@ -1,0 +1,24 @@
+{
+  "pr_number": 78,
+  "title": "fix(core): cancel pending emitChange on silent setDocument",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "YingzuoLiu",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-23T04:07:14Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=78) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:41:38Z",
+      "body": "感谢这个修复 🙏 silent setDocument 时取消挂起的 emitChange 是个合理的正确性改进。不过当前对 main 为 CONFLICTING，需要先 rebase 到最新 main（核心的 setDocument 路径在 #57/#60 之后有变化）。rebase 后请确认 `pnpm test` 里组合输入（IME）相关用例仍通过，并补一条针对「silent 后不应触发 onChange」的回归测试。\n\n⚠️ 这个 PR 目前 **CLA 未签署**，在签署前我们无法合并。请点开 PR 里 CLA 机器人留的链接签一下；签完并按上面的点调整后，维护者会重新评审。感谢理解 🙏"
+    }
+  ]
+}

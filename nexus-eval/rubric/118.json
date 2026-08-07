@@ -1,0 +1,37 @@
+{
+  "pr_number": 118,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR bundles two independent capabilities; should be split"
+    },
+    {
+      "id": 2,
+      "summary": "Scroll-sync uses percentage-based heuristic, previously rejected"
+    },
+    {
+      "id": 3,
+      "summary": "ROADMAP #13 marked done but implementation insufficient"
+    },
+    {
+      "id": 4,
+      "summary": "Demo re-renders with innerHTML and percent sync; prototype only"
+    },
+    {
+      "id": 5,
+      "summary": "Keybindings entangled with scroll-sync and roadmap changes"
+    },
+    {
+      "id": 6,
+      "summary": "Keep PR #117 as OpenSpec proposal; resubmit keybindings separately"
+    },
+    {
+      "id": 7,
+      "summary": "Do not include percentage-based scroll-sync demo in keybindings PR"
+    },
+    {
+      "id": 8,
+      "summary": "Use source-offset/block-anchor strategy with regression tests"
+    }
+  ]
+}

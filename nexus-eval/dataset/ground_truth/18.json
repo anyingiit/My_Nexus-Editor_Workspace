@@ -1,0 +1,29 @@
+{
+  "pr_number": 18,
+  "title": "feat(electron): add snapshot history for draft restore and reuse",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ronandddd",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:38:23Z",
+      "body": "### Code review\n\nOverall direction looks good — snapshot store is pure and tested, IPC follows the existing bridge pattern, OpenSpec proposal is structured. A few real implementation issues worth fixing (lower-confidence individually, but together they affect user-visible correctness):\n\n- **`state.error` is being used as a success-toast channel.** `renderStatus` formats `state.error` as `— Error: <msg>`, so the snapshot success messages (\"Snapshot created\", \"Restored snapshot...\", \"Reused snapshot...\") will render to the user as errors. Either route success messages through a new `state.statusMessage` field, or add a transient-success channel.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/50364039ae70b756cdf2d54e04f753ca3b385a67/apps/electron-demo/src/renderer/app.ts#L265-L310\n\n- **`snapshots.json` is rewritten non-atomically with no size cap.** Every `snapshot:create` does `readSnapshotStore` → `addSnapshot` → full `writeFile` rewrite, and there's no validation on `input.content` size. A crash mid-write corrupts the entire history store across all documents, and a large note × 20 retention × N docs grows the JSON quickly. Two suggestions: (1) write to `snapshots.json.tmp` then `rename` for atomicity, (2) reject `content` above a configurable byte cap.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/50364039ae70b756cdf2d54e04f753ca3b385a67/apps/electron-demo/electron/snapshots.ts#L1-L111\n\n- **`parseSnapshotStore` silently returns an empty store on parse failure.** A single bad write erases the visible history with no log and no `.bak`. At minimum log the parse error; ideally rename the corrupt file to `snapshots.json.corrupt-<ts>` before returning empty so users can recover.\n\n- **`normalizeDocKey` only swaps backslashes.** It doesn't `path.resolve`, lower-case (macOS/Windows are case-insensitive), or dereference symlinks — opening the same file via `./notes/foo.md` vs `notes/foo.md` vs an absolute path produces three separate snapshot histories. design.md acknowledges \"unsaved-document identity is coarse\" but doesn't acknowledge this for saved files.\n\n- **`reuseSnapshot` doesn't call `confirmDiscardIfDirty`** while `restoreSnapshot` does. Clicking Reuse with unsaved changes silently discards them. If the divergence is intentional (\"reuse means new draft, don't prompt\"), worth a spec scenario; otherwise add the guard.\n\n- **Renderer imports `import type { SnapshotEntry } from \"../../electron/snapshots\"`.** Type-only is safe today, but it's the only place renderer reaches across the main/renderer boundary into `electron/`, and design.md proposed types live in `bridge.d.ts` (which already redeclares `SnapshotEntry`). Pick one source of truth — the cross-boundary import is fragile to future tsconfig/path changes.\n\n- **Merge conflict risk with PR #15.** Both PRs modify `electron/main.ts`, `renderer/app.ts`, and `renderer/state.ts`. Whichever lands second will need a rebase.\n\n- (CLAUDE.md note) The OpenSpec proposal is included — that's good.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:17Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=18) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=18) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=18) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:42:42Z",
+      "body": "感谢草稿快照历史（roadmap #19 的参考实现方向）🙏 这是 roadmap 里规划的能力。当前对 main 为 CONFLICTING，需 rebase。按 roadmap，#19 标注「需 OpenSpec」——建议先在 openspec/changes/ 下补一个 proposal 说明快照的存储模型与 host 接口边界，再让实现 PR 链接它。rebase + 补 OpenSpec 后重提。\n\n⚠️ 该 PR 目前 **CLA 未签署**，签署前无法合并。请点 PR 内 CLA 机器人的链接签署；签完并调整后维护者会重新评审。感谢理解 🙏"
+    }
+  ]
+}

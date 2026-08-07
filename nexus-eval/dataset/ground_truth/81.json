@@ -1,0 +1,26 @@
+{
+  "pr_number": 81,
+  "title": "feat: standardize widget API + HTML-paste plugin + fork sync (OpenSpec 1.5, CI, docs)",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-30T05:28:41Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "HerbertGao",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-29T04:31:59Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=81) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-06-30T05:28:39Z",
+      "body": "Thanks for the detailed contribution and the clear write-up. We’re going to close this PR for now because it bundles several large concerns into one review surface. If you’d like to continue, please split it into focused PRs so each area can be reviewed independently."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

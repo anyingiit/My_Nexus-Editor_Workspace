@@ -1,0 +1,67 @@
+{
+  "pr_number": 93,
+  "title": "feat(electron): surface broken links in backlinks panel",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-07T01:33:01Z",
+  "merged_by": null,
+  "closed_by": "lilaizhencn",
+  "head_sha_final": "bb77faf60fb51ebfc65dda2189569ea4517a0df7",
+  "merge_commit_sha": "5bcb0f4eacbc2d68bd885f98d4cbf98223405e10",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "bb77faf60fb51ebfc65dda2189569ea4517a0df7",
+      "message": "feat(electron): surface broken links in backlinks panel",
+      "date": "2026-07-02T04:17:16Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 56,
+      "deletions": 2,
+      "changes": 58
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 219,
+      "deletions": 0,
+      "changes": 219
+    },
+    {
+      "filename": "apps/electron-demo/test/link-index.test.ts",
+      "status": "modified",
+      "additions": 53,
+      "deletions": 0,
+      "changes": 53
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=93",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

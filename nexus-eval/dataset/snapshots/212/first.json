@@ -1,0 +1,64 @@
+{
+  "pr_number": 212,
+  "title": "fix(wordcount): preserve table cell word boundaries",
+  "body": "## Summary / 摘要\r\n\r\nPreserve lexical boundaries between adjacent GFM table cells so Markdown-aware word counts do not merge unrelated cell contents.\r\n\r\n## Motivation / 背景与动机\r\n\r\n`countMarkdown()` traversed table cells correctly but concatenated their text without a separator. A table containing `Alpha`, `Beta`, `Gamma`, and `Delta` was therefore analysed as `AlphaBetaGammaDelta` and reported one word. The same bug collapsed adjacent CJK cells into one run with `cjkUnit: \"word\"`.\r\n\r\n- Issue: none; found during repository audit\r\n- Roadmap: n/a\r\n- OpenSpec change: n/a — bug fix with no public API change\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/plugin-wordcount`:\r\n  - Preserve a lexical boundary after each `tableCell`.\r\n  - Keep structural boundaries out of character statistics, so `characters` and `charactersNoSpaces` do not gain synthetic whitespace.\r\n  - Count Latin tokens and collapsed CJK runs per lexical segment.\r\n  - Add regression coverage for Latin and CJK GFM tables.\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` — 34 files, 539 tests passed\r\n- [x] `pnpm typecheck`\r\n- [x] `pnpm --filter @floatboat/nexus-plugin-wordcount build`\r\n- [x] New regression tests: `packages/plugin-wordcount/test/count.test.ts`\r\n- [x] Regression proof: before the fix both new cases reported `1`; after the fix they report `4`.\r\n- [ ] Manual UI check: n/a — pure statistics helper, no UI changes\r\n\r\n## Compliance / 合规自检\r\n\r\n- [ ] **CLA signed** — pending first-time contributor check\r\n- [ ] **AI disclosure**: functional implementation was developed with Codex assistance.\r\n      AI-assisted notes: Codex assisted with repository audit, root-cause analysis, implementation, regression tests, validation, and PR drafting. This PR is intentionally draft so the contributor can review and defend every change before marking it ready.\r\n- [x] **New dependencies**: none\r\n- [x] **No build artifacts** committed\r\n- [x] **No secrets** / `.env` / personal vault data committed\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits\r\n- [x] Public API changes: none\r\n- [x] `live-preview-table.ts`: not touched\r\n- [x] New capability / breaking change: none; OpenSpec not required\r\n- [x] Change aligns with project scope\r\n\r\n## Review guide\r\n\r\nThe key invariant is that table cell boundaries affect word tokenisation only. Character counts continue to reflect extracted prose characters and do not include synthetic separators.",
+  "created_at": "2026-08-04T10:23:56Z",
+  "draft": true,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "295b9305c69dbbba760e4091507f9d3b2b7ab039",
+  "first_review_time": "2026-08-04T10:24:04Z",
+  "commits_at_first_review": [
+    {
+      "sha": "295b9305c69dbbba760e4091507f9d3b2b7ab039",
+      "message": "fix(wordcount): preserve table cell word boundaries",
+      "date": "2026-08-04T10:19:08Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "ad8b3c20a589aa3306b07cad4a671d793e271666",
+        "filename": "packages/plugin-wordcount/src/count.ts",
+        "status": "modified",
+        "additions": 38,
+        "deletions": 10,
+        "changes": 48,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/295b9305c69dbbba760e4091507f9d3b2b7ab039/packages%2Fplugin-wordcount%2Fsrc%2Fcount.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/295b9305c69dbbba760e4091507f9d3b2b7ab039/packages%2Fplugin-wordcount%2Fsrc%2Fcount.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-wordcount%2Fsrc%2Fcount.ts?ref=295b9305c69dbbba760e4091507f9d3b2b7ab039",
+        "patch": "@@ -177,6 +177,8 @@ interface ProseSegment {\n   text: string;\n   /** True for the synthetic `\\n\\n` separator between prose blocks. */\n   isParagraphBreak: boolean;\n+  /** Separate lexical runs without adding synthetic characters to the result. */\n+  isWordBoundary?: boolean;\n }\n \n function computeFromAst(source: string, ast: Root, options: WordCountOptions): WordCountStats {\n@@ -206,6 +208,14 @@ function computeFromAst(source: string, ast: Root, options: WordCountOptions): W\n         if (alt) segments.push({ text: alt, isParagraphBreak: false });\n         return;\n       }\n+      case \"tableCell\": {\n+        const children = (node as { children?: RootContent[] }).children;\n+        if (children) {\n+          for (const child of children) visit(child);\n+        }\n+        segments.push({ text: \"\", isParagraphBreak: false, isWordBoundary: true });\n+        return;\n+      }\n       case \"link\":\n       case \"linkReference\":\n       case \"emphasis\":\n@@ -219,7 +229,6 @@ function computeFromAst(source: string, ast: Root, options: WordCountOptions): W\n       case \"list\":\n       case \"blockquote\":\n       case \"tableRow\":\n-      case \"tableCell\":\n       case \"table\":\n       case \"root\": {\n         if (type === \"paragraph\") paragraphs += 1;\n@@ -254,12 +263,20 @@ function computeFromAst(source: string, ast: Root, options: WordCountOptions): W\n   // Strip trailing whitespace introduced by the synthetic paragraph\n   // breaks pushed after each block-level container, otherwise a single\n   // paragraph reports 2 extra characters than the source text.\n-  const prose = segments\n-    .map((segment) => (segment.isParagraphBreak ? \"\\n\\n\" : segment.text))\n-    .join(\"\")\n-    .replace(/[\\s\\u00A0]+$/, \"\");\n+  const proseParts: string[] = [];\n+  const lexicalSegments: string[] = [\"\"];\n+  for (const segment of segments) {\n+    if (segment.isWordBoundary) {\n+      lexicalSegments.push(\"\");\n+      continue;\n+    }\n+    const text = segment.isParagraphBreak ? \"\\n\\n\" : segment.text;\n+    proseParts.push(text);\n+    lexicalSegments[lexicalSegments.length - 1] += text;\n+  }\n+  const prose = proseParts.join(\"\").replace(/[\\s\\u00A0]+$/, \"\");\n \n-  const wordStats = analyseProse(prose, cjkUnit);\n+  const wordStats = analyseProse(prose, cjkUnit, lexicalSegments);\n   const sentences = countSentences(prose);\n   const lines = countLines(source);\n   const readingTimeSeconds = computeReadingTime(wordStats.latinWords, wordStats.cjkCharacters, options.readingSpeed);\n@@ -328,7 +345,11 @@ const CJK_REGEX = /[\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Scrip\n const CJK_RUN_REGEX = /[\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Script=Hangul}]+/gu;\n const WHITESPACE_REGEX = /\\s+/g;\n \n-function analyseProse(text: string, cjkUnit: CjkUnit): ProseAnalysis {\n+function analyseProse(\n+  text: string,\n+  cjkUnit: CjkUnit,\n+  lexicalSegments: readonly string[] = [text]\n+): ProseAnalysis {\n   if (text.length === 0) {\n     return { words: 0, latinWords: 0, cjkCharacters: 0, characters: 0, charactersNoSpaces: 0 };\n   }\n@@ -337,11 +358,18 @@ function analyseProse(text: string, cjkUnit: CjkUnit): ProseAnalysis {\n   // pass — otherwise a Han ideograph would be matched as a one-letter\n   // Latin \"word\" by `\\p{L}`.\n   const cjkCharacters = (text.match(CJK_REGEX) ?? []).length;\n-  const cjkContribution = cjkUnit === \"char\" ? cjkCharacters : (text.match(CJK_RUN_REGEX) ?? []).length;\n+  const cjkContribution = cjkUnit === \"char\"\n+    ? cjkCharacters\n+    : lexicalSegments.reduce(\n+        (total, segment) => total + (segment.match(CJK_RUN_REGEX) ?? []).length,\n+        0\n+      );\n \n   // Strip CJK before counting Latin runs to keep the buckets disjoint.\n-  const latinSource = text.replace(CJK_REGEX, \" \");\n-  const latinWords = (latinSource.match(LATIN_WORD_REGEX) ?? []).length;\n+  const latinWords = lexicalSegments.reduce((total, segment) => {\n+    const latinSource = segment.replace(CJK_REGEX, \" \");\n+    return total + (latinSource.match(LATIN_WORD_REGEX) ?? []).length;\n+  }, 0);\n \n   const characters = [...text].length; // count by code point, not UTF-16 unit\n   const charactersNoSpaces = characters - countWhitespaceCodePoints(text);"
+      },
+      {
+        "sha": "d408e32a72e0495df87730859a1029c0ec792392",
+        "filename": "packages/plugin-wordcount/test/count.test.ts",
+        "status": "modified",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/295b9305c69dbbba760e4091507f9d3b2b7ab039/packages%2Fplugin-wordcount%2Ftest%2Fcount.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/295b9305c69dbbba760e4091507f9d3b2b7ab039/packages%2Fplugin-wordcount%2Ftest%2Fcount.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-wordcount%2Ftest%2Fcount.test.ts?ref=295b9305c69dbbba760e4091507f9d3b2b7ab039",
+        "patch": "@@ -119,6 +119,33 @@ describe(\"countMarkdown — markdown awareness\", () => {\n     expect(result.words).toBe(5);\n   });\n \n+  it(\"keeps words in adjacent GFM table cells separate\", () => {\n+    const source = [\n+      \"| Alpha | Beta |\",\n+      \"| --- | --- |\",\n+      \"| Gamma | Delta |\",\n+    ].join(\"\\n\");\n+    const result = countMarkdown(source);\n+\n+    expect(result.words).toBe(4);\n+    expect(result.latinWords).toBe(4);\n+    expect(result.characters).toBe(\"AlphaBetaGammaDelta\".length);\n+    expect(result.charactersNoSpaces).toBe(\"AlphaBetaGammaDelta\".length);\n+  });\n+\n+  it(\"keeps CJK runs in adjacent GFM table cells separate\", () => {\n+    const source = [\n+      \"| 你好 | 世界 |\",\n+      \"| --- | --- |\",\n+      \"| 东京 | 首尔 |\",\n+    ].join(\"\\n\");\n+    const result = countMarkdown(source, { cjkUnit: \"word\" });\n+\n+    expect(result.words).toBe(4);\n+    expect(result.cjkCharacters).toBe(8);\n+    expect(result.characters).toBe(8);\n+  });\n+\n   it(\"recovers gracefully when content forms only excluded nodes\", () => {\n     const result = countMarkdown(\"```js\\nlet x = 1;\\n```\\n\");\n     expect(result.words).toBe(0);"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=212",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

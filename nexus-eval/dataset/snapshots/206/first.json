@@ -1,0 +1,52 @@
+{
+  "pr_number": 206,
+  "title": "fix(live-preview): preserve table text drag selection",
+  "body": "## Summary / 摘要\r\n\r\nPreserve partial native text selections inside rendered table cells after mouse drag.\r\n\r\n## Motivation / 背景与动机\r\n\r\nDragging to select part of a rendered table cell could be restored as the whole cell text during the native selection stabilization flow.\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/core`: prefer the mouse hit-test range when stabilizing table-cell text selection, falling back to the browser selection only when hit testing is unavailable.\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes\r\n- [x] Affected packages build (`pnpm build`) passes\r\n- [x] Existing vitest regression covers partial table-cell text selection",
+  "created_at": "2026-08-03T07:36:10Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "ae8de63cb9114ba688133806aea1a650fc0655f1",
+  "first_review_time": "2026-08-03T07:36:18Z",
+  "commits_at_first_review": [
+    {
+      "sha": "ae8de63cb9114ba688133806aea1a650fc0655f1",
+      "message": "fix(live-preview): preserve table text drag selection",
+      "date": "2026-08-03T04:12:35Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "2fdce5b796fa8883a367bcc8e88c197238c1b827",
+        "filename": "packages/core/src/live-preview-table.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/ae8de63cb9114ba688133806aea1a650fc0655f1/packages%2Fcore%2Fsrc%2Flive-preview-table.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/ae8de63cb9114ba688133806aea1a650fc0655f1/packages%2Fcore%2Fsrc%2Flive-preview-table.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Flive-preview-table.ts?ref=ae8de63cb9114ba688133806aea1a650fc0655f1",
+        "patch": "@@ -1957,7 +1957,7 @@ export class EditableTableWidget extends WidgetType {\n                       to: Math.max(rawCaretOffset, rawSelectionEndOffset),\n                     }\n                   : null;\n-              const currentNativeRange = rawSourceRangeFromNativeSelection(td) ?? hitTestRange;\n+              const currentNativeRange = hitTestRange ?? rawSourceRangeFromNativeSelection(td);\n               if (currentNativeRange) {\n                 armRange(currentNativeRange);\n                 return;"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=206",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

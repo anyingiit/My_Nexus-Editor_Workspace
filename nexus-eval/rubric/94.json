@@ -1,0 +1,21 @@
+{
+  "pr_number": 94,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Sign the Contributor License Agreement"
+    },
+    {
+      "id": 2,
+      "summary": "Commit email not linked to GitHub account"
+    },
+    {
+      "id": 3,
+      "summary": "Add commit email to GitHub account"
+    },
+    {
+      "id": 4,
+      "summary": "Recheck CLA status if already signed"
+    }
+  ]
+}

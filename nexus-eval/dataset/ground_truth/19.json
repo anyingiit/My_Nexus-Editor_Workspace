@@ -1,0 +1,31 @@
+{
+  "pr_number": 19,
+  "title": "feat(react,vue): add onReady callback, ref forwarding, and container props",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:37:57Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "HopeBearer",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:47:15Z",
+      "body": "### Code review\n\nOpenSpec proposal, READMEs, and tests are all in place. A few lower-confidence concerns worth a look (none are individually blocking, but the first one is a real coordination problem):\n\n1. **Direct overlap with the still-open PR #17.** Both PRs add `onReady` to `packages/react/src/use-editor.ts`, `packages/react/src/types.ts`, `packages/vue/src/use-editor.ts`, and `packages/vue/src/types.ts`, and both claim Roadmap item #4. Whichever lands second will need a non-trivial rebase. The two also disagree on call-site shape — PR #19 destructures `onReady` out of config before passing to `createEditor` (cleaner, prevents leakage), while PR #17 passes the full config through. Worth coordinating which approach lands.\n\n2. **Vue `<Editor>` spreads `...attrs` into `UseEditorConfig` without setting `inheritAttrs: false`.** Result: any non-prop attribute (`class`, `style`, `id`, `data-*`, parent event listeners) is BOTH spread into `createEditor` as an `EditorConfig` field AND auto-applied to the root `<div>` via Vue's default attribute inheritance. The forwarded keys silently pollute `EditorConfig` (today they're ignored; if `EditorConfig` later grows a field named like a DOM attribute, this becomes a real collision). Suggested fix: declare `inheritAttrs: false` and explicitly list which attrs forward where, OR drop the `...attrs` spread entirely and stick to the declared `initialValue` + `className` props plus the `ready` emit.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/678181bde049ba4e3ff26198a51dba627884d27a/packages/vue/src/editor.ts#L1-L40\n\n3. **Vue `className` prop is non-idiomatic.** Vue users will reasonably write `<Editor class=\"foo\" />` — that goes through `attrs` (issue #2 above) rather than `props.className`, so the explicit className handling never fires. Either rename the prop to `class` (the framework will merge it onto the root automatically), or document that consumers must use `class-name=\"foo\"` and remove the auto-attr-inheritance side channel.\n\n4. **React `useImperativeHandle(ref, () => editor as EditorAPI, [editor])` casts a possibly-null value.** `editor` comes from `useState<EditorAPI | null>(null)` and is null on the first render — the `as EditorAPI` cast hides this from the type system. Consumers writing `ref.current.focus()` without a null-check will crash on the first paint frame. Either change the type to `EditorAPI | null` (and update the spec scenario) or use the synchronous `editorRef.current` rather than the state.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/678181bde049ba4e3ff26198a51dba627884d27a/packages/react/src/editor.tsx\n\n5. **React StrictMode double-mount fires `onReady` twice, violating the spec's \"exactly once\" guarantee.** In React 18 dev, the mount effect runs → cleanup destroys the instance and nulls `editorRef.current` → effect runs again → `createEditor` is called a second time → `onReady` fires again with a fresh instance. The first instance is destroyed; consumers who captured it via the first `onReady` call hold a dead handle. The `react-sdk/spec.md` scenario says `onReady` SHALL be called exactly once. Consider a `useRef` flag to guard the second invocation, or relax the spec to \"exactly once per editor instance\".\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/678181bde049ba4e3ff26198a51dba627884d27a/packages/react/src/use-editor.ts\n\n6. **Vue test \"exposes editor via template ref\" only asserts the `ready` event, not the exposed `editor` ref.** The test name promises one thing; the assertion checks another. Add an assertion against `wrapper.vm.editor` (or the equivalent expose surface).\n\n7. Process nit: PR adds new `use-editor.test.tsx` / `use-editor.test.ts` files alongside the pre-existing `editor-react.test.tsx` / `editor-vue.test.ts` without removing or merging them. Two test files with overlapping mount/destroy cases will diverge over time.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:14Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=19) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=19) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=19) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:37:55Z",
+      "body": "感谢 onReady + ref 转发 + 容器属性 🙏 roadmap #4 已由 #29 落地（`c55d37d`）。本 PR 重复，故关闭。如果 ref 转发是你认为 #29 缺少的能力，欢迎基于当前 main 单独提一个聚焦的小 PR。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；非常欢迎你继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,123 @@
+{
+  "pr_number": 100,
+  "title": "feat(core): add split-pane preview sync scroll",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T15:28:15Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+  "merge_commit_sha": "98984faad0b133804e838558c3844242eaea0b7a",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "121907b7be5a4de7e4dc1907be1ad445c7a6bbb7",
+      "message": "feat(core): add split-pane preview sync scroll\n\nExpose getScrollElement() and attachSyncScroll() for hosts wiring a\nside-by-side HTML preview. Integrate the feature in electron-demo with\na settings toggle (Roadmap P2 #13).\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-02T09:05:53Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 1,
+      "changes": 9
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 5,
+      "changes": 34
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/split-preview.ts",
+      "status": "added",
+      "additions": 65,
+      "deletions": 0,
+      "changes": 65
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 72,
+      "deletions": 0,
+      "changes": 72
+    },
+    {
+      "filename": "packages/core/README.md",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/src/sync-scroll.ts",
+      "status": "added",
+      "additions": 79,
+      "deletions": 0,
+      "changes": 79
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "packages/core/test/sync-scroll.test.ts",
+      "status": "added",
+      "additions": 101,
+      "deletions": 0,
+      "changes": 101
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=100",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

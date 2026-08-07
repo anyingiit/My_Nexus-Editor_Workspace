@@ -1,0 +1,26 @@
+{
+  "pr_number": 100,
+  "title": "feat(core): add split-pane preview sync scroll",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T15:28:15Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ws8634",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-02T09:08:04Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=100) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T15:28:12Z",
+      "body": "严格审查结论：不通过。\n\n这个 PR 的代码能看出一定工程意识，但与 “Markdown live preview sync scroll” 的真实需求仍有明显偏差，不建议合入。\n\n主要问题：\n\n1. 同步策略过于粗糙。`attachSyncScroll()` 只是把两个滚动容器按 `scrollTop / maxScroll` 的比例互相映射。这不是 Markdown 源文与 HTML preview 的同步滚动：Markdown 行高、图片/表格/代码块/标题/列表渲染高度差异很大，比例同步在真实文档中会快速失准。\n\n2. 新增核心 API 的理由不充分。`getScrollElement()` 暴露了 CodeMirror 内部滚动 DOM，等于把内部结构变成公共 API；但 PR 没有充分论证这个 API 的长期兼容边界，也没有给出比 host 自行传入 container 更稳的抽象。\n\n3. bidirectional re-entrancy guard 依赖 `requestAnimationFrame` 清锁，在连续滚动、惯性滚动、两侧高度动态变化时容易出现丢事件或抖动；测试只覆盖了非常理想化的同步，不覆盖真实 wheel/scroll 连续事件。\n\n4. demo 层实现每次 `updateFromEditor()` 都 `innerHTML = exportHTML()` 并重新 wire sync，缺少节流/增量策略；大文档输入时会带来明显性能问题。\n\n5. Roadmap P2 #13 的描述是 live preview sync scroll，这通常需要基于源位置/heading/block anchors 的语义同步，至少要有复杂文档用例验证。当前实现只能算“两个容器比例联动”的基础工具。\n\n本地验证：`pnpm install --frozen-lockfile` 与 `pnpm typecheck` 通过；`pnpm test` 在当前机器被 Rollup native optional dependency 加载问题阻断，未进入用例执行。该环境问题不作为本 PR 的主要扣分点。\n\n建议关闭。候选人如果继续，应补充基于 Markdown block/source range 的同步设计，避免过早把 CodeMirror DOM 暴露为核心公共 API。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

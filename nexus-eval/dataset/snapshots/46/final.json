@@ -1,0 +1,102 @@
+{
+  "pr_number": 46,
+  "title": "feat(core): add getCursorPosition + getScrollInfo APIs and plugin-aut…",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-09T08:33:59Z",
+  "merged_by": null,
+  "closed_by": "GarrisonPJ",
+  "head_sha_final": "fd5bc9fdb9c23e81ff0200b118f85dcac22c8064",
+  "merge_commit_sha": "c1e80c55e92dd06c07c3cf3fba8e4f9e7e0a24b9",
+  "base_sha": "654433426e490069807442b970d5d6015bede5b4",
+  "commits": [
+    {
+      "sha": "fd5bc9fdb9c23e81ff0200b118f85dcac22c8064",
+      "message": "feat(core): add getCursorPosition + getScrollInfo APIs and plugin-autosave\n\nB — EditorAPI query methods:\n- getCursorPosition(): returns 1-based line, 1-based column, 0-based offset\n- getScrollInfo(): returns scrollTop/scrollLeft/scrollHeight/clientHeight\n- _nexusView (@internal): bridge for plugins needing CM6 EditorView access\n\nC — plugin-autosave:\n- createAutosavePlugin({ onSave, debounceMs }): debounced auto-save\n- isDirty(editor): document-snapshot-based dirty check (not boolean flag)\n- forceSave(editor): immediate flush for SPA route navigation\n- State lives in WeakMap<EditorView, AutosaveState> — no cross-instance\n  stomping, no stateful plugin object anti-pattern\n- Snapshots captured synchronously before await to prevent race conditions",
+      "date": "2026-06-02T12:09:49Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/plans/feat-editor-api-autosave-PR.md",
+      "status": "added",
+      "additions": 72,
+      "deletions": 0,
+      "changes": 72
+    },
+    {
+      "filename": "docs/plans/feat-editor-api-autosave.md",
+      "status": "added",
+      "additions": 205,
+      "deletions": 0,
+      "changes": 205
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 1,
+      "changes": 23
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "packages/plugin-autosave/README.md",
+      "status": "added",
+      "additions": 63,
+      "deletions": 0,
+      "changes": 63
+    },
+    {
+      "filename": "packages/plugin-autosave/package.json",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-autosave/src/index.ts",
+      "status": "added",
+      "additions": 99,
+      "deletions": 0,
+      "changes": 99
+    },
+    {
+      "filename": "packages/plugin-autosave/test/plugin-autosave.test.ts",
+      "status": "added",
+      "additions": 205,
+      "deletions": 0,
+      "changes": 205
+    },
+    {
+      "filename": "packages/plugin-autosave/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=46",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "split": "dev",
+  "tag": "final",
+  "n_iter": 10000,
+  "seed": 1234,
+  "ours_vs_baseline": {
+    "n": 21,
+    "delta_acc": 0.0952,
+    "p_value": 0.1243
+  },
+  "ours_vs_empty": {
+    "n": 21,
+    "delta_acc": 0.2381,
+    "p_value": 0.0027
+  },
+  "observed": {
+    "acc": {
+      "empty": 0.7143,
+      "baseline": 0.8571,
+      "ours": 0.9524
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "pr_number": 29,
+  "title": "feat(react, vue): add Editor component and useEditor hook with onReady callback",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T08:07:54Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "MiniMilkfish",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "APPROVED",
+      "submitted_at": "2026-05-22T12:52:17Z",
+      "body": "### Overall\n\n整体质量很高 👍 精准对齐 Roadmap #4（`<Editor />` container pass-through props + onReady callback，P0），React 和 Vue 双端 API 对称，类型设计、向后兼容、测试覆盖都做得到位，PR 描述和 commit message 也很规范。\n\n#### 亮点\n\n- **类型设计干净**：`EditorProps = UseEditorConfig + HTMLAttributes<HTMLDivElement>`，通过 Omit 排除 `onChange / onFocus / onBlur` 等与 EditorConfig 冲突的 DOM 事件，避免了类型撞车。\n- **双端对称**：Vue 通过 `inheritAttrs: false` + 显式 `attrs` 透传保持与 React 一致语义。\n- **测试覆盖到位**：React 测试覆盖了 `<Editor />` 和 `useEditor` 两条路径下的 onReady 触发、className 透传；Vue 测试通过 `attrs.class` 验证容器样式。\n- **README 双端新建**，包含 install / `<Editor />` / `useEditor` / container props 完整示例。\n\n#### 小建议（不阻塞合并）\n\n1. PR 模板里的 Screenshots / Recordings 段为空——下次类似 UI / DX 改动如果能附一段录屏或 gif 演示「`onReady` 触发后 editor.focus() 的实际效果」，对 reviewer 和后续维护者会更友好（参考 #5 的 manual UI check 风格）。\n2. `useEditor` 在 React 中如果在严格模式下首次 mount 会被卸载再挂载一次，`onReady` 当前是 `oncePerMount`，已经处理得很好；可以在 README 里加一句 strict-mode 行为说明。\n\n整体没问题，可以进入下一轮面试。HR 这边会在 BOSS 上同步面试时间和飞书会议链接。\n\nThanks for the contribution! 🚀\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-22T06:00:00Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=29) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T08:03:53Z",
+      "body": "感谢贡献 🙌 已在本地 rebase 到最新 main，跑通 `pnpm typecheck` + `pnpm test` + `pnpm build` 全绿后，以 squash 提交合入主分支：`c55d37d`（保留你为 author + Co-authored-by）。\n\n为保持 main 线性整洁，这里采用 squash 后手动合并的方式落地，所以 PR 由系统关闭而非显示 merged，但你的提交已经在主分支上了。再次感谢！"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

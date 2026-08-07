@@ -1,0 +1,123 @@
+{
+  "pr_number": 165,
+  "title": "feat(search): add fuzzy search to editor search panel",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "ea207dd781429a586096b98e76229fbe1afb50af",
+  "merge_commit_sha": "c86c7cef4df423d249779630b554e65aeadede27",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "ea207dd781429a586096b98e76229fbe1afb50af",
+      "message": "feat(search): add fuzzy search support",
+      "date": "2026-07-17T06:24:17Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "CHANGELOG.md",
+      "status": "added",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 9,
+      "changes": 34
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 2,
+      "changes": 9
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/outline-panel.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 2,
+      "changes": 8
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 241,
+      "changes": 241
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "docs/prd-mvp.md",
+      "status": "added",
+      "additions": 75,
+      "deletions": 0,
+      "changes": 75
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 1020,
+      "deletions": 204,
+      "changes": 1224
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 507,
+      "deletions": 126,
+      "changes": 633
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 0,
+      "changes": 14
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=165",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

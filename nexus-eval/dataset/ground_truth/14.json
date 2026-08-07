@@ -1,0 +1,33 @@
+{
+  "pr_number": 14,
+  "title": "docs(openspec): propose realtime collaboration plugin",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-14T04:54:02Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "ChainCoinLab",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "COMMENTED",
+      "submitted_at": "2026-05-13T11:22:29Z",
+      "body": "## Review: PR #14 — docs(openspec): propose realtime collaboration plugin\n\n**Assessment:** Pure documentation PR — proposes a realtime collaboration plugin design. Well-structured (proposal + design + spec + tasks). However, this is a docs-only PR with no implementation code, which per the challenge instructions counts as low-quality ('无关的测试/文档修改将被视为低质量').\n\nNo code changes beyond marking ROADMAP item as 'in progress'."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:38:21Z",
+      "body": "### Code review\n\nOpenSpec structure (proposal/design/tasks/spec) is conformant. A few design-stage gaps worth tightening before implementation starts (all lower-confidence, none blocking):\n\n- **Table widget interaction with remote edits is unaddressed.** Per the root `CLAUDE.md` rules 8/10/12, the live-preview-table `StateField` deliberately skips rebuilds during `isTableEditing()` on `docChanged` transactions, and uses `decos.map(tr.changes)` to preserve old DOM. A remote CRDT update arrives as a `docChanged` transaction — so a remote update mid-table-edit will keep stale decos against shifted markdown. design.md only briefly mentions \"live preview/table widgets\" in Risks; the spec has no scenario for \"remote update arrives while widget interaction is active.\" Worth at least one scenario (defer remote updates until widget interaction ends, or document that interactions get interrupted) and a design note pinning the contract.\n\n- **Initial-seeding race.** spec.md's \"Empty shared document MAY be seeded once\" has no gate on the initial-sync completing. With Yjs the joiner's local doc starts empty and fills on first sync — two clients joining a fresh shared doc simultaneously both see empty and both seed. The spec should require \"wait for initial state-vector exchange, only seed if still empty.\"\n\n- **`setDocument()` after connect is left as an Open Question in design.md**, but spec.md normatively prescribes \"Document switching\" behavior that depends on this decision. Pick a contract (no-op-with-warn vs explicit reset) and pin it in the spec.\n\n- **Provider interface is named, not defined.** `CollabProvider` as drafted has only `connect/disconnect/destroy/status` — no contract for how Yjs updates flow (single `send(update: Uint8Array)`? two channels for doc + awareness? sync-protocol handshake?). A WebSocket, WebRTC, and file/in-memory transport can't all conform to the current shape because the doc-update path is missing entirely.\n\n- **`onChange` rebroadcast prevention is a goal with no named mechanism.** Spec says \"remote update SHALL NOT rebroadcast as a new local edit\"; the implementing transaction-annotation / origin-tagging mechanism should be named in the spec so consumers (plugin authors, host `onChange` users) know what to expect.\n\n- `tasks.md` 1.3 is pre-checked claiming `openspec validate --strict` ran; worth confirming locally before merge.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:54:01Z",
+      "body": "Thanks for the proposal. Closing here to focus your several concurrent PRs into a single review thread.\n\nYou currently have three open PRs (#9, #14, #15). We'd like to focus review attention on **#15** (cloud storage interface) since it has the most concrete implementation surface. Realtime collaboration is a great direction but the design here still has open contracts (table-widget interaction with remote `docChanged` transactions per CLAUDE.md rule 12, the initial-seeding race, `setDocument()` after connect, and the `CollabProvider` interface itself lacks an update-flow contract — see [the review comment](https://github.com/floatboatai/Nexus-Editor/pull/14#issuecomment-4447575431) for specifics).\n\nHappy to re-engage on this after #15 lands. A future re-submission would be in a stronger position with:\n- A scenario covering \"remote update arrives while a live-preview/table widget interaction is active\"\n- An explicit \"wait for first sync before seeding\" gate in the spec\n- A pinned decision on `setDocument()` lifecycle after connect (currently in design.md Open Questions, but the spec normatively commits)\n- A concrete `CollabProvider` interface that includes the doc-update transport (`send/receive` or sync-protocol shape), not just lifecycle\n\nThanks for the work — the proposal is a good starting point, just early."
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

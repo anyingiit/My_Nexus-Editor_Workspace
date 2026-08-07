@@ -1,0 +1,26 @@
+{
+  "pr_number": 49,
+  "title": "Feat(webcomponent)：Implement Web Component custom-element wrapper and provide a supporting demo project for usage",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:39:50Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "qq1209974887",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-03T09:10:09Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=49) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:39:48Z",
+      "body": "感谢 Web Component 封装 + demo 🙏 `<nexus-editor>` 封装本身写得不错，但有几处按门槛需要先解决：(1) roadmap #22 要求先有 OpenSpec proposal，本 PR 缺；(2) 4 处接线 bug——根 package.json 的 dev/build 脚本 filter 的包名（`@floatboat/nexus-web-demo`）与实际包名（`@floatboat/nexus-webcomponent-demo`）不符、webcomponent 的 tsconfig 没 extends tsconfig.base、tsconfig.base.json 的 paths 没加 webcomponent、build 脚本顺序在依赖之前；(3) attributeChangedCallback 对 tab-size/indent-guides/read-only/live-preview 改了私有字段但没重新初始化编辑器，属性挂载后变更无效；(4) 3175 行的 demo app 体量远超被测的封装本身。建议拆成「webcomponent 包（含 OpenSpec、修接线与属性响应）」+「demo 单独 PR」。当前无法合并，故关闭。\n\n—— 评审基于本轮统一的质量门槛（本地 build/test/typecheck 全绿 + 无已知正确性缺陷 + 核心逻辑有自动化测试）。修好后非常欢迎基于当前 main 重新提交 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

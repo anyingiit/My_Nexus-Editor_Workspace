@@ -1,0 +1,19 @@
+{
+  "pr_number": 210,
+  "title": "feat(search): add fuzzy search mode with subsequence matcher",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "oyq77",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-08-04T09:14:55Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=210) <br/>All committers have signed the CLA."
+    }
+  ]
+}

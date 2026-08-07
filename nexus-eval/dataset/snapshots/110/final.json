@@ -1,0 +1,86 @@
+{
+  "pr_number": 110,
+  "title": "Fix/core eliminate unsafe any casts",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-03T05:52:20Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "10091a5e258310ebcedee73e7b1fe7756aac91c6",
+  "merge_commit_sha": "80577fa263798cb8d8807eac031e5b1d863fe3fa",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "ee9943157877eb3fe572ab2ae17a5915987e9518",
+      "message": "fix(core): eliminate unsafe as any casts in live preview modules",
+      "date": "2026-07-03T03:51:12Z"
+    },
+    {
+      "sha": "10091a5e258310ebcedee73e7b1fe7756aac91c6",
+      "message": "fix(core): eliminate unsafe as any casts in live preview modules",
+      "date": "2026-07-03T04:57:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 5,
+      "changes": 9
+    },
+    {
+      "filename": "packages/core/src/live-preview-diag.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/src/live-preview-renderers.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 126,
+      "deletions": 36,
+      "changes": 162
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 3,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=110",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "pr_number": 147,
+  "title": "refactor(core): standardize Widget API with EditorWidget base class",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "bunbun79",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-10T06:34:30Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=147) <br/>All committers have signed the CLA."
+    }
+  ]
+}

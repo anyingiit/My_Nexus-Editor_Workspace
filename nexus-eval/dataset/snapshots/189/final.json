@@ -1,0 +1,46 @@
+{
+  "pr_number": 189,
+  "title": "test(electron): cover Windows path normalization",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "6eaeb5d8126f656d208176c0f6930cd194f511fd",
+  "merge_commit_sha": "863bf88d22b6b698878d6c50a1d117a84ef11971",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "6eaeb5d8126f656d208176c0f6930cd194f511fd",
+      "message": "test(electron): cover Windows path normalization",
+      "date": "2026-07-27T07:54:34Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/test/link-index.test.ts",
+      "status": "modified",
+      "additions": 75,
+      "deletions": 0,
+      "changes": 75
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=189",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

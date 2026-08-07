@@ -1,0 +1,64 @@
+{
+  "pr_number": 188,
+  "title": "fix(live-preview): reveal footnote source in edit mode",
+  "body": "## Summary\r\n\r\nFootnote previews now switch back to the Markdown source when the caret enters the footnote range or when the rendered footnote is clicked.\r\n\r\n## Why\r\n\r\nLinks and HTML blocks already have a clear edit-mode path in live preview. Footnotes had the preview rendering, but editing the original `[^1]` / `[^1]: ...` source was awkward once the widget replaced it.\r\n\r\n## Changes\r\n\r\n- reveal footnote reference and definition source while the selection is inside the range\r\n- let rendered footnote previews move the caret back into the source\r\n- add live-preview coverage for both cursor and click paths\r\n\r\n## Testing\r\n\r\n- `pnpm test`\r\n- `pnpm typecheck`\r\n- `pnpm build`\r\n",
+  "created_at": "2026-07-27T06:28:55Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "d2243960463ec6ea85d3d2685de80f3d1f59de1a",
+  "first_review_time": "2026-07-27T06:29:15Z",
+  "commits_at_first_review": [
+    {
+      "sha": "d2243960463ec6ea85d3d2685de80f3d1f59de1a",
+      "message": "fix(live-preview): reveal footnote source in edit mode",
+      "date": "2026-07-27T06:00:45Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "0746f0f0cf56bc2b9cfb8adb36195416f174a483",
+        "filename": "packages/core/src/live-preview.ts",
+        "status": "modified",
+        "additions": 30,
+        "deletions": 2,
+        "changes": 32,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d2243960463ec6ea85d3d2685de80f3d1f59de1a/packages%2Fcore%2Fsrc%2Flive-preview.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d2243960463ec6ea85d3d2685de80f3d1f59de1a/packages%2Fcore%2Fsrc%2Flive-preview.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Flive-preview.ts?ref=d2243960463ec6ea85d3d2685de80f3d1f59de1a",
+        "patch": "@@ -131,6 +131,24 @@ function createWidget(\n   })();\n }\n \n+function bindEnterEditMode(\n+  element: HTMLElement,\n+  viewRef: { current: EditorView | null },\n+  anchor: number\n+): void {\n+  element.addEventListener(\"mousedown\", (event) => {\n+    event.preventDefault();\n+    event.stopPropagation();\n+\n+    const view = viewRef.current;\n+    if (!view) return;\n+\n+    const safeAnchor = Math.max(0, Math.min(anchor, view.state.doc.length));\n+    view.dispatch({ selection: { anchor: safeAnchor } });\n+    view.focus();\n+  });\n+}\n+\n class CodeCopyWidget extends WidgetType {\n   constructor(private readonly code: string, private readonly lang: string) { super(); }\n   eq(other: CodeCopyWidget): boolean { return other.code === this.code && other.lang === this.lang; }\n@@ -1178,34 +1196,44 @@ function buildDecorations(\n           .range(range.from, range.to)\n       );\n     } else if (range.node.type === \"footnoteReference\") {\n+      if (selectionIntersects(range.from, range.to, selection, true)) {\n+        continue;\n+      }\n       const ref = range.node as FootnoteReference;\n       const sup = document.createElement(\"sup\");\n       sup.textContent = ref.identifier;\n+      sup.setAttribute(\"data-live-preview-footnote-reference\", ref.identifier);\n       sup.style.cssText = \"color:var(--nexus-accent);cursor:pointer;font-size:0.8em;vertical-align:super;\";\n+      bindEnterEditMode(sup, viewRef, range.from + 2);\n       const fnRefKey = `fnref:${range.from}-${range.to}:${ref.identifier}`;\n       decos.push(\n         Decoration.replace({\n-          widget: createWidget(sup, false, undefined, fnRefKey),\n+          widget: createWidget(sup, true, undefined, fnRefKey),\n         }).range(range.from, range.to)\n       );\n     } else if (range.node.type === \"footnoteDefinition\") {\n+      if (selectionIntersects(range.from, range.to, selection, true)) {\n+        continue;\n+      }\n       const def = range.node as FootnoteDefinition;\n       const defText = range.source.replace(/^\\[\\^\\w+\\]:\\s*/, \"\");\n       const el = document.createElement(\"div\");\n+      el.setAttribute(\"data-live-preview-footnote-definition\", def.identifier);\n       el.style.cssText = \"font-size:0.85em;color:var(--nexus-text-muted);border-top:1px solid var(--nexus-border);padding-top:8px;\";\n       const marker = document.createElement(\"sup\");\n       marker.textContent = def.identifier;\n       marker.style.cssText = \"color:var(--nexus-accent);margin-right:4px;\";\n       el.appendChild(marker);\n       el.appendChild(document.createTextNode(defText));\n+      bindEnterEditMode(el, viewRef, range.from + 2);\n       // Use line decoration + widget for stable viewport height\n       decos.push(Decoration.line({\n         attributes: { style: \"padding:0;margin:0;min-height:0;\" }\n       }).range(range.from));\n       const fnDefKey = `fndef:${range.from}-${range.to}:${def.identifier}:${range.source}`;\n       decos.push(\n         Decoration.replace({\n-          widget: createWidget(el, false, undefined, fnDefKey),\n+          widget: createWidget(el, true, undefined, fnDefKey),\n         }).range(range.from, range.to)\n       );\n     } else {"
+      },
+      {
+        "sha": "31e3eeebae98949b87355fbfe3f7d647bdbeab23",
+        "filename": "packages/core/test/live-preview.test.ts",
+        "status": "modified",
+        "additions": 76,
+        "deletions": 0,
+        "changes": 76,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/d2243960463ec6ea85d3d2685de80f3d1f59de1a/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/d2243960463ec6ea85d3d2685de80f3d1f59de1a/packages%2Fcore%2Ftest%2Flive-preview.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Flive-preview.test.ts?ref=d2243960463ec6ea85d3d2685de80f3d1f59de1a",
+        "patch": "@@ -536,6 +536,82 @@ describe(\"live preview\", () => {\n     editor.destroy();\n   });\n \n+  it(\"reveals raw footnote reference markup when the cursor enters it\", () => {\n+    const container = document.createElement(\"div\");\n+    const source = \"Text with footnote[^1]\\n\\n[^1]: Definition text\";\n+    const editor = createEditor({\n+      container,\n+      initialValue: source,\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    editor.setSelection(0);\n+    expect(container.querySelector(\"[data-live-preview-footnote-reference='1']\")).not.toBeNull();\n+    expect(container.textContent).not.toContain(\"[^1]\");\n+\n+    editor.setSelection(source.indexOf(\"[^1]\") + 2);\n+    expect(container.textContent).toContain(\"[^1]\");\n+    expect(container.querySelector(\"[data-live-preview-footnote-reference='1']\")).toBeNull();\n+    editor.destroy();\n+  });\n+\n+  it(\"reveals raw footnote definition markup when the cursor enters it\", () => {\n+    const container = document.createElement(\"div\");\n+    const source = \"Text with footnote[^1]\\n\\n[^1]: Definition text\";\n+    const editor = createEditor({\n+      container,\n+      initialValue: source,\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    editor.setSelection(0);\n+    expect(container.querySelector(\"[data-live-preview-footnote-definition='1']\")).not.toBeNull();\n+    expect(container.textContent).not.toContain(\"[^1]: Definition text\");\n+\n+    editor.setSelection(source.indexOf(\"[^1]:\") + 3);\n+    expect(container.textContent).toContain(\"[^1]: Definition text\");\n+    expect(container.querySelector(\"[data-live-preview-footnote-definition='1']\")).toBeNull();\n+    editor.destroy();\n+  });\n+\n+  it(\"enters footnote reference edit mode from the rendered preview\", () => {\n+    const container = document.createElement(\"div\");\n+    const source = \"Text with footnote[^1]\\n\\n[^1]: Definition text\";\n+    const editor = createEditor({\n+      container,\n+      initialValue: source,\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    editor.setSelection(0);\n+    const reference = container.querySelector<HTMLElement>(\"[data-live-preview-footnote-reference='1']\");\n+    expect(reference).not.toBeNull();\n+    reference?.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, cancelable: true }));\n+    expect(container.textContent).toContain(\"[^1]\");\n+    editor.destroy();\n+  });\n+\n+  it(\"enters footnote definition edit mode from the rendered preview\", () => {\n+    const container = document.createElement(\"div\");\n+    const source = \"Text with footnote[^1]\\n\\n[^1]: Definition text\";\n+    const editor = createEditor({\n+      container,\n+      initialValue: source,\n+      livePreview: true,\n+      plugins: [createGfmPreset()]\n+    });\n+\n+    editor.setSelection(0);\n+    const definition = container.querySelector<HTMLElement>(\"[data-live-preview-footnote-definition='1']\");\n+    expect(definition).not.toBeNull();\n+    definition?.dispatchEvent(new MouseEvent(\"mousedown\", { bubbles: true, cancelable: true }));\n+    expect(container.textContent).toContain(\"[^1]: Definition text\");\n+    editor.destroy();\n+  });\n+\n   // ── Autolinks ──\n \n   it(\"renders GFM autolinks as styled links\", () => {"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=188",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

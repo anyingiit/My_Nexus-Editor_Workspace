@@ -1,0 +1,75 @@
+{
+  "pr_number": 209,
+  "title": "fix(core): honor remark syntax extensions in public AST",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "03488d602916fe3a8745b019d84d5a95bbb83706",
+  "merge_commit_sha": "069f682863c8d1bf16b98561e0ebf8e334e6bb56",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "f6a17ad10c7d0f723d968950a85cce68a4097ff1",
+      "message": "fix(core): honor remark syntax extensions in public AST",
+      "date": "2026-08-04T08:19:54Z"
+    },
+    {
+      "sha": "25718dfab916f825015ababa0e7bca135831bf13",
+      "message": "test(core): cover remark-aware public AST",
+      "date": "2026-08-04T08:21:06Z"
+    },
+    {
+      "sha": "644c634cd6b6fba66c8f61c8cb9437992d5ee33b",
+      "message": "test(math): cover public AST consumers",
+      "date": "2026-08-04T08:22:09Z"
+    },
+    {
+      "sha": "03488d602916fe3a8745b019d84d5a95bbb83706",
+      "message": "test(wordcount): exclude remark syntax nodes",
+      "date": "2026-08-04T08:23:14Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 156,
+      "deletions": 72,
+      "changes": 228
+    },
+    {
+      "filename": "packages/core/test/editor.test.ts",
+      "status": "modified",
+      "additions": 192,
+      "deletions": 1,
+      "changes": 193
+    },
+    {
+      "filename": "packages/plugin-math/test/plugin-math.test.ts",
+      "status": "added",
+      "additions": 60,
+      "deletions": 0,
+      "changes": 60
+    },
+    {
+      "filename": "packages/plugin-wordcount/test/plugin.test.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "pr_number": 64,
+  "title": "feat: support default text color configuration for newly input content",
+  "body": "<!--\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\n  e.g.  feat(toolbar): list toggle for multi-line selection\nAllowed scopes — see CONTRIBUTING.md §2\n\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2\n-->\n\n## Summary / 摘要\n\n<!-- One sentence summary of the change. / 一句话说明改了什么。 -->\n\n## Motivation / 背景与动机\n\n<!-- Why is this change needed? Link issue / roadmap entry / OpenSpec change. -->\n<!-- 解决什么问题？关联 issue / roadmap 条目 / OpenSpec change id。 -->\n\n- Issue:\n- Roadmap (docs/ROADMAP.md):\n- OpenSpec change:\n\n## Changes / 变更内容\n\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\n\n- `packages/core`:\n- `packages/plugin-*`:\n- `apps/electron-demo`:\n- `openspec/`:\n\n## Testing / 测试\n\n<!-- How was this verified? Commands and scenarios covered. -->\n<!-- 描述如何验证，附上命令与覆盖的场景。 -->\n\n- [ ] `pnpm test` passes / 全绿\n- [ ] Affected packages build (`pnpm build`) / 受影响包构建通过\n- [ ] New / updated vitest cases / 新增或更新的 vitest 用例：\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证：\n\n## Checklist / 自检清单\n\n- [ ] Title follows Conventional Commits / 标题遵循 Conventional Commits\n- [ ] Public API changes update package README / types — 改了公共 API 已同步 README 与类型\n- [ ] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md / 已核对 12 条表格规则\n- [ ] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec\n- [ ] No secrets / personal vault data committed / 无敏感信息被提交\n\n## Screenshots / Recordings · 截图或录屏 (UI changes)\n\n<!-- Attach screenshots or gifs for visible UI changes. / 改动可见 UI 时请附上截图或 gif。 -->\n",
+  "created_at": "2026-06-12T14:05:15Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "27917b22b26c87292ea37f8e04e8d6c88241222f",
+  "first_review_time": "2026-06-12T14:05:23Z",
+  "commits_at_first_review": [
+    {
+      "sha": "27917b22b26c87292ea37f8e04e8d6c88241222f",
+      "message": "feat: support default text color configuration for newly input content",
+      "date": "2026-06-12T12:56:54Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "82570a32bf04582d56804e1cdede02656b0c0139",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -683,6 +683,10 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       if (destroyed) return;\n       view.dispatch(themeExt.reconfigure(theme));\n     },\n+    reconfigure(transaction) {\n+      if (destroyed) return;\n+      view.dispatch(transaction);\n+    },\n     getSelection() {\n       const sel = view.state.selection.main;\n       return { anchor: sel.anchor, head: sel.head };"
+      },
+      {
+        "sha": "feead2e5e34750876f922e05abce60afef4b740a",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -139,6 +139,7 @@ export interface EditorAPI {\n   getTableOfContents(): TocEntry[];\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;\n+  reconfigure(transaction: { effects: any }): void;\n   getSelection(): { anchor: number; head: number };\n   getSlashCommands(): SlashCommandDef[];\n   uploadAsset(file: File): Promise<string | null>;"
+      },
+      {
+        "sha": "f70bd9cc5d776a2a83ae605d11fd62361758190d",
+        "filename": "packages/plugin-toolbar/src/color-decoration.ts",
+        "status": "modified",
+        "additions": 55,
+        "deletions": 21,
+        "changes": 76,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Fcolor-decoration.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Fcolor-decoration.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fcolor-decoration.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -17,11 +17,11 @@ import {\n   WidgetType,\n } from \"@codemirror/view\";\n \n-// Matches <span style=\"color:...\">...</span> and <mark style=\"background:...\">...</mark>\n-const COLOR_RE =\n-  /<span\\s+style=\"color:\\s*([^\"]+)\">([\\s\\S]*?)<\\/span>/g;\n-const HIGHLIGHT_RE =\n-  /<mark\\s+style=\"background:\\s*([^\"]+)\">([\\s\\S]*?)<\\/mark>/g;\n+// Matches internal markers produced by the toolbar, plus legacy raw HTML spans.\n+const COLOR_RE = /<span\\s+style=\"color:\\s*([^\"]+)\">([\\s\\S]*?)<\\/span>/g;\n+const COLOR_MARKER_RE = /\\[\\[nexus-color:([^\\]]+)\\]\\]([\\s\\S]*?)(?:\\[\\[\\/nexus-color\\]\\]|$)/g;\n+const HIGHLIGHT_RE = /<mark\\s+style=\"background:\\s*([^\"]+)\">([\\s\\S]*?)<\\/mark>/g;\n+const HIGHLIGHT_MARKER_RE = /\\[\\[nexus-highlight:([^\\]]+)\\]\\]([\\s\\S]*?)(?:\\[\\[\\/nexus-highlight\\]\\]|$)/g;\n \n /** Zero-width widget used to replace opening/closing tags (hides them). */\n class HiddenTagWidget extends WidgetType {\n@@ -69,6 +69,24 @@ function findColorRanges(doc: string): ColorRange[] {\n     });\n   }\n \n+  COLOR_MARKER_RE.lastIndex = 0;\n+  while ((m = COLOR_MARKER_RE.exec(doc)) !== null) {\n+    const from = m.index;\n+    const openTag = `[[nexus-color:${m[1]}]]`;\n+    const closeTag = \"[[/nexus-color]]\";\n+    const isComplete = m[0].endsWith(closeTag);\n+    const innerStart = from + openTag.length;\n+    const innerEnd = isComplete ? from + m[0].length - closeTag.length : innerStart;\n+    ranges.push({\n+      from,\n+      to: isComplete ? from + m[0].length : innerStart,\n+      innerFrom: innerStart,\n+      innerTo: innerEnd,\n+      color: m[1].trim(),\n+      kind: \"color\",\n+    });\n+  }\n+\n   HIGHLIGHT_RE.lastIndex = 0;\n   while ((m = HIGHLIGHT_RE.exec(doc)) !== null) {\n     const from = m.index;\n@@ -84,6 +102,21 @@ function findColorRanges(doc: string): ColorRange[] {\n     });\n   }\n \n+  HIGHLIGHT_MARKER_RE.lastIndex = 0;\n+  while ((m = HIGHLIGHT_MARKER_RE.exec(doc)) !== null) {\n+    const from = m.index;\n+    const openTag = `[[nexus-highlight:${m[1]}]]`;\n+    const closeTag = \"[[/nexus-highlight]]\";\n+    ranges.push({\n+      from,\n+      to: from + m[0].length,\n+      innerFrom: from + openTag.length,\n+      innerTo: from + m[0].length - closeTag.length,\n+      color: m[1].trim(),\n+      kind: \"background\",\n+    });\n+  }\n+\n   // Sort by position for Decoration.set ordering requirement\n   ranges.sort((a, b) => a.from - b.from);\n   return ranges;\n@@ -95,27 +128,28 @@ function buildDecorations(view: EditorView): DecorationSet {\n \n   if (ranges.length === 0) return Decoration.none;\n \n-  // Check if the cursor is inside any color range — if so, show raw text for that range\n-  const cursorPos = view.state.selection.main.head;\n-\n   const decorations: Array<{ from: number; to: number; value: Decoration }> = [];\n \n   for (const r of ranges) {\n-    // If cursor is inside this range, skip decorations so user can edit the raw HTML\n-    if (cursorPos >= r.from && cursorPos <= r.to) continue;\n-\n-    // Hide opening tag\n-    decorations.push({ from: r.from, to: r.innerFrom, value: hiddenWidget });\n+    // Hide the surrounding marker/tag markup while preserving the content as\n+    // styled text even when the cursor is inside the colored span.\n+    if (r.from < r.innerFrom) {\n+      decorations.push({ from: r.from, to: r.innerFrom, value: hiddenWidget });\n+    }\n \n-    // Style the inner text\n-    const markDeco =\n-      r.kind === \"color\"\n-        ? Decoration.mark({ attributes: { style: `color:${r.color}` } })\n-        : Decoration.mark({ attributes: { style: `background:${r.color};border-radius:2px;padding:0 1px` } });\n-    decorations.push({ from: r.innerFrom, to: r.innerTo, value: markDeco });\n+    if (r.innerFrom < r.innerTo) {\n+      // Style the inner text\n+      const markDeco =\n+        r.kind === \"color\"\n+          ? Decoration.mark({ attributes: { style: `color:${r.color}` } })\n+          : Decoration.mark({ attributes: { style: `background:${r.color};border-radius:2px;padding:0 1px` } });\n+      decorations.push({ from: r.innerFrom, to: r.innerTo, value: markDeco });\n+    }\n \n-    // Hide closing tag\n-    decorations.push({ from: r.innerTo, to: r.to, value: hiddenWidget });\n+    // Hide closing tag when one exists.\n+    if (r.innerTo < r.to) {\n+      decorations.push({ from: r.innerTo, to: r.to, value: hiddenWidget });\n+    }\n   }\n \n   // Must be sorted by from position, then by startSide"
+      },
+      {
+        "sha": "9c97d99f7b1184de2a6ad55ebb2440299db088c1",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 52,
+        "deletions": 5,
+        "changes": 57,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -1,5 +1,16 @@\n import type { EditorAPI } from \"@floatboat/nexus-core\";\n \n+const COLOR_MARKER_PREFIX = \"[[nexus-color:\";\n+const COLOR_MARKER_SUFFIX = \"]]\";\n+const COLOR_CLOSE_MARKER = \"[[/nexus-color]]\";\n+const HIGHLIGHT_MARKER_PREFIX = \"[[nexus-highlight:\";\n+const HIGHLIGHT_MARKER_SUFFIX = \"]]\";\n+const HIGHLIGHT_CLOSE_MARKER = \"[[/nexus-highlight]]\";\n+\n+function wrapWithMarker(text: string, openMarker: string, closeMarker: string): string {\n+  return `${openMarker}${text}${closeMarker}`;\n+}\n+\n /** Get the current line containing the anchor position. */\n function getCurrentLine(doc: string, anchor: number): { lineStart: number; lineEnd: number; line: string } {\n   const lineStart = doc.lastIndexOf(\"\\n\", anchor - 1) + 1;\n@@ -124,12 +135,47 @@ export function applyTextColor(editor: EditorAPI, color: string): boolean {\n   const to = Math.max(anchor, head);\n   const selected = doc.slice(from, to);\n \n-  if (from === to) return false;\n+  if (from === to) {\n+    const openMarker = `${COLOR_MARKER_PREFIX}${color}${COLOR_MARKER_SUFFIX}`;\n+\n+    const openMarkerPattern = /\\[\\[nexus-color:([^\\]]+)\\]\\]/g;\n+    let activeOpenMarkerIndex = -1;\n+    let activeOpenMarkerText = \"\";\n+    let match: RegExpExecArray | null;\n+\n+    while ((match = openMarkerPattern.exec(doc)) !== null) {\n+      if (match.index >= from) break;\n+      activeOpenMarkerIndex = match.index;\n+      activeOpenMarkerText = match[0];\n+    }\n+\n+    const closeMarkerIndex = doc.indexOf(COLOR_CLOSE_MARKER, from);\n+    if (\n+      activeOpenMarkerIndex >= 0 &&\n+      activeOpenMarkerText.length > 0 &&\n+      closeMarkerIndex !== -1 &&\n+      closeMarkerIndex >= from\n+    ) {\n+      const replacementStart = activeOpenMarkerIndex;\n+      const replacementEnd = replacementStart + activeOpenMarkerText.length;\n+      const newDoc = doc.slice(0, replacementStart) + openMarker + doc.slice(replacementEnd);\n+      editor.setDocument(newDoc);\n+      const delta = openMarker.length - activeOpenMarkerText.length;\n+      editor.setSelection(from + delta, from + delta);\n+      return true;\n+    }\n+\n+    const newDoc = doc.slice(0, from) + openMarker + COLOR_CLOSE_MARKER + doc.slice(to);\n+    editor.setDocument(newDoc);\n+    editor.setSelection(from + openMarker.length, from + openMarker.length);\n+    return true;\n+  }\n \n-  const wrapped = `<span style=\"color:${color}\">${selected}</span>`;\n+  const openMarker = `${COLOR_MARKER_PREFIX}${color}${COLOR_MARKER_SUFFIX}`;\n+  const wrapped = wrapWithMarker(selected, openMarker, COLOR_CLOSE_MARKER);\n   const newDoc = doc.slice(0, from) + wrapped + doc.slice(to);\n   editor.setDocument(newDoc);\n-  const innerStart = from + `<span style=\"color:${color}\">`.length;\n+  const innerStart = from + openMarker.length;\n   editor.setSelection(innerStart, innerStart + selected.length);\n   return true;\n }\n@@ -143,10 +189,11 @@ export function applyHighlight(editor: EditorAPI, color: string): boolean {\n \n   if (from === to) return false;\n \n-  const wrapped = `<mark style=\"background:${color}\">${selected}</mark>`;\n+  const openMarker = `${HIGHLIGHT_MARKER_PREFIX}${color}${HIGHLIGHT_MARKER_SUFFIX}`;\n+  const wrapped = wrapWithMarker(selected, openMarker, HIGHLIGHT_CLOSE_MARKER);\n   const newDoc = doc.slice(0, from) + wrapped + doc.slice(to);\n   editor.setDocument(newDoc);\n-  const innerStart = from + `<mark style=\"background:${color}\">`.length;\n+  const innerStart = from + openMarker.length;\n   editor.setSelection(innerStart, innerStart + selected.length);\n   return true;\n }"
+      },
+      {
+        "sha": "faed4d5a0f0a656fbe7fbaafca2cd2b3e80ba66b",
+        "filename": "packages/plugin-toolbar/src/index.ts",
+        "status": "modified",
+        "additions": 51,
+        "deletions": 0,
+        "changes": 51,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -216,6 +216,54 @@ export const toolbarSlashCommands: SlashCommandDef[] = [\n   },\n ];\n \n+function handleColorBackspace(editor: EditorAPI, event: KeyboardEvent): boolean {\n+  if (event.key !== \"Backspace\") return false;\n+\n+  const doc = editor.getDocument();\n+  const { anchor, head } = editor.getSelection();\n+  if (anchor !== head) return false;\n+\n+  const pos = anchor;\n+  if (pos <= 0) return false;\n+\n+  const colorMarkerRe = /\\[\\[nexus-color:([^\\]]+)\\]\\]([\\s\\S]*?)(?:\\[\\[\\/nexus-color\\]\\]|$)/g;\n+  let match: RegExpExecArray | null;\n+  while ((match = colorMarkerRe.exec(doc)) !== null) {\n+    const openTag = `[[nexus-color:${match[1]}]]`;\n+    const openTagStart = match.index;\n+    const openTagEnd = openTagStart + openTag.length;\n+    const closeTag = \"[[/nexus-color]]\";\n+    const closeTagStart = match[0].endsWith(closeTag) ? match.index + match[0].length - closeTag.length : -1;\n+    const closeTagEnd = closeTagStart >= 0 ? closeTagStart + closeTag.length : -1;\n+    const contentStart = openTagEnd;\n+    const contentEnd = closeTagStart >= 0 ? closeTagStart : doc.length;\n+\n+    const isInsideOpenTag = pos > openTagStart && pos <= openTagEnd;\n+    const isInsideCloseTag = closeTagStart >= 0 && pos > closeTagStart && pos <= closeTagEnd;\n+    const isBoundaryBeforeContent = pos === contentStart;\n+    const isInsideContent = pos > contentStart && pos <= contentEnd;\n+\n+    if (isInsideOpenTag || isInsideCloseTag || isBoundaryBeforeContent || isInsideContent) {\n+      const deleteIndex = isInsideContent\n+        ? pos - 1\n+        : isInsideCloseTag\n+          ? closeTagStart - 1\n+          : openTagStart - 1;\n+      if (deleteIndex >= 0) {\n+        const before = doc.slice(0, deleteIndex);\n+        const after = doc.slice(deleteIndex + 1);\n+        editor.setDocument(before + after);\n+        editor.setSelection(deleteIndex, deleteIndex);\n+        event.preventDefault();\n+        event.stopPropagation();\n+        return true;\n+      }\n+    }\n+  }\n+\n+  return false;\n+}\n+\n export function createToolbarPlugin(): NexusPlugin {\n   return {\n     name: \"plugin-toolbar\",\n@@ -231,5 +279,8 @@ export function createToolbarPlugin(): NexusPlugin {\n     ],\n     slashCommands: toolbarSlashCommands,\n     cmExtensions: [colorDecorationExtension()],\n+    handlers: {\n+      keydown: (event, ctx) => handleColorBackspace(ctx.editor, event),\n+    },\n   };\n }"
+      },
+      {
+        "sha": "251fb0a3f0d28e156ba9a3399db97d6eccc96beb",
+        "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+        "status": "modified",
+        "additions": 25,
+        "deletions": 5,
+        "changes": 30,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -371,6 +371,8 @@ function showColorPicker(\n   palette: string[],\n   apply: (editor: EditorAPI, color: string) => boolean,\n   onClose: () => void,\n+  selectedColor: string | null,\n+  onSelectColor: (color: string) => void,\n ): { destroy: () => void } {\n   const panel = document.createElement(\"div\");\n   panel.className = \"nexus-toolbar-dropdown\";\n@@ -390,30 +392,37 @@ function showColorPicker(\n     const swatch = document.createElement(\"button\");\n     swatch.type = \"button\";\n     swatch.title = color;\n+    const isSelected = selectedColor === color;\n     swatch.style.cssText = `\n       width: 22px; height: 22px;\n-      border: 1px solid var(--nexus-border-subtle, #ddd);\n+      border: 1px solid ${isSelected ? \"var(--nexus-accent, #0969da)\" : \"var(--nexus-border-subtle, #ddd)\"};\n       border-radius: 3px;\n       background: ${color};\n       cursor: pointer;\n       padding: 0;\n       transition: transform 0.1s, box-shadow 0.1s;\n+      box-shadow: ${isSelected ? \"inset 0 0 0 1px #fff, 0 0 0 2px var(--nexus-accent, #0969da)\" : \"none\"};\n     `;\n \n     const handleClick = (e: MouseEvent) => {\n       e.preventDefault();\n       e.stopPropagation();\n+      onSelectColor(color);\n       apply(editor, color);\n       editor.focus();\n       onClose();\n     };\n     const handleEnter = () => {\n       swatch.style.transform = \"scale(1.2)\";\n-      swatch.style.boxShadow = \"0 0 0 2px var(--nexus-accent, #0969da)\";\n+      swatch.style.boxShadow = isSelected\n+        ? \"inset 0 0 0 1px #fff, 0 0 0 2px var(--nexus-accent, #0969da)\"\n+        : \"0 0 0 2px var(--nexus-accent, #0969da)\";\n     };\n     const handleLeave = () => {\n       swatch.style.transform = \"scale(1)\";\n-      swatch.style.boxShadow = \"none\";\n+      swatch.style.boxShadow = isSelected\n+        ? \"inset 0 0 0 1px #fff, 0 0 0 2px var(--nexus-accent, #0969da)\"\n+        : \"none\";\n     };\n \n     swatch.addEventListener(\"click\", handleClick);\n@@ -453,6 +462,7 @@ export function createToolbarUI(editor: EditorAPI, options?: ToolbarUIOptions):\n   const cleanupFns: Array<() => void> = [];\n   let activeDropdown: { destroy: () => void } | null = null;\n   let outsideHandler: ((e: MouseEvent) => void) | null = null;\n+  let activeTextColor: string | null = null;\n \n   function closeDropdown() {\n     if (activeDropdown) {\n@@ -507,9 +517,19 @@ export function createToolbarUI(editor: EditorAPI, options?: ToolbarUIOptions):\n           if (btn.id === \"heading-menu\") {\n             activeDropdown = showHeadingDropdown(editor, button, closeDropdown);\n           } else if (btn.id === \"text-color\") {\n-            activeDropdown = showColorPicker(editor, button, COLOR_PALETTE, applyTextColor, closeDropdown);\n+            activeDropdown = showColorPicker(\n+              editor,\n+              button,\n+              COLOR_PALETTE,\n+              applyTextColor,\n+              closeDropdown,\n+              activeTextColor,\n+              (color) => {\n+                activeTextColor = color;\n+              },\n+            );\n           } else if (btn.id === \"highlight\") {\n-            activeDropdown = showColorPicker(editor, button, HIGHLIGHT_PALETTE, applyHighlight, closeDropdown);\n+            activeDropdown = showColorPicker(editor, button, HIGHLIGHT_PALETTE, applyHighlight, closeDropdown, null, () => {});\n           }\n \n           outsideHandler = (ev: MouseEvent) => {"
+      },
+      {
+        "sha": "e8e4d5ad192cb31a7d1621ee6ab80848570ab5ea",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 140,
+        "deletions": 1,
+        "changes": 141,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -1,4 +1,4 @@\n-import { describe, expect, it } from \"vitest\";\n+import { afterEach, beforeAll, describe, expect, it, vi } from \"vitest\";\n \n import { createEditor } from \"@floatboat/nexus-core\";\n import {\n@@ -9,8 +9,28 @@ import {\n   toggleHeading,\n   createToolbarPlugin,\n   createToolbarUI,\n+  applyTextColor,\n } from \"../src/index\";\n \n+beforeAll(() => {\n+  if (!(\"getClientRects\" in Range.prototype)) {\n+    Object.defineProperty(Range.prototype, \"getClientRects\", {\n+      configurable: true,\n+      value: () => [] as unknown as DOMRectList,\n+    });\n+  }\n+  if (!(\"getBoundingClientRect\" in Range.prototype)) {\n+    Object.defineProperty(Range.prototype, \"getBoundingClientRect\", {\n+      configurable: true,\n+      value: () => new DOMRect(),\n+    });\n+  }\n+});\n+\n+afterEach(() => {\n+  vi.useRealTimers();\n+});\n+\n describe(\"toggleBold\", () => {\n   it(\"wraps selected text with **\", () => {\n     const container = document.createElement(\"div\");\n@@ -120,6 +140,125 @@ describe(\"toggleHeading\", () => {\n   });\n });\n \n+describe(\"inline color decorations\", () => {\n+  it(\"renders colored spans as styled text instead of raw HTML markup\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: '<span style=\"color:#f1c232\">you might have mixed feelings about rain</span>',\n+      plugins: [createToolbarPlugin()],\n+    });\n+\n+    expect(editor.getDocument()).toContain('<span style=\"color:#f1c232\">you might have mixed feelings about rain</span>');\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"applies the chosen color to subsequent typing when no text is selected\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [createToolbarPlugin()],\n+    });\n+\n+    editor.setSelection(0);\n+    expect(applyTextColor(editor, \"#f1c232\")).toBe(true);\n+\n+    expect(editor.getDocument()).toBe(\"[[nexus-color:#f1c232]][[/nexus-color]]\");\n+    expect(container.textContent).not.toContain(\"[[nexus-color\");\n+    expect(container.textContent).not.toContain(\"[[/nexus-color]]\");\n+\n+    editor.replaceSelection(\"hello\");\n+\n+    expect(editor.getDocument()).toBe(\"[[nexus-color:#f1c232]]hello[[/nexus-color]]\");\n+    expect(container.textContent).toContain(\"hello\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"reselecting a different color updates the active default for subsequent typing\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"\",\n+      plugins: [createToolbarPlugin()],\n+    });\n+\n+    editor.setSelection(0);\n+    expect(applyTextColor(editor, \"#f1c232\")).toBe(true);\n+    editor.replaceSelection(\"hello\");\n+\n+    expect(applyTextColor(editor, \"#ff0000\")).toBe(true);\n+    editor.replaceSelection(\" world\");\n+\n+    expect(editor.getDocument()).toBe(\"[[nexus-color:#ff0000]]hello world[[/nexus-color]]\");\n+\n+    expect(editor.getDocument()).toContain(\"[[nexus-color:#ff0000]]hello world[[/nexus-color]]\");\n+    expect(editor.getDocument()).toContain(\"hello\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"backspace at the start of colored text removes the prior visible character without exposing marker tags\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"A[[nexus-color:#4285f4]]hello[[/nexus-color]]\",\n+      plugins: [createToolbarPlugin()],\n+    });\n+\n+    const content = container.querySelector(\"[contenteditable='true']\") as HTMLElement;\n+    const openTag = \"[[nexus-color:#4285f4]]\";\n+    editor.setSelection(openTag.length);\n+\n+    const event = new KeyboardEvent(\"keydown\", { key: \"Backspace\", bubbles: true, cancelable: true });\n+    content.dispatchEvent(event);\n+\n+    expect(event.defaultPrevented).toBe(true);\n+    expect(editor.getDocument()).toBe(\"[[nexus-color:#4285f4]]hello[[/nexus-color]]\");\n+    expect(container.textContent).not.toContain(\"[[nexus-color\");\n+    expect(container.textContent).not.toContain(\"[[/nexus-color]]\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"deleting a character inside colored text keeps the remaining sentence colored\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({\n+      container,\n+      initialValue: \"[[nexus-color:#4285f4]]hello[[/nexus-color]]\",\n+      plugins: [createToolbarPlugin()],\n+    });\n+\n+    const content = container.querySelector(\"[contenteditable='true']\") as HTMLElement;\n+    const openTag = \"[[nexus-color:#4285f4]]\";\n+    editor.setSelection(openTag.length + 1);\n+\n+    const event = new KeyboardEvent(\"keydown\", { key: \"Backspace\", bubbles: true, cancelable: true });\n+    content.dispatchEvent(event);\n+\n+    expect(event.defaultPrevented).toBe(true);\n+    expect(editor.getDocument()).toBe(\"[[nexus-color:#4285f4]]ello[[/nexus-color]]\");\n+    expect(container.textContent).not.toContain(\"[[nexus-color\");\n+    expect(container.textContent).not.toContain(\"[[/nexus-color]]\");\n+\n+    editor.destroy();\n+  });\n+\n+  it(\"hides incomplete color markers in the rendered view\", () => {\n+    const container = document.createElement(\"div\");\n+    createEditor({\n+      container,\n+      initialValue: \"[[nexus-color:#4285f4]]hello\",\n+      plugins: [createToolbarPlugin()],\n+    });\n+\n+    expect(container.textContent).not.toContain(\"[[nexus-color\");\n+    expect(container.textContent).toContain(\"hello\");\n+  });\n+});\n+\n describe(\"createToolbarPlugin\", () => {\n   it(\"returns a plugin with keyboard shortcuts\", () => {\n     const plugin = createToolbarPlugin();"
+      },
+      {
+        "sha": "fa7a86a23cf7ff5c0b3870c0f9ce0188c23639dc",
+        "filename": "packages/plugin-word-color/README.md",
+        "status": "added",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-word-color%2FREADME.md?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -0,0 +1,13 @@\n+# Plugin: Word Color\n+\n+Adds configurable per-word text coloring via a CodeMirror ViewPlugin.\n+\n+Usage:\n+\n+```ts\n+import { createWordColorPlugin } from \"@floatboat/nexus-plugin-word-color\";\n+\n+const plugin = createWordColorPlugin({ initial: { words: { important: '#d73a49' }, caseSensitive: false } });\n+\n+// Add to editor plugins\n+```\n\\ No newline at end of file"
+      },
+      {
+        "sha": "a2dcade458f40820125f546de7489d25a416e61a",
+        "filename": "packages/plugin-word-color/package.json",
+        "status": "added",
+        "additions": 16,
+        "deletions": 0,
+        "changes": 16,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-word-color%2Fpackage.json?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -0,0 +1,16 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-word-color\",\n+  \"version\": \"0.0.1\",\n+  \"private\": true,\n+  \"main\": \"dist/index.js\",\n+  \"types\": \"dist/index.d.ts\",\n+  \"files\": [\"dist\"],\n+  \"scripts\": {\n+    \"build\": \"tsc -p tsconfig.json\"\n+  },\n+  \"dependencies\": {\n+    \"@floatboat/nexus-core\": \"workspace:*\",\n+    \"@codemirror/state\": \"^6.6.0\",\n+    \"@codemirror/view\": \"^6.41.0\"\n+  }\n+}"
+      },
+      {
+        "sha": "6ba052d2a3e550fcf475572b8b2626a4362187b0",
+        "filename": "packages/plugin-word-color/src/index.ts",
+        "status": "added",
+        "additions": 29,
+        "deletions": 0,
+        "changes": 29,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-word-color%2Fsrc%2Findex.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -0,0 +1,29 @@\n+import type { NexusPlugin, EditorAPI } from \"@floatboat/nexus-core\";\n+import { createWordColorExtension, type WordColorOptions } from \"./word-color\";\n+\n+declare module \"@floatboat/nexus-core\" {\n+  interface EditorAPI {\n+    reconfigure?(transaction: { effects: any }): void;\n+    setWordColors?(map: Record<string, string>, caseSensitive?: boolean): void;\n+  }\n+}\n+\n+export interface WordColorPluginOptions {\n+  initial?: WordColorOptions;\n+}\n+\n+export function createWordColorPlugin(options: WordColorPluginOptions = {}): NexusPlugin {\n+  const wordColor = createWordColorExtension(options.initial ?? { words: {}, caseSensitive: false });\n+\n+  return {\n+    name: \"plugin-word-color\",\n+    cmExtensions: [wordColor.extension],\n+    onReady(editor: EditorAPI) {\n+      (editor as any).setWordColors = (map: Record<string, string>, caseSensitive = false) => {\n+        editor.reconfigure?.(wordColor.reconfigure({ words: map, caseSensitive }));\n+      };\n+    },\n+  } as NexusPlugin;\n+}\n+\n+export type { WordColorOptions };"
+      },
+      {
+        "sha": "b5ab391492785d9043f9eef2b160036f3e2ee0c5",
+        "filename": "packages/plugin-word-color/src/word-color.ts",
+        "status": "added",
+        "additions": 77,
+        "deletions": 0,
+        "changes": 77,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Fsrc%2Fword-color.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Fsrc%2Fword-color.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-word-color%2Fsrc%2Fword-color.ts?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -0,0 +1,77 @@\n+import { type Compartment, type Extension } from \"@codemirror/state\";\n+import { Decoration, type DecorationSet, EditorView, ViewPlugin, type ViewUpdate } from \"@codemirror/view\";\n+\n+export interface WordColorOptions {\n+  words: Record<string, string>;\n+  caseSensitive?: boolean;\n+}\n+\n+export interface WordColorExtension {\n+  extension: Extension;\n+  reconfigure(next: WordColorOptions): { effects: any };\n+}\n+\n+export function createWordColorExtension(opts: WordColorOptions): WordColorExtension {\n+  const compartment = new Compartment();\n+  return {\n+    extension: compartment.of(wordColorExtension(opts)),\n+    reconfigure(next: WordColorOptions) {\n+      return { effects: compartment.reconfigure(wordColorExtension(next)) };\n+    },\n+  };\n+}\n+\n+function escapeRegExp(value: string): string {\n+  return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n+}\n+\n+function buildRegex(words: string[], caseSensitive = false): RegExp | null {\n+  if (words.length === 0) return null;\n+  const pattern = words.map(escapeRegExp).join(\"|\");\n+  const flags = caseSensitive ? \"g\" : \"gi\";\n+  return new RegExp(`\\\\b(?:${pattern})\\\\b`, flags);\n+}\n+\n+function buildDecorations(view: EditorView, opts: WordColorOptions): DecorationSet {\n+  const doc = view.state.doc.toString();\n+  const words = Object.keys(opts.words || {});\n+  const re = buildRegex(words, !!opts.caseSensitive);\n+  if (!re) return Decoration.none;\n+\n+  const cursorPos = view.state.selection.main.head;\n+  const decorations: Array<{ from: number; to: number; value: Decoration }> = [];\n+\n+  for (const m of doc.matchAll(re)) {\n+    const text = m[0];\n+    const from = m.index ?? 0;\n+    const to = from + text.length;\n+    if (cursorPos >= from && cursorPos <= to) continue; // leave editable\n+    const key = opts.caseSensitive ? text : text.toLowerCase();\n+    const color = opts.words[key] ?? opts.words[text] ?? opts.words[text.toLowerCase()];\n+    if (!color) continue;\n+    const deco = Decoration.mark({ attributes: { style: `color: ${color}` } });\n+    decorations.push({ from, to, value: deco });\n+  }\n+\n+  if (decorations.length === 0) return Decoration.none;\n+  decorations.sort((a, b) => a.from - b.from || a.value.startSide - b.value.startSide);\n+  return Decoration.set(decorations.map((d) => d.value.range(d.from, d.to)));\n+}\n+\n+export function wordColorExtension(opts: WordColorOptions): Extension {\n+  const plugin = ViewPlugin.fromClass(\n+    class {\n+      decorations: DecorationSet;\n+      constructor(view: EditorView) {\n+        this.decorations = buildDecorations(view, opts);\n+      }\n+      update(update: ViewUpdate) {\n+        if (update.docChanged || update.selectionSet) {\n+          this.decorations = buildDecorations(update.view, opts);\n+        }\n+      }\n+    },\n+    { decorations: (v) => v.decorations }\n+  );\n+  return plugin;\n+}"
+      },
+      {
+        "sha": "5a24989cd30dcf3749ca7e60d4e83d6ddbb14714",
+        "filename": "packages/plugin-word-color/tsconfig.json",
+        "status": "added",
+        "additions": 8,
+        "deletions": 0,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/packages%2Fplugin-word-color%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-word-color%2Ftsconfig.json?ref=27917b22b26c87292ea37f8e04e8d6c88241222f",
+        "patch": "@@ -0,0 +1,8 @@\n+{\n+  \"extends\": \"../../tsconfig.base.json\",\n+  \"compilerOptions\": {\n+    \"outDir\": \"dist\",\n+    \"rootDir\": \"src\"\n+  },\n+  \"include\": [\"src\"]\n+}"
+      },
+      {
+        "sha": "f158a2896216cea0f586116b18bd628a5d304a5f",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 3713,
+        "deletions": 4526,
+        "changes": 8239,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/27917b22b26c87292ea37f8e04e8d6c88241222f/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/27917b22b26c87292ea37f8e04e8d6c88241222f/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=27917b22b26c87292ea37f8e04e8d6c88241222f"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=64",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

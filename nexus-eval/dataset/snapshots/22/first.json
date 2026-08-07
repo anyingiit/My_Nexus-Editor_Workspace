@@ -1,0 +1,139 @@
+{
+  "pr_number": 22,
+  "title": "feat(core): add document structure analyzer with schema validation",
+  "body": "\r\n## PR title\r\n\r\nfeat(core): add document structure analyzer with schema validation\r\n\r\n---\r\n\r\n## Summary / 摘要\r\n\r\nAdd a core-level helper `analyzeDocumentStructure()` with lightweight heading schema validation and machine-readable structure warnings.\r\n\r\n中文摘要：\r\n\r\n新增核心 helper `analyzeDocumentStructure()`，支持轻量标题 schema 校验和机器可读结构告警。\r\n\r\n---\r\n\r\n## Motivation / 背景与动机\r\n\r\nHosts building structured writing tools, report-like editors, and LLM-powered writing assistants often need consistent document structure analysis without duplicating mdast traversal logic. This core helper provides a reusable solution.\r\n\r\n中文：\r\n\r\n面向构建结构化写作工具、报告编辑器和 LLM 驱动的写作助手，宿主端通常需要统一的文档结构分析而不重复 mdast 遍历逻辑。本核心 helper 提供可复用的解决方案。\r\n\r\n关联条目：\r\n\r\n- Issue: N/A\r\n- Roadmap (docs/ROADMAP.md): add document structure analysis capability\r\n- OpenSpec change: add-document-structure-analyzer\r\n\r\n---\r\n\r\n## Changes / 变更内容\r\n\r\n- `packages/core`:\r\n  - Add `analyzeDocumentStructure(input, options)` supporting markdown string or mdast Root\r\n  - Add schema validation options: `headingSchema`, `enforceHeadingOrder`, `allowUnknownHeadings`\r\n  - Add new issue types: `heading-level-mismatch`, `heading-order-mismatch`, `unknown-heading`\r\n  - Keep backward compatibility: `requiredHeadings`\r\n  - Add unit tests covering new schema rules and existing functionality\r\n- `openspec/changes/add-document-structure-analyzer/`:\r\n  - `proposal.md`, `tasks.md`, `specs/editor-core/spec.md` updated to cover schema validation\r\n- `README.md` / `README.zh.md`:\r\n  - Update examples to use `headingSchema` and show machine-readable structure warnings\r\n\r\n---\r\n\r\n## Testing / 测试\r\n\r\n- [x] `pnpm test` passes — all vitest tests for core pass\r\n- [x] Build succeeds: `pnpm --filter @floatboat/nexus-core build`\r\n- [x] Typecheck succeeds: `pnpm typecheck`\r\n- [x] New vitest cases cover:\r\n  - Missing required headings from `headingSchema`\r\n  - `heading-level-mismatch`\r\n  - `heading-order-mismatch`\r\n  - `unknown-heading`\r\n  - Default behavior when no schema\r\n\r\n---\r\n\r\n## Checklist / 自检清单\r\n\r\n- [x] Title follows Conventional Commits\r\n- [x] Public API changes update package README / types\r\n- [x] New capability → OpenSpec proposal linked\r\n- [x] No secrets / personal vault data committed\r\n\r\n---\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\nNo UI changes. Functionality tested via vitest.",
+  "created_at": "2026-05-14T11:08:57Z",
+  "draft": false,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "head_sha_at_first_review": "90ef6bca91824397e8bf3fd7468782adde5af01b",
+  "first_review_time": "2026-05-15T06:38:06Z",
+  "commits_at_first_review": [
+    {
+      "sha": "90ef6bca91824397e8bf3fd7468782adde5af01b",
+      "message": "feat(core): add document structure analyzer with schema validation",
+      "date": "2026-05-14T10:26:06Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 1,
+    "behind_by": 3,
+    "files": [
+      {
+        "sha": "ca62ee4d3f44cb083f60458055a62c570288c332",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 14,
+        "deletions": 0,
+        "changes": 14,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -223,6 +223,20 @@ editor.getCoordsAtPos(pos)     // { left, right, top, bottom } | null\n \n </details>\n \n+<details>\n+<summary><b>Document structure analysis</b></summary>\n+\n+```ts\n+import { analyzeDocumentStructure } from \"@floatboat/nexus-core\";\n+\n+const analysis = analyzeDocumentStructure(editor.getAst(), {\n+  requiredHeadings: [\"Summary\", \"Analysis\", \"Conclusion\"],\n+  maxSectionWords: 500,\n+});\n+```\n+\n+</details>\n+\n <details>\n <summary><b>Plugin authoring</b> — three tiers, one shape</summary>\n "
+      },
+      {
+        "sha": "3c93e4fb581a7fcb272d14a5405fa929e7601ae2",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 14,
+        "deletions": 0,
+        "changes": 14,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -223,6 +223,20 @@ editor.getCoordsAtPos(pos)     // { left, right, top, bottom } | null\n \n </details>\n \n+<details>\n+<summary><b>文档结构分析</b></summary>\n+\n+```ts\n+import { analyzeDocumentStructure } from \"@floatboat/nexus-core\";\n+\n+const analysis = analyzeDocumentStructure(editor.getAst(), {\n+  requiredHeadings: [\"摘要\", \"分析\", \"结论\"],\n+  maxSectionWords: 500,\n+});\n+```\n+\n+</details>\n+\n <details>\n <summary><b>插件编写</b> —— 三个层级，统一形态</summary>\n "
+      },
+      {
+        "sha": "9fed300bfe9cc4ea7bd1d49e2148f6e89fc961dc",
+        "filename": "openspec/changes/add-document-structure-analyzer/proposal.md",
+        "status": "added",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Fproposal.md?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -0,0 +1,15 @@\n+# Change: Add document structure analyzer\n+\n+## Why\n+Nexus already exposes Markdown as mdast, but hosts still need to repeat common outline and section analysis when building structured writing tools, report-like editors, and LLM-powered writing assistants.\n+\n+## What Changes\n+- Add a pure core helper, `analyzeDocumentStructure(input, options)`.\n+- Accept either Markdown text or an mdast `Root`.\n+- Return headings, sections, aggregate stats, and machine-readable structure issues.\n+- Keep the helper domain-neutral: no AI provider, UI, or medical-specific behavior.\n+\n+## Impact\n+- Affected specs: `editor-core`\n+- Affected code: `packages/core/src/document-structure.ts`, `packages/core/src/index.ts`, `packages/core/test/document-structure.test.ts`, `README.md`, `README.zh.md`\n+- New dependencies: none"
+      },
+      {
+        "sha": "0582b5f07627e259d0f4f763d2f7deaee8fd277d",
+        "filename": "openspec/changes/add-document-structure-analyzer/specs/editor-core/spec.md",
+        "status": "added",
+        "additions": 18,
+        "deletions": 0,
+        "changes": 18,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Fspecs%2Feditor-core%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Fspecs%2Feditor-core%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Fspecs%2Feditor-core%2Fspec.md?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -0,0 +1,18 @@\n+## ADDED Requirements\n+\n+### Requirement: Document Structure Analysis\n+\n+The core package SHALL expose `analyzeDocumentStructure(input, options)` as a pure helper that accepts Markdown text or an mdast `Root` and returns headings, sections, aggregate stats, and machine-readable structure issues. Supported issue types SHALL be limited to `empty-heading`, `heading-level-skip`, `duplicate-heading`, `missing-required-heading`, and `section-too-long`.\n+\n+#### Scenario: Analyze a Markdown string\n+- **WHEN** `analyzeDocumentStructure()` receives Markdown text with headings and body content\n+- **THEN** it SHALL return heading entries in document order\n+- **AND** it SHALL return section entries and aggregate document stats\n+\n+#### Scenario: Analyze an mdast Root\n+- **WHEN** `analyzeDocumentStructure()` receives an mdast `Root`\n+- **THEN** it SHALL analyze the tree without requiring an editor instance\n+\n+#### Scenario: Report supported structure issues\n+- **WHEN** the document contains empty headings, skipped heading levels, duplicate headings, missing required headings, or sections over the configured word limit\n+- **THEN** the returned `issues` array SHALL include machine-readable entries for those issue types"
+      },
+      {
+        "sha": "98dd21d7ee77c7e614b3f7160805c63286ae8b5f",
+        "filename": "openspec/changes/add-document-structure-analyzer/tasks.md",
+        "status": "added",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-document-structure-analyzer%2Ftasks.md?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -0,0 +1,7 @@\n+## 1. Implementation\n+- [x] 1.1 Add `analyzeDocumentStructure(input, options)` and public types in core.\n+- [x] 1.2 Export the helper and types from `@floatboat/nexus-core`.\n+- [x] 1.3 Add focused unit tests for headings, sections, stats, and supported issues.\n+- [x] 1.4 Add short README and README.zh API examples.\n+- [x] 1.5 Run affected core test/build checks.\n+- [ ] 1.6 Run OpenSpec validation."
+      },
+      {
+        "sha": "f0c7a6a0495e60d077e80eb180ec4e387145843d",
+        "filename": "packages/core/src/document-structure.ts",
+        "status": "added",
+        "additions": 347,
+        "deletions": 0,
+        "changes": 347,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/packages%2Fcore%2Fsrc%2Fdocument-structure.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/packages%2Fcore%2Fsrc%2Fdocument-structure.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Fdocument-structure.ts?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -0,0 +1,347 @@\n+import type { Root } from \"mdast\";\n+\n+import { lezerStringToMdast } from \"./lezer-mdast-adapter\";\n+\n+export type DocumentStructureInput = Root | string;\n+\n+export interface DocumentStructureOptions {\n+  requiredHeadings?: string[];\n+  maxSectionWords?: number;\n+}\n+\n+export interface DocumentStructureHeading {\n+  index: number;\n+  level: 1 | 2 | 3 | 4 | 5 | 6;\n+  text: string;\n+  from?: number;\n+  to?: number;\n+  parentIndex?: number;\n+}\n+\n+export interface DocumentStructureSection {\n+  headingIndex: number;\n+  level: 1 | 2 | 3 | 4 | 5 | 6;\n+  title: string;\n+  from?: number;\n+  to?: number;\n+  wordCount: number;\n+}\n+\n+export interface DocumentStructureStats {\n+  headings: number;\n+  sections: number;\n+  words: number;\n+  paragraphs: number;\n+  lists: number;\n+  tables: number;\n+  codeBlocks: number;\n+}\n+\n+export type DocumentStructureIssueType =\n+  | \"empty-heading\"\n+  | \"heading-level-skip\"\n+  | \"duplicate-heading\"\n+  | \"missing-required-heading\"\n+  | \"section-too-long\";\n+\n+export interface DocumentStructureIssue {\n+  type: DocumentStructureIssueType;\n+  severity: \"warning\";\n+  headingIndex?: number;\n+  firstHeadingIndex?: number;\n+  expected?: string;\n+  previousLevel?: number;\n+  actualLevel?: number;\n+  wordCount?: number;\n+  limit?: number;\n+  from?: number;\n+  to?: number;\n+}\n+\n+export interface DocumentStructureAnalysis {\n+  headings: DocumentStructureHeading[];\n+  sections: DocumentStructureSection[];\n+  stats: DocumentStructureStats;\n+  issues: DocumentStructureIssue[];\n+}\n+\n+interface MdastPosition {\n+  start?: { offset?: number };\n+  end?: { offset?: number };\n+}\n+\n+interface MdastNode {\n+  type: string;\n+  value?: unknown;\n+  children?: MdastNode[];\n+  position?: MdastPosition;\n+  depth?: number;\n+}\n+\n+function normalizeHeading(text: string): string {\n+  return text.trim().replace(/\\s+/g, \" \").toLowerCase();\n+}\n+\n+function getOffset(position: MdastPosition | undefined, edge: \"start\" | \"end\"): number | undefined {\n+  const offset = position?.[edge]?.offset;\n+  return typeof offset === \"number\" ? offset : undefined;\n+}\n+\n+function getPlainText(node: MdastNode): string {\n+  const parts: string[] = [];\n+\n+  const visit = (current: MdastNode) => {\n+    if (current.type === \"code\") {\n+      return;\n+    }\n+\n+    if (typeof current.value === \"string\") {\n+      parts.push(current.value);\n+    }\n+\n+    for (const child of current.children ?? []) {\n+      visit(child);\n+    }\n+  };\n+\n+  visit(node);\n+  return parts.join(\" \");\n+}\n+\n+function countWords(text: string): number {\n+  const matches = text.match(/[\\p{L}\\p{N}]+(?:['’.-][\\p{L}\\p{N}]+)*/gu);\n+  return matches?.length ?? 0;\n+}\n+\n+function toHeadingLevel(value: unknown): DocumentStructureHeading[\"level\"] {\n+  return value === 1 || value === 2 || value === 3 || value === 4 || value === 5 || value === 6\n+    ? value\n+    : 1;\n+}\n+\n+function createEmptyStats(): DocumentStructureStats {\n+  return {\n+    headings: 0,\n+    sections: 0,\n+    words: 0,\n+    paragraphs: 0,\n+    lists: 0,\n+    tables: 0,\n+    codeBlocks: 0\n+  };\n+}\n+\n+function collectStats(root: MdastNode): DocumentStructureStats {\n+  const stats = createEmptyStats();\n+\n+  const visit = (node: MdastNode) => {\n+    switch (node.type) {\n+      case \"heading\":\n+        stats.headings++;\n+        break;\n+      case \"paragraph\":\n+        stats.paragraphs++;\n+        break;\n+      case \"list\":\n+        stats.lists++;\n+        break;\n+      case \"table\":\n+        stats.tables++;\n+        break;\n+      case \"code\":\n+        stats.codeBlocks++;\n+        break;\n+    }\n+\n+    for (const child of node.children ?? []) {\n+      visit(child);\n+    }\n+  };\n+\n+  visit(root);\n+  stats.words = countWords(getPlainText(root));\n+  return stats;\n+}\n+\n+function analyzeHeadings(children: MdastNode[], issues: DocumentStructureIssue[]): DocumentStructureHeading[] {\n+  const headings: DocumentStructureHeading[] = [];\n+  const stack: DocumentStructureHeading[] = [];\n+  const seen = new Map<string, number>();\n+  let previousLevel: DocumentStructureHeading[\"level\"] | null = null;\n+\n+  for (const child of children) {\n+    if (child.type !== \"heading\") {\n+      continue;\n+    }\n+\n+    const level = toHeadingLevel(child.depth);\n+    const text = getPlainText(child).trim();\n+    const heading: DocumentStructureHeading = {\n+      index: headings.length,\n+      level,\n+      text,\n+      from: getOffset(child.position, \"start\"),\n+      to: getOffset(child.position, \"end\")\n+    };\n+\n+    while (stack.length > 0 && stack[stack.length - 1].level >= level) {\n+      stack.pop();\n+    }\n+    if (stack.length > 0) {\n+      heading.parentIndex = stack[stack.length - 1].index;\n+    }\n+    stack.push(heading);\n+\n+    if (!text) {\n+      issues.push({\n+        type: \"empty-heading\",\n+        severity: \"warning\",\n+        headingIndex: heading.index,\n+        from: heading.from,\n+        to: heading.to\n+      });\n+    }\n+\n+    if (previousLevel !== null && level > previousLevel + 1) {\n+      issues.push({\n+        type: \"heading-level-skip\",\n+        severity: \"warning\",\n+        headingIndex: heading.index,\n+        previousLevel,\n+        actualLevel: level,\n+        from: heading.from,\n+        to: heading.to\n+      });\n+    }\n+\n+    const normalized = normalizeHeading(text);\n+    if (normalized) {\n+      const firstHeadingIndex = seen.get(normalized);\n+      if (firstHeadingIndex === undefined) {\n+        seen.set(normalized, heading.index);\n+      } else {\n+        issues.push({\n+          type: \"duplicate-heading\",\n+          severity: \"warning\",\n+          headingIndex: heading.index,\n+          firstHeadingIndex,\n+          from: heading.from,\n+          to: heading.to\n+        });\n+      }\n+    }\n+\n+    headings.push(heading);\n+    previousLevel = level;\n+  }\n+\n+  return headings;\n+}\n+\n+function createSections(\n+  children: MdastNode[],\n+  headings: DocumentStructureHeading[],\n+  options: DocumentStructureOptions,\n+  issues: DocumentStructureIssue[]\n+): DocumentStructureSection[] {\n+  const headingChildIndexes = children.reduce<number[]>((out, child, index) => {\n+    if (child.type === \"heading\") {\n+      out.push(index);\n+    }\n+    return out;\n+  }, []);\n+  const sections: DocumentStructureSection[] = [];\n+  const maxSectionWords =\n+    typeof options.maxSectionWords === \"number\" && options.maxSectionWords >= 0\n+      ? options.maxSectionWords\n+      : undefined;\n+\n+  for (let i = 0; i < headingChildIndexes.length; i++) {\n+    const heading = headings[i];\n+    const startChildIndex = headingChildIndexes[i];\n+    let endChildIndex = children.length;\n+\n+    for (let j = i + 1; j < headingChildIndexes.length; j++) {\n+      const nextHeading = headings[j];\n+      if (nextHeading.level <= heading.level) {\n+        endChildIndex = headingChildIndexes[j];\n+        break;\n+      }\n+    }\n+\n+    const bodyNodes = children.slice(startChildIndex + 1, endChildIndex);\n+    const lastNode = children[endChildIndex - 1] ?? children[startChildIndex];\n+    const wordCount = countWords(bodyNodes.map(getPlainText).join(\" \"));\n+    const section: DocumentStructureSection = {\n+      headingIndex: heading.index,\n+      level: heading.level,\n+      title: heading.text,\n+      from: heading.from,\n+      to: getOffset(lastNode.position, \"end\") ?? heading.to,\n+      wordCount\n+    };\n+\n+    sections.push(section);\n+\n+    if (maxSectionWords !== undefined && wordCount > maxSectionWords) {\n+      issues.push({\n+        type: \"section-too-long\",\n+        severity: \"warning\",\n+        headingIndex: heading.index,\n+        wordCount,\n+        limit: maxSectionWords,\n+        from: section.from,\n+        to: section.to\n+      });\n+    }\n+  }\n+\n+  return sections;\n+}\n+\n+function addMissingRequiredHeadingIssues(\n+  headings: DocumentStructureHeading[],\n+  requiredHeadings: string[] | undefined,\n+  issues: DocumentStructureIssue[]\n+): void {\n+  if (!requiredHeadings || requiredHeadings.length === 0) {\n+    return;\n+  }\n+\n+  const actual = new Set(headings.map((heading) => normalizeHeading(heading.text)).filter(Boolean));\n+\n+  for (const requiredHeading of requiredHeadings) {\n+    const normalized = normalizeHeading(requiredHeading);\n+    if (!normalized || actual.has(normalized)) {\n+      continue;\n+    }\n+\n+    issues.push({\n+      type: \"missing-required-heading\",\n+      severity: \"warning\",\n+      expected: requiredHeading\n+    });\n+  }\n+}\n+\n+export function analyzeDocumentStructure(\n+  input: DocumentStructureInput,\n+  options: DocumentStructureOptions = {}\n+): DocumentStructureAnalysis {\n+  const root = (typeof input === \"string\" ? lezerStringToMdast(input) : input) as unknown as MdastNode;\n+  const children = root.children ?? [];\n+  const issues: DocumentStructureIssue[] = [];\n+  const headings = analyzeHeadings(children, issues);\n+  const sections = createSections(children, headings, options, issues);\n+  addMissingRequiredHeadingIssues(headings, options.requiredHeadings, issues);\n+\n+  return {\n+    headings,\n+    sections,\n+    stats: {\n+      ...collectStats(root),\n+      sections: sections.length\n+    },\n+    issues\n+  };\n+}"
+      },
+      {
+        "sha": "b31976e7bb7e43c4d766a8b0746447dea598bb38",
+        "filename": "packages/core/src/index.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/packages%2Fcore%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/packages%2Fcore%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Findex.ts?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -1,4 +1,15 @@\n export { createEditor } from \"./editor\";\n+export {\n+  analyzeDocumentStructure,\n+  type DocumentStructureAnalysis,\n+  type DocumentStructureHeading,\n+  type DocumentStructureInput,\n+  type DocumentStructureIssue,\n+  type DocumentStructureIssueType,\n+  type DocumentStructureOptions,\n+  type DocumentStructureSection,\n+  type DocumentStructureStats,\n+} from \"./document-structure\";\n export { markdownAutoPair } from \"./markdown-autopair\";\n export { markdownFold, markdownFoldService } from \"./markdown-fold\";\n export { markdownKeymap, handleMarkdownEnter } from \"./markdown-keymap\";"
+      },
+      {
+        "sha": "3dee99a9d4610f35d8cffece7afb3956e95c7c13",
+        "filename": "packages/core/test/document-structure.test.ts",
+        "status": "added",
+        "additions": 128,
+        "deletions": 0,
+        "changes": 128,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/90ef6bca91824397e8bf3fd7468782adde5af01b/packages%2Fcore%2Ftest%2Fdocument-structure.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/90ef6bca91824397e8bf3fd7468782adde5af01b/packages%2Fcore%2Ftest%2Fdocument-structure.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Fdocument-structure.test.ts?ref=90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "patch": "@@ -0,0 +1,128 @@\n+import type { Root } from \"mdast\";\n+import { describe, expect, it } from \"vitest\";\n+\n+import { analyzeDocumentStructure } from \"../src/index\";\n+\n+describe(\"analyzeDocumentStructure\", () => {\n+  it(\"analyzes headings, sections, and stats from markdown text\", () => {\n+    const analysis = analyzeDocumentStructure(\n+      \"# Report\\n\\nIntro words here.\\n\\n## Findings\\n\\nAlpha beta gamma.\\n\\n### Details\\n\\nNested words.\\n\\n## Impression\\n\\nDone.\"\n+    );\n+\n+    expect(analysis.headings).toEqual([\n+      expect.objectContaining({ index: 0, level: 1, text: \"Report\" }),\n+      expect.objectContaining({ index: 1, level: 2, text: \"Findings\", parentIndex: 0 }),\n+      expect.objectContaining({ index: 2, level: 3, text: \"Details\", parentIndex: 1 }),\n+      expect.objectContaining({ index: 3, level: 2, text: \"Impression\", parentIndex: 0 })\n+    ]);\n+    expect(analysis.sections).toHaveLength(4);\n+    expect(analysis.sections[2]).toMatchObject({\n+      headingIndex: 2,\n+      level: 3,\n+      title: \"Details\",\n+      wordCount: 2\n+    });\n+    expect(analysis.stats).toMatchObject({\n+      headings: 4,\n+      sections: 4,\n+      paragraphs: 4\n+    });\n+    expect(analysis.issues).toEqual([]);\n+  });\n+\n+  it(\"accepts an mdast Root without requiring an editor instance\", () => {\n+    const root: Root = {\n+      type: \"root\",\n+      children: [\n+        {\n+          type: \"heading\",\n+          depth: 1,\n+          children: [{ type: \"text\", value: \"Manual Root\" }]\n+        },\n+        {\n+          type: \"paragraph\",\n+          children: [{ type: \"text\", value: \"alpha beta\" }]\n+        }\n+      ]\n+    };\n+\n+    const analysis = analyzeDocumentStructure(root);\n+\n+    expect(analysis.headings).toEqual([\n+      expect.objectContaining({ index: 0, level: 1, text: \"Manual Root\" })\n+    ]);\n+    expect(analysis.sections).toEqual([\n+      expect.objectContaining({ headingIndex: 0, title: \"Manual Root\", wordCount: 2 })\n+    ]);\n+    expect(analysis.stats.words).toBe(4);\n+  });\n+\n+  it(\"reports empty headings, skipped levels, duplicate headings, and missing required headings\", () => {\n+    const analysis = analyzeDocumentStructure(\n+      \"# Intro\\n\\n### Details\\n\\n## Findings\\n\\n## Findings\\n\\n##\\n\\nBody.\",\n+      {\n+        requiredHeadings: [\"Intro\", \"Conclusion\"]\n+      }\n+    );\n+\n+    expect(analysis.issues).toEqual(\n+      expect.arrayContaining([\n+        expect.objectContaining({\n+          type: \"heading-level-skip\",\n+          headingIndex: 1,\n+          previousLevel: 1,\n+          actualLevel: 3\n+        }),\n+        expect.objectContaining({\n+          type: \"duplicate-heading\",\n+          headingIndex: 3,\n+          firstHeadingIndex: 2\n+        }),\n+        expect.objectContaining({\n+          type: \"empty-heading\",\n+          headingIndex: 4\n+        }),\n+        expect.objectContaining({\n+          type: \"missing-required-heading\",\n+          expected: \"Conclusion\"\n+        })\n+      ])\n+    );\n+  });\n+\n+  it(\"reports sections over the configured word limit\", () => {\n+    const analysis = analyzeDocumentStructure(\"# Summary\\n\\none two three four\", {\n+      maxSectionWords: 3\n+    });\n+\n+    expect(analysis.sections[0]).toMatchObject({\n+      headingIndex: 0,\n+      wordCount: 4\n+    });\n+    expect(analysis.issues).toEqual([\n+      expect.objectContaining({\n+        type: \"section-too-long\",\n+        headingIndex: 0,\n+        wordCount: 4,\n+        limit: 3\n+      })\n+    ]);\n+  });\n+\n+  it(\"returns a stable empty analysis for an empty document\", () => {\n+    expect(analyzeDocumentStructure(\"\")).toEqual({\n+      headings: [],\n+      sections: [],\n+      stats: {\n+        headings: 0,\n+        sections: 0,\n+        words: 0,\n+        paragraphs: 0,\n+        lists: 0,\n+        tables: 0,\n+        codeBlocks: 0\n+      },\n+      issues: []\n+    });\n+  });\n+});"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=22",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  },
+  "first_review_basis": "formal_review",
+  "strict_first_review": true,
+  "first_review_recovered": true
+}

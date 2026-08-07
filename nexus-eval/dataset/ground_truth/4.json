@@ -1,0 +1,26 @@
+{
+  "pr_number": 4,
+  "title": "feat(slash): add command sorting by match priority and limit parameter",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-05-13T06:13:15Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "JungleYwl",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "JungleYwl",
+      "created_at": "2026-05-13T07:51:21Z",
+      "body": "@ketd 你好 ，感谢 review 我注意到这个 PR 被关闭了，能说一下原因吗？我很愿意调整方案。\r\n\r\n而且我看到 PR #5 实现了包含排序和数量限制的完整浮动菜单 UI。如果我的排序逻辑（getMatchPriority + 带 limit 的 filterSlashCommands）可以作为 #5 的底层逻辑复用，我觉得把它重构为独立工具函数也可以。Nexus-Editor 是无头编辑器，排序逻辑和 UI 层分离应该是合理的关注点分离。\r\n\r\n期待你的反馈，谢谢"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-13T09:06:52Z",
+      "body": "@JungleYwl 抱歉关 PR 时没留言，让你白等一段时间，先道个歉。\n\n说明一下原因：这是一道开放命题的面试 PR，Roadmap #3 同时收到了几个实现，最后选了 #5，几点考量：\n\n1. **改动落点不同。** #5 把排序和 `limit` 放进 `packages/core`（`filterSlashCommands` / `computeSlashState`），而不是只改 `plugin-slash`。core 已经在 emit `slashMenuChange` 并通过 `computeSlashState` 驱动菜单状态，排序属于 core 状态计算的一部分，留在 plugin 里反而分层倒挂。你说的「headless = 排序和 UI 分离」我同意，只是分离的位置应在 core，不在 plugin。\n\n2. **覆盖范围不同。** Roadmap #3 的验收目标是把 slash 链路打通到 demo 可用：#5 同时交付了浮层 UI（键盘 / IME / ARIA / 视口翻转）+ 14 条 toolbar slash 命令 + OpenSpec 提案 + electron-demo 接入，是端到端可验收的一份。单独的排序 + limit 不足以收掉这条 roadmap。\n\n3. **排序档位粒度。** #5 用五档（exact title → title prefix → exact keyword → title substring → keyword prefix → keyword substring），你这边三档。都能跑，但对纯 keyword 命中和 title 子串命中做了区分，命中顺序更可预期。\n\n关于把你这版排序抽成独立工具函数复用 —— 谢谢你愿意继续打磨。但 #5 合并后 core 里那一套事实上已经是\"工具函数\"，再叠一层会重复且 API 不一致，这条线就不继续推了。\n\n如果对项目本身感兴趣，ROADMAP #17（模糊匹配，P2）现在还没人做，是个自然的后续切入点；其他 planned 项也欢迎挑。再次感谢投入。"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,164 @@
+{
+  "pr_number": 32,
+  "title": "feat: initial CAL-AGENT panel integration",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-27T13:08:08Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "6cbc871fe95a10fc2074679bf05c513ac42243cf",
+  "merge_commit_sha": "7c2c47fa00fad5dbaccaa9488b2157403f8046b9",
+  "base_sha": "141f0002748b84d924bbf58d92852f0e0078f3e8",
+  "commits": [
+    {
+      "sha": "c1b48f2c74b9eca2811a92a9591cfbedaf9a01db",
+      "message": "docs(superpowers): add cal-agent embedded panel design",
+      "date": "2026-05-26T17:42:22Z"
+    },
+    {
+      "sha": "1d579d820992079577a1713190690f3a8725f8a3",
+      "message": "feat(electron-demo): embed cal-agent workbench panel",
+      "date": "2026-05-26T17:55:47Z"
+    },
+    {
+      "sha": "6ab31be0cc4a77e60b0b9f3a6a87077d4267ab89",
+      "message": "chore(electron-demo): refresh built electron outputs",
+      "date": "2026-05-26T17:56:07Z"
+    },
+    {
+      "sha": "a607b6dd6c9ee30ae94f7b099a794588bae7d2fa",
+      "message": "fix(electron-demo): embed cal-agent with webview fallback",
+      "date": "2026-05-26T17:58:45Z"
+    },
+    {
+      "sha": "6cbc871fe95a10fc2074679bf05c513ac42243cf",
+      "message": "feat(electron-demo): embed cal-agent panel",
+      "date": "2026-05-27T02:28:39Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "modified",
+      "additions": 245,
+      "deletions": 37,
+      "changes": 282
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "apps/electron-demo/electron/cal-agent-controller.ts",
+      "status": "added",
+      "additions": 272,
+      "deletions": 0,
+      "changes": 272
+    },
+    {
+      "filename": "apps/electron-demo/electron/cal-agent-manager.ts",
+      "status": "added",
+      "additions": 238,
+      "deletions": 0,
+      "changes": 238
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 0,
+      "changes": 12
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 0,
+      "changes": 36
+    },
+    {
+      "filename": "apps/electron-demo/scripts/dev-electron.mjs",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 3,
+      "changes": 37
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 73,
+      "deletions": 9,
+      "changes": 82
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/cal-agent-panel.ts",
+      "status": "added",
+      "additions": 153,
+      "deletions": 0,
+      "changes": 153
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 107,
+      "deletions": 0,
+      "changes": 107
+    },
+    {
+      "filename": "apps/electron-demo/test/cal-agent-manager.test.ts",
+      "status": "added",
+      "additions": 125,
+      "deletions": 0,
+      "changes": 125
+    },
+    {
+      "filename": "docs/superpowers/plans/2026-05-27-cal-agent-embedded-panel-poc.md",
+      "status": "added",
+      "additions": 910,
+      "deletions": 0,
+      "changes": 910
+    },
+    {
+      "filename": "docs/superpowers/specs/2026-05-27-cal-agent-embedded-panel-design.md",
+      "status": "added",
+      "additions": 251,
+      "deletions": 0,
+      "changes": 251
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=32",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

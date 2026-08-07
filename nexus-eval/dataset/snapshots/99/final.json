@@ -1,0 +1,79 @@
+{
+  "pr_number": 99,
+  "title": "feat(search): add opt-in fuzzy matching",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T15:27:43Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "929b00819e673b6b4b1454834ac25970384a2727",
+  "merge_commit_sha": "6cdfbb8d59c3e8f7590675434949e8dff5c3859e",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "721d2cf2ab2824b3831b5ad9b8241cb411df5c5b",
+      "message": "feat(search): add opt-in fuzzy matching",
+      "date": "2026-07-02T07:26:27Z"
+    },
+    {
+      "sha": "929b00819e673b6b4b1454834ac25970384a2727",
+      "message": "test(search): cover fuzzy edge cases",
+      "date": "2026-07-02T07:50:51Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy.ts",
+      "status": "added",
+      "additions": 158,
+      "deletions": 0,
+      "changes": 158
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 116,
+      "deletions": 1,
+      "changes": 117
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy.test.ts",
+      "status": "added",
+      "additions": 121,
+      "deletions": 0,
+      "changes": 121
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=99",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

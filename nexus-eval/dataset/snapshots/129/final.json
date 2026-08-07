@@ -1,0 +1,60 @@
+{
+  "pr_number": 129,
+  "title": "fix(plugin-toolbar): make formatting commands atomic for undo/redo",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "cae3fda54aeb1f62693ce3df799d803d870bdf21",
+  "merge_commit_sha": "2f8ca527e023c4fc0c05b5f55e24e637f9b4a9d5",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "cae3fda54aeb1f62693ce3df799d803d870bdf21",
+      "message": "fix(plugin-toolbar): make formatting commands atomic for undo/redo",
+      "date": "2026-07-04T09:33:15Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 19,
+      "changes": 40
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 16,
+      "changes": 36
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 63,
+      "deletions": 0,
+      "changes": 63
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=129",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

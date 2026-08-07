@@ -1,0 +1,187 @@
+{
+  "pr_number": 92,
+  "title": "feat/add-image-paste-plugin",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-02T07:00:56Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "3d9fff3f2f340cdf0183550cb714f05539f6f006",
+  "merge_commit_sha": "4c1325da8853300966009c52d27161a1ebd16e39",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "e44dac4f83cdbe0aea013566befaa2a5280f55de",
+      "message": "feat(search): add fuzzy subsequence matching for find/replace\n\nImplement roadmap #17 with a backtracking fzf-like matcher, CM search panel toggle, and electron-demo search bar integration.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-01T09:54:09Z"
+    },
+    {
+      "sha": "49de6fc641a35dea311c293eaa8cdbe5d5aa9c38",
+      "message": "fix(search): address fuzzy search panel and navigation edge cases\n\nWire fuzzy replace in CM panel, suppress literal CM highlights when fuzzy is active, sync fuzzy state on external setQuery, fix next/previous navigation, and add pattern/token length guards.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-01T12:27:06Z"
+    },
+    {
+      "sha": "e06d14fbc4cbdb972f011004e66f2fbca3d72daa",
+      "message": "fix(search): polish fuzzy search performance and panel parity\n\nSkip redundant fuzzy state dispatches, disable selection highlight while fuzzy is active, use incremental replace-all changes, advance after replace-next, unify demo navigation helpers, and defer external query sync.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-01T13:13:22Z"
+    },
+    {
+      "sha": "3d9fff3f2f340cdf0183550cb714f05539f6f006",
+      "message": "fix(search): restore highlights in live preview and demo search bar\n\nWire search highlights through core live-preview (tables, inline code, wiki links) and fix the electron-demo search bar so typing no longer steals focus while matches stay visible.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-01T16:27:01Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 116,
+      "deletions": 22,
+      "changes": 138
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 13,
+      "deletions": 0,
+      "changes": 13
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 93,
+      "deletions": 16,
+      "changes": 109
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 25,
+      "deletions": 4,
+      "changes": 29
+    },
+    {
+      "filename": "packages/core/src/search-highlight.ts",
+      "status": "added",
+      "additions": 196,
+      "deletions": 0,
+      "changes": 196
+    },
+    {
+      "filename": "packages/core/src/wikilinks.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 10,
+      "changes": 31
+    },
+    {
+      "filename": "packages/plugin-search/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy-match.ts",
+      "status": "added",
+      "additions": 246,
+      "deletions": 0,
+      "changes": 246
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy-navigation.ts",
+      "status": "added",
+      "additions": 83,
+      "deletions": 0,
+      "changes": 83
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy-search-extension.ts",
+      "status": "added",
+      "additions": 327,
+      "deletions": 0,
+      "changes": 327
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 201,
+      "deletions": 22,
+      "changes": 223
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy-match.test.ts",
+      "status": "added",
+      "additions": 93,
+      "deletions": 0,
+      "changes": 93
+    },
+    {
+      "filename": "packages/plugin-search/test/fuzzy-navigation.test.ts",
+      "status": "added",
+      "additions": 34,
+      "deletions": 0,
+      "changes": 34
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 138,
+      "deletions": 1,
+      "changes": 139
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 0,
+      "changes": 20
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=92",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

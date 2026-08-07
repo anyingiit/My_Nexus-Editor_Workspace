@@ -1,0 +1,2113 @@
+{
+  "total_collected": 213,
+  "n_candidates": 79,
+  "n_open_excluded": 96,
+  "n_self_finalized_excluded": 33,
+  "n_unrecoverable_first_review_excluded": 5,
+  "n_train": 47,
+  "n_dev": 15,
+  "n_test": 17,
+  "split_policy": "time-ascending by created_at (authoritative _pr_list.json); 60/20/20; universe = A (finalized PRs with an evidence-gated final actor, Round5 rule) UNION B (open PRs with an admin decision formal review where the REVIEW ACTOR's own author_association is OWNER/MEMBER/COLLABORATOR OR the actor carries direct-push weak evidence; other commenters' associations never substitute for the review actor); open PRs without an admin decision review excluded; unrecoverable first-review snapshots excluded (1.2)",
+  "admin_policy": "Manage permission is NOT provable via REST (403, recorded; never claimed). Finalized: final-actor evidence tiers (weak direct-push / final-actor COLLABORATOR+ / distinct non-author actor); author-self-finalized WITHOUT weak maintainer evidence excluded. Open: admitted only via an admin DECISION formal review whose review actor is admin-candidate-evidenced (own association OWNER/MEMBER/COLLABORATOR OR direct-push weak); GT = earliest admin decision-review state; first-review snapshot pinned to that review's exact commit_id (1.2).",
+  "first_review_time_policy": "Literal first-review snapshot = first formal admin review (submitted_at + exact commit_id) whenever such a review exists (incl. every open-with-admin-review candidate). Finalized PRs without a formal review keep the documented first-activity proxy (AGENTS.md 1.2, never disguised as literal).",
+  "dates": {
+    "earliest": "2026-05-11T13:16:30Z",
+    "latest": "2026-07-14T07:35:20Z",
+    "train_end": "2026-06-17T18:20:11Z",
+    "dev_end": "2026-07-02T14:22:06Z",
+    "test_end": "2026-07-14T07:35:20Z"
+  },
+  "golden_distribution": {
+    "reject": 68,
+    "approve": 11
+  },
+  "open_included": [
+    15,
+    84,
+    87,
+    112,
+    116,
+    117,
+    119
+  ],
+  "open_excluded": [
+    {
+      "number": 18,
+      "created_at": "2026-05-13T14:33:37Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 40,
+      "created_at": "2026-06-01T17:47:49Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 51,
+      "created_at": "2026-06-05T06:34:14Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 55,
+      "created_at": "2026-06-10T07:08:57Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 58,
+      "created_at": "2026-06-11T03:52:48Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 59,
+      "created_at": "2026-06-11T07:27:23Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 70,
+      "created_at": "2026-06-18T02:36:30Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 74,
+      "created_at": "2026-06-22T04:53:43Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 78,
+      "created_at": "2026-06-23T04:07:03Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 79,
+      "created_at": "2026-06-27T10:10:47Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 80,
+      "created_at": "2026-06-28T12:17:49Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 82,
+      "created_at": "2026-06-29T06:54:47Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 85,
+      "created_at": "2026-06-30T13:57:56Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 86,
+      "created_at": "2026-07-01T04:27:58Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 89,
+      "created_at": "2026-07-01T08:41:32Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 90,
+      "created_at": "2026-07-01T15:50:13Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 95,
+      "created_at": "2026-07-02T05:08:03Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 98,
+      "created_at": "2026-07-02T07:18:33Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 101,
+      "created_at": "2026-07-02T09:35:01Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 105,
+      "created_at": "2026-07-03T01:38:15Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 106,
+      "created_at": "2026-07-03T02:07:58Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 111,
+      "created_at": "2026-07-03T05:35:26Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 122,
+      "created_at": "2026-07-03T15:25:19Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 123,
+      "created_at": "2026-07-03T15:58:49Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 124,
+      "created_at": "2026-07-03T16:11:07Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 125,
+      "created_at": "2026-07-03T16:25:13Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 126,
+      "created_at": "2026-07-04T03:44:51Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 127,
+      "created_at": "2026-07-04T05:00:42Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 128,
+      "created_at": "2026-07-04T05:01:00Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 129,
+      "created_at": "2026-07-04T09:59:21Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 130,
+      "created_at": "2026-07-05T03:42:45Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 131,
+      "created_at": "2026-07-06T02:44:23Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 132,
+      "created_at": "2026-07-06T05:29:57Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 133,
+      "created_at": "2026-07-06T06:06:09Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 134,
+      "created_at": "2026-07-06T09:58:39Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 136,
+      "created_at": "2026-07-07T03:02:20Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 139,
+      "created_at": "2026-07-08T06:30:43Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 140,
+      "created_at": "2026-07-08T10:29:52Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 141,
+      "created_at": "2026-07-08T11:00:29Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 142,
+      "created_at": "2026-07-08T21:38:44Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 143,
+      "created_at": "2026-07-09T07:51:38Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 147,
+      "created_at": "2026-07-10T06:34:23Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 148,
+      "created_at": "2026-07-10T11:00:43Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 149,
+      "created_at": "2026-07-11T15:10:17Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 150,
+      "created_at": "2026-07-12T14:50:51Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 156,
+      "created_at": "2026-07-14T09:25:35Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 158,
+      "created_at": "2026-07-15T03:42:14Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 159,
+      "created_at": "2026-07-15T05:12:01Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 161,
+      "created_at": "2026-07-15T08:25:41Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 162,
+      "created_at": "2026-07-15T14:42:25Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 164,
+      "created_at": "2026-07-17T04:17:54Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 165,
+      "created_at": "2026-07-17T06:24:56Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 166,
+      "created_at": "2026-07-20T04:43:11Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 167,
+      "created_at": "2026-07-20T15:30:56Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 168,
+      "created_at": "2026-07-21T05:41:11Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 169,
+      "created_at": "2026-07-21T06:03:13Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 170,
+      "created_at": "2026-07-21T06:16:49Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 171,
+      "created_at": "2026-07-22T08:37:03Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 172,
+      "created_at": "2026-07-22T10:10:13Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 173,
+      "created_at": "2026-07-22T12:50:08Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 174,
+      "created_at": "2026-07-23T00:29:21Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 175,
+      "created_at": "2026-07-23T04:11:45Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 176,
+      "created_at": "2026-07-23T09:30:53Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 177,
+      "created_at": "2026-07-23T10:50:25Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 178,
+      "created_at": "2026-07-23T11:18:49Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 179,
+      "created_at": "2026-07-23T15:36:56Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 180,
+      "created_at": "2026-07-23T18:55:03Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 181,
+      "created_at": "2026-07-24T13:28:24Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 184,
+      "created_at": "2026-07-24T17:59:48Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 185,
+      "created_at": "2026-07-25T06:36:12Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 186,
+      "created_at": "2026-07-25T15:40:38Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 187,
+      "created_at": "2026-07-26T03:33:06Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 188,
+      "created_at": "2026-07-27T06:28:55Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 189,
+      "created_at": "2026-07-27T07:52:35Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 190,
+      "created_at": "2026-07-27T08:38:23Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 191,
+      "created_at": "2026-07-27T15:40:44Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 192,
+      "created_at": "2026-07-28T12:04:23Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 193,
+      "created_at": "2026-07-28T12:52:05Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 194,
+      "created_at": "2026-07-28T13:18:20Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 195,
+      "created_at": "2026-07-28T13:22:12Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 197,
+      "created_at": "2026-07-28T14:26:24Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 198,
+      "created_at": "2026-07-29T04:18:30Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 199,
+      "created_at": "2026-07-29T06:15:24Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 200,
+      "created_at": "2026-07-29T07:17:23Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 201,
+      "created_at": "2026-07-30T10:36:41Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 203,
+      "created_at": "2026-08-01T03:50:06Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 204,
+      "created_at": "2026-08-01T07:21:06Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 205,
+      "created_at": "2026-08-01T07:58:19Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 206,
+      "created_at": "2026-08-03T07:36:10Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 207,
+      "created_at": "2026-08-03T08:54:49Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 208,
+      "created_at": "2026-08-04T04:09:12Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 209,
+      "created_at": "2026-08-04T08:24:24Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 210,
+      "created_at": "2026-08-04T09:12:39Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 211,
+      "created_at": "2026-08-04T09:50:17Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 213,
+      "created_at": "2026-08-04T10:25:42Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    },
+    {
+      "number": 214,
+      "created_at": "2026-08-04T11:06:14Z",
+      "state": "open",
+      "reason": "open PR without an admin decision formal review (no APPROVED/CHANGES_REQUESTED/DISMISSED review by an admin-candidate-evidenced actor: association OWNER/MEMBER/COLLABORATOR or direct-push weak) - not in the literal set"
+    }
+  ],
+  "excluded_self_finalized": [
+    {
+      "number": 6,
+      "created_at": "2026-05-13T07:35:13Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 7,
+      "created_at": "2026-05-13T08:52:27Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 25,
+      "created_at": "2026-05-18T13:13:36Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 35,
+      "created_at": "2026-05-28T06:08:09Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 37,
+      "created_at": "2026-05-29T06:56:28Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 39,
+      "created_at": "2026-06-01T15:55:11Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 41,
+      "created_at": "2026-06-02T06:57:51Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 42,
+      "created_at": "2026-06-02T07:15:57Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 43,
+      "created_at": "2026-06-02T08:32:09Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 44,
+      "created_at": "2026-06-02T10:23:31Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 45,
+      "created_at": "2026-06-02T10:25:25Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 46,
+      "created_at": "2026-06-02T12:12:09Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 54,
+      "created_at": "2026-06-10T06:22:03Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 56,
+      "created_at": "2026-06-10T08:52:08Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 93,
+      "created_at": "2026-07-02T04:54:44Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 94,
+      "created_at": "2026-07-02T04:55:36Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 113,
+      "created_at": "2026-07-03T06:24:55Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 114,
+      "created_at": "2026-07-03T06:42:14Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 115,
+      "created_at": "2026-07-03T06:45:36Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 138,
+      "created_at": "2026-07-07T10:07:56Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 145,
+      "created_at": "2026-07-10T03:52:04Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 146,
+      "created_at": "2026-07-10T04:16:49Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 151,
+      "created_at": "2026-07-13T11:29:26Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 152,
+      "created_at": "2026-07-13T12:59:03Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 155,
+      "created_at": "2026-07-14T08:56:53Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 157,
+      "created_at": "2026-07-14T14:19:18Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 160,
+      "created_at": "2026-07-15T07:45:15Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 163,
+      "created_at": "2026-07-17T03:34:19Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 182,
+      "created_at": "2026-07-24T14:49:18Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 183,
+      "created_at": "2026-07-24T15:15:42Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 196,
+      "created_at": "2026-07-28T13:44:57Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 202,
+      "created_at": "2026-07-31T14:18:19Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    },
+    {
+      "number": 212,
+      "created_at": "2026-08-04T10:23:56Z",
+      "state": "closed",
+      "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+    }
+  ],
+  "excluded_unrecoverable_first_review": [
+    {
+      "number": 23,
+      "created_at": "2026-05-15T10:09:05Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 65,
+      "created_at": "2026-06-17T07:39:20Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 83,
+      "created_at": "2026-06-29T14:06:42Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 97,
+      "created_at": "2026-07-02T07:16:23Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    },
+    {
+      "number": 137,
+      "created_at": "2026-07-07T04:29:19Z",
+      "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+    }
+  ],
+  "first_review_basis_counts": {
+    "comment": 50,
+    "created_at": 3,
+    "formal_review": 26
+  },
+  "literal_first_review_counts": {
+    "first_activity_proxy": 53,
+    "literal_first_review": 26
+  },
+  "prs": [
+    {
+      "number": 1,
+      "created_at": "2026-05-11T13:16:30Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-12T03:18:25Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 2,
+      "created_at": "2026-05-11T13:56:53Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-12T03:18:47Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 3,
+      "created_at": "2026-05-12T03:02:26Z",
+      "merged": true,
+      "state": "closed",
+      "closed_at": "2026-05-13T09:10:04Z",
+      "open": false,
+      "golden_decision": "approve",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "created_at",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 4,
+      "created_at": "2026-05-12T14:56:23Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-13T06:13:15Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 5,
+      "created_at": "2026-05-13T04:01:45Z",
+      "merged": true,
+      "state": "closed",
+      "closed_at": "2026-05-13T09:11:01Z",
+      "open": false,
+      "golden_decision": "approve",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 8,
+      "created_at": "2026-05-13T09:08:33Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:38:34Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 9,
+      "created_at": "2026-05-13T09:11:40Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-14T04:53:59Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 10,
+      "created_at": "2026-05-13T09:21:55Z",
+      "merged": true,
+      "state": "closed",
+      "closed_at": "2026-05-13T09:23:34Z",
+      "open": false,
+      "golden_decision": "approve",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "created_at",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 11,
+      "created_at": "2026-05-13T09:33:12Z",
+      "merged": true,
+      "state": "closed",
+      "closed_at": "2026-05-13T09:38:24Z",
+      "open": false,
+      "golden_decision": "approve",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "created_at",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 12,
+      "created_at": "2026-05-13T10:28:58Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-14T04:38:56Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 13,
+      "created_at": "2026-05-13T10:41:48Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:38:54Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 14,
+      "created_at": "2026-05-13T10:42:13Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-14T04:54:02Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 15,
+      "created_at": "2026-05-13T11:15:44Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "approve",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 16,
+      "created_at": "2026-05-13T11:18:26Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:40:54Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 17,
+      "created_at": "2026-05-13T13:32:54Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:40:47Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 19,
+      "created_at": "2026-05-14T04:04:56Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:37:57Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 20,
+      "created_at": "2026-05-14T06:56:27Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:38:45Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 21,
+      "created_at": "2026-05-14T09:16:21Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:02:17Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 22,
+      "created_at": "2026-05-14T11:08:57Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-27T13:08:12Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 24,
+      "created_at": "2026-05-18T08:30:17Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:38:42Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 26,
+      "created_at": "2026-05-21T10:39:48Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:38:50Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 27,
+      "created_at": "2026-05-21T10:53:25Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-22T12:52:19Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 28,
+      "created_at": "2026-05-22T05:38:39Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:39:39Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 29,
+      "created_at": "2026-05-22T05:59:54Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:07:54Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 30,
+      "created_at": "2026-05-23T06:35:05Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:08:09Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 31,
+      "created_at": "2026-05-23T10:09:17Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T06:15:28Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 32,
+      "created_at": "2026-05-27T02:47:55Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-27T13:08:08Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 33,
+      "created_at": "2026-05-27T07:04:30Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-05-27T12:59:14Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 34,
+      "created_at": "2026-05-27T13:43:14Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:37:10Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 36,
+      "created_at": "2026-05-28T15:24:46Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:39:46Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 38,
+      "created_at": "2026-05-29T07:16:34Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:40:39Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 47,
+      "created_at": "2026-06-02T13:01:47Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:39:42Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 48,
+      "created_at": "2026-06-03T07:57:04Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:37:53Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 49,
+      "created_at": "2026-06-03T09:08:35Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:39:50Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 50,
+      "created_at": "2026-06-03T09:32:10Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:01:42Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 52,
+      "created_at": "2026-06-09T15:19:53Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:37:49Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 53,
+      "created_at": "2026-06-09T20:31:30Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T06:15:09Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 57,
+      "created_at": "2026-06-10T09:36:43Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:01:50Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 60,
+      "created_at": "2026-06-11T08:13:32Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:02:33Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 61,
+      "created_at": "2026-06-11T10:00:09Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:38:38Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 62,
+      "created_at": "2026-06-11T10:50:54Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:40:43Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 63,
+      "created_at": "2026-06-11T14:13:55Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:40:50Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 64,
+      "created_at": "2026-06-12T14:05:15Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T03:36:36Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 66,
+      "created_at": "2026-06-17T08:17:19Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T03:36:44Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 67,
+      "created_at": "2026-06-17T08:19:05Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T03:36:47Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 68,
+      "created_at": "2026-06-17T08:20:26Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T03:36:51Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 69,
+      "created_at": "2026-06-17T18:20:11Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T03:36:55Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "train"
+    },
+    {
+      "number": 71,
+      "created_at": "2026-06-18T15:49:36Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:08:42Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 72,
+      "created_at": "2026-06-18T16:46:29Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T08:08:45Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 73,
+      "created_at": "2026-06-22T04:52:30Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:37:46Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 75,
+      "created_at": "2026-06-22T09:31:50Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T03:36:58Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 76,
+      "created_at": "2026-06-22T17:49:47Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-23T12:39:52Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 81,
+      "created_at": "2026-06-29T04:31:49Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-06-30T05:28:41Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 84,
+      "created_at": "2026-06-30T07:04:00Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "reject",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 87,
+      "created_at": "2026-07-01T06:37:51Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "reject",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 88,
+      "created_at": "2026-07-01T08:37:03Z",
+      "merged": true,
+      "state": "closed",
+      "closed_at": "2026-07-01T09:37:44Z",
+      "open": false,
+      "golden_decision": "approve",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 91,
+      "created_at": "2026-07-01T16:12:38Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T07:00:50Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 92,
+      "created_at": "2026-07-01T17:13:20Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T07:00:56Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 96,
+      "created_at": "2026-07-02T06:29:09Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T07:01:09Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 99,
+      "created_at": "2026-07-02T08:24:37Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T15:27:43Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 100,
+      "created_at": "2026-07-02T09:07:51Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T15:28:15Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 102,
+      "created_at": "2026-07-02T14:22:06Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T15:16:57Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "dev"
+    },
+    {
+      "number": 103,
+      "created_at": "2026-07-02T14:33:22Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T15:28:46Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 104,
+      "created_at": "2026-07-02T15:45:40Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-02T16:01:10Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 107,
+      "created_at": "2026-07-03T04:14:32Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T05:46:11Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 108,
+      "created_at": "2026-07-03T04:30:34Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T05:46:57Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 109,
+      "created_at": "2026-07-03T05:06:16Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T05:52:20Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 110,
+      "created_at": "2026-07-03T05:07:27Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T05:52:20Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 112,
+      "created_at": "2026-07-03T06:04:04Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "approve",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 116,
+      "created_at": "2026-07-03T06:57:30Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "approve",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 117,
+      "created_at": "2026-07-03T07:56:17Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "approve",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 118,
+      "created_at": "2026-07-03T08:03:56Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T10:59:55Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 119,
+      "created_at": "2026-07-03T08:44:39Z",
+      "merged": false,
+      "state": "open",
+      "closed_at": null,
+      "open": true,
+      "golden_decision": "approve",
+      "gt_basis": "earliest admin decision review",
+      "evidence_tier": "open_admin_review",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 120,
+      "created_at": "2026-07-03T10:28:21Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T11:36:02Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 121,
+      "created_at": "2026-07-03T10:51:18Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-03T11:42:06Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "formal_review",
+      "snapshot_type": "literal_first_review",
+      "literal_first_review": true,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 135,
+      "created_at": "2026-07-06T14:52:43Z",
+      "merged": true,
+      "state": "closed",
+      "closed_at": "2026-07-13T03:18:17Z",
+      "open": false,
+      "golden_decision": "approve",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 144,
+      "created_at": "2026-07-09T15:41:44Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-14T08:29:50Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 153,
+      "created_at": "2026-07-14T03:14:01Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-14T08:29:46Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    },
+    {
+      "number": 154,
+      "created_at": "2026-07-14T07:35:20Z",
+      "merged": false,
+      "state": "closed",
+      "closed_at": "2026-07-14T08:29:48Z",
+      "open": false,
+      "golden_decision": "reject",
+      "gt_basis": "final outcome",
+      "evidence_tier": "weak_maintainer_evidence",
+      "first_review_basis": "comment",
+      "snapshot_type": "first_activity_proxy",
+      "literal_first_review": false,
+      "unrecoverable": false,
+      "split": "test"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "pr_number": 75,
+  "title": "feat(toolbar):emoji-table-add",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T03:36:58Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "88e934ed00fa7abf2eb8ea9a68dffb1aaacc7f2e",
+  "merge_commit_sha": "3ed7d19997722629d82082920fb27da05f2dc44f",
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "88e934ed00fa7abf2eb8ea9a68dffb1aaacc7f2e",
+      "message": "toolbar-emoji-table-add",
+      "date": "2026-06-22T09:18:36Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/test/sample-vault.test.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 13,
+      "changes": 31
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 1,
+      "changes": 15
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/icons.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 250,
+      "deletions": 1,
+      "changes": 251
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=75",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

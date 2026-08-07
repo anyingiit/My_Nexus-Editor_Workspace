@@ -1,0 +1,23 @@
+{
+  "split": "dev",
+  "tag": "r6r7_flash",
+  "n_iter": 10000,
+  "seed": 1234,
+  "ours_vs_baseline": {
+    "n": 15,
+    "delta_acc": -0.1333,
+    "p_value": 1.0
+  },
+  "ours_vs_empty": {
+    "n": 15,
+    "delta_acc": -0.0667,
+    "p_value": 0.814
+  },
+  "observed": {
+    "acc": {
+      "empty": 0.6,
+      "baseline": 0.6667,
+      "ours": 0.5333
+    }
+  }
+}

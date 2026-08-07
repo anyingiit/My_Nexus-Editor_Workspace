@@ -1,0 +1,136 @@
+{
+  "pr_number": 162,
+  "title": "feat(history): configurable undo depth + test(toolbar): coverage + refactor(core): shared helpers + docs",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "1f8603c97faf901c3fc00a0898f163eee55b20b8",
+  "merge_commit_sha": "d078e1fb40d3768eaf11a823bbafbadad988dd03",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "1fb8683dee346b488814133cd6626ca9ef9aaafd",
+      "message": "feat(history): add configurable minDepth and newGroupDelay",
+      "date": "2026-07-15T13:40:54Z"
+    },
+    {
+      "sha": "d1169f672e42473635a712f8807a06e1fc10ab65",
+      "message": "test(toolbar): add coverage for blockquote, code block, image, and hr",
+      "date": "2026-07-15T13:41:35Z"
+    },
+    {
+      "sha": "9eb27c973fe3227ed81579ef8c2298bb05ad0d63",
+      "message": "refactor(core): extract shared controlled-document helpers from react and vue",
+      "date": "2026-07-15T13:56:52Z"
+    },
+    {
+      "sha": "940c0f2944cc30428d5af5d09ddb75b0a8fbbff6",
+      "message": "feat(core): add once() method to EventEmitter",
+      "date": "2026-07-15T14:23:30Z"
+    },
+    {
+      "sha": "1f8603c97faf901c3fc00a0898f163eee55b20b8",
+      "message": "docs: document createHistoryPlugin options",
+      "date": "2026-07-15T14:30:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "packages/core/src/controlled-document.ts",
+      "status": "added",
+      "additions": 17,
+      "deletions": 0,
+      "changes": 17
+    },
+    {
+      "filename": "packages/core/src/event-emitter.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 0,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/test/events.test.ts",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 1,
+      "changes": 42
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 3,
+      "changes": 21
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 36,
+      "deletions": 0,
+      "changes": 36
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 103,
+      "deletions": 0,
+      "changes": 103
+    },
+    {
+      "filename": "packages/react/src/controlled-document.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 18,
+      "changes": 28
+    },
+    {
+      "filename": "packages/vue/src/controlled-document.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 16,
+      "changes": 26
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=162",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

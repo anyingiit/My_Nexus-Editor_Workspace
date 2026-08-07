@@ -1,0 +1,554 @@
+{
+  "generated_at_utc": "2026-08-07T04:56:20Z",
+  "n_prs": 213,
+  "reviews": {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [
+      {
+        "id": 4278958862,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-13T06:36:30Z",
+        "commit_id": "da66d7addcccb6e99a52512c89a197ca829a3534",
+        "body_prefix": "Review completed. Overall this is a solid and well-scoped implementation for the"
+      }
+    ],
+    "6": [],
+    "7": [],
+    "8": [
+      {
+        "id": 4280514805,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-13T10:11:10Z",
+        "commit_id": "c644d36fe1df9e31bd35a82338b12696b189eeb3",
+        "body_prefix": "Clean implementation of `getSelectedText()`. Good use of `sel.from/sel.to` inste"
+      },
+      {
+        "id": 4281001492,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-13T11:22:24Z",
+        "commit_id": "433a69b84d9084450b6bd12b6c595a051e1c91c9",
+        "body_prefix": "## Review: PR #8 — feat(core): add getSelectedText() API\n\n### ✅ Approved\n\n**High"
+      }
+    ],
+    "9": [
+      {
+        "id": 4281001718,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-05-13T11:22:26Z",
+        "commit_id": "ffd2fbf8d9531e373171a23eea7e96edbcb9a3e5",
+        "body_prefix": "## Review: PR #9 — feat(search): support regex queries\n\n**Assessment:** This PR "
+      }
+    ],
+    "10": [],
+    "11": [],
+    "12": [
+      {
+        "id": 4281001937,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-05-13T11:22:28Z",
+        "commit_id": "ff33917f7b58883414d0460d2afcddb82079b5a9",
+        "body_prefix": "## Review: PR #12 — feat(search): add fuzzy search helpers\n\n**Assessment:** Adds"
+      }
+    ],
+    "13": [
+      {
+        "id": 4280846169,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-05-13T10:59:36Z",
+        "commit_id": "b6448162a57409eb2919cd71d6d98900dd91efc8",
+        "body_prefix": "## Review Summary\n\nThanks for the PR! Here's my review of the slash command sort"
+      },
+      {
+        "id": 4280927981,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-05-13T11:11:46Z",
+        "commit_id": "b6448162a57409eb2919cd71d6d98900dd91efc8",
+        "body_prefix": "## Changes Requested\n\n你的 PR 目前存在合并冲突（merge conflicts），无法直接合入 main 分支。请先 rebase 或"
+      },
+      {
+        "id": 4281088358,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-13T11:34:00Z",
+        "commit_id": "ebc35321718a6bb85f72322691e1927c3fe51438",
+        "body_prefix": "## Re-review: PR #13 — Conflicts Resolved ✅\n\n冲突已解决，重新审查通过。\n\n### Changes since la"
+      }
+    ],
+    "14": [
+      {
+        "id": 4281002132,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-05-13T11:22:29Z",
+        "commit_id": "d5b14c11f4abb5b523efaa3dfc0aee08f7547bb6",
+        "body_prefix": "## Review: PR #14 — docs(openspec): propose realtime collaboration plugin\n\n**Ass"
+      }
+    ],
+    "15": [
+      {
+        "id": 4281002339,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-05-13T11:22:31Z",
+        "commit_id": "bcfe67ec182a0c116d3917fdf4ca086de501c98d",
+        "body_prefix": "## Review: PR #15 — docs(openspec): propose cloud storage interface\n\n**Assessmen"
+      },
+      {
+        "id": 4281870268,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-13T13:03:17Z",
+        "commit_id": "50fbc8c2c5d6c79201d0ae7c0253a3cab83f145e",
+        "body_prefix": "## Re-review: PR #15 — Updated with Implementation ✅\n\n### Summary of Changes (Up"
+      }
+    ],
+    "16": [
+      {
+        "id": 4281001194,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-13T11:22:22Z",
+        "commit_id": "c1c54689df50c1471c3042782084415593011636",
+        "body_prefix": "## Review: PR #16 — feat(search): add fuzzy search with fzf-like scoring algorit"
+      }
+    ],
+    "17": [
+      {
+        "id": 4282258842,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-05-13T13:49:55Z",
+        "commit_id": "bb4a6bbeeb0db76ba27552727078848c8ab843f7",
+        "body_prefix": "## Review: PR #17 — feat(core,react,vue,search,slash,toolbar): editor API, searc"
+      }
+    ],
+    "18": [],
+    "19": [],
+    "20": [
+      {
+        "id": 4295949163,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-05-15T06:37:38Z",
+        "commit_id": "67a820ebeb095a685ba018b78f14b045d28b9f35",
+        "body_prefix": "Thanks for the contribution. I found one correctness issue that should be fixed "
+      }
+    ],
+    "21": [
+      {
+        "id": 4295950793,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-05-15T06:37:54Z",
+        "commit_id": "1a7c8a3307b67bc63c011e033bf5b2850850e51c",
+        "body_prefix": "The implementation is directionally strong: the half-open line range handling, r"
+      }
+    ],
+    "22": [
+      {
+        "id": 4295951660,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-15T06:38:06Z",
+        "commit_id": "90ef6bca91824397e8bf3fd7468782adde5af01b",
+        "body_prefix": "Approved. The helper is scoped cleanly as a pure core API, exports the public ty"
+      }
+    ],
+    "23": [],
+    "24": [],
+    "25": [],
+    "26": [
+      {
+        "id": 4345620247,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-05-22T13:04:19Z",
+        "commit_id": "51f056c7aa6a9e665ebec0f94c63bcf106279d5f",
+        "body_prefix": "### Overall\n\n感谢提交 👍 这个 PR 整体质量不错，发现问题的角度也很好：「UI 已有「By word」入口，但底层 helpers 实际不支持」"
+      }
+    ],
+    "27": [],
+    "28": [
+      {
+        "id": 4345522465,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-05-22T12:52:17Z",
+        "commit_id": "4150535aab209a965d42967ae7079230e05c0532",
+        "body_prefix": "### Overall\n\n感谢提交 👋 整体方向 OK，fuzzy 算法本身有思考——加入 word-boundary 加分、相邻字符加分、score 排序，测"
+      }
+    ],
+    "29": [
+      {
+        "id": 4345522466,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-22T12:52:17Z",
+        "commit_id": "1886ba02ab4608f3c83bf417f05f33d6e9160877",
+        "body_prefix": "### Overall\n\n整体质量很高 👍 精准对齐 Roadmap #4（`<Editor />` container pass-through props "
+      }
+    ],
+    "30": [
+      {
+        "id": 4360189886,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-05-26T03:14:12Z",
+        "commit_id": "ab3a4ae9e6b459a1bb02420d05897d24109a6c5a",
+        "body_prefix": "## Review 总结\n\n整体质量很高，可以判定 **PASS**，准备进入面试环节。\n\n### 亮点\n\n- **Roadmap 对齐准确**：明确登记 `§"
+      }
+    ],
+    "31": [
+      {
+        "id": 4360192674,
+        "user": "ketd",
+        "author_association": "CONTRIBUTOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-05-26T03:14:41Z",
+        "commit_id": "e655b087a6d429ae97ce3bcdaed356779f49fffb",
+        "body_prefix": "## Review 总结\n\nPR 整体覆盖了 P1 Roadmap 全部 5 项功能（#6 / #8 / #9 / #15 / #21），实现广度和体量足够，但"
+      }
+    ],
+    "32": [],
+    "33": [],
+    "34": [],
+    "35": [],
+    "36": [],
+    "37": [],
+    "38": [],
+    "39": [],
+    "40": [],
+    "41": [],
+    "42": [],
+    "43": [],
+    "44": [],
+    "45": [],
+    "46": [],
+    "47": [],
+    "48": [],
+    "49": [],
+    "50": [],
+    "51": [],
+    "52": [],
+    "53": [],
+    "54": [],
+    "55": [],
+    "56": [],
+    "57": [],
+    "58": [],
+    "59": [],
+    "60": [],
+    "61": [],
+    "62": [],
+    "63": [],
+    "64": [],
+    "65": [],
+    "66": [],
+    "67": [],
+    "68": [],
+    "69": [],
+    "70": [],
+    "71": [],
+    "72": [],
+    "73": [],
+    "74": [],
+    "75": [],
+    "76": [],
+    "78": [],
+    "79": [],
+    "80": [],
+    "81": [],
+    "82": [
+      {
+        "id": 4598841762,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "COMMENTED",
+        "submitted_at": "2026-06-30T08:55:48Z",
+        "commit_id": "3c9941c0194d7fe52f2737ee759b58e71f8db46c",
+        "body_prefix": "Code review summary:\n\nThe fuzzy matcher change looks reasonable overall. The imp"
+      }
+    ],
+    "83": [],
+    "84": [
+      {
+        "id": 4598733124,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-06-30T08:39:10Z",
+        "commit_id": "983510494c16fe4986bce4ed3cc53349b4e41e34",
+        "body_prefix": "Thanks for the contribution. This PR is not mergeable in its current state.\n\nBlo"
+      }
+    ],
+    "85": [],
+    "86": [],
+    "87": [
+      {
+        "id": 4625440073,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-07-03T11:31:56Z",
+        "commit_id": "6c458c1d81c480de149062310256f842bf170291",
+        "body_prefix": "感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection "
+      },
+      {
+        "id": 4625449099,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-07-03T11:33:35Z",
+        "commit_id": "6c458c1d81c480de149062310256f842bf170291",
+        "body_prefix": "感谢提交。这个改动本身方向是合理的：把 blockquote toggle 从单行扩展到多行选择，并补了 mixed / reversed selection "
+      },
+      {
+        "id": 4626205079,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-07-03T13:46:12Z",
+        "commit_id": "a883a9083966eb0256a16ddcff9b949d3bc8752d",
+        "body_prefix": "复审更新：\n\n- CLA 现在已经通过。\n- 本 PR 当前只改动 `packages/plugin-toolbar/src/formatting.ts` 和 "
+      }
+    ],
+    "88": [],
+    "89": [],
+    "90": [],
+    "91": [],
+    "92": [],
+    "93": [],
+    "94": [],
+    "95": [],
+    "96": [],
+    "97": [],
+    "98": [],
+    "99": [],
+    "100": [],
+    "101": [],
+    "102": [],
+    "103": [],
+    "104": [],
+    "105": [],
+    "106": [],
+    "107": [],
+    "108": [],
+    "109": [],
+    "110": [],
+    "111": [],
+    "112": [
+      {
+        "id": 4623247948,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-07-03T06:13:05Z",
+        "commit_id": "ae55307dd252aaa3f7a4101faedf5027789cc17c",
+        "body_prefix": "Reviewed PR #112.\n\nThis resubmission addresses the blockers from #110:\n\n- CLA ch"
+      }
+    ],
+    "113": [],
+    "114": [],
+    "115": [],
+    "116": [
+      {
+        "id": 4623945644,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-07-03T07:53:55Z",
+        "commit_id": "697efb1a6339366080d9d3c6aed65483fcd5af4e",
+        "body_prefix": "Reviewed PR #116.\n\nThis is a substantial implementation of ROADMAP #13: scroll-s"
+      }
+    ],
+    "117": [
+      {
+        "id": 4625257229,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-07-03T10:59:54Z",
+        "commit_id": "34add58d2169367af52e83e09ba0027d346253ad",
+        "body_prefix": "Reviewed PR #117.\n\nThis is a documentation-only OpenSpec proposal for customizab"
+      }
+    ],
+    "118": [
+      {
+        "id": 4625257217,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-07-03T10:59:54Z",
+        "commit_id": "e8704b0315810b86c65c98192cb1f776307db3ba",
+        "body_prefix": "Thanks for the substantial work here. I reviewed the PR metadata, OpenSpec docs,"
+      }
+    ],
+    "119": [
+      {
+        "id": 4625219161,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "APPROVED",
+        "submitted_at": "2026-07-03T10:52:58Z",
+        "commit_id": "2ee7013da61adcd6addafb74bcbb6e94ef812750",
+        "body_prefix": "Reviewed PR #119.\n\nThis is a focused and well-scoped fix for `toggleBlockquote` "
+      }
+    ],
+    "120": [
+      {
+        "id": 4625460627,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-07-03T11:35:59Z",
+        "commit_id": "efcd7a14ca66fa2689e1bf9f2d5a6f634d4cffec",
+        "body_prefix": "感谢提交。这个 PR 的方向是有价值的：表格选区复制同时写入 `text/plain` TSV 和 `text/html` table，能改善粘贴到富文本编辑器"
+      }
+    ],
+    "121": [
+      {
+        "id": 4625491860,
+        "user": "redreamality",
+        "author_association": "COLLABORATOR",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-07-03T11:42:03Z",
+        "commit_id": "6fb480cb35a292200c8cced9e124f1b8ff75befd",
+        "body_prefix": "感谢提交。CLA 已通过，PR 也不是 Draft；本地验证中 `pnpm install --frozen-lockfile`、`packages/core`"
+      }
+    ],
+    "122": [],
+    "123": [],
+    "124": [],
+    "125": [],
+    "126": [],
+    "127": [],
+    "128": [],
+    "129": [],
+    "130": [],
+    "131": [],
+    "132": [],
+    "133": [],
+    "134": [],
+    "135": [],
+    "136": [],
+    "137": [],
+    "138": [],
+    "139": [],
+    "140": [],
+    "141": [],
+    "142": [],
+    "143": [],
+    "144": [],
+    "145": [],
+    "146": [],
+    "147": [],
+    "148": [],
+    "149": [],
+    "150": [],
+    "151": [],
+    "152": [],
+    "153": [],
+    "154": [],
+    "155": [],
+    "156": [],
+    "157": [],
+    "158": [],
+    "159": [],
+    "160": [],
+    "161": [],
+    "162": [],
+    "163": [],
+    "164": [],
+    "165": [],
+    "166": [],
+    "167": [],
+    "168": [],
+    "169": [],
+    "170": [],
+    "171": [
+      {
+        "id": 4752615750,
+        "user": "copilot-pull-request-reviewer[bot]",
+        "author_association": "NONE",
+        "state": "COMMENTED",
+        "submitted_at": "2026-07-22T08:41:31Z",
+        "commit_id": "651179a08e835a2d15cd01c9c8d21df8e30e5166",
+        "body_prefix": "## Pull request overview\n\nAdds a new CodeMirror-based streaming plugin to suppor"
+      }
+    ],
+    "172": [],
+    "173": [],
+    "174": [],
+    "175": [],
+    "176": [],
+    "177": [],
+    "178": [],
+    "179": [],
+    "180": [],
+    "181": [],
+    "182": [],
+    "183": [],
+    "184": [],
+    "185": [],
+    "186": [],
+    "187": [],
+    "188": [],
+    "189": [],
+    "190": [],
+    "191": [],
+    "192": [],
+    "193": [],
+    "194": [],
+    "195": [],
+    "196": [],
+    "197": [],
+    "198": [],
+    "199": [],
+    "200": [],
+    "201": [],
+    "202": [],
+    "203": [],
+    "204": [],
+    "205": [],
+    "206": [],
+    "207": [],
+    "208": [],
+    "209": [],
+    "210": [],
+    "211": [],
+    "212": [],
+    "213": [],
+    "214": []
+  },
+  "errors": []
+}

@@ -1,0 +1,376 @@
+{
+  "pr_number": 33,
+  "title": "Feat/ai text polish",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-27T12:59:14Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+  "merge_commit_sha": "1df3d12a262e5d06f5852d9b378c70063bc6ca58",
+  "base_sha": "78eabdfd105190d23178ca5d5be3840a4a15c23a",
+  "commits": [
+    {
+      "sha": "b37ebf3670120c1af820397b56edbc3597053f36",
+      "message": "feat: 开启 CSP，允许接口请求到火山引擎的 ark 域名",
+      "date": "2026-05-27T03:40:07Z"
+    },
+    {
+      "sha": "c9eb75e76be8bcc68a7eb83358a463eeeb6870a4",
+      "message": "feat: 更新项目依赖，新增 ai 插件的构建命令",
+      "date": "2026-05-27T03:42:46Z"
+    },
+    {
+      "sha": "a9199e47e16a4199ee7408d553f8e61433c79754",
+      "message": "feat: electron demo 配置 ai 插件",
+      "date": "2026-05-27T03:43:28Z"
+    },
+    {
+      "sha": "d53dca8d6d97a01e36c789d7c4966e378db1c683",
+      "message": "feat: 新增了通过 electron ipc 读取系统环境变量的接口",
+      "date": "2026-05-27T03:46:37Z"
+    },
+    {
+      "sha": "5cdf4fe6868b3373f4e8d749379cc70dc5b3b391",
+      "message": "feat: 初始化 ai 插件配置并装载 ai 插件同时配置工具栏中显示 ai 润色的按钮",
+      "date": "2026-05-27T03:49:19Z"
+    },
+    {
+      "sha": "509a8557c38ffae7f7bcf38e41490b73f41dcabe",
+      "message": "feat: 更新 ts 类型声明文件",
+      "date": "2026-05-27T03:50:20Z"
+    },
+    {
+      "sha": "5d27294ec0cf612ee18ba0f7a940d16bb4b98f30",
+      "message": "feat: 提取 ai 插件常量配置",
+      "date": "2026-05-27T03:50:46Z"
+    },
+    {
+      "sha": "3ca19e9b45ab09b912c0fbf65a57193cc858090a",
+      "message": "feat: 新增了additionalGroups配置项，允许用户在默认或自定义的工具栏组后追加额外的按钮组，提升工具栏的可扩展性",
+      "date": "2026-05-27T03:51:16Z"
+    },
+    {
+      "sha": "be37bf19f0c96c3cfd502d61ce8b901b88807e32",
+      "message": "feat: 将工具栏图标统一从插件包入口文件导出，方便外部直接引入使用",
+      "date": "2026-05-27T03:51:41Z"
+    },
+    {
+      "sha": "0074619634e056dc5722241728588ac563d7cf4d",
+      "message": "feat: 定义工具栏中 ai 润色按钮的 svg icon",
+      "date": "2026-05-27T03:52:36Z"
+    },
+    {
+      "sha": "8a5d3a00b9e75b32e5c2cdf860ddde5e3ffae88c",
+      "message": "feat: 创建 ui 插件",
+      "date": "2026-05-27T04:03:42Z"
+    },
+    {
+      "sha": "4480957fa29a662290ef93a12e904b9346b9cc8f",
+      "message": "feat: 创建 message 组件",
+      "date": "2026-05-27T04:03:54Z"
+    },
+    {
+      "sha": "256d2a0ed37ba35707d05a2845ad44e5a631528a",
+      "message": "feat: 创建确认弹窗组件",
+      "date": "2026-05-27T04:04:18Z"
+    },
+    {
+      "sha": "4e900050a6aba8a048442374bcea365f41262008",
+      "message": "feat: 更新项目依赖",
+      "date": "2026-05-27T04:04:44Z"
+    },
+    {
+      "sha": "975599416d113bc1ebb0f803873ac99772f1b2a0",
+      "message": "feat: 创建 ai 插件",
+      "date": "2026-05-27T04:04:57Z"
+    },
+    {
+      "sha": "fac8ee305422652ed0b976370cc1f8956c34dc6f",
+      "message": "feat: 更新项目依赖",
+      "date": "2026-05-27T05:45:37Z"
+    },
+    {
+      "sha": "aca658abec71610378515353b4e543ffd53fe1bb",
+      "message": "feat: 新增 test 命令",
+      "date": "2026-05-27T05:46:24Z"
+    },
+    {
+      "sha": "cdfb4bba645fbc8349e437f6fa454e28351dd2b6",
+      "message": "feat: 代码格式化",
+      "date": "2026-05-27T05:47:35Z"
+    },
+    {
+      "sha": "fceb8fd816d4104c347e4c815605a43e1c405550",
+      "message": "feat: 增加测试文件",
+      "date": "2026-05-27T05:47:54Z"
+    },
+    {
+      "sha": "75e4c71e62cec6907a73b24f5b9b96386521bb9f",
+      "message": "Merge remote-tracking branch 'nexus/feat/ai-text-polish' into feat/ai-text-polish",
+      "date": "2026-05-27T05:52:54Z"
+    },
+    {
+      "sha": "0ec7461c183ff651f8b47eb259a584895292a772",
+      "message": "chore: add .env file with API key",
+      "date": "2026-05-27T06:07:16Z"
+    },
+    {
+      "sha": "55c0fa7b8c5a2021da89b5bb2980b684d6c66859",
+      "message": "Merge remote-tracking branch 'nexus/feat/ai-text-polish' into feat/ai-text-polish",
+      "date": "2026-05-27T06:07:38Z"
+    },
+    {
+      "sha": "b9882cbbe973daedb512f3a1b984a389e111dba7",
+      "message": "build: 使用 electron 镜像源",
+      "date": "2026-05-27T06:14:10Z"
+    },
+    {
+      "sha": "0cf83734cd2d79cf56ae7d4b9b44a786d1294a44",
+      "message": "refactor: remove unused slash command",
+      "date": "2026-05-27T06:50:10Z"
+    },
+    {
+      "sha": "a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+      "message": "Merge remote-tracking branch 'nexus/feat/ai-text-polish' into feat/ai-text-polish",
+      "date": "2026-05-27T06:51:18Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".npmrc",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/.env",
+      "status": "added",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/.env.example",
+      "status": "added",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/main.js",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/dist-electron/preload.js",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 1,
+      "changes": 5
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/config.ts",
+      "status": "added",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 38,
+      "deletions": 2,
+      "changes": 40
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/index.html",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "docs/AI_POLISH_FEATURE.md",
+      "status": "added",
+      "additions": 315,
+      "deletions": 0,
+      "changes": 315
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-ai/package.json",
+      "status": "added",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "packages/plugin-ai/src/ai-service.ts",
+      "status": "added",
+      "additions": 354,
+      "deletions": 0,
+      "changes": 354
+    },
+    {
+      "filename": "packages/plugin-ai/src/index.ts",
+      "status": "added",
+      "additions": 78,
+      "deletions": 0,
+      "changes": 78
+    },
+    {
+      "filename": "packages/plugin-ai/test/ai-service.test.ts",
+      "status": "added",
+      "additions": 104,
+      "deletions": 0,
+      "changes": 104
+    },
+    {
+      "filename": "packages/plugin-ai/tsconfig.json",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/icons.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 1,
+      "changes": 17
+    },
+    {
+      "filename": "packages/plugin-ui/package.json",
+      "status": "added",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "packages/plugin-ui/src/confirm-dialog.ts",
+      "status": "added",
+      "additions": 452,
+      "deletions": 0,
+      "changes": 452
+    },
+    {
+      "filename": "packages/plugin-ui/src/index.ts",
+      "status": "added",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "packages/plugin-ui/src/message.ts",
+      "status": "added",
+      "additions": 173,
+      "deletions": 0,
+      "changes": 173
+    },
+    {
+      "filename": "packages/plugin-ui/test/message.test.ts",
+      "status": "added",
+      "additions": 24,
+      "deletions": 0,
+      "changes": 24
+    },
+    {
+      "filename": "packages/plugin-ui/tsconfig.json",
+      "status": "added",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 6,
+      "changes": 49
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=33",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

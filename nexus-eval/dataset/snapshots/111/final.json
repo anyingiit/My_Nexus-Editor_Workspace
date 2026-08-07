@@ -1,0 +1,75 @@
+{
+  "pr_number": 111,
+  "title": "fix(search): support Unicode whole-word boundaries",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "d4b2df069b4b878b3bc117e52f57788a1f8c0850",
+  "merge_commit_sha": "6c7583f333b85ec13458cd281e4ae4248ca189fb",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "f92f42b74a3938eac151ef9a1731f2b687e884d1",
+      "message": "fix(search): support Unicode whole-word boundaries\n\nbuildSearchPattern wrapped whole-word queries with JavaScript's \\b, which\nuses ASCII \\w semantics. It could not recognize word boundaries around\nCJK, Cyrillic, accented letters, or combining marks, so a whole-word\nsearch for e.g. 世界 would not match 你好，世界！.\n\nReplace the ASCII boundary with Unicode-aware lookaround assertions\nbuilt from \\p{L}\\p{M}\\p{N}_, and add the `u` flag only when wholeWord\nis enabled so the property escapes are interpreted and non-whole-word\nsearches keep their existing flags and regexp behavior unchanged.\n\nfindSearchMatches and replaceAllMatches continue to share the same\ncompiled pattern, so search and native replacement (capture groups,\n$1/$&) stay in sync.",
+      "date": "2026-07-01T14:46:45Z"
+    },
+    {
+      "sha": "91a63e33efdadea98f577cc40cd0af7b35f11255",
+      "message": "fix(search): validate whole-word regexp queries before wrapping\n\nAn already-invalid caller-supplied regexp query (e.g. an unterminated\ncharacter class like \"[bad(\") is normally rejected by buildSearchPattern.\nBut wrapping it with the whole-word boundary assertions can concatenate\nthe query's dangling \"[\" with a \"]\" from the assertion text, silently\nproducing a technically valid pattern that matches unintended, arbitrary\ntext instead of falling back to the documented invalid-regexp contract.\n\nValidate the caller-supplied body compiles on its own, under the same\nflags, before wrapping it for whole-word matching. This also gives the\n\"legacy escape becomes invalid under the Unicode flag\" case (e.g. \"\\a\")\na single, explicit place where it resolves to the invalid-regexp\nfallback rather than relying on the final construction to catch it.",
+      "date": "2026-07-01T15:00:03Z"
+    },
+    {
+      "sha": "888dea1822c65948e6810d712bfd6d1e5e2ff913",
+      "message": "test(search): cover Unicode boundary edge cases\n\nExtend coverage for the whole-word rewrite: Cyrillic, precomposed\naccented Latin, Hangul, a base letter followed by a combining mark,\nconsecutive combining marks, astral-plane letters with exact UTF-16\noffsets, digit/underscore identifiers, start/end-of-document and CRLF\nboundaries, adjacent emoji, a punctuation-containing literal query, a\nzero-width regexp query, capture groups combined with alternation, and\n$1/$& replacement templates.",
+      "date": "2026-07-03T04:03:34Z"
+    },
+    {
+      "sha": "d4b2df069b4b878b3bc117e52f57788a1f8c0850",
+      "message": "docs(search): document matching semantics\n\nAdd packages/plugin-search/README.md: install, panel + standalone\nusage, the Unicode whole-word boundary rules with worked examples, the\nwhole-word regexp Unicode-mode constraint, the invalid-regexp fallback\ncontract, and the exported API surface. Every code sample is verified\nagainst the built package rather than hand-derived.",
+      "date": "2026-07-03T04:03:34Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-search/README.md",
+      "status": "added",
+      "additions": 134,
+      "deletions": 0,
+      "changes": 134
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 8,
+      "changes": 38
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 144,
+      "deletions": 0,
+      "changes": 144
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=111",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

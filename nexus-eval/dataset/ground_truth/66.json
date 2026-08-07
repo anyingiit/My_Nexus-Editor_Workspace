@@ -1,0 +1,31 @@
+{
+  "pr_number": 66,
+  "title": "feat(toolbar): support multi-line selection for list toggles",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T03:36:44Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "maidangzhu",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-17T08:17:33Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=66) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-06-23T03:36:43Z",
+      "body": "Closing this PR after internal review. The change is not suitable to continue as-is for this interview evaluation; please resubmit a clean, focused PR if needed."
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T06:15:19Z",
+      "body": "感谢这个 PR 👏 多行列表 toggle 的核心逻辑（all-or-nothing 判定、空行跳过、有序列表从 1 重排）写得是扎实的。\n\n但本 PR 把三块互相独立的功能捆在了一起：\n- **toolbar** 多行列表 toggle（标题里写的功能）\n- **react/vue** 的 onReady + 容器属性\n- **plugin-search** 的 wholeWord/regexp\n\n按项目 `CONTRIBUTING.md` §2「One PR, one concern. Don't mix refactor with feature work」，这种捆绑没法被干净地评审——想接受 toolbar 部分就被迫连带裁决 SDK API 设计和搜索语义，而这两块各自都还有竞品 PR 在排队（onReady 见 #29，搜索见 #68/#28）。\n\n而且 toolbar 多行列表本身也有多个并行实现（#21/#24/#20/#63/#36 等），需要先选定一个 canonical 版本。\n\n因此先关闭本 PR。如果你愿意把 toolbar 那块单独拆成一个聚焦的 PR，我们很乐意拿它和其他几个并列评审。\n\n🧭 一条提交建议：一个 PR 只解决一个 concern。跨包的协同改动可以放一个 PR，但前提是它们服务于同一件事；功能 A + 功能 B + 功能 C 这种应该拆成三个 PR——每个都更快被合并，也不会一块卡住全部。\n\n🙌\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

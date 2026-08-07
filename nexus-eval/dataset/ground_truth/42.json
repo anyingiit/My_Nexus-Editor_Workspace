@@ -1,0 +1,13 @@
+{
+  "pr_number": 42,
+  "title": "feat(ci): add Vitest coverage reporting to CI workflow",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-09T08:33:58Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "GarrisonPJ",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": []
+}

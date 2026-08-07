@@ -1,0 +1,532 @@
+{
+  "pr_number": 33,
+  "title": "Feat/ai text polish",
+  "body": "<!--\r\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\r\n  e.g.  feat(toolbar): list toggle for multi-line selection\r\nAllowed scopes — see CONTRIBUTING.md §2\r\n\r\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2\r\n-->\r\n\r\n## Summary / 摘要\r\n🎈 功能整体和 pr 记录基本由 AI 生成。\r\n<!-- One sentence summary of the change. / 一句话说明改了什么。 -->\r\n\r\n\r\n## Motivation / 背景与动机\r\n\r\n<!-- Why is this change needed? Link issue / roadmap entry / OpenSpec change. -->\r\n<!-- 解决什么问题？关联 issue / roadmap 条目 / OpenSpec change id。 -->\r\n\r\n- 功能扩展：用户编辑文章时可能对自己写的某段文字不满意但自己想不出更好的表达方式，可以鼠标选取这段文字，通过 ai 来进行润色。\r\n\r\n\r\n## 架构设计\r\n\r\n```mermaid\r\ngraph TB\r\n    subgraph \"插件层\"\r\n        A[plugin-ai] --> B[ai-service.ts]\r\n        A --> C[index.ts]\r\n    end\r\n    \r\n    subgraph \"UI 组件层\"\r\n        D[plugin-ui] --> E[message.ts]\r\n        D --> F[confirm-dialog.ts]\r\n    end\r\n    \r\n    subgraph \"工具栏\"\r\n        G[plugin-toolbar] --> H[icons.ts]\r\n        G --> I[toolbar-ui.ts]\r\n    end\r\n    \r\n    subgraph \"应用层\"\r\n        J[electron-demo] --> K[editor-shell.ts]\r\n        J --> L[config.ts]\r\n        J --> M[main.ts]\r\n        J --> N[.env]\r\n    end\r\n    \r\n    A -.依赖.-> D\r\n    A -.依赖.-> G\r\n    J -.依赖.-> A\r\n    J -.依赖.-> I\r\n    \r\n    B -.流式输出.-> F\r\n    C -.调用.-> E\r\n    K -.添加按钮.-> I\r\n    M -.加载环境变量.-> N\r\n```\r\n\r\n\r\n## 使用流程\r\n⚠️  **别忘记将 /apps/electron-demo/.env.example 文件名字改为 .env，然后将 api key 换成自己的。在[字节的火山引擎上新建 api key](https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D) 然后替换即可。**\r\n\r\n```mermaid\r\nflowchart TD\r\n    A[用户选中文本] --> B{是否已选中?}\r\n    B -->|否| C[提示: 请先选中文本]\r\n    B -->|是| D{API Key 已配置?}\r\n    D -->|否| E[提示: 请配置 API Key]\r\n    D -->|是| F[创建确认对话框]\r\n    F --> G[调用豆包 API 流式输出]\r\n    G --> H[实时显示推导过程]\r\n    H --> I[解析 AI 响应]\r\n    I --> J[展示 5 个润色方案]\r\n    J --> K{用户操作}\r\n    K -->|选择方案并确定| L[替换选中文本]\r\n    K -->|取消| M[关闭对话框]\r\n    L --> N[完成]\r\n    M --> N\r\n```\r\n\r\n## Changes / 变更内容\r\n\r\n<!-- List key changes per package. / 按包分节，列出关键改动点。 -->\r\n\r\n### 新增文件\r\n\r\n| 文件 | 说明 |\r\n|------|------|\r\n| `packages/plugin-ai/package.json` | AI 插件配置 |\r\n| `packages/plugin-ai/src/ai-service.ts` | AI 服务层（流式输出、响应解析） |\r\n| `packages/plugin-ai/src/index.ts` | AI 插件入口 |\r\n| `packages/plugin-ai/test/ai-service.test.ts` | AI 服务层单元测试 |\r\n| `packages/plugin-ui/package.json` | UI 组件库配置 |\r\n| `packages/plugin-ui/src/message.ts` | 消息提示组件 |\r\n| `packages/plugin-ui/src/confirm-dialog.ts` | 确认对话框组件 |\r\n| `packages/plugin-ui/src/index.ts` | UI 组件库入口 |\r\n| `packages/plugin-ui/test/message.test.ts` | 消息组件单元测试 |\r\n| `apps/electron-demo/src/renderer/config.ts` | AI 配置常量 |\r\n| `apps/electron-demo/.env.example` | 环境变量示例文件 |\r\n\r\n\r\n### 修改文件\r\n\r\n| 文件 | 变更说明 |\r\n|------|----------|\r\n| `packages/plugin-toolbar/src/icons.ts` | 新增 AI 图标 |\r\n| `packages/plugin-toolbar/src/index.ts` | 导出 AI 图标 |\r\n| `packages/plugin-toolbar/src/toolbar-ui.ts` | 支持 `additionalGroups` 选项 |\r\n| `apps/electron-demo/src/renderer/editor-shell.ts` | 集成 AI 按钮和配置加载 |\r\n| `apps/electron-demo/src/renderer/index.html` | CSP 配置（限制 connect-src） |\r\n| `apps/electron-demo/electron/main.ts` | 添加 dotenv 加载和 IPC 处理器 |\r\n| `apps/electron-demo/electron/preload.ts` | 暴露 `getEnv` 方法 |\r\n| `apps/electron-demo/src/renderer/bridge.d.ts` | 类型声明 |\r\n| `apps/electron-demo/vite.config.ts` | 路径别名配置 |\r\n| `apps/electron-demo/package.json` | 添加 dotenv 依赖 |\r\n| `.npmrc` | 设置 electron 镜像源 |\r\n\r\n\r\n## 使用示例\r\n\r\n### 使用方式：工具栏按钮\r\n\r\n1. 选中文本\r\n2. 点击工具栏 \"AI 润色\" 按钮\r\n3. 等待 AI 生成方案（流式展示推导过程）\r\n4. 选择满意的方案并点击\"确定\"\r\n\r\n\r\n## 错误处理\r\n\r\n| 场景 | 处理方式 |\r\n|------|----------|\r\n| 未选中文本 | `message.warning(\"请先选中要润色的文本\")` |\r\n| 未配置 API Key | `message.error(\"请先配置 AI API Key\")` |\r\n| 网络请求失败 | `message.error(\"润色失败: {error}\")` |\r\n| 用户取消 | 中止请求，关闭对话框 |\r\n\r\n\r\n## Testing / 测试\r\n\r\n<!-- How was this verified? Commands and scenarios covered. -->\r\n<!-- 描述如何验证，附上命令与覆盖的场景。 -->\r\n\r\n```bash\r\n# 测试 plugin-ai\r\npnpm --filter @floatboat/nexus-plugin-ai test\r\n\r\n# 测试 plugin-ui\r\npnpm --filter @floatboat/nexus-plugin-ui test\r\n```\r\n\r\n覆盖场景：\r\n- ✅ 标准分隔符格式解析\r\n- ✅ 5 个选项解析\r\n- ✅ 无分隔符降级处理\r\n- ✅ JSON 格式响应\r\n- ✅ Markdown 标题格式\r\n- ✅ 消息组件导出和创建\r\n\r\n## 后续优化方向\r\n\r\n- [ ] 支持自定义 Prompt 模板\r\n- [ ] 支持多模型切换（GPT、Claude 等）\r\n- [ ] 添加历史记录功能\r\n- [ ] 支持批量润色\r\n- [ ] 添加加载动画优化\r\n\r\n## Screenshots / Recordings · 截图或录屏 (UI changes)\r\n\r\n<!-- Attach screenshots or gifs for visible UI changes. / 改动可见 UI 时请附上截图或 gif。 -->\r\n\r\nhttps://github.com/user-attachments/assets/9ade2ceb-83ee-4f83-b5d8-7858da0b9e56\r\n\r\n",
+  "created_at": "2026-05-27T07:04:30Z",
+  "draft": false,
+  "base_sha": "78eabdfd105190d23178ca5d5be3840a4a15c23a",
+  "head_sha_at_first_review": "a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+  "first_review_time": "2026-05-27T07:04:38Z",
+  "commits_at_first_review": [
+    {
+      "sha": "b37ebf3670120c1af820397b56edbc3597053f36",
+      "message": "feat: 开启 CSP，允许接口请求到火山引擎的 ark 域名",
+      "date": "2026-05-27T03:40:07Z"
+    },
+    {
+      "sha": "c9eb75e76be8bcc68a7eb83358a463eeeb6870a4",
+      "message": "feat: 更新项目依赖，新增 ai 插件的构建命令",
+      "date": "2026-05-27T03:42:46Z"
+    },
+    {
+      "sha": "a9199e47e16a4199ee7408d553f8e61433c79754",
+      "message": "feat: electron demo 配置 ai 插件",
+      "date": "2026-05-27T03:43:28Z"
+    },
+    {
+      "sha": "d53dca8d6d97a01e36c789d7c4966e378db1c683",
+      "message": "feat: 新增了通过 electron ipc 读取系统环境变量的接口",
+      "date": "2026-05-27T03:46:37Z"
+    },
+    {
+      "sha": "5cdf4fe6868b3373f4e8d749379cc70dc5b3b391",
+      "message": "feat: 初始化 ai 插件配置并装载 ai 插件同时配置工具栏中显示 ai 润色的按钮",
+      "date": "2026-05-27T03:49:19Z"
+    },
+    {
+      "sha": "509a8557c38ffae7f7bcf38e41490b73f41dcabe",
+      "message": "feat: 更新 ts 类型声明文件",
+      "date": "2026-05-27T03:50:20Z"
+    },
+    {
+      "sha": "5d27294ec0cf612ee18ba0f7a940d16bb4b98f30",
+      "message": "feat: 提取 ai 插件常量配置",
+      "date": "2026-05-27T03:50:46Z"
+    },
+    {
+      "sha": "3ca19e9b45ab09b912c0fbf65a57193cc858090a",
+      "message": "feat: 新增了additionalGroups配置项，允许用户在默认或自定义的工具栏组后追加额外的按钮组，提升工具栏的可扩展性",
+      "date": "2026-05-27T03:51:16Z"
+    },
+    {
+      "sha": "be37bf19f0c96c3cfd502d61ce8b901b88807e32",
+      "message": "feat: 将工具栏图标统一从插件包入口文件导出，方便外部直接引入使用",
+      "date": "2026-05-27T03:51:41Z"
+    },
+    {
+      "sha": "0074619634e056dc5722241728588ac563d7cf4d",
+      "message": "feat: 定义工具栏中 ai 润色按钮的 svg icon",
+      "date": "2026-05-27T03:52:36Z"
+    },
+    {
+      "sha": "8a5d3a00b9e75b32e5c2cdf860ddde5e3ffae88c",
+      "message": "feat: 创建 ui 插件",
+      "date": "2026-05-27T04:03:42Z"
+    },
+    {
+      "sha": "4480957fa29a662290ef93a12e904b9346b9cc8f",
+      "message": "feat: 创建 message 组件",
+      "date": "2026-05-27T04:03:54Z"
+    },
+    {
+      "sha": "256d2a0ed37ba35707d05a2845ad44e5a631528a",
+      "message": "feat: 创建确认弹窗组件",
+      "date": "2026-05-27T04:04:18Z"
+    },
+    {
+      "sha": "4e900050a6aba8a048442374bcea365f41262008",
+      "message": "feat: 更新项目依赖",
+      "date": "2026-05-27T04:04:44Z"
+    },
+    {
+      "sha": "975599416d113bc1ebb0f803873ac99772f1b2a0",
+      "message": "feat: 创建 ai 插件",
+      "date": "2026-05-27T04:04:57Z"
+    },
+    {
+      "sha": "fac8ee305422652ed0b976370cc1f8956c34dc6f",
+      "message": "feat: 更新项目依赖",
+      "date": "2026-05-27T05:45:37Z"
+    },
+    {
+      "sha": "aca658abec71610378515353b4e543ffd53fe1bb",
+      "message": "feat: 新增 test 命令",
+      "date": "2026-05-27T05:46:24Z"
+    },
+    {
+      "sha": "cdfb4bba645fbc8349e437f6fa454e28351dd2b6",
+      "message": "feat: 代码格式化",
+      "date": "2026-05-27T05:47:35Z"
+    },
+    {
+      "sha": "fceb8fd816d4104c347e4c815605a43e1c405550",
+      "message": "feat: 增加测试文件",
+      "date": "2026-05-27T05:47:54Z"
+    },
+    {
+      "sha": "75e4c71e62cec6907a73b24f5b9b96386521bb9f",
+      "message": "Merge remote-tracking branch 'nexus/feat/ai-text-polish' into feat/ai-text-polish",
+      "date": "2026-05-27T05:52:54Z"
+    },
+    {
+      "sha": "0ec7461c183ff651f8b47eb259a584895292a772",
+      "message": "chore: add .env file with API key",
+      "date": "2026-05-27T06:07:16Z"
+    },
+    {
+      "sha": "55c0fa7b8c5a2021da89b5bb2980b684d6c66859",
+      "message": "Merge remote-tracking branch 'nexus/feat/ai-text-polish' into feat/ai-text-polish",
+      "date": "2026-05-27T06:07:38Z"
+    },
+    {
+      "sha": "b9882cbbe973daedb512f3a1b984a389e111dba7",
+      "message": "build: 使用 electron 镜像源",
+      "date": "2026-05-27T06:14:10Z"
+    },
+    {
+      "sha": "0cf83734cd2d79cf56ae7d4b9b44a786d1294a44",
+      "message": "refactor: remove unused slash command",
+      "date": "2026-05-27T06:50:10Z"
+    },
+    {
+      "sha": "a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+      "message": "Merge remote-tracking branch 'nexus/feat/ai-text-polish' into feat/ai-text-polish",
+      "date": "2026-05-27T06:51:18Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "diverged",
+    "ahead_by": 25,
+    "behind_by": 1,
+    "files": [
+      {
+        "sha": "4f418c645cc070e7abb3832a93b97051145e8b16",
+        "filename": ".npmrc",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/.npmrc",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/.npmrc",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/.npmrc?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -1,2 +1,3 @@\n link-workspace-packages=true\n access=public\n+ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/"
+      },
+      {
+        "sha": "c089bfedac5386a0f1f1c783796c9c33445642ea",
+        "filename": "apps/electron-demo/.env",
+        "status": "added",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2F.env",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2F.env",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2F.env?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1 @@\n+NEXUS_AI_API_KEY=[REDACTED_FROM_ARCHIVE]"
+      },
+      {
+        "sha": "54757fd5f73e16649ed079d5a1432224b16bb131",
+        "filename": "apps/electron-demo/.env.example",
+        "status": "added",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2F.env.example",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2F.env.example",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2F.env.example?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,3 @@\n+# AI API Key (豆包大模型)\n+# 获取地址: https://console.volces.com/\n+NEXUS_AI_API_KEY=your-api-key-here"
+      },
+      {
+        "sha": "2486fc954d4ac1c25245578174ef0afee369d064",
+        "filename": "apps/electron-demo/dist-electron/main.js",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 0,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fdist-electron%2Fmain.js",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fdist-electron%2Fmain.js",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fdist-electron%2Fmain.js?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -31,6 +31,8 @@ var import_promises = require(\"fs/promises\");\n var import_node_fs = require(\"fs\");\n var import_node_path = __toESM(require(\"path\"));\n var import_node_url = require(\"url\");\n+var import_dotenv = __toESM(require(\"dotenv\"));\n+import_dotenv.default.config({ path: import_node_path.default.resolve(__dirname, \"../.env\") });\n import_electron.protocol.registerSchemesAsPrivileged([\n   {\n     scheme: \"nexus-vault\",\n@@ -113,6 +115,9 @@ import_electron.ipcMain.handle(\n     return { path: result.filePath };\n   }\n );\n+import_electron.ipcMain.handle(\"demo:get-env\", (_event, key) => {\n+  return process.env[key];\n+});\n function assertInsideVault(target) {\n   if (!activeVault) {\n     throw new Error(\"No active vault\");"
+      },
+      {
+        "sha": "9d31f4f9494d8befed9bab7b8377e961660c7c51",
+        "filename": "apps/electron-demo/dist-electron/preload.js",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 1,
+        "changes": 5,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fdist-electron%2Fpreload.js",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fdist-electron%2Fpreload.js",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fdist-electron%2Fpreload.js?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -69,6 +69,9 @@ var bridge = {\n   saveFileAs(content) {\n     return import_electron.ipcRenderer.invoke(\"demo:save-file-as\", content);\n   },\n-  vault: vaultBridge\n+  vault: vaultBridge,\n+  getEnv(key) {\n+    return import_electron.ipcRenderer.invoke(\"demo:get-env\", key);\n+  }\n };\n import_electron.contextBridge.exposeInMainWorld(\"nexusDemo\", bridge);"
+      },
+      {
+        "sha": "9763e5ecbb4ec86c365ba15e84a2d43b5cc24fea",
+        "filename": "apps/electron-demo/electron/main.ts",
+        "status": "modified",
+        "additions": 8,
+        "deletions": 0,
+        "changes": 8,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Felectron%2Fmain.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Felectron%2Fmain.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fmain.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -3,6 +3,10 @@ import { readFile, writeFile, readdir, mkdir, rename, stat } from \"node:fs/promi\n import { existsSync, watch, type FSWatcher } from \"node:fs\";\n import path from \"node:path\";\n import { pathToFileURL } from \"node:url\";\n+import dotenv from \"dotenv\";\n+\n+// Load environment variables from .env file\n+dotenv.config({ path: path.resolve(__dirname, \"../.env\") });\n \n // Must be called before app ready — declares our custom scheme as privileged\n // so images served via nexus-vault:// pass fetch/<img> with credentials / CORS.\n@@ -122,6 +126,10 @@ ipcMain.handle(\n   }\n );\n \n+ipcMain.handle(\"demo:get-env\", (_event, key: string) => {\n+  return process.env[key];\n+});\n+\n // -- vault helpers ------------------------------------------------------------\n \n function assertInsideVault(target: string): string {"
+      },
+      {
+        "sha": "129f1ab222de3087e3be82fd91af517dee547619",
+        "filename": "apps/electron-demo/electron/preload.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fpreload.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -37,6 +37,7 @@ export interface DemoBridge {\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n   vault: VaultBridge;\n+  getEnv(key: string): Promise<string | undefined>;\n }\n \n const vaultBridge: VaultBridge = {\n@@ -93,6 +94,9 @@ const bridge: DemoBridge = {\n     return ipcRenderer.invoke(\"demo:save-file-as\", content);\n   },\n   vault: vaultBridge,\n+  getEnv(key: string) {\n+    return ipcRenderer.invoke(\"demo:get-env\", key);\n+  },\n };\n \n contextBridge.exposeInMainWorld(\"nexusDemo\", bridge);"
+      },
+      {
+        "sha": "3a023aad35222cd6b930c2fd6664a9733079a225",
+        "filename": "apps/electron-demo/package.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fpackage.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -23,11 +23,13 @@\n   },\n   \"dependencies\": {\n     \"@floatboat/nexus-core\": \"workspace:*\",\n+    \"@floatboat/nexus-plugin-ai\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-history\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-search\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-slash\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-toolbar\": \"workspace:*\",\n     \"@floatboat/nexus-preset-gfm\": \"workspace:*\",\n+    \"dotenv\": \"^17.4.2\",\n     \"highlight.js\": \"^11.11.0\"\n   },\n   \"devDependencies\": {"
+      },
+      {
+        "sha": "ab6a4decf1966260d2147be786d46343e9810773",
+        "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -35,6 +35,7 @@ interface DemoBridge {\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n   vault: VaultBridge;\n+  getEnv(key: string): Promise<string | undefined>;\n }\n \n interface Window {"
+      },
+      {
+        "sha": "56e06b1d807698ed488b1201e6c1c0d71a25c61b",
+        "filename": "apps/electron-demo/src/renderer/config.ts",
+        "status": "added",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fconfig.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fconfig.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fconfig.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,11 @@\n+export interface AIConfig {\n+  apiKey: string;\n+  provider: \"doubao\";\n+  model: string;\n+}\n+\n+export const DEFAULT_AI_CONFIG: AIConfig = {\n+  apiKey: \"\", // 通过环境变量 NEXUS_AI_API_KEY 配置\n+  provider: \"doubao\",\n+  model: \"doubao-seed-2-0-lite-260428\",\n+};"
+      },
+      {
+        "sha": "f8e91f5a6bc9dc91f3c71614a41c4b314f10beae",
+        "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+        "status": "modified",
+        "additions": 38,
+        "deletions": 2,
+        "changes": 40,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -4,12 +4,15 @@ import {\n   type EditorAPI,\n   type LivePreviewRenderContext,\n } from \"@floatboat/nexus-core\";\n+import { DEFAULT_AI_CONFIG } from \"./config\";\n import { createGfmPreset } from \"@floatboat/nexus-preset-gfm\";\n import { createHistoryPlugin } from \"@floatboat/nexus-plugin-history\";\n-import { createToolbarPlugin, createToolbarUI, type ToolbarUI } from \"@floatboat/nexus-plugin-toolbar\";\n+import { createToolbarPlugin, createToolbarUI, type ToolbarUI, type ToolbarGroup, iconAI } from \"@floatboat/nexus-plugin-toolbar\";\n import { createSearchPlugin } from \"@floatboat/nexus-plugin-search\";\n import { createSlashMenuUI, type SlashMenuUI } from \"@floatboat/nexus-plugin-slash\";\n+import { createAIPlugin, aiPolishHandler, message } from \"@floatboat/nexus-plugin-ai\";\n import type { AppState } from \"./state\";\n+import type { AIConfig } from \"./config\";\n import { type EditorSettings, settingsToTheme } from \"./settings\";\n \n // Parse Obsidian-style size specifier from the alt text: `alt|width` or\n@@ -83,6 +86,16 @@ export interface EditorShell {\n   destroy(): void;\n }\n \n+// ai configuration\n+const AI_CONFIG: AIConfig = { ...DEFAULT_AI_CONFIG };\n+\n+async function loadAIConfig(): Promise<void> {\n+  const apiKey = await window.nexusDemo?.getEnv(\"NEXUS_AI_API_KEY\");\n+  if (apiKey) {\n+    AI_CONFIG.apiKey = apiKey;\n+  }\n+}\n+\n export function createEditorShell(options: EditorShellOptions): EditorShell {\n   const {\n     container,\n@@ -94,6 +107,8 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n     suggestWikilinks,\n   } = options;\n \n+  loadAIConfig().catch(console.error);\n+\n   // Forward ref so the image renderer (built BEFORE createEditor returns)\n   // can dispatch selection changes through the editor API after it exists.\n   const editorRef: { current: EditorAPI | null } = { current: null };\n@@ -104,6 +119,8 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n     suggest: suggestWikilinks ? (q) => suggestWikilinks(q) : undefined,\n   });\n \n+  const aiPlugin = createAIPlugin({ config: AI_CONFIG });\n+\n   // No more parser worker. Live-preview drives off `syntaxTree(state)` from\n   // @codemirror/lang-markdown (incremental, intrinsic to EditorState), and\n   // editor.ts builds mdast for `getAst()` / `change` events synchronously\n@@ -124,6 +141,7 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n       createToolbarPlugin(),\n       createSearchPlugin(),\n       wikilinksPlugin,\n+      aiPlugin,\n     ],\n     livePreview: settings.livePreview\n       ? {\n@@ -313,7 +331,25 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n \n   editorRef.current = editor;\n \n-  const toolbar = createToolbarUI(editor);\n+  // AI button group\n+  const aiGroup: ToolbarGroup = {\n+    buttons: [\n+      {\n+        id: \"ai-polish\",\n+        title: \"AI 润色\",\n+        icon: () => iconAI(),\n+        action: (editor) => {\n+          if (!AI_CONFIG.apiKey) {\n+            message.warning(\"请先配置 AI API Key\");\n+            return;\n+          }\n+          aiPolishHandler(editor, AI_CONFIG);\n+        },\n+      },\n+    ],\n+  };\n+\n+  const toolbar = createToolbarUI(editor, { additionalGroups: [aiGroup] });\n   container.insertBefore(toolbar.element, container.firstChild);\n \n   // The slash menu owns its own DOM root mounted on document.body so"
+      },
+      {
+        "sha": "9bd7cde2ae7d1f21837e364e28db4ebefc04e828",
+        "filename": "apps/electron-demo/src/renderer/index.html",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Findex.html",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fsrc%2Frenderer%2Findex.html",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Findex.html?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -5,7 +5,7 @@\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n     <meta\n       http-equiv=\"Content-Security-Policy\"\n-      content=\"default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' https: http: data: nexus-vault:\"\n+      content=\"default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' https: http: data: nexus-vault:; connect-src 'self' https://ark.cn-beijing.volces.com\"\n     />\n     <title>Nexus Editor Demo</title>\n     <link rel=\"stylesheet\" href=\"./style.css\" />"
+      },
+      {
+        "sha": "f18ad245182428a36dceef4b66243b240022ecf9",
+        "filename": "apps/electron-demo/tsconfig.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftsconfig.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -8,7 +8,8 @@\n       \"@floatboat/nexus-plugin-history\": [\"packages/plugin-history/src/index.ts\"],\n       \"@floatboat/nexus-plugin-search\": [\"packages/plugin-search/src/index.ts\"],\n       \"@floatboat/nexus-plugin-slash\": [\"packages/plugin-slash/src/index.ts\"],\n-      \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"]\n+      \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-ai\": [\"packages/plugin-ai/src/index.ts\"]\n     }\n   },\n   \"include\": ["
+      },
+      {
+        "sha": "badc6dde173f753fbf1148286a32111f5db81d28",
+        "filename": "apps/electron-demo/vite.config.ts",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fvite.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/apps%2Felectron-demo%2Fvite.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fvite.config.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -56,6 +56,10 @@ export default defineConfig({\n         __dirname,\n         \"../../packages/plugin-slash/src/index.ts\"\n       ),\n+      \"@floatboat/nexus-plugin-ai\": path.resolve(\n+        __dirname,\n+        \"../../packages/plugin-ai/src/index.ts\"\n+      ),\n     },\n   },\n   server: {"
+      },
+      {
+        "sha": "955d8da60e102b6e39cebaa5938e4dac11ee0c96",
+        "filename": "docs/AI_POLISH_FEATURE.md",
+        "status": "added",
+        "additions": 315,
+        "deletions": 0,
+        "changes": 315,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/docs%2FAI_POLISH_FEATURE.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/docs%2FAI_POLISH_FEATURE.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FAI_POLISH_FEATURE.md?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,315 @@\n+# AI 润色功能\n+\n+## 功能概述\n+\n+为 Nexus Editor 新增 AI 文本润色功能，用户选中文本后可调用豆包大模型进行智能优化，支持流式输出和 5 种方案选择。\n+\n+## 使用流程\n+\n+```mermaid\n+flowchart TD\n+    A[用户选中文本] --> B[点击工具栏 AI 润色按钮]\n+    B --> C{是否已选中?}\n+    C -->|否| D[message.warning: 请先选中文本]\n+    C -->|是| E{API Key 已配置?}\n+    E -->|否| F[message.error: 请配置 API Key]\n+    E -->|是| G[创建确认对话框]\n+    G --> H[调用豆包 API 流式输出]\n+    H --> I[实时显示推导过程]\n+    I --> J{流式完成?}\n+    J -->|否| I\n+    J -->|是| K[解析 AI 响应]\n+    K --> L[展示 5 个润色方案]\n+    L --> M{用户操作}\n+    M -->|选择方案并确定| N[replaceSelection 替换文本]\n+    M -->|取消| O[abort 中止请求]\n+    N --> P[关闭对话框]\n+    O --> P\n+    P --> Q[完成]\n+```\n+\n+## 架构设计\n+\n+```mermaid\n+graph TB\n+    subgraph \"插件层\"\n+        A[plugin-ai] --> B[ai-service.ts]\n+        A --> C[index.ts]\n+    end\n+    \n+    subgraph \"UI 组件层\"\n+        D[plugin-ui] --> E[message.ts]\n+        D --> F[confirm-dialog.ts]\n+    end\n+    \n+    subgraph \"工具栏\"\n+        G[plugin-toolbar] --> H[icons.ts]\n+        G --> I[toolbar-ui.ts]\n+    end\n+    \n+    subgraph \"应用层\"\n+        J[electron-demo] --> K[editor-shell.ts]\n+        J --> L[config.ts]\n+        J --> M[main.ts]\n+        J --> N[.env]\n+    end\n+    \n+    A -.依赖.-> D\n+    A -.依赖.-> G\n+    J -.依赖.-> A\n+    J -.依赖.-> I\n+    \n+    B -.流式输出.-> F\n+    C -.调用.-> E\n+    K -.添加按钮.-> I\n+    M -.加载环境变量.-> N\n+```\n+\n+## 核心实现思路\n+\n+### 1. 插件化架构\n+\n+基于项目现有的插件系统，创建独立的 `plugin-ai` 和 `plugin-ui` 插件：\n+\n+- **服务层** (`ai-service.ts`)：封装 AI API 调用、流式输出处理、响应解析\n+- **入口层** (`index.ts`)：导出润色处理器和插件工厂\n+- **UI 组件层** (`plugin-ui`)：通用消息提示和确认对话框组件\n+\n+### 2. 流式输出处理\n+\n+使用 `ReadableStream` + `TextDecoder` 解析 SSE 格式，支持不完整行的 buffer 处理：\n+\n+```typescript\n+buffer += decoder.decode(value, { stream: true });\n+const lines = buffer.split('\\n');\n+buffer = lines.pop() || ''; // 保留未完成的行\n+\n+for (const line of lines) {\n+  if (line.startsWith('data: ')) {\n+    const json = JSON.parse(jsonStr);\n+    const token = json.delta || '';\n+    if (token) handler.onToken(token);\n+  }\n+}\n+```\n+\n+### 3. 响应解析策略\n+\n+使用分隔符解析 AI 返回的结构化内容，支持多层降级：\n+\n+- **主策略**：`---` 分隔推导过程和选项，`===` 分隔不同选项\n+- **降级策略**：JSON 解析、正则匹配（支持 `【】`、`[]`、`()` 等格式）\n+- **标签解析**：`【方案N】标签名称` 格式，支持 Markdown 标题前缀\n+\n+### 4. 通用 UI 组件\n+\n+创建独立的 `plugin-ui` 插件管理通用组件：\n+\n+- **message**：支持 success/warning/error/info 四种类型，自动消失，懒加载样式（SSR 兼容）\n+- **confirm-dialog**：支持流式输出展示、5 选项单选、推导过程小字号灰色显示\n+\n+### 5. 工具栏扩展\n+\n+通过 `additionalGroups` 选项在不修改默认按钮组的情况下添加 AI 按钮：\n+\n+```typescript\n+const aiGroup: ToolbarGroup = {\n+  buttons: [{\n+    id: \"ai-polish\",\n+    title: \"AI 润色\",\n+    icon: () => iconAI(),\n+    action: (editor) => aiPolishHandler(editor, AI_CONFIG),\n+  }],\n+};\n+\n+const toolbar = createToolbarUI(editor, { additionalGroups: [aiGroup] });\n+```\n+\n+## 配置说明\n+\n+### 环境变量配置\n+\n+1. 复制 `.env.example` 为 `.env`：\n+```bash\n+cp apps/electron-demo/.env.example apps/electron-demo/.env\n+```\n+\n+2. 填入你的 API Key：\n+```env\n+NEXUS_AI_API_KEY=ark-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n+```\n+\n+### 主进程加载\n+\n+Electron 主进程通过 `dotenv` 加载 `.env` 文件：\n+\n+```typescript\n+// electron/main.ts\n+import dotenv from \"dotenv\";\n+dotenv.config({ path: path.resolve(__dirname, \"../.env\") });\n+```\n+\n+### 默认配置\n+\n+```typescript\n+// apps/electron-demo/src/renderer/config.ts\n+export const DEFAULT_AI_CONFIG: AIConfig = {\n+  apiKey: \"\", // 通过环境变量 NEXUS_AI_API_KEY 配置\n+  provider: \"doubao\",\n+  model: \"doubao-seed-2-0-lite-260428\",\n+};\n+```\n+\n+## AI Prompt 设计\n+\n+```\n+优化文本：{text}\n+\n+请严格按照以下格式输出：\n+你的优化思路和分析过程\n+\n+---\n+\n+【方案1】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案2】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案3】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案4】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案5】标签名称\n+优化后的文本内容\n+\n+要求：\n+1. 要求说明优化思路\n+2. 使用 --- 分隔思考和方案\n+3. 使用 === 分隔不同方案\n+4. 每个方案的标签用【】包含\n+5. 提供5种不同风格的优化版本\n+6. 保持原意不变，语言更流畅自然\n+7. 不要输出任何多余内容\n+8. 【方案N】和标签名称必须在同一行，不要换行\n+```\n+\n+## 安全配置\n+\n+### Content Security Policy\n+\n+```html\n+<meta http-equiv=\"Content-Security-Policy\"\n+  content=\"default-src 'self'; ... connect-src 'self' https://ark.cn-beijing.volces.com\" />\n+```\n+\n+限制 `connect-src` 仅允许豆包 API 域名，防止数据泄露。\n+\n+### Electron IPC 安全\n+\n+通过预加载脚本暴露 `getEnv` 方法，避免渲染进程直接访问 `process.env`：\n+\n+```typescript\n+// preload.ts\n+contextBridge.exposeInMainWorld(\"nexusDemo\", {\n+  getEnv: (key: string) => ipcRenderer.invoke(\"demo:get-env\", key)\n+});\n+```\n+\n+### API Key 前置校验\n+\n+在调用 API 前检查 API Key 是否已配置：\n+\n+```typescript\n+if (!config.apiKey) {\n+  message.error(\"请先配置 AI API Key\");\n+  return false;\n+}\n+```\n+\n+## 文件变更清单\n+\n+### 新增文件\n+\n+| 文件 | 说明 |\n+|------|------|\n+| `packages/plugin-ai/package.json` | AI 插件配置 |\n+| `packages/plugin-ai/src/ai-service.ts` | AI 服务层（流式输出、响应解析） |\n+| `packages/plugin-ai/src/index.ts` | AI 插件入口 |\n+| `packages/plugin-ai/test/ai-service.test.ts` | AI 服务层单元测试 |\n+| `packages/plugin-ui/package.json` | UI 组件库配置 |\n+| `packages/plugin-ui/src/message.ts` | 消息提示组件 |\n+| `packages/plugin-ui/src/confirm-dialog.ts` | 确认对话框组件 |\n+| `packages/plugin-ui/src/index.ts` | UI 组件库入口 |\n+| `packages/plugin-ui/test/message.test.ts` | 消息组件单元测试 |\n+| `apps/electron-demo/src/renderer/config.ts` | AI 配置常量 |\n+| `apps/electron-demo/.env.example` | 环境变量示例文件 |\n+\n+### 修改文件\n+\n+| 文件 | 变更说明 |\n+|------|----------|\n+| `packages/plugin-toolbar/src/icons.ts` | 新增 AI 图标 |\n+| `packages/plugin-toolbar/src/index.ts` | 导出 AI 图标 |\n+| `packages/plugin-toolbar/src/toolbar-ui.ts` | 支持 `additionalGroups` 选项 |\n+| `apps/electron-demo/src/renderer/editor-shell.ts` | 集成 AI 按钮和配置加载 |\n+| `apps/electron-demo/src/renderer/index.html` | CSP 配置（限制 connect-src） |\n+| `apps/electron-demo/electron/main.ts` | 添加 dotenv 加载和 IPC 处理器 |\n+| `apps/electron-demo/electron/preload.ts` | 暴露 `getEnv` 方法 |\n+| `apps/electron-demo/src/renderer/bridge.d.ts` | 类型声明 |\n+| `apps/electron-demo/vite.config.ts` | 路径别名配置 |\n+| `apps/electron-demo/package.json` | 添加 dotenv 依赖 |\n+\n+## 使用示例\n+\n+### 使用方式：工具栏按钮\n+\n+1. 选中文本\n+2. 点击工具栏 \"AI 润色\" 按钮\n+3. 等待 AI 生成方案（流式展示推导过程）\n+4. 选择满意的方案并点击\"确定\"\n+\n+## 错误处理\n+\n+| 场景 | 处理方式 |\n+|------|----------|\n+| 未选中文本 | `message.warning(\"请先选中要润色的文本\")` |\n+| 未配置 API Key | `message.error(\"请先配置 AI API Key\")` |\n+| 网络请求失败 | `message.error(\"润色失败: {error}\")` |\n+| 用户取消 | 中止请求，关闭对话框 |\n+\n+## 单元测试\n+\n+```bash\n+# 测试 plugin-ai\n+pnpm --filter @floatboat/nexus-plugin-ai test\n+\n+# 测试 plugin-ui\n+pnpm --filter @floatboat/nexus-plugin-ui test\n+```\n+\n+覆盖场景：\n+- ✅ 标准分隔符格式解析\n+- ✅ 5 个选项解析\n+- ✅ 无分隔符降级处理\n+- ✅ JSON 格式响应\n+- ✅ Markdown 标题格式\n+- ✅ 消息组件导出和创建\n+\n+## 后续优化方向\n+\n+- [ ] 支持自定义 Prompt 模板\n+- [ ] 支持多模型切换（GPT、Claude 等）\n+- [ ] 添加历史记录功能\n+- [ ] 支持批量润色\n+- [ ] 添加加载动画优化"
+      },
+      {
+        "sha": "b7aee4df2cfcbd883025a7b40866907de6c0c3da",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -4,7 +4,7 @@\n   \"version\": \"0.0.5\",\n   \"packageManager\": \"pnpm@9.15.4\",\n   \"scripts\": {\n-    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build\",\n+    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-ai build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build\",\n     \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n     \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\","
+      },
+      {
+        "sha": "efb43e6f49064eff570e28e6bd30495b811ddceb",
+        "filename": "packages/plugin-ai/package.json",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ai%2Fpackage.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,27 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-ai\",\n+  \"version\": \"0.1.0\",\n+  \"description\": \"AI polish plugin for Nexus Editor\",\n+  \"main\": \"dist/index.js\",\n+  \"types\": \"dist/index.d.ts\",\n+  \"exports\": {\n+    \".\": {\n+      \"types\": \"./dist/index.d.ts\",\n+      \"import\": \"./dist/index.mjs\",\n+      \"require\": \"./dist/index.cjs\"\n+    }\n+  },\n+  \"scripts\": {\n+    \"build\": \"tsup src/index.ts --format esm,cjs --dts --clean\",\n+    \"dev\": \"tsup src/index.ts --format esm,cjs --dts --watch\",\n+    \"test\": \"vitest run --config ../../vitest.config.ts\"\n+  },\n+  \"dependencies\": {\n+    \"@floatboat/nexus-core\": \"workspace:*\",\n+    \"@floatboat/nexus-plugin-ui\": \"workspace:*\"\n+  },\n+  \"devDependencies\": {\n+    \"tsup\": \"^8.5.0\",\n+    \"typescript\": \"^5.3.3\"\n+  }\n+}"
+      },
+      {
+        "sha": "60933af26868dde9c1f868242a09feefeede115b",
+        "filename": "packages/plugin-ai/src/ai-service.ts",
+        "status": "added",
+        "additions": 354,
+        "deletions": 0,
+        "changes": 354,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Fsrc%2Fai-service.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Fsrc%2Fai-service.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ai%2Fsrc%2Fai-service.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,354 @@\n+export type AIProvider = 'doubao';\n+\n+export interface AIConfig {\n+  apiKey: string;\n+  provider: AIProvider;\n+  model?: string;\n+  apiUrl?: string;\n+}\n+\n+export interface StreamHandler {\n+  onToken: (token: string) => void;\n+  onComplete: () => void;\n+  onError: (error: Error) => void;\n+}\n+\n+export interface AIAnswerOption {\n+  text: string;\n+  label: string;\n+}\n+\n+export interface AIResponse {\n+  thinking: string;\n+  options: AIAnswerOption[];\n+}\n+\n+export function parseAIResponse(fullText: string): AIResponse {\n+  const thinkingSeparator = '---';\n+  const optionSeparator = '===';\n+  \n+  const thinkingEndIndex = fullText.indexOf(thinkingSeparator);\n+  \n+  if (thinkingEndIndex !== -1) {\n+    const thinking = fullText.slice(0, thinkingEndIndex).trim();\n+    const optionsPart = fullText.slice(thinkingEndIndex + thinkingSeparator.length);\n+    const optionBlocks = optionsPart.split(optionSeparator);\n+    const options: AIAnswerOption[] = [];\n+    \n+    for (const block of optionBlocks) {\n+      const trimmedBlock = block.trim();\n+      if (!trimmedBlock) continue;\n+      \n+      const lines = trimmedBlock.split('\\n');\n+      if (lines.length === 0) continue;\n+      \n+      const firstLine = lines[0].trim();\n+      const match = firstLine.match(/^【(.+?)】\\s*(.+)$/);\n+      if (match) {\n+        const label = `${match[1].trim()} ${match[2].trim()}`;\n+        const text = lines.slice(1).join('\\n').trim();\n+        \n+        if (text) {\n+          options.push({\n+            label,\n+            text\n+          });\n+        }\n+      }\n+    }\n+    \n+    if (options.length > 0) {\n+      return {\n+        thinking,\n+        options\n+      };\n+    }\n+  }\n+  \n+  try {\n+    const jsonStart = fullText.indexOf('{');\n+    const jsonEnd = fullText.lastIndexOf('}') + 1;\n+    \n+    if (jsonStart !== -1 && jsonEnd > jsonStart) {\n+      const jsonStr = fullText.slice(jsonStart, jsonEnd);\n+      const json = JSON.parse(jsonStr);\n+      if (json.thinking && json.options && Array.isArray(json.options)) {\n+        const validOptions = json.options\n+          .filter((opt: any) => opt && opt.label && opt.text)\n+          .map((opt: any) => ({\n+            label: String(opt.label).trim(),\n+            text: String(opt.text).trim()\n+          }));\n+        \n+        if (validOptions.length > 0) {\n+          return {\n+            thinking: String(json.thinking).trim(),\n+            options: validOptions\n+          };\n+        }\n+      }\n+    }\n+  } catch {\n+  }\n+  \n+  const lines = fullText.split('\\n');\n+  const fallbackThinkingLines: string[] = [];\n+  const fallbackOptions: AIAnswerOption[] = [];\n+  \n+  let inThinking = true;\n+  let currentOption: AIAnswerOption | null = null;\n+  \n+  const optionStartRegexes = [\n+    /^\\s*(\\d+)\\.\\s*【(.+?)】\\s*(.*)/,\n+    /^#{1,6}\\s*(\\d+)\\.\\s*【(.+?)】\\s*(.*)/,\n+    /^\\s*(\\d+)\\.\\s*\\[(.+?)\\]\\s*(.*)/,\n+    /^\\s*(\\d+)\\.\\s*\\((.+?)\\)\\s*(.*)/,\n+  ];\n+  \n+  for (const line of lines) {\n+    const trimmedLine = line.trim();\n+    \n+    let matched = false;\n+    for (const regex of optionStartRegexes) {\n+      const match = trimmedLine.match(regex);\n+      if (match) {\n+        inThinking = false;\n+        if (currentOption) {\n+          fallbackOptions.push(currentOption);\n+        }\n+        const labelSuffix = match[3]?.trim() || '';\n+        currentOption = {\n+          label: labelSuffix ? `${match[2]} ${labelSuffix}` : match[2],\n+          text: ''\n+        };\n+        matched = true;\n+        break;\n+      }\n+    }\n+    \n+    if (matched) continue;\n+    \n+    if (inThinking) {\n+      fallbackThinkingLines.push(line);\n+    } else if (currentOption) {\n+      if (currentOption.text) {\n+        currentOption.text += '\\n';\n+      }\n+      currentOption.text += line;\n+    }\n+  }\n+  \n+  if (currentOption) {\n+    fallbackOptions.push(currentOption);\n+  }\n+  \n+  const thinking = fallbackThinkingLines.join('\\n').trim();\n+  \n+  if (fallbackOptions.length === 0) {\n+    return {\n+      thinking: '',\n+      options: [{ text: fullText, label: '默认' }]\n+    };\n+  }\n+  \n+  const cleanedOptions = fallbackOptions.map(opt => ({\n+    label: opt.label.trim(),\n+    text: opt.text.trim()\n+  })).filter(opt => opt.text.length > 0);\n+  \n+  if (cleanedOptions.length === 0) {\n+    return {\n+      thinking,\n+      options: [{ text: fullText, label: '默认' }]\n+    };\n+  }\n+  \n+  return {\n+    thinking,\n+    options: cleanedOptions\n+  };\n+}\n+\n+const DEFAULT_API_URLS: Record<AIProvider, string> = {\n+  doubao: 'https://ark.cn-beijing.volces.com/api/v3/responses',\n+};\n+\n+const DEFAULT_MODELS: Record<AIProvider, string> = {\n+  doubao: 'doubao-seed-2-0-lite-260215',\n+};\n+\n+export async function streamAIPolish(\n+  text: string,\n+  config: AIConfig,\n+  handler: StreamHandler\n+): Promise<() => void> {\n+  const abortController = new AbortController();\n+  const apiUrl = config.apiUrl || DEFAULT_API_URLS[config.provider];\n+  const model = config.model || DEFAULT_MODELS[config.provider];\n+\n+  const prompt = `优化文本：${text}\n+\n+请严格按照以下格式输出：\n+你的优化思路和分析过程\n+\n+---\n+\n+【方案1】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案2】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案3】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案4】标签名称\n+优化后的文本内容\n+\n+===\n+\n+【方案5】标签名称\n+优化后的文本内容\n+\n+要求：\n+1. 要求说明优化思路\n+2. 使用 --- 分隔思考和方案\n+3. 使用 === 分隔不同方案\n+4. 每个方案的标签用【】包含\n+5. 提供5种不同风格的优化版本\n+6. 保持原意不变，语言更流畅自然\n+7. 不要输出任何多余内容\n+8. 【方案N】和标签名称必须在同一行，不要换行\n+\n+\n+示例\n+\n+【思考】\n+原句过于直白，需要优化表达\n+\n+---\n+\n+【方案1】通用得体版\n+您好，我是新来的同事小张，请问我的工位在哪里？\n+\n+===\n+\n+【方案2】轻松活泼版\n+哈喽大家好，我是小张，请问我坐哪儿呀？\n+\n+===\n+\n+【方案3】正式严谨版\n+您好，我是新入职的员工小张，烦请告知我的座位安排。\n+\n+===\n+\n+【方案4】简洁高效版\n+你好，我是新同事小张，请问我的座位在哪？\n+\n+===\n+\n+【方案5】亲切友好版\n+嗨～我是今天新来的小张，想问一下我的工位安排在哪儿呢？`;\n+\n+  try {\n+    const response = await fetch(apiUrl, {\n+      method: 'POST',\n+      headers: {\n+        'Content-Type': 'application/json',\n+        'Authorization': `Bearer ${config.apiKey}`,\n+      },\n+      body: JSON.stringify({\n+        model,\n+        input: [\n+          {\n+            role: 'user',\n+            content: [\n+              {\n+                type: 'input_text',\n+                text: prompt,\n+              },\n+            ],\n+          },\n+        ],\n+        stream: true,\n+      }),\n+      signal: abortController.signal,\n+    });\n+\n+    if (!response.ok || !response.body) {\n+      throw new Error(`API request failed: ${response.status} ${response.statusText}`);\n+    }\n+\n+    const reader = response.body.getReader();\n+    const decoder = new TextDecoder('utf-8');\n+    let buffer = '';\n+\n+    while (true) {\n+      const { done, value } = await reader.read();\n+      if (done) break;\n+\n+      buffer += decoder.decode(value, { stream: true });\n+      const lines = buffer.split('\\n');\n+      buffer = lines.pop() || '';\n+\n+      for (const line of lines) {\n+        if (line.startsWith('data: ')) {\n+          const jsonStr = line.slice(6);\n+          if (jsonStr.trim() === '[DONE]') {\n+            handler.onComplete();\n+            return () => abortController.abort();\n+          }\n+          try {\n+            const json = JSON.parse(jsonStr);\n+            // Responses API 的流式输出格式\n+            const token = json.delta || '';\n+            if (token) {\n+              handler.onToken(token);\n+            }\n+          } catch (e) {\n+            // SyntaxError 是正常的（不完整的 JSON 或空行），忽略\n+            // 其他错误记录日志以便调试\n+            if (!(e instanceof SyntaxError)) {\n+              console.warn('[AI] Failed to parse SSE chunk:', e);\n+            }\n+          }\n+        }\n+      }\n+    }\n+\n+    handler.onComplete();\n+  } catch (error) {\n+    if (error instanceof Error && error.name !== 'AbortError') {\n+      handler.onError(error);\n+    }\n+  }\n+\n+  return () => abortController.abort();\n+}\n+\n+export async function callAIPolish(\n+  text: string,\n+  config: AIConfig\n+): Promise<string> {\n+  return new Promise((resolve, reject) => {\n+    let result = '';\n+    streamAIPolish(text, config, {\n+      onToken: (token) => {\n+        result += token;\n+      },\n+      onComplete: () => {\n+        resolve(result);\n+      },\n+      onError: (error) => {\n+        reject(error);\n+      },\n+    });\n+  });\n+}"
+      },
+      {
+        "sha": "6f3c6d71d911b8f24f822e16f3c375f0613092db",
+        "filename": "packages/plugin-ai/src/index.ts",
+        "status": "added",
+        "additions": 78,
+        "deletions": 0,
+        "changes": 78,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ai%2Fsrc%2Findex.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,78 @@\n+\n+import type { EditorAPI, NexusPlugin } from \"@floatboat/nexus-core\";\n+import { streamAIPolish, parseAIResponse, type AIConfig, type AIProvider } from \"./ai-service\";\n+import { createConfirmDialog, message } from \"@floatboat/nexus-plugin-ui\";\n+\n+export type { AIConfig, AIProvider };\n+\n+export interface AIPluginOptions {\n+  config: AIConfig;\n+}\n+\n+export function createAIPlugin(options: AIPluginOptions): NexusPlugin {\n+  return {\n+    name: \"plugin-ai\",\n+  };\n+}\n+\n+export async function aiPolishHandler(\n+  editor: EditorAPI,\n+  config: AIConfig\n+): Promise<boolean> {\n+  const { anchor, head } = editor.getSelection();\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n+\n+  if (from === to) {\n+    message.warning(\"请先选中要润色的文本\");\n+    return false;\n+  }\n+\n+  if (!config.apiKey) {\n+    message.error(\"请先配置 AI API Key\");\n+    return false;\n+  }\n+\n+  const selectedText = editor.getDocument().slice(from, to);\n+\n+  const dialog = createConfirmDialog({\n+    title: \"AI 润色\",\n+    originalText: selectedText,\n+    onConfirm: (selectedOption) => {\n+      editor.replaceSelection(selectedOption.text);\n+      editor.focus();\n+      dialog.destroy();\n+    },\n+    onCancel: () => {\n+      abort?.();\n+      dialog.destroy();\n+    },\n+  });\n+\n+  document.body.appendChild(dialog.element);\n+\n+  let abort: (() => void) | undefined;\n+  let accumulatedText = \"\";\n+\n+  abort = await streamAIPolish(selectedText, config, {\n+    onToken: (token) => {\n+      accumulatedText += token;\n+      dialog.updateStreamingText(accumulatedText);\n+    },\n+    onComplete: () => {\n+      dialog.setLoading(false);\n+      const parsed = parseAIResponse(accumulatedText);\n+      dialog.updateAIResponse(parsed);\n+    },\n+    onError: (error) => {\n+      dialog.setLoading(false);\n+      message.error(`润色失败: ${error.message}`);\n+      dialog.destroy();\n+    },\n+  });\n+\n+  return true;\n+}\n+\n+export { streamAIPolish, callAIPolish, parseAIResponse } from \"./ai-service\";\n+export { createConfirmDialog, message } from \"@floatboat/nexus-plugin-ui\";"
+      },
+      {
+        "sha": "15acbe9f3c5e032998e6deb6f8bd4fec1f63d087",
+        "filename": "packages/plugin-ai/test/ai-service.test.ts",
+        "status": "added",
+        "additions": 104,
+        "deletions": 0,
+        "changes": 104,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Ftest%2Fai-service.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Ftest%2Fai-service.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ai%2Ftest%2Fai-service.test.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,104 @@\n+import { describe, expect, it } from \"vitest\";\n+import { parseAIResponse } from \"../src/ai-service\";\n+\n+describe(\"parseAIResponse\", () => {\n+  it(\"parses thinking and options with separators\", () => {\n+    const input = `分析原文本特点...\n+\n+---\n+\n+【方案1】通用得体版\n+您好，我是新来的同事小张，请问我应该坐哪个位置呀？\n+\n+===\n+\n+【方案2】轻松活泼版\n+哈喽～我是今天刚入职的小张，请问我的工位安排在哪里呀？`;\n+\n+    const result = parseAIResponse(input);\n+\n+    expect(result.thinking).toContain(\"分析原文本特点\");\n+    expect(result.options).toHaveLength(2);\n+    expect(result.options[0].label).toBe(\"方案1 通用得体版\");\n+    expect(result.options[0].text).toContain(\"您好，我是新来的同事小张\");\n+    expect(result.options[1].label).toBe(\"方案2 轻松活泼版\");\n+    expect(result.options[1].text).toContain(\"哈喽～我是今天刚入职的小张\");\n+  });\n+\n+  it(\"parses 5 options correctly\", () => {\n+    const input = `思考过程...\n+\n+---\n+\n+【方案1】风格A\n+内容A\n+\n+===\n+\n+【方案2】风格B\n+内容B\n+\n+===\n+\n+【方案3】风格C\n+内容C\n+\n+===\n+\n+【方案4】风格D\n+内容D\n+\n+===\n+\n+【方案5】风格E\n+内容E`;\n+\n+    const result = parseAIResponse(input);\n+\n+    expect(result.options).toHaveLength(5);\n+    expect(result.options[4].label).toBe(\"方案5 风格E\");\n+  });\n+\n+  it(\"returns full text as default option when no separators\", () => {\n+    const input = \"这是一段没有分隔符的文本\";\n+\n+    const result = parseAIResponse(input);\n+\n+    expect(result.thinking).toBe(\"\");\n+    expect(result.options).toHaveLength(1);\n+    expect(result.options[0].text).toBe(\"这是一段没有分隔符的文本\");\n+  });\n+\n+  it(\"handles JSON format response\", () => {\n+    const input = `{\n+  \"thinking\": \"分析过程\",\n+  \"options\": [\n+    {\"label\": \"方案1 风格A\", \"text\": \"内容A\"},\n+    {\"label\": \"方案2 风格B\", \"text\": \"内容B\"}\n+  ]\n+}`;\n+\n+    const result = parseAIResponse(input);\n+\n+    expect(result.thinking).toBe(\"分析过程\");\n+    expect(result.options).toHaveLength(2);\n+    expect(result.options[0].label).toBe(\"方案1 风格A\");\n+  });\n+\n+  it(\"handles markdown header format\", () => {\n+    const input = `思考...\n+\n+---\n+\n+### 1. 【方案1】风格A\n+内容A\n+\n+### 2. 【方案2】风格B\n+内容B`;\n+\n+    const result = parseAIResponse(input);\n+\n+    expect(result.options).toHaveLength(2);\n+    expect(result.options[0].label).toBe(\"方案1 风格A\");\n+  });\n+});"
+      },
+      {
+        "sha": "bc8df04718a6f44240528de819fe882755b2d698",
+        "filename": "packages/plugin-ai/tsconfig.json",
+        "status": "added",
+        "additions": 22,
+        "deletions": 0,
+        "changes": 22,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ai%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ai%2Ftsconfig.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,22 @@\n+{\n+  \"compilerOptions\": {\n+    \"target\": \"ES2020\",\n+    \"module\": \"ESNext\",\n+    \"moduleResolution\": \"bundler\",\n+    \"strict\": true,\n+    \"jsx\": \"preserve\",\n+    \"declaration\": true,\n+    \"declarationMap\": true,\n+    \"sourceMap\": true,\n+    \"resolveJsonModule\": true,\n+    \"isolatedModules\": true,\n+    \"esModuleInterop\": true,\n+    \"skipLibCheck\": true,\n+    \"lib\": [\"ES2020\", \"DOM\"],\n+    \"baseUrl\": \".\",\n+    \"paths\": {\n+      \"@floatboat/nexus-core\": [\"../core/src\"]\n+    }\n+  },\n+  \"include\": [\"src/**/*.ts\"]\n+}"
+      },
+      {
+        "sha": "e27bfab9c5ea108bbf83be475f837f93d3e2d982",
+        "filename": "packages/plugin-toolbar/src/icons.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-toolbar%2Fsrc%2Ficons.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-toolbar%2Fsrc%2Ficons.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Ficons.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -174,3 +174,10 @@ export function iconHorizontalRule(): HTMLElement {\n     `<line x1=\"2\" y1=\"9\" x2=\"16\" y2=\"9\"/>`\n   );\n }\n+\n+export function iconAI(): HTMLElement {\n+  const wrap = document.createElement(\"span\");\n+  wrap.style.cssText = \"display:flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:14px;font-weight:bold;color:currentColor;\";\n+  wrap.textContent = \"AI\";\n+  return wrap;\n+}"
+      },
+      {
+        "sha": "e19c934b9fd38cfa986c091ad2e34f2287208327",
+        "filename": "packages/plugin-toolbar/src/index.ts",
+        "status": "modified",
+        "additions": 18,
+        "deletions": 0,
+        "changes": 18,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Findex.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -13,6 +13,24 @@ export { toggleBlockquote, toggleOrderedList, toggleUnorderedList, insertCodeBlo\n export { createToolbarUI } from \"./toolbar-ui\";\n export { colorDecorationExtension } from \"./color-decoration\";\n export type { ToolbarUI, ToolbarUIOptions, ToolbarButton, ToolbarGroup } from \"./toolbar-ui\";\n+export { \n+  iconUndo, \n+  iconRedo, \n+  iconLink, \n+  iconH2, \n+  iconH3, \n+  iconBold, \n+  iconItalic, \n+  iconStrikethrough, \n+  iconUnderline, \n+  iconInlineCode, \n+  iconBlockquote, \n+  iconCodeBlock, \n+  iconOrderedList, \n+  iconUnorderedList, \n+  iconImage, \n+  iconAI \n+} from \"./icons\";\n \n export function toggleWrap(editor: EditorAPI, marker: string): boolean {\n   const doc = editor.getDocument();"
+      },
+      {
+        "sha": "69ca0f718a54938be5d26dd7655d9ed7b42c2107",
+        "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+        "status": "modified",
+        "additions": 16,
+        "deletions": 1,
+        "changes": 17,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -53,6 +53,8 @@ export interface ToolbarGroup {\n \n export interface ToolbarUIOptions {\n   groups?: ToolbarGroup[];\n+  /** Additional button groups appended after the default groups */\n+  additionalGroups?: ToolbarGroup[];\n   onFullscreen?: () => void;\n }\n \n@@ -444,7 +446,20 @@ function showColorPicker(\n const DROPDOWN_IDS = new Set([\"heading-menu\", \"text-color\", \"highlight\"]);\n \n export function createToolbarUI(editor: EditorAPI, options?: ToolbarUIOptions): ToolbarUI {\n-  const groups = options?.groups ?? defaultGroups(options);\n+  let groups: ToolbarGroup[];\n+  if (options?.groups) {\n+    // Custom groups provided — use them directly (and optionally extend with additionalGroups)\n+    groups = options.groups;\n+    if (options.additionalGroups?.length) {\n+      groups = [...groups, ...options.additionalGroups];\n+    }\n+  } else {\n+    // Use default groups (and optionally extend with additionalGroups)\n+    groups = defaultGroups(options);\n+    if (options?.additionalGroups?.length) {\n+      groups = [...groups, ...options.additionalGroups];\n+    }\n+  }\n   const toolbar = document.createElement(\"div\");\n   toolbar.className = \"nexus-toolbar\";\n   toolbar.setAttribute(\"role\", \"toolbar\");"
+      },
+      {
+        "sha": "bb498abeb9f21ebd4a5f4b5fbd911929def3453e",
+        "filename": "packages/plugin-ui/package.json",
+        "status": "added",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ui%2Fpackage.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,27 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-ui\",\n+  \"version\": \"0.0.1\",\n+  \"description\": \"通用 UI 组件库 for Nexus Editor\",\n+  \"type\": \"module\",\n+  \"main\": \"dist/index.js\",\n+  \"module\": \"dist/index.js\",\n+  \"types\": \"dist/index.d.ts\",\n+  \"exports\": {\n+    \".\": {\n+      \"import\": \"./dist/index.js\",\n+      \"types\": \"./dist/index.d.ts\"\n+    }\n+  },\n+  \"files\": [\n+    \"dist\"\n+  ],\n+  \"scripts\": {\n+    \"build\": \"tsup src/index.ts --format esm --dts --clean\",\n+    \"dev\": \"tsup src/index.ts --format esm --dts --clean --watch\",\n+    \"test\": \"vitest run --config ../../vitest.config.ts\"\n+  },\n+  \"devDependencies\": {\n+    \"tsup\": \"^8.0.0\",\n+    \"typescript\": \"^5.0.0\"\n+  }\n+}"
+      },
+      {
+        "sha": "2ba54e38a4c464246932982feb577f47aa34a9ba",
+        "filename": "packages/plugin-ui/src/confirm-dialog.ts",
+        "status": "added",
+        "additions": 452,
+        "deletions": 0,
+        "changes": 452,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fsrc%2Fconfirm-dialog.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fsrc%2Fconfirm-dialog.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ui%2Fsrc%2Fconfirm-dialog.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,452 @@\n+export interface AIAnswerOption {\n+  text: string;\n+  label: string;\n+}\n+\n+export interface AIResponse {\n+  thinking: string;\n+  options: AIAnswerOption[];\n+}\n+\n+export interface ConfirmDialogOptions {\n+  title: string;\n+  originalText: string;\n+  onConfirm: (selectedOption: AIAnswerOption) => void;\n+  onCancel: () => void;\n+}\n+\n+export interface ConfirmDialog {\n+  element: HTMLElement;\n+  updateStreamingText: (text: string) => void;\n+  updateAIResponse: (response: AIResponse) => void;\n+  setLoading: (loading: boolean) => void;\n+  destroy: () => void;\n+}\n+\n+function escapeHtml(text: string): string {\n+  return text\n+    .replace(/&/g, '&amp;')\n+    .replace(/</g, '&lt;')\n+    .replace(/>/g, '&gt;')\n+    .replace(/\"/g, '&quot;')\n+    .replace(/'/g, '&#039;');\n+}\n+\n+const DIALOG_STYLES = `\n+  .nexus-ai-dialog {\n+    position: fixed;\n+    inset: 0;\n+    z-index: 10000;\n+    display: flex;\n+    align-items: center;\n+    justify-content: center;\n+    animation: fadeIn 0.2s ease-out;\n+  }\n+\n+  @keyframes fadeIn {\n+    from { opacity: 0; }\n+    to { opacity: 1; }\n+  }\n+\n+  .nexus-ai-dialog-overlay {\n+    position: absolute;\n+    inset: 0;\n+    background: rgba(0, 0, 0, 0.5);\n+    backdrop-filter: blur(2px);\n+  }\n+\n+  .nexus-ai-dialog-content {\n+    position: relative;\n+    width: 90%;\n+    max-width: 900px;\n+    max-height: 90vh;\n+    background: var(--nexus-bg, #ffffff);\n+    border-radius: 12px;\n+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);\n+    display: flex;\n+    flex-direction: column;\n+    overflow: hidden;\n+    animation: slideUp 0.2s ease-out;\n+  }\n+\n+  @keyframes slideUp {\n+    from { \n+      opacity: 0;\n+      transform: translateY(20px);\n+    }\n+    to { \n+      opacity: 1;\n+      transform: translateY(0);\n+    }\n+  }\n+\n+  .nexus-ai-dialog-header {\n+    display: flex;\n+    align-items: center;\n+    justify-content: space-between;\n+    padding: 16px 20px;\n+    border-bottom: 1px solid var(--nexus-border, #e5e7eb);\n+    background: var(--nexus-bg-subtle, #f9fafb);\n+  }\n+\n+  .nexus-ai-dialog-header h3 {\n+    margin: 0;\n+    font-size: 16px;\n+    font-weight: 600;\n+    color: var(--nexus-text, #111827);\n+  }\n+\n+  .nexus-ai-dialog-close {\n+    background: transparent;\n+    border: none;\n+    font-size: 20px;\n+    cursor: pointer;\n+    color: var(--nexus-text-muted, #6b7280);\n+    padding: 4px;\n+    border-radius: 4px;\n+    transition: background-color 0.15s;\n+    width: 28px;\n+    height: 28px;\n+    display: flex;\n+    align-items: center;\n+    justify-content: center;\n+  }\n+\n+  .nexus-ai-dialog-close:hover {\n+    background: var(--nexus-bg-muted, #f3f4f6);\n+    color: var(--nexus-text, #111827);\n+  }\n+\n+  .nexus-ai-dialog-body {\n+    flex: 1;\n+    overflow-y: auto;\n+    padding: 20px;\n+    display: grid;\n+    grid-template-columns: 1fr 1fr;\n+    gap: 20px;\n+  }\n+\n+  .nexus-ai-text-section {\n+    display: flex;\n+    flex-direction: column;\n+    background: var(--nexus-bg-subtle, #f9fafb);\n+    border-radius: 8px;\n+    overflow: hidden;\n+    max-height: 500px;\n+  }\n+\n+  .nexus-ai-polished-section {\n+    display: flex;\n+    flex-direction: column;\n+    gap: 12px;\n+    max-height: 500px;\n+    overflow-y: auto;\n+  }\n+\n+  .nexus-ai-text-section label,\n+  .nexus-ai-polished-section label {\n+    font-size: 13px;\n+    font-weight: 500;\n+    color: var(--nexus-text-muted, #6b7280);\n+    padding: 10px 12px;\n+    border-bottom: 1px solid var(--nexus-border, #e5e7eb);\n+    display: flex;\n+    align-items: center;\n+    gap: 8px;\n+    background: var(--nexus-bg-muted, #f3f4f6);\n+    border-radius: 8px 8px 0 0;\n+  }\n+\n+  .nexus-ai-polished-section label {\n+    border-radius: 8px;\n+  }\n+\n+  .nexus-ai-loading {\n+    font-size: 12px;\n+    animation: spin 1s linear infinite;\n+  }\n+\n+  @keyframes spin {\n+    from { transform: rotate(0deg); }\n+    to { transform: rotate(360deg); }\n+  }\n+\n+  .nexus-ai-original {\n+    flex: 1;\n+    padding: 12px;\n+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n+    font-size: 14px;\n+    line-height: 1.6;\n+    white-space: pre-wrap;\n+    word-break: break-word;\n+    overflow-y: auto;\n+    max-height: 450px;\n+    margin: 0;\n+    color: var(--nexus-text-muted, #6b7280);\n+    background: transparent;\n+  }\n+\n+  .nexus-ai-thinking {\n+    margin-bottom: 12px;\n+    font-size: 12px;\n+    color: #9ca3af;\n+    line-height: 1.6;\n+    padding: 12px;\n+    background: var(--nexus-bg-subtle, #f9fafb);\n+    border-radius: 8px;\n+    white-space: pre-wrap;\n+    word-break: break-word;\n+  }\n+\n+  .nexus-ai-thinking:empty {\n+    display: none;\n+  }\n+\n+  .nexus-ai-streaming {\n+    font-size: 13px;\n+    line-height: 1.6;\n+    padding: 12px;\n+    background: var(--nexus-bg-subtle, #f9fafb);\n+    border-radius: 8px;\n+    white-space: pre-wrap;\n+    word-break: break-word;\n+    color: var(--nexus-text, #111827);\n+    min-height: 100px;\n+  }\n+\n+  .nexus-ai-options {\n+    display: flex;\n+    flex-direction: column;\n+    gap: 10px;\n+  }\n+\n+  .nexus-ai-option {\n+    display: flex;\n+    align-items: flex-start;\n+    gap: 12px;\n+    padding: 12px;\n+    background: var(--nexus-bg-subtle, #f9fafb);\n+    border: 2px solid var(--nexus-border, #e5e7eb);\n+    border-radius: 8px;\n+    cursor: pointer;\n+    transition: all 0.15s;\n+  }\n+\n+  .nexus-ai-option:hover {\n+    border-color: var(--nexus-accent, #3b82f6);\n+    background: rgba(59, 130, 246, 0.03);\n+  }\n+\n+  .nexus-ai-option.selected {\n+    border-color: var(--nexus-accent, #3b82f6);\n+    background: rgba(59, 130, 246, 0.08);\n+  }\n+\n+  .nexus-ai-option input[type=\"radio\"] {\n+    margin-top: 4px;\n+    flex-shrink: 0;\n+    width: 16px;\n+    height: 16px;\n+    accent-color: var(--nexus-accent, #3b82f6);\n+  }\n+\n+  .nexus-ai-option-content {\n+    flex: 1;\n+    min-width: 0;\n+  }\n+\n+  .nexus-ai-option-label {\n+    font-size: 12px;\n+    font-weight: 600;\n+    color: var(--nexus-accent, #3b82f6);\n+    margin-bottom: 6px;\n+    display: flex;\n+    align-items: center;\n+    gap: 6px;\n+  }\n+\n+  .nexus-ai-option-text {\n+    font-size: 13px;\n+    line-height: 1.6;\n+    color: var(--nexus-text, #111827);\n+    white-space: pre-wrap;\n+    word-break: break-word;\n+  }\n+\n+  .nexus-ai-dialog-footer {\n+    display: flex;\n+    justify-content: flex-end;\n+    gap: 12px;\n+    padding: 16px 20px;\n+    border-top: 1px solid var(--nexus-border, #e5e7eb);\n+    background: var(--nexus-bg-subtle, #f9fafb);\n+  }\n+\n+  .nexus-ai-btn {\n+    padding: 8px 16px;\n+    border: none;\n+    border-radius: 6px;\n+    font-size: 14px;\n+    font-weight: 500;\n+    cursor: pointer;\n+    transition: all 0.15s;\n+    display: inline-flex;\n+    align-items: center;\n+    justify-content: center;\n+  }\n+\n+  .nexus-ai-btn-cancel {\n+    background: transparent;\n+    color: var(--nexus-text, #111827);\n+    border: 1px solid var(--nexus-border, #e5e7eb);\n+  }\n+\n+  .nexus-ai-btn-cancel:hover {\n+    background: var(--nexus-bg-muted, #f3f4f6);\n+  }\n+\n+  .nexus-ai-btn-confirm {\n+    background: var(--nexus-accent, #3b82f6);\n+    color: white;\n+  }\n+\n+  .nexus-ai-btn-confirm:hover:not(:disabled) {\n+    background: var(--nexus-accent-hover, #2563eb);\n+  }\n+\n+  .nexus-ai-btn-confirm:disabled {\n+    opacity: 0.5;\n+    cursor: not-allowed;\n+  }\n+\n+  @media (max-width: 640px) {\n+    .nexus-ai-dialog-body {\n+      grid-template-columns: 1fr;\n+    }\n+  }\n+`;\n+\n+let stylesInjected = false;\n+\n+function injectStyles(): void {\n+  if (stylesInjected) return;\n+  \n+  const styleSheet = document.createElement('style');\n+  styleSheet.textContent = DIALOG_STYLES;\n+  document.head.appendChild(styleSheet);\n+  stylesInjected = true;\n+}\n+\n+export function createConfirmDialog(options: ConfirmDialogOptions): ConfirmDialog {\n+  injectStyles();\n+\n+  const dialog = document.createElement('div');\n+  dialog.className = 'nexus-ai-dialog';\n+  dialog.innerHTML = `\n+    <div class=\"nexus-ai-dialog-overlay\"></div>\n+    <div class=\"nexus-ai-dialog-content\">\n+      <div class=\"nexus-ai-dialog-header\">\n+        <h3>${escapeHtml(options.title)}</h3>\n+        <button class=\"nexus-ai-dialog-close\" aria-label=\"Close\">&times;</button>\n+      </div>\n+      <div class=\"nexus-ai-dialog-body\">\n+        <div class=\"nexus-ai-text-section\">\n+          <label>原文</label>\n+          <pre class=\"nexus-ai-original\">${escapeHtml(options.originalText)}</pre>\n+        </div>\n+        <div class=\"nexus-ai-polished-section\">\n+          <label>润色方案 <span class=\"nexus-ai-loading\">⏳</span></label>\n+          <div class=\"nexus-ai-streaming\" id=\"streaming\"></div>\n+          <div id=\"formatted-content\" style=\"display: none;\">\n+            <div class=\"nexus-ai-thinking\" id=\"thinking\"></div>\n+            <div class=\"nexus-ai-options\" id=\"options\"></div>\n+          </div>\n+        </div>\n+      </div>\n+      <div class=\"nexus-ai-dialog-footer\">\n+        <button class=\"nexus-ai-btn nexus-ai-btn-cancel\">取消</button>\n+        <button class=\"nexus-ai-btn nexus-ai-btn-confirm\" disabled>确定</button>\n+      </div>\n+    </div>\n+  `;\n+\n+  const streamingEl = dialog.querySelector('#streaming') as HTMLElement;\n+  const formattedContentEl = dialog.querySelector('#formatted-content') as HTMLElement;\n+  const thinkingEl = dialog.querySelector('#thinking') as HTMLElement;\n+  const optionsEl = dialog.querySelector('#options') as HTMLElement;\n+  const confirmBtn = dialog.querySelector('.nexus-ai-btn-confirm') as HTMLButtonElement;\n+  const loadingEl = dialog.querySelector('.nexus-ai-loading') as HTMLElement;\n+  \n+  let selectedOption: AIAnswerOption | null = null;\n+\n+  const handleCancel = () => {\n+    options.onCancel();\n+  };\n+\n+  dialog.querySelector('.nexus-ai-dialog-close')?.addEventListener('click', handleCancel);\n+  dialog.querySelector('.nexus-ai-dialog-overlay')?.addEventListener('click', handleCancel);\n+  dialog.querySelector('.nexus-ai-btn-cancel')?.addEventListener('click', handleCancel);\n+  \n+  confirmBtn.addEventListener('click', () => {\n+    if (selectedOption) {\n+      options.onConfirm(selectedOption);\n+    }\n+  });\n+\n+  const cleanup = () => {\n+    dialog.remove();\n+  };\n+\n+  return {\n+    element: dialog,\n+    updateStreamingText(text: string) {\n+      streamingEl.textContent = text;\n+      streamingEl.style.display = 'block';\n+      formattedContentEl.style.display = 'none';\n+    },\n+    updateAIResponse(response: AIResponse) {\n+      streamingEl.style.display = 'none';\n+      formattedContentEl.style.display = 'block';\n+      \n+      thinkingEl.textContent = response.thinking;\n+      optionsEl.innerHTML = '';\n+      \n+      response.options.forEach((option, index) => {\n+        const optionEl = document.createElement('div');\n+        optionEl.className = `nexus-ai-option${index === 0 ? ' selected' : ''}`;\n+        optionEl.innerHTML = `\n+          <input type=\"radio\" name=\"ai-option\" value=\"${index}\" ${index === 0 ? 'checked' : ''}>\n+          <div class=\"nexus-ai-option-content\">\n+            <div class=\"nexus-ai-option-label\">【${escapeHtml(option.label)}】</div>\n+            <div class=\"nexus-ai-option-text\">${escapeHtml(option.text)}</div>\n+          </div>\n+        `;\n+        \n+        optionEl.addEventListener('click', () => {\n+          dialog.querySelectorAll('.nexus-ai-option').forEach(el => {\n+            el.classList.remove('selected');\n+          });\n+          dialog.querySelectorAll('input[name=\"ai-option\"]').forEach(input => {\n+            (input as HTMLInputElement).checked = false;\n+          });\n+          const radioInput = optionEl.querySelector('input[name=\"ai-option\"]') as HTMLInputElement;\n+          radioInput.checked = true;\n+          optionEl.classList.add('selected');\n+          selectedOption = option;\n+          confirmBtn.disabled = false;\n+        });\n+        \n+        optionsEl.appendChild(optionEl);\n+        \n+        if (index === 0) {\n+          selectedOption = option;\n+          confirmBtn.disabled = false;\n+        }\n+      });\n+    },\n+    setLoading(loading: boolean) {\n+      loadingEl.style.display = loading ? 'inline-block' : 'none';\n+    },\n+    destroy: cleanup,\n+  };\n+}"
+      },
+      {
+        "sha": "6d4f5fcabadd5b6f5726c0faf4091e4011627684",
+        "filename": "packages/plugin-ui/src/index.ts",
+        "status": "added",
+        "additions": 10,
+        "deletions": 0,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ui%2Fsrc%2Findex.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,10 @@\n+export { message } from \"./message\";\n+export type { MessageType, MessageConfig } from \"./message\";\n+\n+export { createConfirmDialog } from \"./confirm-dialog\";\n+export type {\n+  AIAnswerOption,\n+  AIResponse,\n+  ConfirmDialogOptions,\n+  ConfirmDialog,\n+} from \"./confirm-dialog\";"
+      },
+      {
+        "sha": "0f246faa627b88ff583d64d4b8218d9a836bfe13",
+        "filename": "packages/plugin-ui/src/message.ts",
+        "status": "added",
+        "additions": 173,
+        "deletions": 0,
+        "changes": 173,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fsrc%2Fmessage.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Fsrc%2Fmessage.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ui%2Fsrc%2Fmessage.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,173 @@\n+export type MessageType = \"success\" | \"warning\" | \"error\" | \"info\";\n+\n+export interface MessageConfig {\n+  type?: MessageType;\n+  duration?: number;\n+  closable?: boolean;\n+}\n+\n+const ICONS: Record<MessageType, string> = {\n+  success: \"✓\",\n+  warning: \"⚠\",\n+  error: \"✕\",\n+  info: \"ℹ\",\n+};\n+\n+const STYLES: Record<MessageType, { bg: string; color: string; borderColor: string }> = {\n+  success: { bg: \"rgba(26, 127, 55, 0.08)\", color: \"#1a7f37\", borderColor: \"#1a7f37\" },\n+  warning: { bg: \"rgba(154, 103, 0, 0.08)\", color: \"#9a6700\", borderColor: \"#9a6700\" },\n+  error: { bg: \"rgba(207, 34, 46, 0.08)\", color: \"#cf222e\", borderColor: \"#cf222e\" },\n+  info: { bg: \"rgba(9, 105, 218, 0.08)\", color: \"#0969da\", borderColor: \"#0969da\" },\n+};\n+\n+const containerId = \"nexus-message-container\";\n+\n+function getContainer(): HTMLElement {\n+  let container = document.getElementById(containerId);\n+  if (!container) {\n+    container = document.createElement(\"div\");\n+    container.id = containerId;\n+    container.style.cssText = `\n+      position: fixed;\n+      top: 20px;\n+      right: 20px;\n+      z-index: 9999;\n+      display: flex;\n+      flex-direction: column;\n+      gap: 10px;\n+    `;\n+    document.body.appendChild(container);\n+  }\n+  return container;\n+}\n+\n+function createMessageElement(content: string, type: MessageType, closable: boolean): HTMLElement {\n+  const style = STYLES[type];\n+  const icon = ICONS[type];\n+\n+  const element = document.createElement(\"div\");\n+  element.style.cssText = `\n+    display: flex;\n+    align-items: center;\n+    gap: 10px;\n+    padding: 12px 16px;\n+    background: ${style.bg};\n+    border: 1px solid ${style.borderColor};\n+    border-radius: 8px;\n+    color: ${style.color};\n+    font-size: 14px;\n+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n+    min-width: 280px;\n+    max-width: 400px;\n+    animation: slideIn 0.3s ease-out;\n+  `;\n+\n+  const iconSpan = document.createElement(\"span\");\n+  iconSpan.textContent = icon;\n+  iconSpan.style.fontSize = \"16px\";\n+  element.appendChild(iconSpan);\n+\n+  const textSpan = document.createElement(\"span\");\n+  textSpan.textContent = content;\n+  textSpan.style.flex = \"1\";\n+  element.appendChild(textSpan);\n+\n+  if (closable) {\n+    const closeBtn = document.createElement(\"button\");\n+    closeBtn.textContent = \"×\";\n+    closeBtn.style.cssText = `\n+      background: none;\n+      border: none;\n+      color: ${style.color};\n+      font-size: 20px;\n+      cursor: pointer;\n+      padding: 0;\n+      line-height: 1;\n+      opacity: 0.7;\n+      transition: opacity 0.2s;\n+    `;\n+    closeBtn.addEventListener(\"mouseenter\", () => {\n+      closeBtn.style.opacity = \"1\";\n+    });\n+    closeBtn.addEventListener(\"mouseleave\", () => {\n+      closeBtn.style.opacity = \"0.7\";\n+    });\n+    closeBtn.addEventListener(\"click\", () => {\n+      removeMessage(element);\n+    });\n+    element.appendChild(closeBtn);\n+  }\n+\n+  return element;\n+}\n+\n+function removeMessage(element: HTMLElement): void {\n+  element.style.animation = \"slideOut 0.2s ease-in forwards\";\n+  setTimeout(() => {\n+    element.remove();\n+  }, 200);\n+}\n+\n+function showMessage(content: string, config: MessageConfig = {}): void {\n+  const { type = \"info\", duration = 3000, closable = true } = config;\n+  \n+  const element = createMessageElement(content, type, closable);\n+  const container = getContainer();\n+  container.appendChild(element);\n+\n+  if (duration > 0) {\n+    setTimeout(() => {\n+      removeMessage(element);\n+    }, duration);\n+  }\n+}\n+\n+export const message = {\n+  success(content: string, config?: Omit<MessageConfig, \"type\">): void {\n+    injectStyles();\n+    showMessage(content, { ...config, type: \"success\" });\n+  },\n+  warning(content: string, config?: Omit<MessageConfig, \"type\">): void {\n+    injectStyles();\n+    showMessage(content, { ...config, type: \"warning\" });\n+  },\n+  error(content: string, config?: Omit<MessageConfig, \"type\">): void {\n+    injectStyles();\n+    showMessage(content, { ...config, type: \"error\" });\n+  },\n+  info(content: string, config?: Omit<MessageConfig, \"type\">): void {\n+    injectStyles();\n+    showMessage(content, { ...config, type: \"info\" });\n+  },\n+};\n+\n+// 懒加载动画样式，避免 SSR/Node 环境报错\n+let styleInjected = false;\n+function injectStyles(): void {\n+  if (styleInjected || typeof document === 'undefined') return;\n+  const styleSheet = document.createElement(\"style\");\n+  styleSheet.textContent = `\n+  @keyframes slideIn {\n+    from {\n+      opacity: 0;\n+      transform: translateX(100%);\n+    }\n+    to {\n+      opacity: 1;\n+      transform: translateX(0);\n+    }\n+  }\n+  @keyframes slideOut {\n+    from {\n+      opacity: 1;\n+      transform: translateX(0);\n+    }\n+    to {\n+      opacity: 0;\n+      transform: translateX(100%);\n+    }\n+  }\n+`;\n+  document.head.appendChild(styleSheet);\n+  styleInjected = true;\n+}"
+      },
+      {
+        "sha": "d712a008d1d595b70269b40976fce8d66f21690a",
+        "filename": "packages/plugin-ui/test/message.test.ts",
+        "status": "added",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Ftest%2Fmessage.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Ftest%2Fmessage.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ui%2Ftest%2Fmessage.test.ts?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,24 @@\n+import { describe, expect, it } from \"vitest\";\n+import { message } from \"../src/message\";\n+\n+describe(\"message\", () => {\n+  it(\"exports message object with all types\", () => {\n+    expect(message).toBeDefined();\n+    expect(typeof message.success).toBe(\"function\");\n+    expect(typeof message.warning).toBe(\"function\");\n+    expect(typeof message.error).toBe(\"function\");\n+    expect(typeof message.info).toBe(\"function\");\n+  });\n+\n+  it(\"creates message element when called\", () => {\n+    // Clear any existing messages\n+    const container = document.getElementById(\"nexus-message-container\");\n+    if (container) container.innerHTML = \"\";\n+\n+    message.info(\"test message\");\n+\n+    const containerAfter = document.getElementById(\"nexus-message-container\");\n+    expect(containerAfter).not.toBeNull();\n+    expect(containerAfter?.children.length).toBeGreaterThan(0);\n+  });\n+});"
+      },
+      {
+        "sha": "cd84f79a5d961146e992c9ef2612a8157246bee9",
+        "filename": "packages/plugin-ui/tsconfig.json",
+        "status": "added",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/packages%2Fplugin-ui%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-ui%2Ftsconfig.json?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -0,0 +1,15 @@\n+{\n+  \"compilerOptions\": {\n+    \"target\": \"ES2022\",\n+    \"module\": \"ESNext\",\n+    \"moduleResolution\": \"bundler\",\n+    \"declaration\": true,\n+    \"outDir\": \"dist\",\n+    \"strict\": true,\n+    \"esModuleInterop\": true,\n+    \"skipLibCheck\": true,\n+    \"forceConsistentCasingInFileNames\": true\n+  },\n+  \"include\": [\"src\"],\n+  \"exclude\": [\"node_modules\", \"dist\"]\n+}"
+      },
+      {
+        "sha": "6aa056e1891a2dff4aa996a7bc022082b79f4a1c",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 43,
+        "deletions": 6,
+        "changes": 49,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a9d142ca3af24fd48d5b8d639b5306bf7fe20d84/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=a9d142ca3af24fd48d5b8d639b5306bf7fe20d84",
+        "patch": "@@ -53,6 +53,9 @@ importers:\n       '@floatboat/nexus-core':\n         specifier: workspace:*\n         version: link:../../packages/core\n+      '@floatboat/nexus-plugin-ai':\n+        specifier: workspace:*\n+        version: link:../../packages/plugin-ai\n       '@floatboat/nexus-plugin-history':\n         specifier: workspace:*\n         version: link:../../packages/plugin-history\n@@ -68,13 +71,16 @@ importers:\n       '@floatboat/nexus-preset-gfm':\n         specifier: workspace:*\n         version: link:../../packages/preset-gfm\n+      dotenv:\n+        specifier: ^17.4.2\n+        version: 17.4.2\n       highlight.js:\n         specifier: ^11.11.0\n         version: 11.11.1\n     devDependencies:\n       electron:\n         specifier: ^35.0.0\n-        version: 35.7.5\n+        version: 35.0.0\n       electron-builder:\n         specifier: ^25.1.8\n         version: 25.1.8(electron-builder-squirrel-windows@25.1.8)\n@@ -136,6 +142,22 @@ importers:\n         specifier: ^11.0.5\n         version: 11.0.5\n \n+  packages/plugin-ai:\n+    dependencies:\n+      '@floatboat/nexus-core':\n+        specifier: workspace:*\n+        version: link:../core\n+      '@floatboat/nexus-plugin-ui':\n+        specifier: workspace:*\n+        version: link:../plugin-ui\n+    devDependencies:\n+      tsup:\n+        specifier: ^8.5.0\n+        version: 8.5.1(postcss@8.5.9)(typescript@5.9.3)\n+      typescript:\n+        specifier: ^5.3.3\n+        version: 5.9.3\n+\n   packages/plugin-history:\n     dependencies:\n       '@codemirror/commands':\n@@ -190,6 +212,15 @@ importers:\n         specifier: workspace:*\n         version: link:../core\n \n+  packages/plugin-ui:\n+    devDependencies:\n+      tsup:\n+        specifier: ^8.0.0\n+        version: 8.5.1(postcss@8.5.9)(typescript@5.9.3)\n+      typescript:\n+        specifier: ^5.0.0\n+        version: 5.9.3\n+\n   packages/plugin-vim:\n     dependencies:\n       '@floatboat/nexus-core':\n@@ -1944,6 +1975,10 @@ packages:\n     resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}\n     engines: {node: '>=12'}\n \n+  dotenv@17.4.2:\n+    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}\n+    engines: {node: '>=12'}\n+\n   dunder-proto@1.0.1:\n     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}\n     engines: {node: '>= 0.4'}\n@@ -1972,8 +2007,8 @@ packages:\n   electron-publish@25.1.7:\n     resolution: {integrity: sha512-+jbTkR9m39eDBMP4gfbqglDd6UvBC7RLh5Y0MhFSsc6UkGHj9Vj9TWobxevHYMMqmoujL11ZLjfPpMX+Pt6YEg==}\n \n-  electron@35.7.5:\n-    resolution: {integrity: sha512-dnL+JvLraKZl7iusXTVTGYs10TKfzUi30uEDTqsmTm0guN9V2tbOjTzyIZbh9n3ygUjgEYyo+igAwMRXIi3IPw==}\n+  electron@35.0.0:\n+    resolution: {integrity: sha512-mwNQNktYLPnUWZVR8iNkfWCBjmM5e2/CmB1rhACwE9ASDbVU7CYPgp/jLUB3bj/LyQsfSuubD82OUite6SN8Uw==}\n     engines: {node: '>= 12.20.55'}\n     hasBin: true\n \n@@ -2172,12 +2207,12 @@ packages:\n \n   glob@7.2.3:\n     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}\n-    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\n+    deprecated: Glob versions prior to v9 are no longer supported\n \n   glob@8.1.0:\n     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}\n     engines: {node: '>=12'}\n-    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\n+    deprecated: Glob versions prior to v9 are no longer supported\n \n   global-agent@3.0.0:\n     resolution: {integrity: sha512-PT6XReJ+D07JvGoxQMkT6qji/jVNfX/h364XHZOWeRzy64sSFr+xJ5OX7LI3b4MPQzdL4H8Y8M0xzPpsVMwA8Q==}\n@@ -5386,6 +5421,8 @@ snapshots:\n \n   dotenv@16.6.1: {}\n \n+  dotenv@17.4.2: {}\n+\n   dunder-proto@1.0.1:\n     dependencies:\n       call-bind-apply-helpers: 1.0.2\n@@ -5445,7 +5482,7 @@ snapshots:\n     transitivePeerDependencies:\n       - supports-color\n \n-  electron@35.7.5:\n+  electron@35.0.0:\n     dependencies:\n       '@electron/get': 2.0.3\n       '@types/node': 22.19.17"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=33",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

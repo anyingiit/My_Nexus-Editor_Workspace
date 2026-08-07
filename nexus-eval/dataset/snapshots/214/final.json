@@ -1,0 +1,526 @@
+{
+  "pr_number": 214,
+  "title": "feat: knowledge-graph view, recent-projects switcher, and editor-shell polish",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "4dfd5306ad9b7a92be0fcce63c807f37fad6ac04",
+  "merge_commit_sha": "81e7e5decc19d57a6768e16f8204d1db98345a85",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "c18d3b2723d3158c955f04dc68fb8c092246d010",
+      "message": "feat(toolbar): responsive overflow menu, shortcut tooltips, and table command\n\nToolbar now collapses buttons it can't fit into an overflow (…) menu via a\nResizeObserver-driven layout pass, shows keyboard-shortcut tooltips (platform-\nnormalized through formatShortcut), and consolidates button construction in a\nwireButton helper with CSS-only hover. Adds an insertTable formatting action\nplus a 'table' slash command that inserts a GFM pipe table. Sample vault gains\na Tables.md demonstrating the output.",
+      "date": "2026-08-04T10:57:49Z"
+    },
+    {
+      "sha": "982c27b4e0e22ace8e6313165f96b4af35e2a290",
+      "message": "feat(core): fenced code-block card with copy/format toolbar and richer highlighting\n\nReplaces the minimal copy-button widget with a full code-block card: a header\ntoolbar (language label, Wrap, Format, Copy, Edit) over syntax-highlighted\noutput. live-preview-highlight gains highlightCodeToHtml + formatCodeSource,\nmany more languages/aliases, and hljs v11 scope handling. Inline images no\nlonger expand the content area (block img, max-width:100%) and keep their\ncompact preview when the caret sits just after them.",
+      "date": "2026-08-04T10:58:08Z"
+    },
+    {
+      "sha": "d6ef4cd7337d8c41427c7a5f452aabe1945f84a1",
+      "message": "feat(core): runtime line-number toggle and default soft-wrap\n\nAdds EditorConfig.lineNumbers / lineWrapping and an EditorAPI.setLineNumbers\nruntime toggle (line numbers moved into a Compartment for reconfiguration).\nSoft-wrap is on by default so long unbreakable tokens (base64 data URLs, long\nlinks) can't expand the content area past the viewport.",
+      "date": "2026-08-04T10:58:27Z"
+    },
+    {
+      "sha": "be899175185fac52d994c9b354a82214c08ce9b9",
+      "message": "feat(demo): frameless window chrome, image IO, and recent-vault IPC\n\nMain process gains custom window chrome (hiddenInset on macOS, frameless\nmin/max/close on Windows/Linux via window:* IPC), vault image handlers\n(vault:write-image for paste/drop, vault:import-image for the picker), and\nnon-pruning recents handlers (vault:list-recents returns {path,name,exists},\nvault:remove-recent) that keep dead entries so the UI can warn instead of\nsilently dropping them. Preload exposes the matching bridge (WindowBridge,\nRecentVault types). Adds an inline-SVG icon set and the frameless window\ncontrols widget.",
+      "date": "2026-08-04T10:58:47Z"
+    },
+    {
+      "sha": "ee92417e3b69ab1ff20ac6162f91b157f1a7ac8c",
+      "message": "feat(demo): editorial theme palettes and runtime color scheme\n\nAdds DESIGN.md-derived light/dark editorial palettes and applyShellColorScheme,\nwhich drives html[data-theme] so chrome, panels, and menus follow the editor's\nlight/dark toggle. settingsToTheme merges the design palette over the base\ntheme; settings modal migrated to nx-modal classes.",
+      "date": "2026-08-04T10:59:05Z"
+    },
+    {
+      "sha": "62169f5b8707f27bbe3387f8f602a2286d21620f",
+      "message": "feat(demo): image insert, paste, drop, and fullscreen preview\n\nWires onAssetUpload so pasted/dropped images persist into the vault (img/),\nadds a toolbar image picker (insertImageWithPicker via vault.importImage), and\na fullscreen lightbox (openImagePreview) on image click. Editor construction\nmoves lineNumbers/tabSize/direction/indentGuides into the config and applies\nthe shell color scheme on settings change.",
+      "date": "2026-08-04T10:59:26Z"
+    },
+    {
+      "sha": "38a387578e975308e90752fcd91468183ff6351d",
+      "message": "refactor(demo): migrate panels to nx design-system classes\n\nDrops the inline *_STYLES constants across the vault, backlinks, outline, and\nsearch panels in favor of shared nx-* classes / --ds-* tokens. The vault panel\nalso gains a resizable + collapsible sidebar (persisted width), a background\ncontext menu for root file/folder creation, and empty-state CTAs; buttons use\naria-disabled instead of native disabled so tooltips stay live.",
+      "date": "2026-08-04T10:59:46Z"
+    },
+    {
+      "sha": "dc3a237da37eac2f5d56203095386a90867298f4",
+      "message": "refactor(demo): modularize shell styles into SCSS partials\n\nSplits the 1.5k-line style.css (plus tokens.css/scrollbars.css) into modular\nSCSS under styles/: main.scss @use-s partials in the original cascade order,\n_variables.scss centralizes z-index magic numbers, _mixins.scss holds a\ntruncate mixin, and _switcher.scss is written with nesting as a showcase.\nStyles now import from app.ts (Vite compiles SCSS); the <link> is dropped from\nindex.html. sass added as a devDependency. Verified byte-equivalent to the\npre-split minified bundle (modulo a harmless @charset).",
+      "date": "2026-08-04T11:00:07Z"
+    },
+    {
+      "sha": "21eb7af72797a47e09e5a44b0b805398b7d6ed79",
+      "message": "feat(demo): knowledge-graph view of the vault wiki-link network\n\nLinkIndex.getGraph() exposes the vault's forward-link graph as nodes+edges,\nincluding unresolved wiki-link targets as ghost nodes (with degree counts for\nsizing). graph-view.ts renders it on a canvas with a cooled force simulation:\ndrag to pin nodes, wheel-zoom around the cursor, pan, hover to spotlight\nneighbours, click a resolved node to open it. Theme-aware via --ds-* tokens,\ncaps at 500 nodes, and idles cheaply when settled. Unit tests cover getGraph\n(edges, ghosts, degree, self/anchor links).",
+      "date": "2026-08-04T11:00:48Z"
+    },
+    {
+      "sha": "edcbb4ea4d3c7b9609502db70248602fb6edf75d",
+      "message": "feat(demo): recent-projects quick switcher\n\nA centered modal (Cmd/Ctrl+Shift+P) listing recently opened vaults from\nvault.listRecents(). Existing projects switch on click/Enter with keyboard\nnavigation; projects whose folder was moved or deleted show a friendly hint\nand a one-click Remove (vault.removeRecent) so the list self-heals. jsdom tests\ncover rendering, switching, removal, and the empty state.",
+      "date": "2026-08-04T11:01:02Z"
+    },
+    {
+      "sha": "c964d4d0a24414edddb71d434da6f8aa3ca14273",
+      "message": "fix(core): align table widget with code blocks and remove phantom scrollbar\n\nWraps the table in an inset shell mirroring the fenced-code-block shell so the\ntwo line up (12px inset, tracked padding instead of untracked margin). The\nwrapper becomes a full-width block (was inline-block, which defeated the\ntable's width:100%). The last column's resize handle no longer overhangs the\nedge. Height estimate updated for the shell padding. Combined with dropping the\nwrapper's overflow-x:auto (see styles), tables no longer show a spurious\nscrollbar when their content fits.",
+      "date": "2026-08-04T11:01:23Z"
+    },
+    {
+      "sha": "9e0c0738e19ae55c01aad73beac5e851df851189",
+      "message": "feat(demo): wire graph, switcher, and window chrome into the app shell\n\nAssembles the new shell: custom chrome toolbar with icon buttons + file menu,\nknowledge-graph overlay (Ctrl+Shift+G), project switcher (Cmd/Ctrl+Shift+P),\nand platform window controls. Adds refreshDocumentPanels() called after every\nsilent loadDocument so the outline (and backlinks) refresh on file open —\npreviously the outline stayed empty because silent loads skip the change\nevent.",
+      "date": "2026-08-04T11:01:40Z"
+    },
+    {
+      "sha": "4dfd5306ad9b7a92be0fcce63c807f37fad6ac04",
+      "message": "docs: add DESIGN.md design specification\n\nEditorial design spec (color tokens, typography scale, spacing, component\ninventory) that the shell theme and --ds-* tokens are derived from.",
+      "date": "2026-08-04T11:01:56Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "DESIGN.md",
+      "status": "added",
+      "additions": 504,
+      "deletions": 0,
+      "changes": 504
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 191,
+      "deletions": 9,
+      "changes": 200
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 92,
+      "deletions": 0,
+      "changes": 92
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/Topics/Tables.md",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 277,
+      "deletions": 105,
+      "changes": 382
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/backlinks-panel.ts",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 114,
+      "changes": 142
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 39,
+      "deletions": 0,
+      "changes": 39
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 76,
+      "deletions": 8,
+      "changes": 84
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/graph-view.ts",
+      "status": "added",
+      "additions": 686,
+      "deletions": 0,
+      "changes": 686
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/icons.ts",
+      "status": "added",
+      "additions": 57,
+      "deletions": 0,
+      "changes": 57
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/image-preview.ts",
+      "status": "added",
+      "additions": 48,
+      "deletions": 0,
+      "changes": 48
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/index.html",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 92,
+      "deletions": 0,
+      "changes": 92
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/outline-panel.ts",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 72,
+      "changes": 84
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/project-switcher.ts",
+      "status": "added",
+      "additions": 220,
+      "deletions": 0,
+      "changes": 220
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 83,
+      "changes": 131
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/settings.ts",
+      "status": "modified",
+      "additions": 81,
+      "deletions": 74,
+      "changes": 155
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "removed",
+      "additions": 0,
+      "deletions": 192,
+      "changes": 192
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_base.scss",
+      "status": "added",
+      "additions": 49,
+      "deletions": 0,
+      "changes": 49
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_buttons.scss",
+      "status": "added",
+      "additions": 101,
+      "deletions": 0,
+      "changes": 101
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_chrome.scss",
+      "status": "added",
+      "additions": 112,
+      "deletions": 0,
+      "changes": 112
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_code-block.scss",
+      "status": "added",
+      "additions": 56,
+      "deletions": 0,
+      "changes": 56
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_graph.scss",
+      "status": "added",
+      "additions": 126,
+      "deletions": 0,
+      "changes": 126
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_layout.scss",
+      "status": "added",
+      "additions": 230,
+      "deletions": 0,
+      "changes": 230
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_menu.scss",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_mixins.scss",
+      "status": "added",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_modal.scss",
+      "status": "added",
+      "additions": 71,
+      "deletions": 0,
+      "changes": 71
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_panels.scss",
+      "status": "added",
+      "additions": 222,
+      "deletions": 0,
+      "changes": 222
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_scrollbars.scss",
+      "status": "added",
+      "additions": 112,
+      "deletions": 0,
+      "changes": 112
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_search.scss",
+      "status": "added",
+      "additions": 39,
+      "deletions": 0,
+      "changes": 39
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_slash-menu.scss",
+      "status": "added",
+      "additions": 58,
+      "deletions": 0,
+      "changes": 58
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_status.scss",
+      "status": "added",
+      "additions": 38,
+      "deletions": 0,
+      "changes": 38
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_switcher.scss",
+      "status": "added",
+      "additions": 152,
+      "deletions": 0,
+      "changes": 152
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_syntax.scss",
+      "status": "added",
+      "additions": 91,
+      "deletions": 0,
+      "changes": 91
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_tables.scss",
+      "status": "added",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_tokens.scss",
+      "status": "added",
+      "additions": 108,
+      "deletions": 0,
+      "changes": 108
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_variables.scss",
+      "status": "added",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_window-controls.scss",
+      "status": "added",
+      "additions": 50,
+      "deletions": 0,
+      "changes": 50
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/_wordcount.scss",
+      "status": "added",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/styles/main.scss",
+      "status": "added",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/vault-panel.ts",
+      "status": "modified",
+      "additions": 247,
+      "deletions": 189,
+      "changes": 436
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/window-controls.ts",
+      "status": "added",
+      "additions": 117,
+      "deletions": 0,
+      "changes": 117
+    },
+    {
+      "filename": "apps/electron-demo/test/app-handlers.test.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/test/link-index.test.ts",
+      "status": "modified",
+      "additions": 57,
+      "deletions": 1,
+      "changes": 58
+    },
+    {
+      "filename": "apps/electron-demo/test/project-switcher.test.ts",
+      "status": "added",
+      "additions": 65,
+      "deletions": 0,
+      "changes": 65
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 2,
+      "changes": 16
+    },
+    {
+      "filename": "packages/core/src/live-preview-highlight.ts",
+      "status": "modified",
+      "additions": 109,
+      "deletions": 8,
+      "changes": 117
+    },
+    {
+      "filename": "packages/core/src/live-preview-renderers.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 3,
+      "changes": 8
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 35,
+      "deletions": 5,
+      "changes": 40
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 419,
+      "deletions": 115,
+      "changes": 534
+    },
+    {
+      "filename": "packages/core/src/theme.ts",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 3,
+      "changes": 37
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "packages/core/test/accessibility.test.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    },
+    {
+      "filename": "packages/core/test/live-preview-regressions.test.ts",
+      "status": "modified",
+      "additions": 106,
+      "deletions": 38,
+      "changes": 144
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 11,
+      "changes": 32
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 34,
+      "deletions": 0,
+      "changes": 34
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 1,
+      "changes": 10
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 378,
+      "deletions": 96,
+      "changes": 474
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 1,
+      "changes": 19
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 205,
+      "deletions": 12,
+      "changes": 217
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=214",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

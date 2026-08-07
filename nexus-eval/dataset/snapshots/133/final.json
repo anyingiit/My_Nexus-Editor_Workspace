@@ -1,0 +1,95 @@
+{
+  "pr_number": 133,
+  "title": "feat(electron): add Playwright-driven e2e tests for the demo app",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+  "merge_commit_sha": "2d49b9fd2cf309f3678f3db6aa844df4938eca7c",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "ddee2dea6a5ba7264fc8c42d70be292778e34a25",
+      "message": "feat(electron): add Playwright-driven e2e tests for the demo app\n\nRoadmap #25 (End-to-end testing) — no OpenSpec required per the\nroadmap row. Adds a real end-to-end layer that drives the *packaged*\nelectron-demo build (real Chromium, real main process, real IPC) via\nplaywright-core's `_electron`, catching the class of bug that never\nshows up in the jsdom unit suite: production build wiring, preload\nbridge exposure, real layout/paint, real mouse coordinates.\n\n- apps/electron-demo/e2e/driver.ts: launchApp()/closeApp() helper.\n  Resolves the electron binary via the `electron` package's own export\n  (portable — no hardcoded paths) and strips ELECTRON_RUN_AS_NODE from\n  the spawned env, since some sandboxed/CI shells set it to stop a\n  stray `electron` invocation from opening a GUI window, which would\n  otherwise make the launch handshake silently time out.\n- apps/electron-demo/e2e/smoke.e2e.test.ts: three golden-path\n  scenarios — app launches to an empty editor, live-preview renders\n  typed markdown (heading/bold/italic), and a GFM task checkbox\n  toggles via a real DOM click. The checkbox assertion re-queries the\n  element after clicking rather than trusting the original reference:\n  its click handler dispatches a CM6 change whose decoration key\n  embeds the checked state, so CM6 replaces the <input> node\n  synchronously and the original reference is left detached.\n- apps/electron-demo/vitest.e2e.config.ts + new `test:e2e` script:\n  separate from the default `pnpm test` on purpose — these need a\n  prior `pnpm build` and a display, so keeping them in the default\n  jsdom run would make the fast unit suite flaky in headless CI.\n- vitest.config.ts: excludes `**/e2e/**` from the root config. Without\n  this, the root `pnpm test` picked the new file up anyway (vitest's\n  default include glob matches any `*.test.ts`, `.e2e.` infix or not)\n  and ran it under jsdom with no built app — confirmed by running\n  `pnpm test` before adding the exclude.\n- docs/ROADMAP.md: #25 marked done, documents how to run it and what's\n  intentionally out of scope for this first pass (vault/file-IO e2e\n  coverage — needs a way to bypass native OS file dialogs, which is\n  its own piece of work).\n\nCI wiring (roadmap #26, \"missing e2e gate\") is intentionally not part\nof this PR — different roadmap item, kept separate per \"one PR, one\nconcern\".\n\nVerified: `pnpm --filter @floatboat/nexus-electron-demo build` then\n`test:e2e` — 3/3 passing, stable across 3 consecutive runs (~3s each).\nFull repo `pnpm test` (515/515), `pnpm typecheck`, and `pnpm build`\nall pass unaffected.",
+      "date": "2026-07-06T06:00:08Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/e2e/driver.ts",
+      "status": "added",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "apps/electron-demo/e2e/smoke.e2e.test.ts",
+      "status": "added",
+      "additions": 88,
+      "deletions": 0,
+      "changes": 88
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "apps/electron-demo/vitest.e2e.config.ts",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 0,
+      "changes": 11
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 2,
+      "changes": 11
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=133",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

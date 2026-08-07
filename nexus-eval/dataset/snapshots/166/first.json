@@ -1,0 +1,100 @@
+{
+  "pr_number": 166,
+  "title": "feat(core): add lineWrapping config and runtime toggle",
+  "body": "## Summary\r\n\r\nAdd `lineWrapping` config option and `setLineWrapping()` runtime API to the core editor, allowing hosts to enable soft word-wrap for long lines. Mirrors CodeMirror 6's `EditorView.lineWrapping`.\r\n\r\n## Changes\r\n\r\n| Package | Change |\r\n|---|---|\r\n| `core` | Add `lineWrapping?: boolean` to `EditorConfig` |\r\n| `core` | Add `setLineWrapping(enabled: boolean)` to `EditorAPI` |\r\n| `core` | Implement via `Compartment` (same pattern as `themeExt`) |\r\n| `react` | Pass `lineWrapping` prop through `<Editor />` |\r\n| `vue` | Pass `lineWrapping` prop through `<Editor />` |\r\n| `react`/`vue` | **Fix:** `multiCursor` prop was not being passed through the wrappers |\r\n\r\n## Why\r\n\r\nMost editors expose a word-wrap toggle (Obsidian, VS Code, etc.). This adds the same capability to Nexus — useful for note-taking apps where users want to see full paragraph text without horizontal scrolling.\r\n\r\n## Tests\r\n\r\n6 tests added in `packages/core/test/editor.test.ts`:\r\n- Default: no wrapping\r\n- Config `lineWrapping: true`\r\n- `setLineWrapping(true)` at runtime\r\n- `setLineWrapping(false)` at runtime\r\n- `setLineWrapping` on destroyed editor (no-op)\r\n- Toggle multiple times without state leak\r\n\r\n## Checklist\r\n\r\n- [x] Tests pass\r\n- [x] `pnpm build` passes\r\n- [x] React/Vue bindings updated in lockstep\r\n- [x] Backward compatible (default: `false`)\r\n- [x] AI-generated code disclosed per GOVERNANCE.md §6.2",
+  "created_at": "2026-07-20T04:43:11Z",
+  "draft": false,
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "head_sha_at_first_review": "926470de435bc6aaf74c8c9145d43c5cbf92036d",
+  "first_review_time": "2026-07-20T04:43:21Z",
+  "commits_at_first_review": [
+    {
+      "sha": "926470de435bc6aaf74c8c9145d43c5cbf92036d",
+      "message": "feat(core): add lineWrapping config and runtime toggle\n\n- Add lineWrapping (boolean, default false) to EditorConfig\n- Add setLineWrapping(enabled) to EditorAPI for runtime toggle\n- Uses Compartment pattern (matching theme.ts) for reconfigure\n- Wire through React and Vue wrappers\n- Fix multiCursor prop not being passed through React/Vue wrappers\n- Add 6 tests covering config, runtime toggle, no-op on destroy, and multi-toggle",
+      "date": "2026-07-20T04:37:27Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "0970bfc80cd58154be976325aef4b111fc9d72ba",
+        "filename": "packages/core/src/editor.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 1,
+        "changes": 14,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fcore%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Feditor.ts?ref=926470de435bc6aaf74c8c9145d43c5cbf92036d",
+        "patch": "@@ -1,4 +1,4 @@\n-import { Annotation, EditorSelection, EditorState } from \"@codemirror/state\";\n+import { Annotation, Compartment, EditorSelection, EditorState } from \"@codemirror/state\";\n \n // Annotation attached to dispatches that load content programmatically (e.g.\n // setDocument from file open) so updateListener can skip the user-edit path —\n@@ -26,6 +26,9 @@ import { markdownKeymap } from \"./markdown-keymap\";\n import { multiCursorExtension } from \"./multi-cursor\";\n import { indentationMarkers } from \"@replit/codemirror-indentation-markers\";\n import { createThemeExtension, lightTheme, type NexusTheme } from \"./theme\";\n+\n+/** Compartment for runtime line-wrapping switching */\n+const lineWrappingCompartment = new Compartment();\n import { computeSlashState } from \"./slash-state\";\n import type {\n   EditorAPI,\n@@ -510,6 +513,9 @@ export function createEditor(config: EditorConfig): EditorAPI {\n     : [];\n   const indentGuidesExt = config.indentGuides ? indentationMarkers() : [];\n   const multiCursorExt = config.multiCursor ? multiCursorExtension() : [];\n+  const lineWrappingExt = config.lineWrapping\n+    ? lineWrappingCompartment.of(EditorView.lineWrapping)\n+    : [];\n \n   const shortcutExtensions =\n     shortcuts.length > 0\n@@ -666,6 +672,7 @@ export function createEditor(config: EditorConfig): EditorAPI {\n         indentGuidesExt,\n         markdownKeymap(),\n         multiCursorExt,\n+        lineWrappingExt,\n         markdownFoldService(),\n         keymap.of([indentWithTab]),\n         closeBrackets(),\n@@ -745,6 +752,11 @@ export function createEditor(config: EditorConfig): EditorAPI {\n       if (destroyed) return;\n       view.dispatch(themeExt.reconfigure(theme));\n     },\n+    setLineWrapping(enabled) {\n+      if (destroyed) return;\n+      const ext = enabled ? EditorView.lineWrapping : [];\n+      view.dispatch({ effects: lineWrappingCompartment.reconfigure(ext) });\n+    },\n     getSelection() {\n       const sel = view.state.selection.main;\n       return { anchor: sel.anchor, head: sel.head };"
+      },
+      {
+        "sha": "e3ddbf72e8fffd55463e2bd3f274e72bef2e968c",
+        "filename": "packages/core/src/types.ts",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fcore%2Fsrc%2Ftypes.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Fsrc%2Ftypes.ts?ref=926470de435bc6aaf74c8c9145d43c5cbf92036d",
+        "patch": "@@ -104,6 +104,11 @@ export interface EditorConfig {\n    * and selection rendering for existing consumers.\n    */\n   multiCursor?: boolean;\n+  /**\n+   * Whether the editor should wrap lines that are longer than the viewport.\n+   * When disabled, a horizontal scrollbar appears for long lines. Default: false.\n+   */\n+  lineWrapping?: boolean;\n   /**\n    * Maximum number of slash-menu entries emitted on `slashMenuChange`\n    * after ranking. Default: 8. A limit of 0 keeps the menu state open\n@@ -189,6 +194,8 @@ export interface EditorAPI {\n   getTableOfContents(): TocEntry[];\n   exportHTML(): string;\n   setTheme(theme: import(\"./theme\").NexusTheme): void;\n+  /** Enable or disable line wrapping at runtime. */\n+  setLineWrapping(enabled: boolean): void;\n   getSelection(): { anchor: number; head: number };\n   /** All selection ranges plus the main-range index. Single-range editors return one entry. */\n   getSelections(): SelectionState;"
+      },
+      {
+        "sha": "e4f6ac1beeeb7c5228f64a6c551d247b33bf99db",
+        "filename": "packages/core/test/editor.test.ts",
+        "status": "modified",
+        "additions": 95,
+        "deletions": 0,
+        "changes": 95,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fcore%2Ftest%2Feditor.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fcore%2Ftest%2Feditor.test.ts?ref=926470de435bc6aaf74c8c9145d43c5cbf92036d",
+        "patch": "@@ -917,4 +917,99 @@ describe(\"createEditor — DOM event hook layer\", () => {\n     expect(passthrough.defaultPrevented).toBe(false);\n     editor.destroy();\n   });\n+\n+  describe(\"lineWrapping\", () => {\n+    it(\"does not wrap lines by default\", () => {\n+      const container = document.createElement(\"div\");\n+      const editor = createEditor({ container, initialValue: \"a\".repeat(500) });\n+      const line = container.querySelector(\".cm-line\") as HTMLElement;\n+\n+      // Without lineWrapping CodeMirror keeps lines on a single visual row —\n+      // overflow-wrap is not set to \"anywhere\" or \"break-word\".\n+      const style = getComputedStyle(line);\n+      expect(style.overflowWrap).not.toBe(\"anywhere\");\n+      expect(style.wordBreak).not.toBe(\"break-word\");\n+\n+      editor.destroy();\n+    });\n+\n+    it(\"wraps long lines when lineWrapping config is true\", () => {\n+      const container = document.createElement(\"div\");\n+      const editor = createEditor({\n+        container,\n+        initialValue: \"a\".repeat(500),\n+        lineWrapping: true,\n+      });\n+      const line = container.querySelector(\".cm-line\") as HTMLElement;\n+\n+      const style = getComputedStyle(line);\n+      expect(style.overflowWrap).toBe(\"anywhere\");\n+      expect(style.wordBreak).toBe(\"break-word\");\n+\n+      editor.destroy();\n+    });\n+\n+    it(\"can enable line wrapping at runtime via setLineWrapping\", () => {\n+      const container = document.createElement(\"div\");\n+      const editor = createEditor({ container, initialValue: \"a\".repeat(500) });\n+      const line = container.querySelector(\".cm-line\") as HTMLElement;\n+\n+      expect(getComputedStyle(line).overflowWrap).not.toBe(\"anywhere\");\n+\n+      editor.setLineWrapping(true);\n+\n+      expect(getComputedStyle(line).overflowWrap).toBe(\"anywhere\");\n+      expect(getComputedStyle(line).wordBreak).toBe(\"break-word\");\n+\n+      editor.destroy();\n+    });\n+\n+    it(\"can disable line wrapping at runtime via setLineWrapping\", () => {\n+      const container = document.createElement(\"div\");\n+      const editor = createEditor({\n+        container,\n+        initialValue: \"a\".repeat(500),\n+        lineWrapping: true,\n+      });\n+      const line = container.querySelector(\".cm-line\") as HTMLElement;\n+\n+      expect(getComputedStyle(line).overflowWrap).toBe(\"anywhere\");\n+\n+      editor.setLineWrapping(false);\n+\n+      expect(getComputedStyle(line).overflowWrap).not.toBe(\"anywhere\");\n+      expect(getComputedStyle(line).wordBreak).not.toBe(\"break-word\");\n+\n+      editor.destroy();\n+    });\n+\n+    it(\"setLineWrapping is a no-op on a destroyed editor\", () => {\n+      const container = document.createElement(\"div\");\n+      const editor = createEditor({ container, initialValue: \"# Hello\" });\n+      editor.destroy();\n+\n+      expect(() => editor.setLineWrapping(true)).not.toThrow();\n+    });\n+\n+    it(\"line wrapping can be toggled multiple times without leaking state\", () => {\n+      const container = document.createElement(\"div\");\n+      const editor = createEditor({ container, initialValue: \"a\".repeat(500) });\n+      const line = container.querySelector(\".cm-line\") as HTMLElement;\n+\n+      editor.setLineWrapping(true);\n+      expect(getComputedStyle(line).overflowWrap).toBe(\"anywhere\");\n+\n+      editor.setLineWrapping(false);\n+      expect(getComputedStyle(line).overflowWrap).not.toBe(\"anywhere\");\n+\n+      editor.setLineWrapping(true);\n+      expect(getComputedStyle(line).overflowWrap).toBe(\"anywhere\");\n+\n+      // Verify the editor is still fully functional\n+      editor.setDocument(\"# After toggle\");\n+      expect(editor.getDocument()).toBe(\"# After toggle\");\n+\n+      editor.destroy();\n+    });\n+  });\n });"
+      },
+      {
+        "sha": "cc47e81a9bc511680ba057c0e22fd9a92ca900a8",
+        "filename": "packages/react/src/editor.tsx",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Freact%2Fsrc%2Feditor.tsx",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Freact%2Fsrc%2Feditor.tsx?ref=926470de435bc6aaf74c8c9145d43c5cbf92036d",
+        "patch": "@@ -15,6 +15,8 @@ export function Editor({\n   direction,\n   indentGuides,\n   readOnly,\n+  lineWrapping,\n+  multiCursor,\n   slashMenuLimit,\n   onChange,\n   onFocus,\n@@ -36,6 +38,8 @@ export function Editor({\n     direction,\n     indentGuides,\n     readOnly,\n+    lineWrapping,\n+    multiCursor,\n     slashMenuLimit,\n     onChange,\n     onFocus,"
+      },
+      {
+        "sha": "5efc1ff830ca550f5544aa00aa79e3a8128bb7da",
+        "filename": "packages/vue/src/editor.ts",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 0,
+        "changes": 10,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/926470de435bc6aaf74c8c9145d43c5cbf92036d/packages%2Fvue%2Fsrc%2Feditor.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fvue%2Fsrc%2Feditor.ts?ref=926470de435bc6aaf74c8c9145d43c5cbf92036d",
+        "patch": "@@ -17,6 +17,8 @@ const editorPropKeys = [\n   \"direction\",\n   \"indentGuides\",\n   \"readOnly\",\n+  \"lineWrapping\",\n+  \"multiCursor\",\n   \"slashMenuLimit\",\n   \"onChange\",\n   \"onFocus\",\n@@ -91,6 +93,14 @@ export const Editor = defineComponent({\n       type: Boolean,\n       required: false\n     },\n+    lineWrapping: {\n+      type: Boolean,\n+      required: false\n+    },\n+    multiCursor: {\n+      type: Boolean,\n+      required: false\n+    },\n     slashMenuLimit: {\n       type: Number,\n       required: false"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=166",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

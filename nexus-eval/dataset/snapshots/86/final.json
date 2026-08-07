@@ -1,0 +1,60 @@
+{
+  "pr_number": 86,
+  "title": "fix(toolbar): make formatting commands atomic undo operations",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "9d3ee2cf21658406227642d38d77f9554c9293f5",
+  "merge_commit_sha": "122911783000e544b5a719a8ed38e78e969c1b85",
+  "base_sha": "49bd8ab6391f3573df82ef68d9ddc764625f1f8f",
+  "commits": [
+    {
+      "sha": "9d3ee2cf21658406227642d38d77f9554c9293f5",
+      "message": "fix(toolbar): make formatting commands atomic undo operations",
+      "date": "2026-07-01T03:45:42Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 12,
+      "deletions": 23,
+      "changes": 35
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 16,
+      "changes": 30
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 134,
+      "deletions": 1,
+      "changes": 135
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=86",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

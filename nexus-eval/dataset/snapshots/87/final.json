@@ -1,0 +1,107 @@
+{
+  "pr_number": 87,
+  "title": "fix(toolbar): support multi-line blockquote toggle",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "a883a9083966eb0256a16ddcff9b949d3bc8752d",
+  "merge_commit_sha": "65726c02d40388a9e3a2287f4c373e486877185c",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "6c458c1d81c480de149062310256f842bf170291",
+      "message": "fix(toolbar): support multi-line blockquote toggle",
+      "date": "2026-07-01T06:29:12Z"
+    },
+    {
+      "sha": "a883a9083966eb0256a16ddcff9b949d3bc8752d",
+      "message": "chore: update pnpm lockfile",
+      "date": "2026-07-03T13:07:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 14,
+      "deletions": 10,
+      "changes": 24
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 62,
+      "deletions": 0,
+      "changes": 62
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ],
+  "compare_final": {
+    "status": "diverged",
+    "ahead_by": 2,
+    "behind_by": 1,
+    "files": [
+      {
+        "sha": "39d4cc64f5fdb7fa4de15cae2dd0509cfa975140",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 14,
+        "deletions": 10,
+        "changes": 24,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a883a9083966eb0256a16ddcff9b949d3bc8752d/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a883a9083966eb0256a16ddcff9b949d3bc8752d/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=a883a9083966eb0256a16ddcff9b949d3bc8752d",
+        "patch": "@@ -62,17 +62,21 @@ function applyLines(editor: EditorAPI, lines: LineRange[], newLines: string[]):\n /** Toggle a line prefix (e.g., \"> \" for blockquote). */\n function toggleLinePrefix(editor: EditorAPI, prefix: string): boolean {\n   const doc = editor.getDocument();\n-  const { anchor } = editor.getSelection();\n-  const lineStart = doc.lastIndexOf(\"\\n\", anchor - 1) + 1;\n-  const lineEndIdx = doc.indexOf(\"\\n\", anchor);\n-  const lineEnd = lineEndIdx === -1 ? doc.length : lineEndIdx;\n-  const line = doc.slice(lineStart, lineEnd);\n+  const { anchor, head } = editor.getSelection();\n+  const from = Math.min(anchor, head);\n+  const to = Math.max(anchor, head);\n+  const lines = getLinesInRange(doc, from, to);\n \n-  const newLine = line.startsWith(prefix) ? line.slice(prefix.length) : prefix + line;\n-  const newDoc = doc.slice(0, lineStart) + newLine + doc.slice(lineEnd);\n-  editor.setDocument(newDoc);\n-  editor.setSelection(lineStart + newLine.length);\n-  return true;\n+  const shouldRemove = lines.every(({ line }) => line.startsWith(prefix));\n+  const newLines = lines.map(({ line }) => {\n+    if (shouldRemove) {\n+      return line.slice(prefix.length);\n+    }\n+  \n+    return line.startsWith(prefix) ? line : `${prefix}${line}`;\n+  });\n+\n+  return applyLines(editor, lines, newLines);\n }\n \n export function toggleBlockquote(editor: EditorAPI): boolean {"
+      },
+      {
+        "sha": "b5ac79b8e4396a0a4bd8f11a920ae275a649ab96",
+        "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+        "status": "modified",
+        "additions": 62,
+        "deletions": 0,
+        "changes": 62,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a883a9083966eb0256a16ddcff9b949d3bc8752d/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a883a9083966eb0256a16ddcff9b949d3bc8752d/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Ftest%2Fplugin-toolbar.test.ts?ref=a883a9083966eb0256a16ddcff9b949d3bc8752d",
+        "patch": "@@ -8,6 +8,7 @@ import {\n   toggleInlineCode,\n   insertLink,\n   toggleHeading,\n+  toggleBlockquote,\n   toggleOrderedList,\n   toggleUnorderedList,\n   createToolbarPlugin,\n@@ -123,6 +124,67 @@ describe(\"toggleHeading\", () => {\n   });\n });\n \n+describe(\"toggleBlockquote - multi-line selection\", () => {\n+  it(\"adds blockquote markers to every selected line\", () => {\n+    const container = document.createElement(\"div\");\n+    const input = \"foo\\nbar\\nbaz\";\n+    const editor = createEditor({ container, initialValue: input });\n+\n+    editor.setSelection(0, input.length);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\\n> baz\");\n+    editor.destroy();\n+  });\n+\n+  it(\"removes blockquote markers when all selected lines already have one\", () => {\n+    const container = document.createElement(\"div\");\n+    const input = \"> foo\\n> bar\\n> baz\";\n+    const editor = createEditor({ container, initialValue: input });\n+\n+    editor.setSelection(0, input.length);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"foo\\nbar\\nbaz\");\n+    editor.destroy();\n+  });\n+\n+  it(\"adds missing blockquote markers for mixed selections\", () => {\n+    const container = document.createElement(\"div\");\n+    const input = \"> foo\\nbar\";\n+    const editor = createEditor({ container, initialValue: input });\n+\n+    editor.setSelection(0, input.length);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\");\n+    editor.destroy();\n+  });\n+\n+  it(\"normalizes reversed selection\", () => {\n+    const container = document.createElement(\"div\");\n+    const input = \"foo\\nbar\";\n+    const editor = createEditor({ container, initialValue: input });\n+\n+    editor.setSelection(input.length, 0);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\n> bar\");\n+    editor.destroy();\n+  });\n+\n+  it(\"does not include the next line when selection ends at its start\", () => {\n+    const container = document.createElement(\"div\");\n+    const editor = createEditor({ container, initialValue: \"foo\\nbar\" });\n+\n+    editor.setSelection(0, \"foo\\n\".length);\n+    toggleBlockquote(editor);\n+\n+    expect(editor.getDocument()).toBe(\"> foo\\nbar\");\n+    editor.destroy();\n+  });\n+});\n+\n describe(\"toggleUnorderedList — single line (existing behaviour)\", () => {\n   it(\"adds bullet marker to current line\", () => {\n     const container = document.createElement(\"div\");"
+      },
+      {
+        "sha": "ec03cd695f8c813d720fc8e83be3ed22dc8f36dd",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/a883a9083966eb0256a16ddcff9b949d3bc8752d/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/a883a9083966eb0256a16ddcff9b949d3bc8752d/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=a883a9083966eb0256a16ddcff9b949d3bc8752d",
+        "patch": "@@ -192,6 +192,10 @@ importers:\n       '@floatboat/nexus-core':\n         specifier: workspace:*\n         version: link:../core\n+    devDependencies:\n+      '@floatboat/nexus-plugin-history':\n+        specifier: workspace:*\n+        version: link:../plugin-history\n \n   packages/plugin-vim:\n     dependencies:"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=87",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

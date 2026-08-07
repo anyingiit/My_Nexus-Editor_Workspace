@@ -1,0 +1,31 @@
+{
+  "pr_number": 62,
+  "title": "feat(core,history,react,vue): add canUndo/canRedo API, undo grouping, clearHistory, and framework bindings",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:40:43Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "meihuahua33",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-11T10:51:07Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=62) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=62) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=62) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:40:41Z",
+      "body": "感谢 canUndo/canRedo + undo 分组 + clearHistory 这一组 history 增强 🙏 但本 PR 跨 16 文件捆了多块功能且对当前 main CONFLICTING。undo 分组（roadmap #8）目前 main 上还没有合入的实现，是有价值的方向——但需要拆成聚焦 PR 并与表格编辑的 tableEditingCount 协调。建议把 canUndo/canRedo + clearHistory 这个 API 增量单独提、undo 分组单独提，各自基于当前 main。当前形态无法合并，故关闭。\n\n—— 此关闭基于代码评审；如果其中某块功能你想单独推进，欢迎基于当前 main 提一个聚焦的小 PR（记得先签 CLA）🙌"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T07:00:42Z",
+      "body": "感谢提交。本 PR 暂不建议合入，主要原因如下：\n\n1. 变更范围过大且边界不清：一个 history API / undo-redo 相关需求，实际改动覆盖 core、history、react、vue、electron-demo、多个插件、OpenSpec、README、根配置、pnpm-lock、vitest 配置等大量模块。\n2. PR 体量过大，难以审查：本地对比显示涉及约 96 个文件，且包含大量与核心需求关联不强的变更。\n3. 与当前 main 存在多处冲突，集成风险较高。\n4. 对工程协作来说，这类 PR 应拆分为更小、更聚焦的变更：core API、history plugin、React/Vue binding、测试与文档分别提交会更合适。\n\n结论：当前 PR 不通过。建议后续按最小可审查范围重新拆分提交，并保证每个 PR 都能独立通过类型检查与测试。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

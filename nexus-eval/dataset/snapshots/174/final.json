@@ -1,0 +1,654 @@
+{
+  "pr_number": 174,
+  "title": "feat(snapshots): add version history snapshots (Roadmap #19)",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "caf2615b49b167370565a6fb829efccb477af2d7",
+  "merge_commit_sha": "6d155295bb6ec0248593a1f9511a16fe5c6c532d",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "11bdd2aee8b8bba203118f8773454ad676be3cc4",
+      "message": "docs(openspec): propose version history snapshots\n\nOpenSpec change add-version-snapshots for Roadmap #19: a new\nplugin-snapshots package with host-injected async storage, plus the\nelectron-demo reference implementation.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-23T00:43:57Z"
+    },
+    {
+      "sha": "d8b53c16f76bfa370bfa19c65f5b1201babe8975",
+      "message": "feat(snapshots): add version history plugin with host-injected storage\n\nNew @floatboat/nexus-plugin-snapshots package: capture/list/restore/\ndelete document snapshots scoped per host-supplied document key, with\nFNV-1a content de-duplication, retention pruning, idle auto-capture,\nand a safe restore flow (safety snapshot + single undoable setDocument).\n\nPersistence is host-injected via an async SnapshotStore; the default is\nan in-memory store and nothing touches localStorage or the filesystem\nimplicitly. Store failures degrade to no-ops instead of breaking the\neditor.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-23T00:43:57Z"
+    },
+    {
+      "sha": "32f947845902419941815ab27bddd1bc28df96db",
+      "message": "feat(electron): add snapshots reference implementation\n\nFile-backed SnapshotStore over IPC persisting snapshots inside the\nvault at .nexus/snapshots/<sha1(documentKey)>/ as content .md plus\nmetadata .json sidecars (append-only, no shared index). Dot-directory\nwrites no longer re-seed the link index via the vault watcher.\n\nRenderer: snapshots panel (list / capture / restore-with-confirm /\ndelete) behind a toolbar toggle, capture-on-save, and per-file history\nkeyed by the active file path. Falls back to the in-memory store when\nthe preload bridge is absent (unit tests, browser hosts).\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-23T00:43:57Z"
+    },
+    {
+      "sha": "664e8a5b5ab339b479ad4a2cb0220d9ed18de2c7",
+      "message": "docs: register snapshots plugin, scope, and roadmap status\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-23T00:43:57Z"
+    },
+    {
+      "sha": "caf2615b49b167370565a6fb829efccb477af2d7",
+      "message": "feat(snapshots): add lazy age-based snapshot expiry\n\nHosts can bound how long snapshots live via maxAgeMs, complementing the\nmaxSnapshots count cap. Expiry is swept lazily — after every capture and\nvia an explicit prune() the demo calls at startup — rather than on a\nbackground timer, matching how Obsidian expires its snapshots. The demo\nconfigures 30-day expiry.\n\nThe engine's capture invokes the sweep body directly: routing it through\nthe public queued prune() would deadlock against the in-flight capture.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-23T00:43:58Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "CONTRIBUTING.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "CONTRIBUTING.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4
+    },
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 128,
+      "deletions": 2,
+      "changes": 130
+    },
+    {
+      "filename": "apps/electron-demo/electron/preload.ts",
+      "status": "modified",
+      "additions": 40,
+      "deletions": 0,
+      "changes": 40
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 33,
+      "deletions": 1,
+      "changes": 34
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/snapshots-panel.ts",
+      "status": "added",
+      "additions": 232,
+      "deletions": 0,
+      "changes": 232
+    },
+    {
+      "filename": "apps/electron-demo/tsconfig.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "openspec/changes/add-version-snapshots/design.md",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "openspec/changes/add-version-snapshots/proposal.md",
+      "status": "added",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "openspec/changes/add-version-snapshots/specs/plugins/spec.md",
+      "status": "added",
+      "additions": 166,
+      "deletions": 0,
+      "changes": 166
+    },
+    {
+      "filename": "openspec/changes/add-version-snapshots/tasks.md",
+      "status": "added",
+      "additions": 42,
+      "deletions": 0,
+      "changes": 42
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-snapshots/README.md",
+      "status": "added",
+      "additions": 70,
+      "deletions": 0,
+      "changes": 70
+    },
+    {
+      "filename": "packages/plugin-snapshots/package.json",
+      "status": "added",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "packages/plugin-snapshots/src/engine.ts",
+      "status": "added",
+      "additions": 189,
+      "deletions": 0,
+      "changes": 189
+    },
+    {
+      "filename": "packages/plugin-snapshots/src/index.ts",
+      "status": "added",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": "packages/plugin-snapshots/src/plugin.ts",
+      "status": "added",
+      "additions": 257,
+      "deletions": 0,
+      "changes": 257
+    },
+    {
+      "filename": "packages/plugin-snapshots/src/store.ts",
+      "status": "added",
+      "additions": 80,
+      "deletions": 0,
+      "changes": 80
+    },
+    {
+      "filename": "packages/plugin-snapshots/test/engine.test.ts",
+      "status": "added",
+      "additions": 306,
+      "deletions": 0,
+      "changes": 306
+    },
+    {
+      "filename": "packages/plugin-snapshots/test/plugin.test.ts",
+      "status": "added",
+      "additions": 279,
+      "deletions": 0,
+      "changes": 279
+    },
+    {
+      "filename": "packages/plugin-snapshots/tsconfig.json",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "tsconfig.base.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": {
+    "status": "ahead",
+    "ahead_by": 5,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "e1c9c893ec41b43931d326870ea38707c1e99203",
+        "filename": "CONTRIBUTING.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/CONTRIBUTING.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/CONTRIBUTING.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/CONTRIBUTING.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -47,7 +47,7 @@ Examples: `feat/toolbar-list-toggle`, `fix/search-regex-escape`, `docs/roadmap-u\n   | `react` | `packages/react` |\n   | `vue` | `packages/vue` |\n   | `gfm` | `packages/preset-gfm` |\n-  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` | corresponding `plugin-*` |\n+  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` / `snapshots` | corresponding `plugin-*` |\n   | `electron` | `apps/electron-demo` |\n   | `live-preview` / `wikilinks` / `image` | core subsystems (historical usage) |\n   | `openspec` | `openspec/` |"
+      },
+      {
+        "sha": "b89176277794d50870975c1dc34477d07962e3c0",
+        "filename": "CONTRIBUTING.zh.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/CONTRIBUTING.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/CONTRIBUTING.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/CONTRIBUTING.zh.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -14,7 +14,7 @@\n |---|---|\n | `packages/core` | 核心编辑器（CodeMirror 6 内核、live-preview、AST） |\n | `packages/preset-gfm` | GFM 默认预设 |\n-| `packages/plugin-*` | 各功能插件（history / search / slash / toolbar / math / vim / wordcount） |\n+| `packages/plugin-*` | 各功能插件（history / search / slash / toolbar / math / vim / wordcount / snapshots） |\n | `packages/react`、`packages/vue` | 框架 SDK |\n | `apps/electron-demo` | 桌面端 demo / 集成测试场 |\n | `openspec/` | 规格驱动（proposal / specs / archive） |\n@@ -47,7 +47,7 @@\n   | `react` | `packages/react` |\n   | `vue` | `packages/vue` |\n   | `gfm` | `packages/preset-gfm` |\n-  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` | 对应 `plugin-*` |\n+  | `history` / `search` / `slash` / `toolbar` / `math` / `vim` / `wordcount` / `snapshots` | 对应 `plugin-*` |\n   | `electron` | `apps/electron-demo` |\n   | `live-preview` / `wikilinks` / `image` | core 内部子系统（沿用历史用法） |\n   | `openspec` | `openspec/` |"
+      },
+      {
+        "sha": "87268ebfbb50e2b45d5aed903fbadc0e355e5183",
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/README.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/README.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -180,6 +180,7 @@ A real Electron app with file IO, live preview, and every plugin enabled — the\n | `@floatboat/nexus-plugin-math` | Inline / block math rendering (KaTeX) |\n | `@floatboat/nexus-plugin-vim` | Vim keybindings powered by `@replit/codemirror-vim` |\n | `@floatboat/nexus-plugin-wordcount` | Markdown-aware word / character / CJK / reading-time stats + ARIA-live status bar |\n+| `@floatboat/nexus-plugin-snapshots` | Version history: document snapshots with host-injected storage, safe restore, retention |\n \n </details>\n "
+      },
+      {
+        "sha": "dd9e7e3445738cedaa2682dca82d279c29e42878",
+        "filename": "README.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/README.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/README.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/README.zh.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -180,6 +180,7 @@ pnpm dev:electron-demo\n | `@floatboat/nexus-plugin-math` | 行内 / 块级数学公式渲染（KaTeX） |\n | `@floatboat/nexus-plugin-vim` | Vim 键位（基于 `@replit/codemirror-vim`） |\n | `@floatboat/nexus-plugin-wordcount` | Markdown 感知的字数 / 字符数 / 中日韩字符 / 阅读时长统计 + ARIA 状态栏 |\n+| `@floatboat/nexus-plugin-snapshots` | 版本历史：宿主注入存储的文档快照，安全恢复，保留策略 |\n \n </details>\n "
+      },
+      {
+        "sha": "2dce9c2b1e2305a22e4f5ef81d00926ddce1a82f",
+        "filename": "apps/electron-demo/electron/main.ts",
+        "status": "modified",
+        "additions": 128,
+        "deletions": 2,
+        "changes": 130,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Felectron%2Fmain.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Felectron%2Fmain.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fmain.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -1,6 +1,7 @@\n import { app, BrowserWindow, dialog, ipcMain, net, protocol, shell } from \"electron\";\n-import { readFile, writeFile, readdir, mkdir, rename, stat } from \"node:fs/promises\";\n+import { readFile, writeFile, readdir, mkdir, rename, rm, stat } from \"node:fs/promises\";\n import { existsSync, watch, type FSWatcher } from \"node:fs\";\n+import { createHash } from \"node:crypto\";\n import path from \"node:path\";\n import { pathToFileURL } from \"node:url\";\n \n@@ -203,7 +204,12 @@ function startWatcher(vaultPath: string): void {\n   }, 150);\n \n   try {\n-    activeWatcher = watch(vaultPath, { recursive: true }, () => notify());\n+    activeWatcher = watch(vaultPath, { recursive: true }, (_event, filename) => {\n+      // Ignore dot-directories (.nexus/snapshots, .git, …) — snapshot writes\n+      // must not re-seed the link index on every capture.\n+      if (filename && filename.split(/[\\\\/]/).some((seg) => seg.startsWith(\".\"))) return;\n+      notify();\n+    });\n   } catch (err) {\n     // Linux without recursive support — fall back to non-recursive on the root.\n     try {\n@@ -414,6 +420,126 @@ ipcMain.handle(\"vault:set-last\", async (_event, vaultPath: string) => {\n   return { ok: true };\n });\n \n+// -- snapshots ----------------------------------------------------------------\n+// Reference implementation of Roadmap #19: snapshots live inside the vault at\n+// .nexus/snapshots/<sha1(documentKey)>/<id>.md + <id>.json — append-only, no\n+// shared index file. Dot-directories are excluded from the vault tree, readAll,\n+// and the file watcher, so snapshot storage stays invisible to the rest of the\n+// app.\n+\n+interface SnapshotMetaDTO {\n+  id: string;\n+  createdAt: number;\n+  label?: string;\n+  size: number;\n+  hash: string;\n+}\n+\n+interface SnapshotDTO extends SnapshotMetaDTO {\n+  content: string;\n+}\n+\n+const SNAPSHOT_ID_PATTERN = /^[A-Za-z0-9_-]+$/;\n+\n+function snapshotDirFor(documentKey: string): string {\n+  if (!activeVault) throw new Error(\"No active vault\");\n+  const keyHash = createHash(\"sha1\").update(documentKey).digest(\"hex\");\n+  return path.join(activeVault, \".nexus\", \"snapshots\", keyHash);\n+}\n+\n+function assertSnapshotId(id: string): string {\n+  if (!SNAPSHOT_ID_PATTERN.test(id)) throw new Error(`Invalid snapshot id: ${id}`);\n+  return id;\n+}\n+\n+function isEnoent(err: unknown): boolean {\n+  return (err as NodeJS.ErrnoException).code === \"ENOENT\";\n+}\n+\n+ipcMain.handle(\"snapshots:list\", async (_event, documentKey: string) => {\n+  if (!activeVault) return [];\n+  const dir = snapshotDirFor(documentKey);\n+  let files: string[];\n+  try {\n+    files = await readdir(dir);\n+  } catch {\n+    return [];\n+  }\n+  const metas: SnapshotMetaDTO[] = [];\n+  for (const file of files) {\n+    if (!file.endsWith(\".json\")) continue;\n+    try {\n+      const raw = await readFile(path.join(dir, file), \"utf-8\");\n+      const parsed = JSON.parse(raw) as Partial<SnapshotMetaDTO>;\n+      if (\n+        typeof parsed.id !== \"string\" ||\n+        typeof parsed.createdAt !== \"number\" ||\n+        typeof parsed.hash !== \"string\"\n+      ) {\n+        continue;\n+      }\n+      metas.push({\n+        id: parsed.id,\n+        createdAt: parsed.createdAt,\n+        label: typeof parsed.label === \"string\" ? parsed.label : undefined,\n+        size: typeof parsed.size === \"number\" ? parsed.size : 0,\n+        hash: parsed.hash,\n+      });\n+    } catch {\n+      // Skip corrupt sidecars rather than failing the whole list.\n+    }\n+  }\n+  return metas;\n+});\n+\n+ipcMain.handle(\"snapshots:load\", async (_event, documentKey: string, id: string) => {\n+  if (!activeVault) return null;\n+  const safeId = assertSnapshotId(id);\n+  try {\n+    return await readFile(path.join(snapshotDirFor(documentKey), `${safeId}.md`), \"utf-8\");\n+  } catch (err) {\n+    if (isEnoent(err)) return null;\n+    throw err;\n+  }\n+});\n+\n+ipcMain.handle(\n+  \"snapshots:save\",\n+  async (_event, documentKey: string, snapshot: SnapshotDTO) => {\n+    const safeId = assertSnapshotId(snapshot.id);\n+    const dir = snapshotDirFor(documentKey);\n+    await mkdir(dir, { recursive: true });\n+    const meta: SnapshotMetaDTO = {\n+      id: safeId,\n+      createdAt: snapshot.createdAt,\n+      label: typeof snapshot.label === \"string\" ? snapshot.label : undefined,\n+      size: snapshot.size,\n+      hash: snapshot.hash,\n+    };\n+    await writeFile(path.join(dir, `${safeId}.md`), snapshot.content, \"utf-8\");\n+    await writeFile(path.join(dir, `${safeId}.json`), JSON.stringify(meta, null, 2), \"utf-8\");\n+  }\n+);\n+\n+ipcMain.handle(\"snapshots:remove\", async (_event, documentKey: string, id: string) => {\n+  if (!activeVault) return;\n+  const safeId = assertSnapshotId(id);\n+  const dir = snapshotDirFor(documentKey);\n+  for (const ext of [\".md\", \".json\"]) {\n+    try {\n+      await rm(path.join(dir, `${safeId}${ext}`));\n+    } catch (err) {\n+      // Removing a missing snapshot is a no-op (SnapshotStore contract).\n+      if (!isEnoent(err)) throw err;\n+    }\n+  }\n+});\n+\n+ipcMain.handle(\"snapshots:clear\", async (_event, documentKey: string) => {\n+  if (!activeVault) return;\n+  await rm(snapshotDirFor(documentKey), { recursive: true, force: true });\n+});\n+\n app.whenReady().then(() => {\n   // nexus-vault://vault/<rel> → read from activeVault/<rel>. Path is validated\n   // so requests cannot escape the vault (same rule as the IPC handlers)."
+      },
+      {
+        "sha": "ad6ad35b3d14d9748a8546a9561587596ae6eabe",
+        "filename": "apps/electron-demo/electron/preload.ts",
+        "status": "modified",
+        "additions": 40,
+        "deletions": 0,
+        "changes": 40,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Felectron%2Fpreload.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Felectron%2Fpreload.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -37,6 +37,27 @@ export interface DemoBridge {\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n   vault: VaultBridge;\n+  snapshots: SnapshotsBridge;\n+}\n+\n+export interface SnapshotMeta {\n+  id: string;\n+  createdAt: number;\n+  label?: string;\n+  size: number;\n+  hash: string;\n+}\n+\n+export interface Snapshot extends SnapshotMeta {\n+  content: string;\n+}\n+\n+export interface SnapshotsBridge {\n+  list(documentKey: string): Promise<SnapshotMeta[]>;\n+  load(documentKey: string, id: string): Promise<string | null>;\n+  save(documentKey: string, snapshot: Snapshot): Promise<void>;\n+  remove(documentKey: string, id: string): Promise<void>;\n+  clear(documentKey: string): Promise<void>;\n }\n \n const vaultBridge: VaultBridge = {\n@@ -82,6 +103,24 @@ const vaultBridge: VaultBridge = {\n   },\n };\n \n+const snapshotsBridge: SnapshotsBridge = {\n+  list(documentKey) {\n+    return ipcRenderer.invoke(\"snapshots:list\", documentKey);\n+  },\n+  load(documentKey, id) {\n+    return ipcRenderer.invoke(\"snapshots:load\", documentKey, id);\n+  },\n+  save(documentKey, snapshot) {\n+    return ipcRenderer.invoke(\"snapshots:save\", documentKey, snapshot);\n+  },\n+  remove(documentKey, id) {\n+    return ipcRenderer.invoke(\"snapshots:remove\", documentKey, id);\n+  },\n+  clear(documentKey) {\n+    return ipcRenderer.invoke(\"snapshots:clear\", documentKey);\n+  },\n+};\n+\n const bridge: DemoBridge = {\n   openFile() {\n     return ipcRenderer.invoke(\"demo:open-file\");\n@@ -93,6 +132,7 @@ const bridge: DemoBridge = {\n     return ipcRenderer.invoke(\"demo:save-file-as\", content);\n   },\n   vault: vaultBridge,\n+  snapshots: snapshotsBridge,\n };\n \n contextBridge.exposeInMainWorld(\"nexusDemo\", bridge);"
+      },
+      {
+        "sha": "454cf174c4b6a1f734162cd9501459b5b204a605",
+        "filename": "apps/electron-demo/package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fpackage.json?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -26,6 +26,7 @@\n     \"@floatboat/nexus-plugin-history\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-search\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-slash\": \"workspace:*\",\n+    \"@floatboat/nexus-plugin-snapshots\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-toolbar\": \"workspace:*\",\n     \"@floatboat/nexus-plugin-wordcount\": \"workspace:*\",\n     \"@floatboat/nexus-preset-gfm\": \"workspace:*\","
+      },
+      {
+        "sha": "d0e5a174f852cf87e01ec276ced77050de20ea0c",
+        "filename": "apps/electron-demo/src/renderer/app.ts",
+        "status": "modified",
+        "additions": 33,
+        "deletions": 1,
+        "changes": 34,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fapp.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -6,6 +6,7 @@ import { createSearchBar, type SearchBar } from \"./search-bar\";\n import { createVaultPanel, type VaultPanel } from \"./vault-panel\";\n import { LinkIndex, parseAnchor, findAnchorPosition } from \"./link-index\";\n import { createBacklinksPanel, type BacklinksPanel } from \"./backlinks-panel\";\n+import { createSnapshotsPanel, type SnapshotsPanel } from \"./snapshots-panel\";\n import { perfStart, perfEnd, installLongTaskWatch } from \"./perf\";\n \n installLongTaskWatch(50);\n@@ -17,6 +18,7 @@ let outline: OutlinePanel;\n let searchBar: SearchBar;\n let vault: VaultPanel;\n let backlinks: BacklinksPanel;\n+let snapshotsPanel: SnapshotsPanel;\n \n const linkIndex = new LinkIndex();\n state.linkIndex = linkIndex;\n@@ -65,6 +67,12 @@ function createAppToolbar(): HTMLElement {\n   backlinksBtn.style.fontSize = \"14px\";\n   backlinksBtn.addEventListener(\"click\", toggleBacklinks);\n \n+  const snapshotsBtn = document.createElement(\"button\");\n+  snapshotsBtn.textContent = \"\\uD83D\\uDD58\"; // 🕘\n+  snapshotsBtn.title = \"Toggle snapshots panel\";\n+  snapshotsBtn.style.fontSize = \"14px\";\n+  snapshotsBtn.addEventListener(\"click\", toggleSnapshots);\n+\n   const searchBtn = document.createElement(\"button\");\n   searchBtn.textContent = \"\\uD83D\\uDD0D\"; // 🔍\n   searchBtn.title = \"Search (Ctrl+F)\";\n@@ -86,6 +94,7 @@ function createAppToolbar(): HTMLElement {\n     vaultToggleBtn,\n     outlineBtn,\n     backlinksBtn,\n+    snapshotsBtn,\n     searchBtn,\n     settingsBtn\n   );\n@@ -131,6 +140,7 @@ async function handleOpen(): Promise<void> {\n     shell.loadDocument(result.content);\n     vault.setActiveFile(result.path);\n     backlinks.refresh();\n+    snapshotsPanel.refresh();\n   } catch (err) {\n     state.error = err instanceof Error ? err.message : String(err);\n   }\n@@ -148,6 +158,8 @@ async function handleSave(): Promise<void> {\n         await window.nexusDemo.saveFile(targetPath, state.content);\n       }\n       state.dirty = false;\n+      // Capture-on-save — de-dup keeps repeat saves of unchanged content free.\n+      void shell.snapshots.capture(\"Saved\");\n     } else {\n       await handleSaveAs();\n       return;\n@@ -202,6 +214,10 @@ function toggleBacklinks(): void {\n   togglePanel(backlinks.element, () => backlinks.refresh());\n }\n \n+function toggleSnapshots(): void {\n+  togglePanel(snapshotsPanel.element, () => snapshotsPanel.refresh());\n+}\n+\n async function handleVaultFileOpen(filePath: string): Promise<void> {\n   const total = perfStart(\"open-file\", { filePath });\n   try {\n@@ -226,6 +242,8 @@ async function handleVaultFileOpen(filePath: string): Promise<void> {\n     const bl = perfStart(\"open-file.backlinks.refresh\");\n     backlinks.refresh();\n     perfEnd(bl);\n+\n+    snapshotsPanel.refresh();\n   } catch (err) {\n     state.error = err instanceof Error ? err.message : String(err);\n   }\n@@ -406,9 +424,23 @@ function boot(): void {\n     onOpenFile: (filePath) => void handleVaultFileOpen(filePath),\n     getActiveFile: () => state.activeFile,\n   });\n+  snapshotsPanel = createSnapshotsPanel({\n+    snapshots: shell.snapshots,\n+    onError: (message) => {\n+      state.error = message;\n+      renderStatus();\n+    },\n+  });\n+  snapshotsPanel.element.style.display = \"none\";\n \n   editorColumn.append(searchBar.element, editorContainer);\n-  mainArea.append(vault.element, editorColumn, outline.element, backlinks.element);\n+  mainArea.append(\n+    vault.element,\n+    editorColumn,\n+    outline.element,\n+    backlinks.element,\n+    snapshotsPanel.element\n+  );\n \n   // External file changes → re-seed the index (cheap for typical vaults).\n   window.nexusDemo.vault.onChanged(() => {"
+      },
+      {
+        "sha": "72d680337e86d730886dde4322530e856c7ed7b0",
+        "filename": "apps/electron-demo/src/renderer/bridge.d.ts",
+        "status": "modified",
+        "additions": 21,
+        "deletions": 0,
+        "changes": 21,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fbridge.d.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -35,6 +35,27 @@ interface DemoBridge {\n   saveFile(path: string, content: string): Promise<{ path: string }>;\n   saveFileAs(content: string): Promise<{ path: string } | null>;\n   vault: VaultBridge;\n+  snapshots: SnapshotsBridge;\n+}\n+\n+interface SnapshotMeta {\n+  id: string;\n+  createdAt: number;\n+  label?: string;\n+  size: number;\n+  hash: string;\n+}\n+\n+interface Snapshot extends SnapshotMeta {\n+  content: string;\n+}\n+\n+interface SnapshotsBridge {\n+  list(documentKey: string): Promise<SnapshotMeta[]>;\n+  load(documentKey: string, id: string): Promise<string | null>;\n+  save(documentKey: string, snapshot: Snapshot): Promise<void>;\n+  remove(documentKey: string, id: string): Promise<void>;\n+  clear(documentKey: string): Promise<void>;\n }\n \n interface Window {"
+      },
+      {
+        "sha": "2431024cbc555b13a807713e0672620f1119b57d",
+        "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+        "status": "modified",
+        "additions": 27,
+        "deletions": 0,
+        "changes": 27,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Feditor-shell.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -14,6 +14,11 @@ import {\n   createWordCountPlugin,\n   type WordCountPlugin\n } from \"@floatboat/nexus-plugin-wordcount\";\n+import {\n+  attachSnapshotsPlugin,\n+  createSnapshotsPlugin,\n+  type SnapshotsPlugin\n+} from \"@floatboat/nexus-plugin-snapshots\";\n import type { AppState } from \"./state\";\n import { type EditorSettings, settingsToTheme } from \"./settings\";\n \n@@ -85,6 +90,8 @@ export interface EditorShell {\n   slashMenu: SlashMenuUI;\n   /** Markdown-aware word-count plugin (handle + status bar). */\n   wordcount: WordCountPlugin;\n+  /** Version-history snapshots (Roadmap #19 reference implementation). */\n+  snapshots: SnapshotsPlugin;\n   applySettings(settings: EditorSettings): void;\n   loadDocument(content: string): void;\n   destroy(): void;\n@@ -119,6 +126,20 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n     statusBar: { container, classPrefix: \"nexus-wordcount\" },\n   });\n \n+  // Snapshots persist through the main process into the vault's\n+  // .nexus/snapshots/ directory, keyed by the active file path so each\n+  // note gets its own history. Outside Electron (unit tests, browser\n+  // hosts) the preload bridge is absent and the plugin falls back to its\n+  // in-memory store.\n+  const snapshots = createSnapshotsPlugin({\n+    store: window.nexusDemo?.snapshots,\n+    getDocumentKey: () => state.activeFile ?? \"untitled\",\n+    autoCapture: { intervalMs: 30_000 },\n+    // Snapshots older than 30 days are swept lazily — on capture and once\n+    // at startup below — so long-lived vaults don't accumulate files.\n+    maxAgeMs: 30 * 24 * 60 * 60 * 1000,\n+  });\n+\n   // No more parser worker. Live-preview drives off `syntaxTree(state)` from\n   // @codemirror/lang-markdown (incremental, intrinsic to EditorState), and\n   // editor.ts builds mdast for `getAst()` / `change` events synchronously\n@@ -143,6 +164,7 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n       createSearchPlugin(),\n       wikilinksPlugin,\n       wordcount,\n+      snapshots,\n     ],\n     livePreview: settings.livePreview\n       ? {\n@@ -345,12 +367,16 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n   // microtask), so it's already wired by the time the user sees the\n   // first paint.\n   attachWordCountPlugin(wordcount, editor);\n+  attachSnapshotsPlugin(snapshots, editor);\n+  // Startup sweep: expire old snapshots even when the user never captures.\n+  void snapshots.prune();\n \n   return {\n     editor,\n     toolbar,\n     slashMenu,\n     wordcount,\n+    snapshots,\n     applySettings(next: EditorSettings) {\n       editor.setTheme(settingsToTheme(next));\n     },\n@@ -373,6 +399,7 @@ export function createEditorShell(options: EditorShellOptions): EditorShell {\n         `${(t1 - t0).toFixed(1)}ms`, { bytes: content.length });\n     },\n     destroy() {\n+      snapshots.destroy();\n       wordcount.destroy();\n       slashMenu.destroy();\n       toolbar.destroy();"
+      },
+      {
+        "sha": "d614aa7279d8b3c76814d8c61b664db5d110d575",
+        "filename": "apps/electron-demo/src/renderer/snapshots-panel.ts",
+        "status": "added",
+        "additions": 232,
+        "deletions": 0,
+        "changes": 232,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsnapshots-panel.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsnapshots-panel.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Fsrc%2Frenderer%2Fsnapshots-panel.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,232 @@\n+import type { SnapshotMeta, SnapshotsPlugin } from \"@floatboat/nexus-plugin-snapshots\";\n+\n+export interface SnapshotsPanelOptions {\n+  snapshots: SnapshotsPlugin;\n+  onError(message: string): void;\n+}\n+\n+export interface SnapshotsPanel {\n+  element: HTMLElement;\n+  /** Re-read the list — needed when the active file (document key) changes. */\n+  refresh(): void;\n+  destroy(): void;\n+}\n+\n+const PANEL_STYLES = `\n+  width: 280px;\n+  flex-shrink: 0;\n+  border-left: 1px solid var(--nexus-border, #eee);\n+  background: var(--nexus-bg, #fff);\n+  display: flex;\n+  flex-direction: column;\n+  font-family: system-ui, -apple-system, sans-serif;\n+  font-size: 13px;\n+  overflow: hidden;\n+`;\n+\n+const HEADER_STYLES = `\n+  padding: 8px 10px;\n+  border-bottom: 1px solid var(--nexus-border, #eee);\n+  font-size: 11px;\n+  font-weight: 600;\n+  text-transform: uppercase;\n+  letter-spacing: 0.5px;\n+  color: var(--nexus-text-muted, #888);\n+  flex-shrink: 0;\n+  display: flex;\n+  align-items: center;\n+  justify-content: space-between;\n+  gap: 6px;\n+`;\n+\n+const CAPTURE_BTN_STYLES = `\n+  border: 1px solid var(--nexus-border, #ddd);\n+  background: var(--nexus-bg, #fff);\n+  border-radius: 4px;\n+  padding: 2px 8px;\n+  font-size: 11px;\n+  cursor: pointer;\n+  color: var(--nexus-text, #24292e);\n+  text-transform: none;\n+  letter-spacing: 0;\n+`;\n+\n+const LIST_STYLES = `\n+  flex: 1;\n+  overflow-y: auto;\n+`;\n+\n+const EMPTY_STYLES = `\n+  padding: 8px 12px 12px;\n+  color: var(--nexus-text-faint, #bbb);\n+  font-size: 12px;\n+  font-style: italic;\n+`;\n+\n+const ITEM_STYLES = `\n+  display: flex;\n+  align-items: center;\n+  gap: 8px;\n+  padding: 6px 10px;\n+  border-bottom: 1px solid var(--nexus-border-subtle, #f2f2f2);\n+`;\n+\n+const ITEM_BODY_STYLES = `\n+  flex: 1;\n+  min-width: 0;\n+`;\n+\n+const ITEM_TITLE_STYLES = `\n+  font-weight: 600;\n+  font-size: 12px;\n+  color: var(--nexus-text, #24292e);\n+  margin-bottom: 2px;\n+  white-space: nowrap;\n+  overflow: hidden;\n+  text-overflow: ellipsis;\n+`;\n+\n+const ITEM_META_STYLES = `\n+  font-size: 11px;\n+  color: var(--nexus-text-muted, #666);\n+`;\n+\n+const ITEM_ACTION_STYLES = `\n+  border: none;\n+  background: transparent;\n+  cursor: pointer;\n+  font-size: 12px;\n+  padding: 2px 4px;\n+  color: var(--nexus-text-muted, #666);\n+  border-radius: 4px;\n+`;\n+\n+function formatSize(size: number): string {\n+  if (size < 1024) return `${size} chars`;\n+  return `${(size / 1024).toFixed(1)}k chars`;\n+}\n+\n+export function createSnapshotsPanel(options: SnapshotsPanelOptions): SnapshotsPanel {\n+  const { snapshots, onError } = options;\n+\n+  const root = document.createElement(\"aside\");\n+  root.className = \"snapshots-panel\";\n+  root.style.cssText = PANEL_STYLES;\n+\n+  const header = document.createElement(\"div\");\n+  header.style.cssText = HEADER_STYLES;\n+\n+  const headerLabel = document.createElement(\"span\");\n+  headerLabel.textContent = \"Snapshots\";\n+\n+  const captureBtn = document.createElement(\"button\");\n+  captureBtn.type = \"button\";\n+  captureBtn.style.cssText = CAPTURE_BTN_STYLES;\n+  captureBtn.textContent = \"Capture now\";\n+  captureBtn.title = \"Take a snapshot of the current document\";\n+  captureBtn.addEventListener(\"click\", () => {\n+    void (async () => {\n+      const meta = await snapshots.capture();\n+      // De-dup makes \"no new snapshot\" a normal outcome, not an error.\n+      if (!meta) headerLabel.textContent = \"Snapshots · unchanged\";\n+    })().catch((err) => onError(err instanceof Error ? err.message : String(err)));\n+  });\n+\n+  header.append(headerLabel, captureBtn);\n+  root.appendChild(header);\n+\n+  const list = document.createElement(\"div\");\n+  list.style.cssText = LIST_STYLES;\n+  root.appendChild(list);\n+\n+  let destroyed = false;\n+\n+  function renderEmpty(reason: string): void {\n+    const empty = document.createElement(\"div\");\n+    empty.style.cssText = EMPTY_STYLES;\n+    empty.textContent = reason;\n+    list.appendChild(empty);\n+  }\n+\n+  function renderItem(meta: SnapshotMeta): void {\n+    const item = document.createElement(\"div\");\n+    item.style.cssText = ITEM_STYLES;\n+\n+    const body = document.createElement(\"div\");\n+    body.style.cssText = ITEM_BODY_STYLES;\n+\n+    const title = document.createElement(\"div\");\n+    title.style.cssText = ITEM_TITLE_STYLES;\n+    title.textContent = meta.label ?? \"Snapshot\";\n+\n+    const metaLine = document.createElement(\"div\");\n+    metaLine.style.cssText = ITEM_META_STYLES;\n+    metaLine.textContent = `${new Date(meta.createdAt).toLocaleString()} · ${formatSize(meta.size)}`;\n+\n+    body.append(title, metaLine);\n+\n+    const restoreBtn = document.createElement(\"button\");\n+    restoreBtn.type = \"button\";\n+    restoreBtn.style.cssText = ITEM_ACTION_STYLES;\n+    restoreBtn.textContent = \"⏪\";\n+    restoreBtn.title = \"Restore this snapshot (current content is kept as a safety snapshot)\";\n+    restoreBtn.addEventListener(\"click\", () => {\n+      const when = new Date(meta.createdAt).toLocaleString();\n+      if (!window.confirm(`Restore the snapshot from ${when}?\\n\\nThe current content will be kept as a safety snapshot.`)) {\n+        return;\n+      }\n+      void snapshots\n+        .restore(meta.id)\n+        .then((restored) => {\n+          if (!restored) onError(\"Snapshot no longer exists on disk.\");\n+        })\n+        .catch((err) => onError(err instanceof Error ? err.message : String(err)));\n+    });\n+\n+    const deleteBtn = document.createElement(\"button\");\n+    deleteBtn.type = \"button\";\n+    deleteBtn.style.cssText = ITEM_ACTION_STYLES;\n+    deleteBtn.textContent = \"🗑\";\n+    deleteBtn.title = \"Delete this snapshot\";\n+    deleteBtn.addEventListener(\"click\", () => {\n+      void snapshots\n+        .remove(meta.id)\n+        .catch((err) => onError(err instanceof Error ? err.message : String(err)));\n+    });\n+\n+    item.append(body, restoreBtn, deleteBtn);\n+    list.appendChild(item);\n+  }\n+\n+  function render(metas: SnapshotMeta[]): void {\n+    if (destroyed) return;\n+    headerLabel.textContent = metas.length > 0 ? `Snapshots · ${metas.length}` : \"Snapshots\";\n+    list.textContent = \"\";\n+    if (metas.length === 0) {\n+      renderEmpty(\"No snapshots yet — capture one to start a version history.\");\n+      return;\n+    }\n+    for (const meta of metas) renderItem(meta);\n+  }\n+\n+  function refresh(): void {\n+    void snapshots\n+      .list()\n+      .then(render)\n+      .catch((err) => onError(err instanceof Error ? err.message : String(err)));\n+  }\n+\n+  // subscribe keeps the panel live for capture/restore/remove; refresh()\n+  // covers document-key changes (file switches), which emit nothing.\n+  const unsubscribe = snapshots.subscribe(render);\n+\n+  return {\n+    element: root,\n+    refresh,\n+    destroy() {\n+      destroyed = true;\n+      unsubscribe();\n+      root.remove();\n+    },\n+  };\n+}"
+      },
+      {
+        "sha": "9010d8be2f594062243235ecaeac832b3d1fe1c7",
+        "filename": "apps/electron-demo/tsconfig.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/apps%2Felectron-demo%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/apps%2Felectron-demo%2Ftsconfig.json?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -8,6 +8,7 @@\n       \"@floatboat/nexus-plugin-history\": [\"packages/plugin-history/src/index.ts\"],\n       \"@floatboat/nexus-plugin-search\": [\"packages/plugin-search/src/index.ts\"],\n       \"@floatboat/nexus-plugin-slash\": [\"packages/plugin-slash/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-snapshots\": [\"packages/plugin-snapshots/src/index.ts\"],\n       \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"],\n       \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"]\n     }"
+      },
+      {
+        "sha": "b6574d987c3ecccba09b0cbe1b29332b62290f79",
+        "filename": "docs/ROADMAP.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/docs%2FROADMAP.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/docs%2FROADMAP.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -65,7 +65,7 @@ This document maps every planned feature to **package ownership / priority / sta\n | # | Feature | Package | Priority | Status | Needs OpenSpec | Notes |\n |---|---|---|---|---|---|---|\n | 18 | Realtime collaboration (OT / CRDT) | new `plugin-collab` | P3 | planned | Yes | Large feature; start with a tech-selection design doc |\n-| 19 | Version history / snapshots | `core` + host storage | P2 | planned | Yes | electron-demo lands the reference impl first |\n+| 19 | Version history / snapshots | `plugin-snapshots` + host storage | P2 | in-progress | Yes | electron-demo reference impl — `openspec/changes/add-version-snapshots` |\n | 20 | Shared comments / @mention | new `plugin-annotation` | P3 | planned | Yes | Depends on #18 |\n \n ## 8. Cross-platform"
+      },
+      {
+        "sha": "7b815a0c4192dc55008c565278ade9ba99acbdb0",
+        "filename": "docs/ROADMAP.zh.md",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/docs%2FROADMAP.zh.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/docs%2FROADMAP.zh.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/docs%2FROADMAP.zh.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -65,7 +65,7 @@\n | # | 功能 | 归属包 | 优先级 | 状态 | 需要 OpenSpec | 备注 |\n |---|---|---|---|---|---|---|\n | 18 | 实时协作（OT / CRDT） | 新包 `plugin-collab` | P3 | planned | 是 | 大特性，先做技术选型 design doc |\n-| 19 | 版本历史 / 快照 | `core` + 宿主存储 | P2 | planned | 是 | electron-demo 先落地参考实现 |\n+| 19 | 版本历史 / 快照 | `plugin-snapshots` + 宿主存储 | P2 | in-progress | 是 | electron-demo 参考实现 —— `openspec/changes/add-version-snapshots` |\n | 20 | 共享注释 / @mention | 新包 `plugin-annotation` | P3 | planned | 是 | 依赖 #18 完成 |\n \n ## 8. 跨平台"
+      },
+      {
+        "sha": "a4487208c08ac8555a2ce555ba3b22ce0c24e897",
+        "filename": "openspec/changes/add-version-snapshots/design.md",
+        "status": "added",
+        "additions": 52,
+        "deletions": 0,
+        "changes": 52,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Fdesign.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Fdesign.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-version-snapshots%2Fdesign.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,52 @@\n+## Context\n+\n+Roadmap #19 asks for \"Version history / snapshots\" with package ownership `core` + host storage. Investigation shows the plugin surface (`NexusPlugin.commands`, `EditorAPI.setDocument`, `on`/`off` events) already covers every hook this feature needs, and the `add-search-query-history` change established the host-injected storage precedent inside a plugin package. Building this as a plugin package therefore matches the repo's actual pattern better than extending `core`, and keeps the capability opt-in with zero cost for hosts that don't enable it.\n+\n+## Goals / Non-Goals\n+\n+- Goals:\n+  - Pure, deterministic snapshot engine (hash de-dup, retention) that is fully unit-testable without a DOM.\n+  - Async host-injected `SnapshotStore` so the electron-demo can persist snapshots as files over IPC.\n+  - Restore flow that is safe by construction: safety snapshot first, then an undoable `setDocument`.\n+  - Electron-demo reference implementation: file-backed store + snapshots panel.\n+- Non-Goals: diff UI, cloud sync, core API changes, React/Vue binding changes.\n+\n+## Decisions\n+\n+- **Decision 1: New plugin package, no core changes.**\n+  Alternatives considered: adding a snapshot API to `core`'s `EditorAPI`. Rejected — every operation (read document, replace document, observe changes, register commands) is already public; a `core` change would widen the stable API surface for a feature most hosts may not enable. `NexusPlugin.commands` gives the command-palette integration for free.\n+\n+- **Decision 2: Async `SnapshotStore` interface.**\n+  `list` / `load` / `save` / `remove` / `clear` all return promises. The search-history storage is synchronous (`getItem`/`setItem`), which fits `localStorage` but cannot represent file or IPC backends — the exact backends Roadmap #19 targets. The plugin ships `createMemorySnapshotStore()` for tests and headless hosts.\n+\n+- **Decision 3: Content-hash de-duplication against the newest snapshot.**\n+  Capture hashes the document (FNV-1a, no dependency) and skips the write when it matches the newest snapshot for the same document key. This makes idle auto-capture cheap and keeps \"restore then capture\" from bouncing. Only the newest snapshot is compared — older duplicates are left alone, so a user returning to an earlier state still gets a fresh, correctly-ordered snapshot.\n+\n+- **Decision 4: Safety snapshot before restore.**\n+  `restore()` first captures the current buffer (labelled `Before restore …`) so an accidental restore is itself recoverable; the restore then goes through `setDocument`, which dispatches a single transaction and therefore remains one `undo()` step. The safety capture runs through the normal de-dup path, so it is skipped when the buffer already matches the restore target or the newest snapshot (e.g. an idle auto-capture that just recorded the same content) — the content is preserved either way. The restore's own `setDocument` also suppresses the pending idle auto-capture, so a restore never grows a duplicate of the restored content.\n+\n+- **Decision 5: Per-document keying via `getDocumentKey()`.**\n+  The host tells the plugin which document is active (electron-demo: the absolute file path, falling back to a fixed \"untitled\" key). Snapshots for different files never interleave, and switching files re-keys all subsequent operations. A fixed string also works for single-document hosts.\n+\n+- **Decision 6: Idle-based auto-capture.**\n+  When `autoCapture.intervalMs` is set, each `change` event (re)starts an idle timer; when the user pauses for the interval, one snapshot is taken. De-dup (Decision 3) guarantees no-op captures stay free. There is deliberately no wall-clock periodic mode: it snapshots unchanged documents and adds timer complexity for no user benefit.\n+\n+- **Decision 7: Electron-demo stores snapshots inside the vault at `.nexus/snapshots/<document-hash>/`.**\n+  Snapshots travel with the vault (portable, vault-scoped) instead of living in Electron's `userData`. The vault tree walker skips dot-directories, so the folder stays invisible in the file panel and out of the link index. Each snapshot is a `<id>.md` content file plus a `<id>.json` metadata sidecar — append-only, no shared index file that could corrupt concurrent writes.\n+\n+- **Decision 8: Retention is count-based plus optional lazy age-based expiry.**\n+  `maxSnapshots` bounds how many versions accumulate; `maxAgeMs` (e.g. 30 days in the demo) bounds how long they live. Expiry is swept lazily — after every capture and via an explicit `prune()` the demo calls at startup — instead of on a background timer. Timers are unreliable in long-lived editor sessions, the storage is host-owned, and sweeping on access is the same model Obsidian uses. The engine's internal sweep must not re-enter its own operation queue (a queued public `prune` called from an in-flight queued `capture` deadlocks), so `capture` invokes the sweep body directly.\n+\n+## Risks / Trade-offs\n+\n+- Async store operations race with rapid capture/restore clicks → the plugin serializes engine operations on a per-plugin promise queue; UI-triggered calls simply queue up.\n+- Retention pruning deletes files the host might still hold ids for → `remove` of a missing id is a no-op, `load` of a missing id resolves `null`, and `restore(null)` is a no-op.\n+- Large documents make full-text snapshots heavy → out of scope to delta-encode; the retention cap bounds total size, and de-dup prevents idle growth.\n+\n+## Migration Plan\n+\n+Purely additive. Hosts that don't install the plugin see no change. No data migration.\n+\n+## Open Questions\n+\n+- Should a future change add a shared storage-adapter contract in `core` for all plugins (search history, snapshots, …)? Deferred — Roadmap #23 (cloud storage interface) is the right place to generalize."
+      },
+      {
+        "sha": "afa9ebd15f89e16a61e7ebd0ef2318a8efee70c3",
+        "filename": "openspec/changes/add-version-snapshots/proposal.md",
+        "status": "added",
+        "additions": 37,
+        "deletions": 0,
+        "changes": 37,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Fproposal.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Fproposal.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-version-snapshots%2Fproposal.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,37 @@\n+# Change: Add Version History / Snapshots\n+\n+## Why\n+\n+Roadmap #19 (\"Version history / snapshots\") calls for point-in-time document snapshots with host-injected storage, so users can recover earlier versions of a note without any cloud dependency. This change delivers a new `@floatboat/nexus-plugin-snapshots` package plus the electron-demo reference implementation called out in the roadmap (\"electron-demo lands the reference impl first\").\n+\n+## What Changes\n+\n+- Add a new package `@floatboat/nexus-plugin-snapshots` exposing `createSnapshotsPlugin()`.\n+- Capture full-document snapshots manually (named editor command) and automatically (idle-based auto-capture after edits, opt-in).\n+- De-duplicate consecutive snapshots by content hash — an unchanged document never produces a new snapshot.\n+- Scope snapshots per document via a host-supplied `getDocumentKey()` (e.g. active file path); each key has an independent snapshot list.\n+- Enforce a configurable `maxSnapshots` retention cap per document, dropping the oldest snapshots first.\n+- Restore a snapshot through `EditorAPI.setDocument()` so the restore is itself undoable; automatically capture a safety snapshot of the current content before restoring.\n+- Support host-injected async storage (`SnapshotStore`) for persistence — the plugin ships an in-memory store and never touches `localStorage` or the filesystem implicitly.\n+- Treat unavailable storage, thrown store operations, and missing snapshot ids as recoverable.\n+- Electron demo: file-backed `SnapshotStore` over IPC (stored inside the vault under `.nexus/snapshots/`), a snapshots panel (list / capture / restore / delete), and capture-on-save.\n+\n+## Non-Goals\n+\n+- No diff / side-by-side comparison UI in this PR (list + restore only).\n+- No changes to `packages/core` — the plugin builds on the existing public `EditorAPI`.\n+- No cloud sync of snapshots; storage backend is the host's responsibility.\n+- No snapshot branching, naming beyond a single label, or per-range restore.\n+- No changes to the React / Vue bindings.\n+\n+## Impact\n+\n+- Affected specs: `plugins`\n+- Affected code:\n+  - `packages/plugin-snapshots/` (new package)\n+  - `apps/electron-demo/electron/main.ts` (snapshot IPC handlers)\n+  - `apps/electron-demo/electron/preload.ts` (snapshot bridge)\n+  - `apps/electron-demo/src/renderer/` (snapshots panel, shell + app wiring)\n+  - `vitest.config.ts` (package alias)\n+  - `README.md`, `docs/ROADMAP.md` (status/docs)\n+- Affected roadmap: reference implementation for Roadmap #19."
+      },
+      {
+        "sha": "5244a109315106e9edfcaf1ddbf0cbaf9a3d0790",
+        "filename": "openspec/changes/add-version-snapshots/specs/plugins/spec.md",
+        "status": "added",
+        "additions": 166,
+        "deletions": 0,
+        "changes": 166,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Fspecs%2Fplugins%2Fspec.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Fspecs%2Fplugins%2Fspec.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-version-snapshots%2Fspecs%2Fplugins%2Fspec.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,166 @@\n+## ADDED Requirements\n+\n+### Requirement: Version Snapshots Scope\n+\n+`@floatboat/nexus-plugin-snapshots` SHALL provide document version history as the reference implementation of Roadmap #19 (\"Version history / snapshots\"). This change SHALL cover full-document snapshot capture, per-document listing, restore, deletion, and retention. Diff / comparison UI, cloud sync, and changes to `packages/core` SHALL remain follow-up work outside this PR.\n+\n+#### Scenario: Plugin-based first stage\n+- **WHEN** a host adds `createSnapshotsPlugin()` to `createEditor({ plugins })`\n+- **THEN** the host SHALL be able to capture, list, restore, and delete full-document snapshots\n+- **AND** `packages/core` public API SHALL remain unchanged\n+\n+#### Scenario: Diff UI remains a follow-up\n+- **WHEN** a reviewer evaluates this change against Roadmap #19\n+- **THEN** the proposal SHALL identify diff / comparison UI and cloud sync as non-goals\n+- **AND** those behaviors SHALL NOT be required for this PR to be complete\n+\n+### Requirement: Opt-In Backward Compatibility\n+\n+Version snapshots SHALL be opt-in. Hosts that do not install the plugin SHALL see no change in editor behavior, and no snapshot data SHALL be written anywhere by default.\n+\n+#### Scenario: No plugin, no snapshots\n+- **WHEN** a host creates an editor without `createSnapshotsPlugin()`\n+- **THEN** no snapshot storage SHALL be read or written\n+- **AND** editor behavior SHALL be unchanged\n+\n+#### Scenario: Default in-memory storage\n+- **WHEN** a host creates `createSnapshotsPlugin()` without a `store`\n+- **THEN** snapshots SHALL be kept in memory only\n+- **AND** the plugin SHALL NOT write to global `localStorage`, the filesystem, or any other implicit persistence\n+\n+### Requirement: Host-Injected Persistence\n+\n+The plugin SHALL support host-injected async storage via a `SnapshotStore` interface (`list` / `load` / `save` / `remove` / `clear`). Persistent storage must be provided explicitly by the host.\n+\n+#### Scenario: Host store persists snapshots\n+- **GIVEN** the host provides a `SnapshotStore`\n+- **WHEN** a snapshot is captured\n+- **THEN** the plugin SHALL write the snapshot content and metadata (id, createdAt, label) through the store under the current document key\n+\n+#### Scenario: Snapshot survives reload\n+- **GIVEN** a host store that persists data across editor instances\n+- **WHEN** a snapshot was captured by a previous editor instance\n+- **THEN** a new plugin instance bound to the same store and document key SHALL list and restore that snapshot\n+\n+### Requirement: Snapshot Capture Rules\n+\n+Capture SHALL record the current document with an optional trimmed label. Consecutive snapshots with identical content SHALL be de-duplicated by content hash: if the newest snapshot for the document has the same content, capture SHALL be a no-op. Snapshots SHALL be scoped per document key supplied by the host's `getDocumentKey()`.\n+\n+#### Scenario: Manual capture via command\n+- **GIVEN** the plugin is attached to an editor\n+- **WHEN** the host runs the `snapshots.capture` editor command\n+- **THEN** a snapshot of the current document SHALL be recorded\n+\n+#### Scenario: Identical content is not re-captured\n+- **GIVEN** a snapshot of the current document already exists as the newest entry\n+- **WHEN** capture runs again without any document change\n+- **THEN** no new snapshot SHALL be created\n+\n+#### Scenario: Changed content produces a new snapshot\n+- **GIVEN** the newest snapshot contains \"alpha\"\n+- **WHEN** the document changes to \"alpha beta\" and capture runs\n+- **THEN** a new snapshot SHALL be created and listed as the newest entry\n+\n+#### Scenario: Labels are trimmed and blank labels are dropped\n+- **WHEN** capture is called with the label `\"  before refactor  \"`\n+- **THEN** the stored label SHALL be `\"before refactor\"`\n+- **WHEN** capture is called with a whitespace-only label\n+- **THEN** the snapshot SHALL be stored with no label\n+\n+#### Scenario: Document keys isolate snapshot lists\n+- **GIVEN** snapshots exist for document key \"a.md\"\n+- **WHEN** the host's `getDocumentKey()` returns \"b.md\"\n+- **THEN** listing SHALL return only snapshots for \"b.md\"\n+- **AND** capturing SHALL write under \"b.md\"\n+\n+#### Scenario: Idle auto-capture\n+- **GIVEN** `autoCapture.intervalMs` is configured\n+- **WHEN** the document changes and then remains idle for the interval\n+- **THEN** exactly one snapshot SHALL be captured\n+- **AND** continued typing SHALL reset the idle timer before it fires\n+\n+### Requirement: Snapshot Retention\n+\n+Each document key SHALL retain at most `maxSnapshots` snapshots (default 50). When the cap is exceeded, the oldest snapshots SHALL be removed first. When `maxAgeMs` is configured, snapshots older than that age SHALL be pruned lazily — on capture and when the host calls `prune()` — rather than by a background timer.\n+\n+#### Scenario: Oldest snapshots are dropped\n+- **GIVEN** `maxSnapshots` is `2`\n+- **WHEN** three snapshots with different content are captured in order\n+- **THEN** only the two newest snapshots SHALL remain listed\n+\n+#### Scenario: Expired snapshots are pruned on capture\n+- **GIVEN** `maxAgeMs` is configured and a snapshot older than that age exists\n+- **WHEN** a new snapshot is captured\n+- **THEN** the expired snapshot SHALL be removed\n+\n+#### Scenario: Startup sweep without a new capture\n+- **GIVEN** `maxAgeMs` is configured and only expired snapshots exist\n+- **WHEN** the host calls `prune()` (e.g. at app startup)\n+- **THEN** the expired snapshots SHALL be removed without capturing anything new\n+\n+### Requirement: Safe Restore\n+\n+Restore SHALL replace the editor document through `EditorAPI.setDocument()` so the restore itself is undoable. Before replacing the document, the plugin SHALL capture a safety snapshot of the current content — skipped when the current content is already preserved (identical to the restore target, or identical to the newest snapshot via de-duplication). Restoring a missing or deleted snapshot id SHALL be a no-op.\n+\n+#### Scenario: Restore replaces the document\n+- **GIVEN** a snapshot with content \"alpha\" and a current document \"beta\"\n+- **WHEN** the snapshot is restored\n+- **THEN** the editor document SHALL become \"alpha\"\n+\n+#### Scenario: Safety snapshot before restore\n+- **GIVEN** a snapshot with content \"alpha\" and a current document \"beta\"\n+- **WHEN** the snapshot is restored\n+- **THEN** a new snapshot containing \"beta\" SHALL exist\n+- **AND** restoring that safety snapshot SHALL bring back \"beta\"\n+\n+#### Scenario: No safety snapshot when content matches\n+- **GIVEN** the current document is identical to the snapshot being restored\n+- **WHEN** restore runs\n+- **THEN** no additional snapshot SHALL be created\n+\n+#### Scenario: Missing snapshot id is a no-op\n+- **WHEN** restore is called with an id that does not exist in the store\n+- **THEN** the editor document SHALL be unchanged\n+- **AND** no error SHALL be thrown\n+\n+### Requirement: Storage Failure Resilience\n+\n+The plugin SHALL treat unavailable storage, thrown store operations, and missing snapshot ids as recoverable conditions. These failures SHALL NOT crash the editor or leave the plugin in a state where later operations fail.\n+\n+#### Scenario: Store save throws\n+- **GIVEN** the host store rejects on `save`\n+- **WHEN** capture runs\n+- **THEN** the editor SHALL NOT throw\n+- **AND** subsequent captures against a healthy store SHALL still succeed\n+\n+#### Scenario: Store list throws\n+- **GIVEN** the host store rejects on `list`\n+- **WHEN** the host lists snapshots\n+- **THEN** the call SHALL resolve with an empty list\n+- **AND** the editor SHALL continue to operate normally\n+\n+### Requirement: Electron Demo Reference Implementation\n+\n+The electron-demo SHALL provide the reference implementation of Roadmap #19: a file-backed `SnapshotStore` exposed over IPC, a snapshots panel for the active file, and capture-on-save. Snapshots SHALL be stored inside the vault under `.nexus/snapshots/`, and the vault file tree SHALL exclude dot-directories so snapshot storage stays invisible.\n+\n+#### Scenario: Snapshots persist on disk\n+- **GIVEN** a vault is open in the electron-demo\n+- **WHEN** the user captures a snapshot of the active file\n+- **THEN** the snapshot content and metadata SHALL be written under `<vault>/.nexus/snapshots/`\n+- **AND** reopening the vault SHALL list the snapshot again\n+\n+#### Scenario: Snapshot storage is invisible in the vault tree\n+- **WHEN** snapshot files exist under `<vault>/.nexus/snapshots/`\n+- **THEN** the vault panel tree SHALL NOT show `.nexus` or its contents\n+- **AND** the link index SHALL NOT index snapshot files\n+\n+#### Scenario: Panel lists, restores, and deletes\n+- **GIVEN** the snapshots panel is open for the active file\n+- **WHEN** the user selects a snapshot and confirms restore\n+- **THEN** the editor document SHALL be replaced with the snapshot content\n+- **WHEN** the user deletes a snapshot\n+- **THEN** it SHALL disappear from the list and from disk\n+\n+#### Scenario: Capture on save\n+- **WHEN** the user saves the active file to the vault\n+- **THEN** a snapshot SHALL be captured unless the content is unchanged since the newest snapshot"
+      },
+      {
+        "sha": "592a9ff7e6a83a04e9b21b7ed6691ae19ca351cc",
+        "filename": "openspec/changes/add-version-snapshots/tasks.md",
+        "status": "added",
+        "additions": 42,
+        "deletions": 0,
+        "changes": 42,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Ftasks.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/openspec%2Fchanges%2Fadd-version-snapshots%2Ftasks.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/openspec%2Fchanges%2Fadd-version-snapshots%2Ftasks.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,42 @@\n+## 1. OpenSpec and Test-First Setup\n+\n+- [x] 1.1 Create OpenSpec change `add-version-snapshots`.\n+- [x] 1.2 Define the `plugin-snapshots` scope and core / diff-UI non-goals.\n+- [x] 1.3 Add red tests for the snapshot engine and plugin before implementation.\n+\n+## 2. Plugin Package Implementation\n+\n+- [x] 2.1 Scaffold `packages/plugin-snapshots` (package.json, tsconfig, tsup build) matching `plugin-wordcount`.\n+- [x] 2.2 Add the async `SnapshotStore` interface and `createMemorySnapshotStore()`; no implicit persistence.\n+- [x] 2.3 Implement the snapshot engine: capture with FNV-1a content-hash de-dup, label trimming, per-document keying, `maxSnapshots` retention, storage-failure resilience, and serialized async operations.\n+- [x] 2.4 Implement `createSnapshotsPlugin()`: `snapshots.capture` editor command, idle-based auto-capture, safe restore (safety snapshot + undoable `setDocument`), delete/clear, and a subscribe/listen API for hosts.\n+- [x] 2.5 Wire `attachSnapshotsPlugin()` following the `plugin-wordcount` attach pattern.\n+- [x] 2.6 Add the vitest alias and workspace registration for the new package.\n+\n+## 3. Tests\n+\n+- [x] 3.1 Engine tests: de-dup, retention, label rules, per-key isolation, missing-id no-ops, store failure resilience.\n+- [x] 3.2 Plugin tests against a real `createEditor` (jsdom): command capture, idle auto-capture with fake timers, safe restore (safety snapshot + undo), subscribe emissions.\n+- [x] 3.3 Memory store round-trip test (persistence contract used by hosts).\n+\n+## 4. Electron Demo Reference Implementation\n+\n+- [x] 4.1 Add `snapshots:*` IPC handlers in `electron/main.ts` persisting under `<vault>/.nexus/snapshots/<document-hash>/` (content `.md` + metadata `.json` sidecar).\n+- [x] 4.2 Exclude dot-directories from the vault tree walker and `readAll` so snapshot storage stays invisible.\n+- [x] 4.3 Expose a `snapshots` bridge in `electron/preload.ts` and `bridge.d.ts`.\n+- [x] 4.4 Add `snapshots-panel.ts` (list / capture / restore-with-confirm / delete) and a toolbar toggle button.\n+- [x] 4.5 Wire the plugin in `editor-shell.ts` with `getDocumentKey()` from the active file and capture-on-save in `app.ts`.\n+- [x] 4.6 Launch the built demo and verify the main process boots cleanly with the snapshot IPC handlers (interactive capture/restore/delete flows are covered by the plugin unit tests; manual UI walkthrough steps are listed in the PR description).\n+\n+## 5. Documentation\n+\n+- [x] 5.1 Write `packages/plugin-snapshots/README.md` (usage, options, `SnapshotStore` contract).\n+- [x] 5.2 Add the plugin to the root `README.md` plugin list.\n+- [x] 5.3 Update `docs/ROADMAP.md` #19 status to `in-progress` with a link to this change.\n+\n+## 6. Verification\n+\n+- [x] 6.1 Run the targeted `plugin-snapshots` Vitest suite and confirm the new tests pass.\n+- [x] 6.2 Run `pnpm test`.\n+- [x] 6.3 Run `pnpm build`.\n+- [x] 6.4 Run `openspec validate add-version-snapshots --strict` (via npx) — change is valid."
+      },
+      {
+        "sha": "e89bcdada347e3e3638d053d168de5661ffea84a",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/package.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/package.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/package.json?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -4,7 +4,7 @@\n   \"version\": \"0.0.13\",\n   \"packageManager\": \"pnpm@9.15.4\",\n   \"scripts\": {\n-    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build\",\n+    \"build\": \"pnpm --filter @floatboat/nexus-core build && pnpm --filter @floatboat/nexus-react build && pnpm --filter @floatboat/nexus-vue build && pnpm --filter @floatboat/nexus-preset-gfm build && pnpm --filter @floatboat/nexus-plugin-slash build && pnpm --filter @floatboat/nexus-plugin-history build && pnpm --filter @floatboat/nexus-plugin-search build && pnpm --filter @floatboat/nexus-plugin-toolbar build && pnpm --filter @floatboat/nexus-plugin-math build && pnpm --filter @floatboat/nexus-plugin-vim build && pnpm --filter @floatboat/nexus-plugin-wordcount build && pnpm --filter @floatboat/nexus-plugin-snapshots build\",\n     \"typecheck\": \"pnpm -r exec tsc --noEmit\",\n     \"test\": \"vitest run\",\n     \"dev:electron-demo\": \"pnpm --filter @floatboat/nexus-electron-demo dev\","
+      },
+      {
+        "sha": "865ab4cddbf22a073c64b16bbf48eafc5d5019c9",
+        "filename": "packages/plugin-snapshots/README.md",
+        "status": "added",
+        "additions": 70,
+        "deletions": 0,
+        "changes": 70,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2FREADME.md",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2FREADME.md?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,70 @@\n+# @floatboat/nexus-plugin-snapshots\n+\n+Version history for Nexus-Editor: capture point-in-time snapshots of the current document, list them per file, and restore any of them — with host-injected persistence and no implicit `localStorage` / filesystem writes.\n+\n+Reference implementation of [Roadmap #19](../../docs/ROADMAP.md) (\"Version history / snapshots\"); see `openspec/changes/add-version-snapshots` for the spec.\n+\n+## Usage\n+\n+```ts\n+import { createEditor } from \"@floatboat/nexus-core\";\n+import {\n+  attachSnapshotsPlugin,\n+  createSnapshotsPlugin\n+} from \"@floatboat/nexus-plugin-snapshots\";\n+\n+const snapshots = createSnapshotsPlugin({\n+  // Optional — defaults to an in-memory store:\n+  store: mySnapshotStore,\n+  // Snapshots are scoped per key (e.g. the active file path):\n+  getDocumentKey: () => activeFilePath ?? \"untitled\",\n+  maxSnapshots: 50,\n+  // Optional age-based expiry — pruned on capture and via prune():\n+  maxAgeMs: 30 * 24 * 60 * 60 * 1000,\n+  autoCapture: { intervalMs: 30_000 } // one snapshot after 30s idle\n+});\n+\n+const editor = createEditor({ container, plugins: [snapshots] });\n+attachSnapshotsPlugin(snapshots, editor);\n+\n+await snapshots.capture(\"First draft\");   // manual capture\n+const list = await snapshots.list();       // newest first\n+await snapshots.restore(list[0].id);       // safe + undoable\n+await snapshots.remove(list[0].id);\n+```\n+\n+A manual capture is also registered as the editor command `snapshots.capture` (label \"Snapshots: Take snapshot\"), so command palettes can trigger it via `editor.runCommand(\"snapshots.capture\")`.\n+\n+## Behavior\n+\n+- **De-duplication** — capturing content identical to the newest snapshot is a no-op (`capture()` resolves `null`). Idle auto-capture therefore never grows the history of an unchanged document.\n+- **Safe restore** — before replacing the document, a safety snapshot of the current buffer (label `\"Before restore\"`) is taken unless the content is already preserved. The restore itself is a single `setDocument` transaction, so one `undo()` reverts it (with `plugin-history` installed).\n+- **Retention** — each document key keeps at most `maxSnapshots` entries (default 50); the oldest drop first. With `maxAgeMs` set, snapshots older than that are also pruned — lazily, on capture and when the host calls `prune()` (e.g. at app startup), never on a background timer.\n+- **Resilience** — a rejecting store never breaks the editor: failed saves resolve `null`, failed lists resolve `[]`, missing ids are no-ops.\n+\n+## Persistence (`SnapshotStore`)\n+\n+Storage is host-injected and fully async, so file / IPC / network backends are representable:\n+\n+```ts\n+interface SnapshotStore {\n+  list(documentKey: string): Promise<SnapshotMeta[]>;\n+  load(documentKey: string, id: string): Promise<string | null>;\n+  save(documentKey: string, snapshot: Snapshot): Promise<void>;\n+  remove(documentKey: string, id: string): Promise<void>; // missing id must not throw\n+  clear(documentKey: string): Promise<void>;\n+}\n+```\n+\n+The default `createMemorySnapshotStore()` keeps everything in memory — persistence only happens when the host explicitly provides a store. The electron-demo (`apps/electron-demo`) ships a file-backed store over IPC that writes snapshots into the vault under `.nexus/snapshots/`.\n+\n+## API\n+\n+| Export | Description |\n+|---|---|\n+| `createSnapshotsPlugin(options?)` | Plugin factory (dual shape: `NexusPlugin` + API handle) |\n+| `attachSnapshotsPlugin(plugin, editor)` | Bind to an editor (required for capture / restore / auto-capture) |\n+| `SNAPSHOTS_CAPTURE_COMMAND` | Editor command id for manual capture |\n+| `createMemorySnapshotStore()` | In-memory `SnapshotStore` (default) |\n+| `SnapshotEngine` | DOM-free snapshot bookkeeping (de-dup, retention) for custom integrations |\n+| `hashContent(content)` | FNV-1a content hash used for de-duplication |"
+      },
+      {
+        "sha": "296344c0810d2d2d4493e32c7f10b0a58352fef5",
+        "filename": "packages/plugin-snapshots/package.json",
+        "status": "added",
+        "additions": 28,
+        "deletions": 0,
+        "changes": 28,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fpackage.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fpackage.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Fpackage.json?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,28 @@\n+{\n+  \"name\": \"@floatboat/nexus-plugin-snapshots\",\n+  \"version\": \"0.0.1\",\n+  \"description\": \"Version history snapshots for Nexus-Editor with host-injected storage.\",\n+  \"type\": \"module\",\n+  \"main\": \"./dist/index.js\",\n+  \"types\": \"./dist/index.d.ts\",\n+  \"exports\": {\n+    \".\": {\n+      \"types\": \"./dist/index.d.ts\",\n+      \"import\": \"./dist/index.js\"\n+    }\n+  },\n+  \"files\": [\n+    \"dist\",\n+    \"README.md\"\n+  ],\n+  \"scripts\": {\n+    \"build\": \"tsup src/index.ts --format esm --dts --clean\"\n+  },\n+  \"dependencies\": {\n+    \"@floatboat/nexus-core\": \"workspace:*\"\n+  },\n+  \"publishConfig\": {\n+    \"access\": \"public\",\n+    \"registry\": \"https://registry.npmjs.org/\"\n+  }\n+}"
+      },
+      {
+        "sha": "74b72857693a34aa95e976cb67f5dc00eb40d345",
+        "filename": "packages/plugin-snapshots/src/engine.ts",
+        "status": "added",
+        "additions": 189,
+        "deletions": 0,
+        "changes": 189,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Fengine.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Fengine.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Fsrc%2Fengine.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,189 @@\n+/**\n+ * Snapshot bookkeeping on top of a {@link SnapshotStore}: content-hash\n+ * de-duplication, retention pruning, and failure containment. The engine\n+ * knows nothing about the editor — hosts feed it plain strings — so the\n+ * whole lifecycle is unit-testable without a DOM.\n+ */\n+\n+import type { Snapshot, SnapshotMeta, SnapshotStore } from \"./store\";\n+\n+export const DEFAULT_MAX_SNAPSHOTS = 50;\n+\n+export function hashContent(content: string): string {\n+  // FNV-1a 32-bit — dependency-free and stable across runs. Collisions are\n+  // acceptable here: the worst case is a skipped consecutive snapshot, not\n+  // a security boundary.\n+  let hash = 0x811c9dc5;\n+  for (let i = 0; i < content.length; i++) {\n+    hash ^= content.charCodeAt(i);\n+    hash = Math.imul(hash, 0x01000193);\n+  }\n+  return (hash >>> 0).toString(16).padStart(8, \"0\");\n+}\n+\n+export function normalizeLabel(label?: string): string | undefined {\n+  const trimmed = label?.trim();\n+  return trimmed ? trimmed : undefined;\n+}\n+\n+export function sortNewestFirst(metas: SnapshotMeta[]): SnapshotMeta[] {\n+  // Ties on createdAt (same-millisecond captures) resolve towards the\n+  // store's later entries, matching insertion order for append-style stores.\n+  return metas\n+    .map((meta, index) => ({ meta, index }))\n+    .sort((a, b) => b.meta.createdAt - a.meta.createdAt || b.index - a.index)\n+    .map(({ meta }) => meta);\n+}\n+\n+function createSnapshotId(createdAt: number, hash: string, taken: SnapshotMeta[]): string {\n+  const ids = new Set(taken.map((meta) => meta.id));\n+  let id = `${createdAt}-${hash}`;\n+  let suffix = 1;\n+  while (ids.has(id)) {\n+    id = `${createdAt}-${hash}-${suffix}`;\n+    suffix += 1;\n+  }\n+  return id;\n+}\n+\n+export interface SnapshotEngineOptions {\n+  store: SnapshotStore;\n+  maxSnapshots?: number;\n+  /**\n+   * Optional age-based expiry: snapshots older than this are pruned on\n+   * capture and via {@link SnapshotEngine.prune}. Lazy sweeping (on access)\n+   * instead of a background timer — timers are unreliable in long-lived\n+   * editors and the storage is host-owned anyway.\n+   */\n+  maxAgeMs?: number;\n+  /** Injectable clock for tests. Defaults to `Date.now`. */\n+  now?: () => number;\n+}\n+\n+export class SnapshotEngine {\n+  private readonly store: SnapshotStore;\n+  private readonly maxSnapshots: number;\n+  private readonly maxAgeMs: number | null;\n+  private readonly now: () => number;\n+  private queue: Promise<unknown> = Promise.resolve();\n+\n+  constructor(options: SnapshotEngineOptions) {\n+    this.store = options.store;\n+    this.maxSnapshots = Math.max(1, options.maxSnapshots ?? DEFAULT_MAX_SNAPSHOTS);\n+    this.maxAgeMs =\n+      options.maxAgeMs !== undefined && options.maxAgeMs > 0 ? options.maxAgeMs : null;\n+    this.now = options.now ?? Date.now;\n+  }\n+\n+  /**\n+   * Record a snapshot unless the newest entry already holds identical\n+   * content. Returns the stored metadata, or `null` when the capture was\n+   * de-duplicated or the store rejected the write.\n+   */\n+  capture(documentKey: string, content: string, label?: string): Promise<SnapshotMeta | null> {\n+    return this.enqueue(async () => {\n+      const hash = hashContent(content);\n+      const existing = await this.safeList(documentKey);\n+      if (existing[0]?.hash === hash) return null;\n+\n+      const createdAt = this.now();\n+      const snapshot: Snapshot = {\n+        id: createSnapshotId(createdAt, hash, existing),\n+        createdAt,\n+        label: normalizeLabel(label),\n+        size: content.length,\n+        hash,\n+        content\n+      };\n+      try {\n+        await this.store.save(documentKey, snapshot);\n+      } catch {\n+        // Persistence is best-effort; a failing store must not break editing.\n+        return null;\n+      }\n+      // Call the sweep directly — the public prune() re-enters the queue,\n+      // which would deadlock against this in-flight capture.\n+      await this.sweep(documentKey);\n+      const { content: _content, ...meta } = snapshot;\n+      return meta;\n+    });\n+  }\n+\n+  /** Newest-first metadata, or an empty list when the store fails. */\n+  list(documentKey: string): Promise<SnapshotMeta[]> {\n+    return this.enqueue(() => this.safeList(documentKey));\n+  }\n+\n+  /** Snapshot content, or `null` for missing ids and store failures. */\n+  load(documentKey: string, id: string): Promise<string | null> {\n+    return this.enqueue(async () => {\n+      try {\n+        return await this.store.load(documentKey, id);\n+      } catch {\n+        return null;\n+      }\n+    });\n+  }\n+\n+  remove(documentKey: string, id: string): Promise<boolean> {\n+    return this.enqueue(async () => {\n+      try {\n+        await this.store.remove(documentKey, id);\n+        return true;\n+      } catch {\n+        return false;\n+      }\n+    });\n+  }\n+\n+  clear(documentKey: string): Promise<boolean> {\n+    return this.enqueue(async () => {\n+      try {\n+        await this.store.clear(documentKey);\n+        return true;\n+      } catch {\n+        return false;\n+      }\n+    });\n+  }\n+\n+  /**\n+   * Remove expired snapshots (older than `maxAgeMs`, when configured) and\n+   * count-overflow beyond `maxSnapshots`. Runs automatically after every\n+   * capture; hosts can also call it explicitly, e.g. at app startup.\n+   */\n+  prune(documentKey: string): Promise<void> {\n+    return this.enqueue(() => this.sweep(documentKey));\n+  }\n+\n+  /** Serialize async operations so rapid capture/restore clicks queue up. */\n+  private enqueue<T>(op: () => Promise<T>): Promise<T> {\n+    const run = this.queue.then(op, op);\n+    this.queue = run.catch(() => undefined);\n+    return run;\n+  }\n+\n+  private async sweep(documentKey: string): Promise<void> {\n+    const cutoff = this.maxAgeMs === null ? null : this.now() - this.maxAgeMs;\n+    const metas = await this.safeList(documentKey);\n+    const stale = metas.filter((meta, index) => {\n+      if (cutoff !== null && meta.createdAt < cutoff) return true;\n+      return index >= this.maxSnapshots;\n+    });\n+    for (const meta of stale) {\n+      try {\n+        await this.store.remove(documentKey, meta.id);\n+      } catch {\n+        // Retention is best-effort; a stuck entry just survives to next time.\n+      }\n+    }\n+  }\n+\n+  private async safeList(documentKey: string): Promise<SnapshotMeta[]> {\n+    try {\n+      return sortNewestFirst(await this.store.list(documentKey));\n+    } catch {\n+      return [];\n+    }\n+  }\n+}"
+      },
+      {
+        "sha": "63423987fb5a9ebd20796eb98942cdeed45f804d",
+        "filename": "packages/plugin-snapshots/src/index.ts",
+        "status": "added",
+        "additions": 25,
+        "deletions": 0,
+        "changes": 25,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Fsrc%2Findex.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,25 @@\n+export {\n+  createMemorySnapshotStore,\n+  type Snapshot,\n+  type SnapshotMeta,\n+  type SnapshotStore\n+} from \"./store\";\n+\n+export {\n+  DEFAULT_MAX_SNAPSHOTS,\n+  hashContent,\n+  normalizeLabel,\n+  SnapshotEngine,\n+  sortNewestFirst,\n+  type SnapshotEngineOptions\n+} from \"./engine\";\n+\n+export {\n+  attachSnapshotsPlugin,\n+  createSnapshotsPlugin,\n+  SNAPSHOTS_CAPTURE_COMMAND,\n+  type SnapshotsAPI,\n+  type SnapshotsPlugin,\n+  type SnapshotsPluginOptions,\n+  type Unsubscribe\n+} from \"./plugin\";"
+      },
+      {
+        "sha": "5327705d5b9959264e47baaa7628b643c17d17b9",
+        "filename": "packages/plugin-snapshots/src/plugin.ts",
+        "status": "added",
+        "additions": 257,
+        "deletions": 0,
+        "changes": 257,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Fplugin.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Fplugin.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Fsrc%2Fplugin.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,257 @@\n+/**\n+ * Plugin factory wiring the snapshot engine into the editor's change\n+ * lifecycle. The returned object is *both* a valid `NexusPlugin` (pass it\n+ * to `createEditor({ plugins })`) and a live API handle (capture / list /\n+ * restore / subscribe) — same dual shape as `plugin-wordcount`.\n+ */\n+\n+import type { EditorAPI, NexusPlugin } from \"@floatboat/nexus-core\";\n+\n+import { SnapshotEngine } from \"./engine\";\n+import {\n+  createMemorySnapshotStore,\n+  type SnapshotMeta,\n+  type SnapshotStore\n+} from \"./store\";\n+\n+export type Unsubscribe = () => void;\n+\n+/** Editor command id for manual capture (`editor.runCommand(...)`). */\n+export const SNAPSHOTS_CAPTURE_COMMAND = \"snapshots.capture\";\n+\n+export interface SnapshotsPluginOptions {\n+  /**\n+   * Host-injected persistence. Defaults to an in-memory store — no\n+   * implicit `localStorage` / filesystem writes.\n+   */\n+  store?: SnapshotStore;\n+  /**\n+   * Identifies the active document; snapshots are scoped per key and\n+   * never interleave across files. Defaults to a fixed `\"default\"` key,\n+   * which suits single-document hosts.\n+   */\n+  getDocumentKey?: () => string;\n+  /** Retention cap per document key. Oldest snapshots drop first. Default: 50. */\n+  maxSnapshots?: number;\n+  /**\n+   * Optional age-based expiry: snapshots older than this are pruned on\n+   * capture and when the host calls {@link SnapshotsAPI.prune} (e.g. at\n+   * app startup). Disabled by default. Example: 30 days is\n+   * `30 * 24 * 60 * 60 * 1000`.\n+   */\n+  maxAgeMs?: number;\n+  /**\n+   * Idle-based auto-capture: after each change, one snapshot is taken once\n+   * the user pauses for `intervalMs`. De-duplication keeps unchanged\n+   * documents free. Disabled by default.\n+   */\n+  autoCapture?: { intervalMs: number } | false;\n+  /** Label for the safety snapshot taken before a restore. Default: \"Before restore\". */\n+  restoreSafetyLabel?: string;\n+}\n+\n+export interface SnapshotsAPI {\n+  /**\n+   * Snapshot the current document. Resolves `null` when the content is\n+   * unchanged since the newest snapshot, the store rejected the write, or\n+   * the plugin is not attached to an editor.\n+   */\n+  capture(label?: string): Promise<SnapshotMeta | null>;\n+  /** Newest-first snapshot metadata for the active document key. */\n+  list(): Promise<SnapshotMeta[]>;\n+  /**\n+   * Replace the document with a snapshot's content. Captures a safety\n+   * snapshot of the current buffer first (unless already identical), then\n+   * applies one undoable `setDocument`. Resolves `false` for missing ids.\n+   */\n+  restore(id: string): Promise<boolean>;\n+  remove(id: string): Promise<boolean>;\n+  clear(): Promise<boolean>;\n+  /**\n+   * Remove expired (older than `maxAgeMs`) and count-overflow snapshots\n+   * for the active document key. Runs automatically on capture; call\n+   * explicitly at app startup so stale snapshots are swept even when the\n+   * user doesn't capture anything.\n+   */\n+  prune(): Promise<void>;\n+  /**\n+   * Subscribe to snapshot-list changes for the active document key. The\n+   * listener fires asynchronously with the current list, then after every\n+   * capture / restore / remove / clear. Returns an unsubscribe function.\n+   */\n+  subscribe(listener: (snapshots: SnapshotMeta[]) => void): Unsubscribe;\n+  /**\n+   * Bind the plugin to an editor instance. Call once after `createEditor`\n+   * returns — required for `capture` / `restore` / auto-capture.\n+   * Idempotent. Most hosts prefer the {@link attachSnapshotsPlugin} free\n+   * function for readability.\n+   */\n+  attachEditor(editor: EditorAPI): void;\n+  destroy(): void;\n+}\n+\n+export type SnapshotsPlugin = NexusPlugin & SnapshotsAPI;\n+\n+/**\n+ * Create a version-snapshots plugin:\n+ *\n+ * ```ts\n+ * const snapshots = createSnapshotsPlugin({ store: myStore });\n+ * const editor = createEditor({ container, plugins: [snapshots] });\n+ * attachSnapshotsPlugin(snapshots, editor);\n+ *\n+ * await snapshots.capture(\"First draft\");\n+ * ```\n+ */\n+export function createSnapshotsPlugin(options: SnapshotsPluginOptions = {}): SnapshotsPlugin {\n+  const engine = new SnapshotEngine({\n+    store: options.store ?? createMemorySnapshotStore(),\n+    maxSnapshots: options.maxSnapshots,\n+    maxAgeMs: options.maxAgeMs\n+  });\n+  const getDocumentKey = options.getDocumentKey ?? (() => \"default\");\n+  const safetyLabel = options.restoreSafetyLabel ?? \"Before restore\";\n+  const autoIntervalMs =\n+    options.autoCapture && options.autoCapture.intervalMs > 0\n+      ? options.autoCapture.intervalMs\n+      : null;\n+\n+  let editor: EditorAPI | null = null;\n+  let destroyed = false;\n+  let autoTimer: ReturnType<typeof setTimeout> | null = null;\n+  // setDocument during restore fires `change`; that edit must not schedule\n+  // an auto-capture, or every restore would grow a duplicate snapshot.\n+  let skipNextAutoCapture = false;\n+  const listeners = new Set<(snapshots: SnapshotMeta[]) => void>();\n+\n+  const emit = async (): Promise<void> => {\n+    if (destroyed || listeners.size === 0) return;\n+    const metas = await engine.list(getDocumentKey());\n+    if (destroyed) return;\n+    for (const listener of listeners) {\n+      listener(metas);\n+    }\n+  };\n+\n+  const captureFrom = async (target: EditorAPI, label?: string): Promise<SnapshotMeta | null> => {\n+    if (destroyed) return null;\n+    const meta = await engine.capture(getDocumentKey(), target.getDocument(), label);\n+    if (meta) await emit();\n+    return meta;\n+  };\n+\n+  const clearAutoTimer = (): void => {\n+    if (autoTimer) {\n+      clearTimeout(autoTimer);\n+      autoTimer = null;\n+    }\n+  };\n+\n+  const onChange = (): void => {\n+    if (autoIntervalMs === null || destroyed) return;\n+    if (skipNextAutoCapture) {\n+      skipNextAutoCapture = false;\n+      return;\n+    }\n+    clearAutoTimer();\n+    autoTimer = setTimeout(() => {\n+      autoTimer = null;\n+      if (editor) void captureFrom(editor);\n+    }, autoIntervalMs);\n+  };\n+\n+  const api: SnapshotsAPI = {\n+    capture(label) {\n+      return editor ? captureFrom(editor, label) : Promise.resolve(null);\n+    },\n+    list() {\n+      return engine.list(getDocumentKey());\n+    },\n+    async restore(id) {\n+      if (!editor || destroyed) return false;\n+      const documentKey = getDocumentKey();\n+      const content = await engine.load(documentKey, id);\n+      if (content === null || destroyed) return false;\n+\n+      const current = editor.getDocument();\n+      if (current !== content) {\n+        await engine.capture(documentKey, current, safetyLabel);\n+        skipNextAutoCapture = true;\n+        editor.setDocument(content);\n+      }\n+      await emit();\n+      return true;\n+    },\n+    async remove(id) {\n+      const removed = await engine.remove(getDocumentKey(), id);\n+      if (removed) await emit();\n+      return removed;\n+    },\n+    async clear() {\n+      const cleared = await engine.clear(getDocumentKey());\n+      if (cleared) await emit();\n+      return cleared;\n+    },\n+    async prune() {\n+      await engine.prune(getDocumentKey());\n+      await emit();\n+    },\n+    subscribe(listener) {\n+      listeners.add(listener);\n+      void emit();\n+      return () => {\n+        listeners.delete(listener);\n+      };\n+    },\n+    attachEditor(target: EditorAPI) {\n+      if (editor || destroyed) return;\n+      editor = target;\n+      target.on(\"change\", onChange);\n+    },\n+    destroy() {\n+      if (destroyed) return;\n+      destroyed = true;\n+      clearAutoTimer();\n+      if (editor) {\n+        try {\n+          editor.off(\"change\", onChange);\n+        } catch {\n+          /* editor may already be torn down */\n+        }\n+        editor = null;\n+      }\n+      listeners.clear();\n+    }\n+  };\n+\n+  return {\n+    name: \"plugin-snapshots\",\n+    ...api,\n+    commands: [\n+      {\n+        id: SNAPSHOTS_CAPTURE_COMMAND,\n+        label: \"Snapshots: Take snapshot\",\n+        run: (target) => {\n+          // Command dispatch passes the editor explicitly, so a manual\n+          // capture works even when the host never called attachEditor.\n+          void captureFrom(target);\n+          return true;\n+        }\n+      }\n+    ]\n+  };\n+}\n+\n+/**\n+ * Bind a snapshots plugin to an editor instance. Equivalent to\n+ * `plugin.attachEditor(editor)` but reads more naturally at the call site:\n+ *\n+ * ```ts\n+ * const snapshots = createSnapshotsPlugin();\n+ * const editor = createEditor({ container, plugins: [snapshots] });\n+ * attachSnapshotsPlugin(snapshots, editor);\n+ * ```\n+ */\n+export function attachSnapshotsPlugin(plugin: SnapshotsPlugin, editor: EditorAPI): void {\n+  plugin.attachEditor(editor);\n+}"
+      },
+      {
+        "sha": "5b8898308b0952c8c3eecccdd9e6b303e33a65ce",
+        "filename": "packages/plugin-snapshots/src/store.ts",
+        "status": "added",
+        "additions": 80,
+        "deletions": 0,
+        "changes": 80,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Fstore.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Fsrc%2Fstore.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Fsrc%2Fstore.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,80 @@\n+/**\n+ * Storage contract for version snapshots. Persistence is host-injected —\n+ * the plugin never touches `localStorage` or the filesystem implicitly.\n+ * All operations are async so file / IPC / network backends are\n+ * representable (unlike the synchronous search-history storage, which\n+ * only fits `localStorage`-shaped hosts).\n+ */\n+\n+export interface SnapshotMeta {\n+  /** Unique within a document key: `<createdAt>-<hash>` plus a collision suffix. */\n+  id: string;\n+  /** Capture time in milliseconds since the Unix epoch. */\n+  createdAt: number;\n+  /** Optional trimmed user label (e.g. \"Before restore\"). */\n+  label?: string;\n+  /** Content length in UTF-16 code units (`string.length`). */\n+  size: number;\n+  /** FNV-1a hex digest of the content, used for consecutive de-duplication. */\n+  hash: string;\n+}\n+\n+export interface Snapshot extends SnapshotMeta {\n+  content: string;\n+}\n+\n+export interface SnapshotStore {\n+  /**\n+   * Metadata for every snapshot under `documentKey`. Order is not\n+   * significant — callers sort by `createdAt` (later entries win ties).\n+   */\n+  list(documentKey: string): Promise<SnapshotMeta[]>;\n+  /** Snapshot content, or `null` when the id does not exist. */\n+  load(documentKey: string, id: string): Promise<string | null>;\n+  save(documentKey: string, snapshot: Snapshot): Promise<void>;\n+  /** Removing a missing id MUST NOT throw. */\n+  remove(documentKey: string, id: string): Promise<void>;\n+  clear(documentKey: string): Promise<void>;\n+}\n+\n+/**\n+ * In-memory store — the plugin default, and the reference implementation\n+ * of the {@link SnapshotStore} contract for host backends.\n+ */\n+export function createMemorySnapshotStore(): SnapshotStore {\n+  const documents = new Map<string, Map<string, Snapshot>>();\n+\n+  const snapshotsOf = (documentKey: string): Map<string, Snapshot> => {\n+    let snapshots = documents.get(documentKey);\n+    if (!snapshots) {\n+      snapshots = new Map();\n+      documents.set(documentKey, snapshots);\n+    }\n+    return snapshots;\n+  };\n+\n+  return {\n+    list(documentKey) {\n+      const metas = [...snapshotsOf(documentKey).values()].map((snapshot) => {\n+        const { content: _content, ...meta } = snapshot;\n+        return meta;\n+      });\n+      return Promise.resolve(metas);\n+    },\n+    load(documentKey, id) {\n+      return Promise.resolve(snapshotsOf(documentKey).get(id)?.content ?? null);\n+    },\n+    save(documentKey, snapshot) {\n+      snapshotsOf(documentKey).set(snapshot.id, { ...snapshot });\n+      return Promise.resolve();\n+    },\n+    remove(documentKey, id) {\n+      snapshotsOf(documentKey).delete(id);\n+      return Promise.resolve();\n+    },\n+    clear(documentKey) {\n+      documents.delete(documentKey);\n+      return Promise.resolve();\n+    }\n+  };\n+}"
+      },
+      {
+        "sha": "9d43c64ffdbe6924bb49c806c59da32a11462acb",
+        "filename": "packages/plugin-snapshots/test/engine.test.ts",
+        "status": "added",
+        "additions": 306,
+        "deletions": 0,
+        "changes": 306,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Ftest%2Fengine.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Ftest%2Fengine.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Ftest%2Fengine.test.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,306 @@\n+import { describe, expect, it, vi } from \"vitest\";\n+\n+import {\n+  DEFAULT_MAX_SNAPSHOTS,\n+  hashContent,\n+  normalizeLabel,\n+  SnapshotEngine\n+} from \"../src/engine\";\n+import {\n+  createMemorySnapshotStore,\n+  type Snapshot,\n+  type SnapshotMeta,\n+  type SnapshotStore\n+} from \"../src/store\";\n+\n+function stubStore(overrides: Partial<SnapshotStore>): SnapshotStore {\n+  return { ...createMemorySnapshotStore(), ...overrides };\n+}\n+\n+describe(\"hashContent\", () => {\n+  it(\"is stable for identical input and differs across inputs\", () => {\n+    expect(hashContent(\"alpha\")).toBe(hashContent(\"alpha\"));\n+    expect(hashContent(\"alpha\")).not.toBe(hashContent(\"beta\"));\n+    expect(hashContent(\"\")).toMatch(/^[0-9a-f]{8}$/);\n+  });\n+});\n+\n+describe(\"normalizeLabel\", () => {\n+  it(\"trims whitespace and drops blank labels\", () => {\n+    expect(normalizeLabel(\"  before refactor  \")).toBe(\"before refactor\");\n+    expect(normalizeLabel(\"   \")).toBeUndefined();\n+    expect(normalizeLabel(undefined)).toBeUndefined();\n+  });\n+});\n+\n+describe(\"SnapshotEngine\", () => {\n+  it(\"captures content and lists it newest-first\", async () => {\n+    const engine = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    await engine.capture(\"doc\", \"alpha\");\n+    await engine.capture(\"doc\", \"alpha beta\");\n+\n+    const metas = await engine.list(\"doc\");\n+    expect(metas).toHaveLength(2);\n+    expect(metas[0]!.createdAt).toBeGreaterThanOrEqual(metas[1]!.createdAt);\n+    expect(await engine.load(\"doc\", metas[0]!.id)).toBe(\"alpha beta\");\n+  });\n+\n+  it(\"de-duplicates consecutive identical content\", async () => {\n+    const engine = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    const first = await engine.capture(\"doc\", \"alpha\");\n+    const second = await engine.capture(\"doc\", \"alpha\");\n+\n+    expect(first).not.toBeNull();\n+    expect(second).toBeNull();\n+    expect(await engine.list(\"doc\")).toHaveLength(1);\n+  });\n+\n+  it(\"captures again when content changed back to an older state\", async () => {\n+    let tick = 0;\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      now: () => ++tick\n+    });\n+    await engine.capture(\"doc\", \"alpha\");\n+    await engine.capture(\"doc\", \"beta\");\n+    // De-dup only compares against the newest snapshot: returning to\n+    // \"alpha\" must still be recorded so the history reflects the return.\n+    const meta = await engine.capture(\"doc\", \"alpha\");\n+\n+    expect(meta).not.toBeNull();\n+    const metas = await engine.list(\"doc\");\n+    expect(metas).toHaveLength(3);\n+    expect(metas[0]!.id).toBe(meta!.id);\n+  });\n+\n+  it(\"trims labels and drops blank ones\", async () => {\n+    const engine = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    const labelled = await engine.capture(\"doc\", \"alpha\", \"  draft  \");\n+    const blank = await engine.capture(\"doc\", \"beta\", \"   \");\n+\n+    expect(labelled!.label).toBe(\"draft\");\n+    expect(blank!.label).toBeUndefined();\n+  });\n+\n+  it(\"keeps snapshot lists isolated per document key\", async () => {\n+    const engine = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    await engine.capture(\"a.md\", \"alpha\");\n+    await engine.capture(\"b.md\", \"beta\");\n+    await engine.capture(\"b.md\", \"gamma\");\n+\n+    expect(await engine.list(\"a.md\")).toHaveLength(1);\n+    expect(await engine.list(\"b.md\")).toHaveLength(2);\n+    expect(await engine.load(\"a.md\", (await engine.list(\"b.md\"))[0]!.id)).toBeNull();\n+  });\n+\n+  it(\"drops the oldest snapshots beyond maxSnapshots\", async () => {\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      maxSnapshots: 2,\n+      now: (() => {\n+        let tick = 0;\n+        return () => ++tick;\n+      })()\n+    });\n+    await engine.capture(\"doc\", \"one\");\n+    await engine.capture(\"doc\", \"two\");\n+    await engine.capture(\"doc\", \"three\");\n+\n+    const metas = await engine.list(\"doc\");\n+    expect(metas).toHaveLength(2);\n+    expect(await engine.load(\"doc\", metas[0]!.id)).toBe(\"three\");\n+    expect(await engine.load(\"doc\", metas[1]!.id)).toBe(\"two\");\n+  });\n+\n+  it(\"prunes snapshots older than maxAgeMs on capture\", async () => {\n+    let tick = 1_000;\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      maxAgeMs: 500,\n+      now: () => tick\n+    });\n+    await engine.capture(\"doc\", \"old\");\n+    tick = 1_600; // 600ms later — beyond the 500ms expiry\n+    await engine.capture(\"doc\", \"new\");\n+\n+    const metas = await engine.list(\"doc\");\n+    expect(metas).toHaveLength(1);\n+    expect(await engine.load(\"doc\", metas[0]!.id)).toBe(\"new\");\n+  });\n+\n+  it(\"prune() sweeps expired snapshots without a new capture\", async () => {\n+    let tick = 1_000;\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      maxAgeMs: 500,\n+      now: () => tick\n+    });\n+    await engine.capture(\"doc\", \"old\");\n+    tick = 1_600;\n+\n+    await engine.prune(\"doc\");\n+    expect(await engine.list(\"doc\")).toHaveLength(0);\n+  });\n+\n+  it(\"age and count retention compose\", async () => {\n+    let tick = 1_000;\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      maxSnapshots: 2,\n+      maxAgeMs: 500,\n+      now: () => tick\n+    });\n+    await engine.capture(\"doc\", \"one\");\n+    tick = 1_100;\n+    await engine.capture(\"doc\", \"two\");\n+    tick = 1_200;\n+    await engine.capture(\"doc\", \"three\");\n+    tick = 1_800; // all three are now expired\n+\n+    await engine.prune(\"doc\");\n+    expect(await engine.list(\"doc\")).toHaveLength(0);\n+  });\n+\n+  it(\"snapshots exactly at the age boundary survive\", async () => {\n+    let tick = 1_000;\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      maxAgeMs: 500,\n+      now: () => tick\n+    });\n+    await engine.capture(\"doc\", \"edge\");\n+    tick = 1_500; // exactly 500ms old — not older than maxAgeMs\n+\n+    await engine.prune(\"doc\");\n+    expect(await engine.list(\"doc\")).toHaveLength(1);\n+  });\n+\n+  it(\"keeps everything when maxAgeMs is not configured\", async () => {\n+    let tick = 1_000;\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      now: () => tick\n+    });\n+    await engine.capture(\"doc\", \"one\");\n+    tick = 999_999_999;\n+    await engine.prune(\"doc\");\n+    expect(await engine.list(\"doc\")).toHaveLength(1);\n+  });\n+\n+  it(\"defaults maxSnapshots to 50\", async () => {\n+    const store = createMemorySnapshotStore();\n+    const engine = new SnapshotEngine({ store });\n+    for (let i = 0; i < DEFAULT_MAX_SNAPSHOTS + 5; i++) {\n+      await engine.capture(\"doc\", `content ${i}`);\n+    }\n+    expect(await engine.list(\"doc\")).toHaveLength(DEFAULT_MAX_SNAPSHOTS);\n+  });\n+\n+  it(\"returns null instead of throwing when the store rejects save\", async () => {\n+    const store = stubStore({\n+      save: () => Promise.reject(new Error(\"disk full\"))\n+    });\n+    const engine = new SnapshotEngine({ store });\n+\n+    await expect(engine.capture(\"doc\", \"alpha\")).resolves.toBeNull();\n+\n+    // A later capture against a healthy store still succeeds.\n+    const healthy = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    await expect(healthy.capture(\"doc\", \"alpha\")).resolves.not.toBeNull();\n+  });\n+\n+  it(\"resolves an empty list when the store rejects list\", async () => {\n+    const store = stubStore({\n+      list: () => Promise.reject(new Error(\"unreadable\"))\n+    });\n+    const engine = new SnapshotEngine({ store });\n+    await expect(engine.list(\"doc\")).resolves.toEqual([]);\n+  });\n+\n+  it(\"treats load failures and missing ids as null\", async () => {\n+    const store = stubStore({\n+      load: () => Promise.reject(new Error(\"gone\"))\n+    });\n+    const engine = new SnapshotEngine({ store });\n+    await expect(engine.load(\"doc\", \"missing\")).resolves.toBeNull();\n+\n+    const healthy = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    await expect(healthy.load(\"doc\", \"missing\")).resolves.toBeNull();\n+  });\n+\n+  it(\"serializes concurrent captures without losing entries\", async () => {\n+    const engine = new SnapshotEngine({ store: createMemorySnapshotStore() });\n+    await Promise.all([\n+      engine.capture(\"doc\", \"one\"),\n+      engine.capture(\"doc\", \"two\"),\n+      engine.capture(\"doc\", \"three\")\n+    ]);\n+    expect(await engine.list(\"doc\")).toHaveLength(3);\n+  });\n+\n+  it(\"generates unique ids for same-millisecond captures\", async () => {\n+    const engine = new SnapshotEngine({\n+      store: createMemorySnapshotStore(),\n+      now: () => 42\n+    });\n+    const a = await engine.capture(\"doc\", \"one\");\n+    const b = await engine.capture(\"doc\", \"two\");\n+    expect(a!.id).not.toBe(b!.id);\n+  });\n+});\n+\n+describe(\"createMemorySnapshotStore\", () => {\n+  it(\"round-trips snapshots across engine instances (persistence contract)\", async () => {\n+    const store = createMemorySnapshotStore();\n+    const first = new SnapshotEngine({ store });\n+    const meta = await first.capture(\"doc\", \"persisted\");\n+\n+    const second = new SnapshotEngine({ store });\n+    expect(await second.list(\"doc\")).toHaveLength(1);\n+    expect(await second.load(\"doc\", meta!.id)).toBe(\"persisted\");\n+  });\n+\n+  it(\"does not mutate caller state when snapshots change after save\", async () => {\n+    const store = createMemorySnapshotStore();\n+    const snapshot: Snapshot = {\n+      id: \"1-abc\",\n+      createdAt: 1,\n+      size: 3,\n+      hash: \"abc\",\n+      content: \"one\"\n+    };\n+    await store.save(\"doc\", snapshot);\n+    snapshot.content = \"tampered\";\n+    await expect(store.load(\"doc\", \"1-abc\")).resolves.toBe(\"one\");\n+  });\n+\n+  it(\"remove of a missing id does not throw\", async () => {\n+    const store = createMemorySnapshotStore();\n+    await expect(store.remove(\"doc\", \"missing\")).resolves.toBeUndefined();\n+  });\n+\n+  it(\"clear drops only the target document key\", async () => {\n+    const store = createMemorySnapshotStore();\n+    const engine = new SnapshotEngine({ store });\n+    await engine.capture(\"a\", \"one\");\n+    await engine.capture(\"b\", \"two\");\n+    await store.clear(\"a\");\n+    expect(await engine.list(\"a\")).toEqual([]);\n+    expect(await engine.list(\"b\")).toHaveLength(1);\n+  });\n+});\n+\n+describe(\"SnapshotStore failure hooks\", () => {\n+  it(\"notifies spies on remove and clear\", async () => {\n+    const remove = vi.fn().mockResolvedValue(undefined);\n+    const clear = vi.fn().mockResolvedValue(undefined);\n+    const store = stubStore({ remove, clear });\n+    const engine = new SnapshotEngine({ store });\n+    const meta = (await engine.capture(\"doc\", \"one\")) as SnapshotMeta;\n+\n+    await engine.remove(\"doc\", meta.id);\n+    await engine.clear(\"doc\");\n+    expect(remove).toHaveBeenCalledWith(\"doc\", meta.id);\n+    expect(clear).toHaveBeenCalledWith(\"doc\");\n+  });\n+});"
+      },
+      {
+        "sha": "c741bf70ba5a20fdadb97695832a87ab2d831ee3",
+        "filename": "packages/plugin-snapshots/test/plugin.test.ts",
+        "status": "added",
+        "additions": 279,
+        "deletions": 0,
+        "changes": 279,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Ftest%2Fplugin.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Ftest%2Fplugin.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Ftest%2Fplugin.test.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,279 @@\n+import { afterEach, beforeEach, describe, expect, it, vi } from \"vitest\";\n+\n+import { createEditor, type EditorAPI } from \"@floatboat/nexus-core\";\n+import { createHistoryPlugin } from \"@floatboat/nexus-plugin-history\";\n+\n+import {\n+  attachSnapshotsPlugin,\n+  createSnapshotsPlugin,\n+  SNAPSHOTS_CAPTURE_COMMAND,\n+  type SnapshotsPlugin\n+} from \"../src/plugin\";\n+import { createMemorySnapshotStore } from \"../src/store\";\n+\n+const flushMicrotasks = async (): Promise<void> => {\n+  await Promise.resolve();\n+  await Promise.resolve();\n+};\n+\n+describe(\"createSnapshotsPlugin\", () => {\n+  let container: HTMLDivElement;\n+  let editor: EditorAPI;\n+\n+  beforeEach(() => {\n+    container = document.createElement(\"div\");\n+    document.body.appendChild(container);\n+  });\n+\n+  afterEach(() => {\n+    editor?.destroy();\n+    container.remove();\n+  });\n+\n+  function setup(\n+    pluginOptions: Parameters<typeof createSnapshotsPlugin>[0] = {},\n+    initialValue = \"alpha\"\n+  ): SnapshotsPlugin {\n+    const snapshots = createSnapshotsPlugin(pluginOptions);\n+    editor = createEditor({ container, initialValue, plugins: [snapshots] });\n+    attachSnapshotsPlugin(snapshots, editor);\n+    return snapshots;\n+  }\n+\n+  it(\"captures the current document and lists it\", async () => {\n+    const snapshots = setup();\n+    const meta = await snapshots.capture(\"first draft\");\n+\n+    expect(meta).not.toBeNull();\n+    expect(meta!.label).toBe(\"first draft\");\n+    const metas = await snapshots.list();\n+    expect(metas.map((m) => m.id)).toEqual([meta!.id]);\n+  });\n+\n+  it(\"captures via the editor command\", async () => {\n+    const snapshots = setup();\n+    expect(editor.runCommand(SNAPSHOTS_CAPTURE_COMMAND)).toBe(true);\n+    await flushMicrotasks();\n+\n+    expect(await snapshots.list()).toHaveLength(1);\n+  });\n+\n+  it(\"registers the capture command with a readable label\", () => {\n+    setup();\n+    const command = editor.getCommands().find((c) => c.id === SNAPSHOTS_CAPTURE_COMMAND);\n+    expect(command?.label).toBe(\"Snapshots: Take snapshot\");\n+  });\n+\n+  it(\"skips capture when content is unchanged\", async () => {\n+    const snapshots = setup();\n+    await snapshots.capture();\n+    expect(await snapshots.capture()).toBeNull();\n+    expect(await snapshots.list()).toHaveLength(1);\n+  });\n+\n+  it(\"auto-captures once after the idle interval\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = setup({ autoCapture: { intervalMs: 1000 } });\n+      editor.setDocument(\"alpha edited\");\n+      await vi.advanceTimersByTimeAsync(500);\n+      expect(await snapshots.list()).toHaveLength(0);\n+\n+      await vi.advanceTimersByTimeAsync(600);\n+      expect(await snapshots.list()).toHaveLength(1);\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"resets the idle timer while the user keeps typing\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = setup({ autoCapture: { intervalMs: 1000 } });\n+      editor.setDocument(\"one\");\n+      await vi.advanceTimersByTimeAsync(800);\n+      editor.setDocument(\"one two\");\n+      await vi.advanceTimersByTimeAsync(800);\n+      expect(await snapshots.list()).toHaveLength(0);\n+\n+      await vi.advanceTimersByTimeAsync(300);\n+      expect(await snapshots.list()).toHaveLength(1);\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"does not auto-capture when disabled\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = setup();\n+      editor.setDocument(\"changed\");\n+      await vi.runAllTimersAsync();\n+      expect(await snapshots.list()).toHaveLength(0);\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"restores a snapshot and captures the pre-restore buffer as a safety snapshot\", async () => {\n+    const snapshots = setup();\n+    const original = await snapshots.capture(\"original\");\n+    editor.setDocument(\"beta\");\n+\n+    expect(await snapshots.restore(original!.id)).toBe(true);\n+    expect(editor.getDocument()).toBe(\"alpha\");\n+\n+    const metas = await snapshots.list();\n+    expect(metas).toHaveLength(2);\n+    expect(metas[0]!.label).toBe(\"Before restore\");\n+\n+    // Restoring the safety snapshot brings back the pre-restore buffer.\n+    expect(await snapshots.restore(metas[0]!.id)).toBe(true);\n+    expect(editor.getDocument()).toBe(\"beta\");\n+  });\n+\n+  it(\"restore is undoable as a single undo step\", async () => {\n+    // CM history merges edits within its new-group delay; fake timers let\n+    // Date.now advance so the restore lands in its own undo group.\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = createSnapshotsPlugin();\n+      editor = createEditor({\n+        container,\n+        initialValue: \"alpha\",\n+        plugins: [createHistoryPlugin(), snapshots]\n+      });\n+      attachSnapshotsPlugin(snapshots, editor);\n+\n+      const meta = await snapshots.capture();\n+      editor.setDocument(\"beta\");\n+      await vi.advanceTimersByTimeAsync(1000);\n+      await snapshots.restore(meta!.id);\n+      expect(editor.getDocument()).toBe(\"alpha\");\n+\n+      expect(editor.undo()).toBe(true);\n+      expect(editor.getDocument()).toBe(\"beta\");\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"restore of a missing id is a no-op\", async () => {\n+    const snapshots = setup();\n+    expect(await snapshots.restore(\"missing-id\")).toBe(false);\n+    expect(editor.getDocument()).toBe(\"alpha\");\n+    expect(await snapshots.list()).toHaveLength(0);\n+  });\n+\n+  it(\"restore creates no safety snapshot when content already matches\", async () => {\n+    const snapshots = setup();\n+    const meta = await snapshots.capture();\n+    expect(await snapshots.restore(meta!.id)).toBe(true);\n+    expect(await snapshots.list()).toHaveLength(1);\n+  });\n+\n+  it(\"a restore does not schedule an auto-capture duplicate\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = setup({ autoCapture: { intervalMs: 1000 } });\n+      const meta = await snapshots.capture(\"original\");\n+      editor.setDocument(\"beta\");\n+      await vi.advanceTimersByTimeAsync(1500); // idle auto-capture of \"beta\"\n+      expect(await snapshots.list()).toHaveLength(2);\n+\n+      await snapshots.restore(meta!.id);\n+      await vi.runAllTimersAsync();\n+      // Still 2: the safety capture de-dupes against the auto-captured\n+      // \"beta\" (current content is already preserved), and the restore's\n+      // own setDocument must not trigger another auto-capture of \"alpha\".\n+      expect(await snapshots.list()).toHaveLength(2);\n+      expect(editor.getDocument()).toBe(\"alpha\");\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"scopes snapshots to the host-supplied document key\", async () => {\n+    let active = \"a.md\";\n+    const store = createMemorySnapshotStore();\n+    const snapshots = setup({ store, getDocumentKey: () => active });\n+    await snapshots.capture(\"on a\");\n+\n+    active = \"b.md\";\n+    expect(await snapshots.list()).toHaveLength(0);\n+    await snapshots.capture(\"on b\");\n+\n+    active = \"a.md\";\n+    const metas = await snapshots.list();\n+    expect(metas).toHaveLength(1);\n+    expect(metas[0]!.label).toBe(\"on a\");\n+  });\n+\n+  it(\"remove and clear update subscribers\", async () => {\n+    const snapshots = setup();\n+    const seen: number[] = [];\n+    snapshots.subscribe((metas) => seen.push(metas.length));\n+    await flushMicrotasks();\n+\n+    const meta = await snapshots.capture();\n+    expect(await snapshots.remove(meta!.id)).toBe(true);\n+    await snapshots.capture();\n+    editor.setDocument(\"alpha two\");\n+    await snapshots.capture(\"two\");\n+    expect(await snapshots.clear()).toBe(true);\n+\n+    // initial(0) → capture(1) → remove(0) → capture(1) → capture(2) → clear(0)\n+    expect(seen).toEqual([0, 1, 0, 1, 2, 0]);\n+  });\n+\n+  it(\"unsubscribe stops further emissions\", async () => {\n+    const snapshots = setup();\n+    const listener = vi.fn();\n+    const unsubscribe = snapshots.subscribe(listener);\n+    await flushMicrotasks();\n+    listener.mockClear();\n+\n+    unsubscribe();\n+    await snapshots.capture();\n+    expect(listener).not.toHaveBeenCalled();\n+  });\n+\n+  it(\"destroy detaches listeners and stops auto-capture\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = setup({ autoCapture: { intervalMs: 1000 } });\n+      snapshots.destroy();\n+      editor.setDocument(\"changed\");\n+      await vi.runAllTimersAsync();\n+      expect(await snapshots.list()).toHaveLength(0);\n+      expect(await snapshots.capture()).toBeNull();\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"prune() sweeps snapshots older than maxAgeMs\", async () => {\n+    vi.useFakeTimers();\n+    try {\n+      const snapshots = setup({ maxAgeMs: 60_000 });\n+      await snapshots.capture(\"old\");\n+      expect(await snapshots.list()).toHaveLength(1);\n+\n+      await vi.advanceTimersByTimeAsync(61_000);\n+      await snapshots.prune();\n+      expect(await snapshots.list()).toHaveLength(0);\n+    } finally {\n+      vi.useRealTimers();\n+    }\n+  });\n+\n+  it(\"keeps working when the store throws\", async () => {\n+    const store = createMemorySnapshotStore();\n+    vi.spyOn(store, \"save\").mockRejectedValueOnce(new Error(\"disk full\"));\n+    const snapshots = setup({ store });\n+\n+    expect(await snapshots.capture()).toBeNull();\n+    expect(await snapshots.capture(\"retry\")).not.toBeNull();\n+    expect(editor.getDocument()).toBe(\"alpha\");\n+  });\n+});"
+      },
+      {
+        "sha": "6ece4d3313edb1b64893526a52f9545f55ec3d15",
+        "filename": "packages/plugin-snapshots/tsconfig.json",
+        "status": "added",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Ftsconfig.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/packages%2Fplugin-snapshots%2Ftsconfig.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-snapshots%2Ftsconfig.json?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -0,0 +1,4 @@\n+{\n+  \"extends\": \"../../tsconfig.base.json\",\n+  \"include\": [\"src/**/*.ts\", \"test/**/*.ts\"]\n+}"
+      },
+      {
+        "sha": "2c018d2bba4df8ee2aa1e64a37335731ad272e1b",
+        "filename": "pnpm-lock.yaml",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/pnpm-lock.yaml",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/pnpm-lock.yaml",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/pnpm-lock.yaml?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -62,6 +62,9 @@ importers:\n       '@floatboat/nexus-plugin-slash':\n         specifier: workspace:*\n         version: link:../../packages/plugin-slash\n+      '@floatboat/nexus-plugin-snapshots':\n+        specifier: workspace:*\n+        version: link:../../packages/plugin-snapshots\n       '@floatboat/nexus-plugin-toolbar':\n         specifier: workspace:*\n         version: link:../../packages/plugin-toolbar\n@@ -181,6 +184,12 @@ importers:\n         specifier: workspace:*\n         version: link:../core\n \n+  packages/plugin-snapshots:\n+    dependencies:\n+      '@floatboat/nexus-core':\n+        specifier: workspace:*\n+        version: link:../core\n+\n   packages/plugin-toolbar:\n     dependencies:\n       '@codemirror/state':"
+      },
+      {
+        "sha": "9379d978f570709202d6de20a4ae13efe3a1242d",
+        "filename": "tsconfig.base.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/tsconfig.base.json",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/tsconfig.base.json",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/tsconfig.base.json?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -16,7 +16,8 @@\n       \"@floatboat/nexus-plugin-toolbar\": [\"packages/plugin-toolbar/src/index.ts\"],\n       \"@floatboat/nexus-plugin-math\": [\"packages/plugin-math/src/index.ts\"],\n       \"@floatboat/nexus-plugin-vim\": [\"packages/plugin-vim/src/index.ts\"],\n-      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"]\n+      \"@floatboat/nexus-plugin-wordcount\": [\"packages/plugin-wordcount/src/index.ts\"],\n+      \"@floatboat/nexus-plugin-snapshots\": [\"packages/plugin-snapshots/src/index.ts\"]\n     },\n     \"strict\": true,\n     \"declaration\": true,"
+      },
+      {
+        "sha": "a86c20865f12f176d0fe755f0d10f06d1afd2733",
+        "filename": "vitest.config.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/caf2615b49b167370565a6fb829efccb477af2d7/vitest.config.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/caf2615b49b167370565a6fb829efccb477af2d7/vitest.config.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/vitest.config.ts?ref=caf2615b49b167370565a6fb829efccb477af2d7",
+        "patch": "@@ -14,7 +14,8 @@ export default defineConfig({\n       \"@floatboat/nexus-plugin-toolbar\": path.resolve(__dirname, \"packages/plugin-toolbar/src/index.ts\"),\n       \"@floatboat/nexus-plugin-math\": path.resolve(__dirname, \"packages/plugin-math/src/index.ts\"),\n       \"@floatboat/nexus-plugin-vim\": path.resolve(__dirname, \"packages/plugin-vim/src/index.ts\"),\n-      \"@floatboat/nexus-plugin-wordcount\": path.resolve(__dirname, \"packages/plugin-wordcount/src/index.ts\")\n+      \"@floatboat/nexus-plugin-wordcount\": path.resolve(__dirname, \"packages/plugin-wordcount/src/index.ts\"),\n+      \"@floatboat/nexus-plugin-snapshots\": path.resolve(__dirname, \"packages/plugin-snapshots/src/index.ts\")\n     }\n   },\n   test: {"
+      }
+    ]
+  },
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=174",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

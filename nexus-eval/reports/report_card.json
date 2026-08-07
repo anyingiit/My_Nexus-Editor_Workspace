@@ -1,0 +1,1413 @@
+{
+  "provenance": {
+    "generated_at_utc": "2026-08-07T05:15:38Z",
+    "round": "round12-data-audit-v7",
+    "tag": "r12_final",
+    "judge_model": "gpt-5.6-luna",
+    "judge_provider": "opencode-go",
+    "judge_reasoning": "max",
+    "judge_fallback_enabled": false,
+    "agents_combined_sha256": "b77be1ffa2c7de1413d1b4ea4120790e9e7bf2dd7dd87a27eb13db33dbff98e2",
+    "agents_files": {
+      "00-constraints.md": "426c1f20bac9e4cc1a2df740916bd457b6db5418ad3da53a3834dfef51269dd6",
+      "01-code-style.md": "69094e8b0b0110f271f32c56f7da897c9cc4970ce9e484cd983b6cb64da8d3ed",
+      "02-commit-completeness.md": "ece5f4e01fe0863bd23a361921e5977536046debd9d15af5f2ee6670b700a193",
+      "03-scope.md": "25b0c510525bfdd89349856045fe3554a9a1c5c4756e3564e547b60bba1058c1",
+      "04-workflow.md": "fc4c55923607d40e7b6398fb7d45496e0aed803547fe4a49d3e5e1914654e1cd",
+      "09-supplements.md": "10d8aa68568bd47b186d7837ae13520f0d3a0dcb7c121c1b589cda919d174053",
+      "AGENTS.md": "cb441533ae48704f86ababaa05fc93fccbf4fa5ca3384009fd93dd13080e4cde"
+    },
+    "split_sha256": "4ea70cd4b9d9ee435b7d9855ceba12f9aa1bb64f023f7dacd716854fea79fcd5",
+    "split_policy": "time-ascending by created_at (authoritative _pr_list.json); 60/20/20; universe = A (finalized PRs with an evidence-gated final actor, Round5 rule) UNION B (open PRs with an admin decision formal review where the REVIEW ACTOR's own author_association is OWNER/MEMBER/COLLABORATOR OR the actor carries direct-push weak evidence; other commenters' associations never substitute for the review actor); open PRs without an admin decision review excluded; unrecoverable first-review snapshots excluded (1.2)",
+    "excluded_unrecoverable_first_review": [
+      {
+        "number": 23,
+        "created_at": "2026-05-15T10:09:05Z",
+        "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+      },
+      {
+        "number": 65,
+        "created_at": "2026-06-17T07:39:20Z",
+        "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+      },
+      {
+        "number": 83,
+        "created_at": "2026-06-29T14:06:42Z",
+        "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+      },
+      {
+        "number": 97,
+        "created_at": "2026-07-02T07:16:23Z",
+        "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+      },
+      {
+        "number": 137,
+        "created_at": "2026-07-07T04:29:19Z",
+        "reason": "first-review snapshot not recoverable to a faithful 1.2 state"
+      }
+    ],
+    "excluded_self_finalized": [
+      {
+        "number": 6,
+        "created_at": "2026-05-13T07:35:13Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 7,
+        "created_at": "2026-05-13T08:52:27Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 25,
+        "created_at": "2026-05-18T13:13:36Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 35,
+        "created_at": "2026-05-28T06:08:09Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 37,
+        "created_at": "2026-05-29T06:56:28Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 39,
+        "created_at": "2026-06-01T15:55:11Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 41,
+        "created_at": "2026-06-02T06:57:51Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 42,
+        "created_at": "2026-06-02T07:15:57Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 43,
+        "created_at": "2026-06-02T08:32:09Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 44,
+        "created_at": "2026-06-02T10:23:31Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 45,
+        "created_at": "2026-06-02T10:25:25Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 46,
+        "created_at": "2026-06-02T12:12:09Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 54,
+        "created_at": "2026-06-10T06:22:03Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 56,
+        "created_at": "2026-06-10T08:52:08Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 93,
+        "created_at": "2026-07-02T04:54:44Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 94,
+        "created_at": "2026-07-02T04:55:36Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 113,
+        "created_at": "2026-07-03T06:24:55Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 114,
+        "created_at": "2026-07-03T06:42:14Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 115,
+        "created_at": "2026-07-03T06:45:36Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 138,
+        "created_at": "2026-07-07T10:07:56Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 145,
+        "created_at": "2026-07-10T03:52:04Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 146,
+        "created_at": "2026-07-10T04:16:49Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 151,
+        "created_at": "2026-07-13T11:29:26Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 152,
+        "created_at": "2026-07-13T12:59:03Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 155,
+        "created_at": "2026-07-14T08:56:53Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 157,
+        "created_at": "2026-07-14T14:19:18Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 160,
+        "created_at": "2026-07-15T07:45:15Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 163,
+        "created_at": "2026-07-17T03:34:19Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 182,
+        "created_at": "2026-07-24T14:49:18Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 183,
+        "created_at": "2026-07-24T15:15:42Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 196,
+        "created_at": "2026-07-28T13:44:57Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 202,
+        "created_at": "2026-07-31T14:18:19Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      },
+      {
+        "number": 212,
+        "created_at": "2026-08-04T10:23:56Z",
+        "state": "closed",
+        "reason": "author self-finalized without direct-push weak maintainer evidence (1.1: a plain author's self-close/merge is not evidence of an admin handling it)"
+      }
+    ],
+    "open_included": [
+      15,
+      84,
+      87,
+      112,
+      116,
+      117,
+      119
+    ],
+    "golden_distribution": {
+      "reject": 68,
+      "approve": 11
+    },
+    "test_run_note": "test judged ONCE after AGENTS freeze. Round 12 / v7 data-audit universe = finalized PRs with an evidence-gated final actor UNION open PRs with an admin DECISION formal review whose REVIEW ACTOR's own author_association is OWNER/MEMBER/COLLABORATOR OR carries direct-push weak evidence (any other commenter's association never substitutes for the review actor; GT = earliest admin decision-review state, open PRs without such a review are outside the literal set); author-self-finalized PRs are INCLUDED only when the author is an evidenced maintainer and EXCLUDED otherwise; unrecoverable first-review snapshots excluded (1.2); every review's author_association/state/submitted_at/commit_id saved in dataset/evidence/reviews_full_v7.json"
+  },
+  "variants": [
+    "empty",
+    "baseline",
+    "ours"
+  ],
+  "results": {
+    "dev": {
+      "empty": {
+        "n": 15,
+        "decision_accuracy": 0.7333,
+        "ci_match": 1.0,
+        "per_pr_pass_rate": 0.0667,
+        "reject_class_recall": 0.7857,
+        "n_rejects": 14,
+        "n_approves": 1,
+        "coverage_mean": 0.3179,
+        "precision_mean": 0.3733,
+        "coverage_p50": 0.167,
+        "rows": [
+          {
+            "pr": 71,
+            "decision": "approve",
+            "golden": "reject",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 72,
+            "decision": "approve",
+            "golden": "reject",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 73,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 75,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 76,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.188,
+            "precision": 0.667
+          },
+          {
+            "pr": 81,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 84,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.714,
+            "precision": 0.6
+          },
+          {
+            "pr": 87,
+            "decision": "approve",
+            "golden": "reject",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 88,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 91,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 92,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 96,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.4,
+            "precision": 0.333
+          },
+          {
+            "pr": 99,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.2,
+            "precision": 0.5
+          },
+          {
+            "pr": 100,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.167,
+            "precision": 1.0
+          },
+          {
+            "pr": 102,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.1,
+            "precision": 0.5
+          }
+        ]
+      },
+      "baseline": {
+        "n": 15,
+        "decision_accuracy": 0.8667,
+        "ci_match": 1.0,
+        "per_pr_pass_rate": 0.2,
+        "reject_class_recall": 0.9286,
+        "n_rejects": 14,
+        "n_approves": 1,
+        "coverage_mean": 0.361,
+        "precision_mean": 0.2145,
+        "coverage_p50": 0.25,
+        "rows": [
+          {
+            "pr": 71,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 72,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 73,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.333
+          },
+          {
+            "pr": 75,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.25,
+            "precision": 0.25
+          },
+          {
+            "pr": 76,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.375,
+            "precision": 1.0
+          },
+          {
+            "pr": 81,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 84,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.857,
+            "precision": 0.8
+          },
+          {
+            "pr": 87,
+            "decision": "approve",
+            "golden": "reject",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 88,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 91,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 92,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.2,
+            "precision": 0.167
+          },
+          {
+            "pr": 96,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 99,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 100,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 102,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.4,
+            "precision": 0.667
+          }
+        ]
+      },
+      "ours": {
+        "n": 15,
+        "decision_accuracy": 0.9333,
+        "ci_match": 1.0,
+        "per_pr_pass_rate": 0.3333,
+        "reject_class_recall": 0.9286,
+        "n_rejects": 14,
+        "n_approves": 1,
+        "coverage_mean": 0.3953,
+        "precision_mean": 0.3389,
+        "coverage_p50": 0.333,
+        "rows": [
+          {
+            "pr": 71,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 72,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 73,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.333
+          },
+          {
+            "pr": 75,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.25,
+            "precision": 0.25
+          },
+          {
+            "pr": 76,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.375,
+            "precision": 1.0
+          },
+          {
+            "pr": 81,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 84,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.571,
+            "precision": 1.0
+          },
+          {
+            "pr": 87,
+            "decision": "approve",
+            "golden": "reject",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 88,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 91,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.8,
+            "precision": 1.0
+          },
+          {
+            "pr": 92,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 96,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 99,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.2,
+            "precision": 0.5
+          },
+          {
+            "pr": 100,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 102,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.4,
+            "precision": 1.0
+          }
+        ]
+      }
+    },
+    "test": {
+      "empty": {
+        "n": 17,
+        "decision_accuracy": 0.8235,
+        "ci_match": 1.0,
+        "per_pr_pass_rate": 0.2353,
+        "reject_class_recall": 1.0,
+        "n_rejects": 12,
+        "n_approves": 5,
+        "coverage_mean": 0.3663,
+        "precision_mean": 0.4559,
+        "coverage_p50": 0.333,
+        "rows": [
+          {
+            "pr": 103,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.2,
+            "precision": 0.333
+          },
+          {
+            "pr": 104,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.667
+          },
+          {
+            "pr": 107,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.25,
+            "precision": 0.25
+          },
+          {
+            "pr": 108,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 109,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.667,
+            "precision": 1.0
+          },
+          {
+            "pr": 110,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 112,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 116,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 117,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 118,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 119,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 120,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 1.0
+          },
+          {
+            "pr": 121,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.5
+          },
+          {
+            "pr": 135,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 144,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 153,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.667,
+            "precision": 1.0
+          },
+          {
+            "pr": 154,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.444,
+            "precision": 1.0
+          }
+        ]
+      },
+      "baseline": {
+        "n": 17,
+        "decision_accuracy": 0.8235,
+        "ci_match": 1.0,
+        "per_pr_pass_rate": 0.4118,
+        "reject_class_recall": 1.0,
+        "n_rejects": 12,
+        "n_approves": 5,
+        "coverage_mean": 0.5011,
+        "precision_mean": 0.4381,
+        "coverage_p50": 0.375,
+        "rows": [
+          {
+            "pr": 103,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 104,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.333
+          },
+          {
+            "pr": 107,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.4
+          },
+          {
+            "pr": 108,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.167
+          },
+          {
+            "pr": 109,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.667,
+            "precision": 0.5
+          },
+          {
+            "pr": 110,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.5,
+            "precision": 0.25
+          },
+          {
+            "pr": 112,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 116,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 117,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 118,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.375,
+            "precision": 1.0
+          },
+          {
+            "pr": 119,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 120,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.167,
+            "precision": 0.5
+          },
+          {
+            "pr": 121,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.333
+          },
+          {
+            "pr": 135,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 144,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.143,
+            "precision": 0.25
+          },
+          {
+            "pr": 153,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.667,
+            "precision": 0.714
+          },
+          {
+            "pr": 154,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 1.0
+          }
+        ]
+      },
+      "ours": {
+        "n": 17,
+        "decision_accuracy": 0.7647,
+        "ci_match": 1.0,
+        "per_pr_pass_rate": 0.2353,
+        "reject_class_recall": 0.9167,
+        "n_rejects": 12,
+        "n_approves": 5,
+        "coverage_mean": 0.3589,
+        "precision_mean": 0.2902,
+        "coverage_p50": 0.25,
+        "rows": [
+          {
+            "pr": 103,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 104,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.167,
+            "precision": 0.5
+          },
+          {
+            "pr": 107,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.25,
+            "precision": 0.333
+          },
+          {
+            "pr": 108,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 109,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 1.0
+          },
+          {
+            "pr": 110,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 112,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 116,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 117,
+            "decision": "reject",
+            "golden": "approve",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 118,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.375,
+            "precision": 0.667
+          },
+          {
+            "pr": 119,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 120,
+            "decision": "approve",
+            "golden": "reject",
+            "decision_ok": false,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 0.5
+          },
+          {
+            "pr": 121,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 135,
+            "decision": "approve",
+            "golden": "approve",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 1.0,
+            "precision": 0.0
+          },
+          {
+            "pr": 144,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.143,
+            "precision": 0.333
+          },
+          {
+            "pr": 153,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": true,
+            "coverage": 0.5,
+            "precision": 0.6
+          },
+          {
+            "pr": 154,
+            "decision": "reject",
+            "golden": "reject",
+            "decision_ok": true,
+            "ci_ok": true,
+            "pass": false,
+            "coverage": 0.333,
+            "precision": 1.0
+          }
+        ]
+      }
+    }
+  },
+  "consistency": {
+    "C": 1.0,
+    "n_pr": 5,
+    "n_runs": 5,
+    "variant": "ours",
+    "split": "dev",
+    "tag": "r12_consistency",
+    "judge_model": "gpt-5.6-luna",
+    "judge_provider": "opencode-go",
+    "judge_reasoning": "max",
+    "fallback_enabled": false,
+    "agents_sha": "b77be1ffa2c7de1413d1b4ea4120790e9e7bf2dd7dd87a27eb13db33dbff98e2",
+    "harness_sha": "d14eb4fe174b1e634776fbf90f20b6821b88b71fcfd9842ff594053c807d4951",
+    "decisions": {
+      "71": [
+        "reject",
+        "reject",
+        "reject",
+        "reject",
+        "reject"
+      ],
+      "72": [
+        "reject",
+        "reject",
+        "reject",
+        "reject",
+        "reject"
+      ],
+      "73": [
+        "reject",
+        "reject",
+        "reject",
+        "reject",
+        "reject"
+      ],
+      "75": [
+        "reject",
+        "reject",
+        "reject",
+        "reject",
+        "reject"
+      ],
+      "76": [
+        "reject",
+        "reject",
+        "reject",
+        "reject",
+        "reject"
+      ]
+    }
+  },
+  "test_accuracy": {
+    "empty": 0.8235,
+    "baseline": 0.8235,
+    "ours": 0.7647
+  },
+  "dev_accuracy": {
+    "empty": 0.7333,
+    "baseline": 0.8667,
+    "ours": 0.9333
+  },
+  "test_reject_recall": {
+    "empty": 1.0,
+    "baseline": 1.0,
+    "ours": 0.9167
+  },
+  "test_per_pr_pass": {
+    "empty": 0.2353,
+    "baseline": 0.4118,
+    "ours": 0.2353
+  },
+  "test_ci_match": {
+    "empty": 1.0,
+    "baseline": 1.0,
+    "ours": 1.0
+  },
+  "test_coverage_mean": {
+    "empty": 0.3663,
+    "baseline": 0.5011,
+    "ours": 0.3589
+  },
+  "test_precision_mean": {
+    "empty": 0.4559,
+    "baseline": 0.4381,
+    "ours": 0.2902
+  },
+  "delta_ours_vs_empty_acc": -0.0588,
+  "delta_ours_vs_baseline_acc": -0.0588,
+  "delta_ours_vs_baseline_dev_acc": 0.0666,
+  "delta_ours_vs_empty_pass": 0.0,
+  "delta_ours_vs_baseline_pass": -0.1765,
+  "bootstrap_p_ours_vs_baseline": 1.0,
+  "bootstrap_p_ours_vs_empty": 1.0,
+  "C": 1.0
+}

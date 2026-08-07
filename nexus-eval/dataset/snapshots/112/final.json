@@ -1,0 +1,81 @@
+{
+  "pr_number": 112,
+  "title": "fix(core): eliminate unsafe as any casts in live preview modules",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "ae55307dd252aaa3f7a4101faedf5027789cc17c",
+  "merge_commit_sha": null,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "ae55307dd252aaa3f7a4101faedf5027789cc17c",
+      "message": "fix(core): eliminate unsafe as any casts in live preview modules",
+      "date": "2026-07-03T05:59:12Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 5,
+      "changes": 9
+    },
+    {
+      "filename": "packages/core/src/live-preview-diag.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 1,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/src/live-preview-renderers.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 126,
+      "deletions": 36,
+      "changes": 162
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 3,
+      "changes": 7
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 0,
+      "changes": 43
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=112",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

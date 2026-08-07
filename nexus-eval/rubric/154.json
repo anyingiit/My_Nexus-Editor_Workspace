@@ -1,0 +1,41 @@
+{
+  "pr_number": 154,
+  "points": [
+    {
+      "id": 1,
+      "summary": "One committer has not signed the CLA"
+    },
+    {
+      "id": 2,
+      "summary": "liveSource() guesses table end using length+512, unreliable"
+    },
+    {
+      "id": 3,
+      "summary": "dispatch() removes stale guard, risking incorrect replacement"
+    },
+    {
+      "id": 4,
+      "summary": "No automated regression tests added for live-preview-table"
+    },
+    {
+      "id": 5,
+      "summary": "Need tests for text after table, first add/delete after edit, IME, selection, undo/redo"
+    },
+    {
+      "id": 6,
+      "summary": "PR includes unrelated .github/PR_CHECKLIST.md and personal process info"
+    },
+    {
+      "id": 7,
+      "summary": "Rework should determine table range via syntax tree or reparse"
+    },
+    {
+      "id": 8,
+      "summary": "Rework should preserve necessary stale protection"
+    },
+    {
+      "id": 9,
+      "summary": "Rework should remove unrelated docs and add full regression tests"
+    }
+  ]
+}

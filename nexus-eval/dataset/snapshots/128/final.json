@@ -1,0 +1,60 @@
+{
+  "pr_number": 128,
+  "title": "fix(core): resolve table widget offsets and source at interaction time",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "590f848c6ba8d5ce030b718f12452d100e533db7",
+  "merge_commit_sha": null,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "590f848c6ba8d5ce030b718f12452d100e533db7",
+      "message": "fix(core): resolve table widget offsets and source at interaction time\n\neq() deliberately compares only `source` so CM6 reuses the table DOM\nwhen the table's own text is unchanged, and locked dispatches (in-cell\ntyping under the focus lock, range clears under the range lock) keep\nthe widget instance alive per the StateField's decos.map path. But the\nreused DOM's event closures reference the widget instance that created\nthem, and its captured `tableFrom` and `source` go stale: `tableFrom`\nas soon as content before the table changes length, `source` as soon\nas a locked dispatch rewrites the table itself. Every mutation path\nthen dispatches against stale values — when the document got shorter\nthe dispatch throws a swallowed RangeError and the edit silently does\nnothing; when it grew, the change lands inside unrelated text and\ncorrupts it; a structural edit right after in-cell typing rebuilds the\ntable from a pre-typing snapshot and reverts what was just typed.\n\nKeep the DOM-reuse optimization and the eq() snapshot semantics intact\nand instead resolve both values live at the moment of interaction:\n`currentTableFrom` via view.posAtDOM (falling back to the captured\noffset), and `currentTableSource` by re-slicing the block's line span\nout of the current document (every widget-retaining edit preserves the\ntable's line count). The per-frame selection poll memoizes the lookups\nper document identity so idle frames stay pure arithmetic.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WoRNuUB2DWz7csbpNvABnz",
+      "date": "2026-07-03T22:41:16Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "CLAUDE.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 77,
+      "deletions": 13,
+      "changes": 90
+    },
+    {
+      "filename": "packages/core/test/live-preview-table-offsets.test.ts",
+      "status": "added",
+      "additions": 189,
+      "deletions": 0,
+      "changes": 189
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=128",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

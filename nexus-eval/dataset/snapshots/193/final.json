@@ -1,0 +1,74 @@
+{
+  "pr_number": 193,
+  "title": "feat(core): enforce strict AST types and group table edit history",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "62ef2026f31679ad0c6833c7ffa6ce40cd3f4d0c",
+  "merge_commit_sha": "820c84f259f6b760c4e64eb00abb2e159a07b92b",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "62ef2026f31679ad0c6833c7ffa6ce40cd3f4d0c",
+      "message": "feat: enforce strict AST types and introduce MathPluginOptions",
+      "date": "2026-07-28T11:23:22Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview-table.ts",
+      "status": "modified",
+      "additions": 44,
+      "deletions": 22,
+      "changes": 66
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 3,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/test/widgets.test.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 2,
+      "changes": 5
+    },
+    {
+      "filename": "packages/plugin-math/src/index.ts",
+      "status": "modified",
+      "additions": 45,
+      "deletions": 7,
+      "changes": 52
+    },
+    {
+      "filename": "packages/plugin-math/test/math-plugin.test.ts",
+      "status": "added",
+      "additions": 80,
+      "deletions": 0,
+      "changes": 80
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=193",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

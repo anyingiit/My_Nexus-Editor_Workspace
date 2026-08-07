@@ -1,0 +1,60 @@
+{
+  "pr_number": 198,
+  "title": "feat(core): add multi-cursor select-all, word-match, line-ends, and s…",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "5a98a412f08fcf42e74f5c1d46297965530d375b",
+  "merge_commit_sha": "8ead75fc417bb7e598fd8903a92eefa53e9ed340",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "5a98a412f08fcf42e74f5c1d46297965530d375b",
+      "message": "feat(core): add multi-cursor select-all, word-match, line-ends, and skip commands",
+      "date": "2026-07-28T16:35:46Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5
+    },
+    {
+      "filename": "packages/core/src/multi-cursor.ts",
+      "status": "modified",
+      "additions": 334,
+      "deletions": 2,
+      "changes": 336
+    },
+    {
+      "filename": "packages/core/test/multi-cursor.test.ts",
+      "status": "modified",
+      "additions": 267,
+      "deletions": 0,
+      "changes": 267
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=198",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

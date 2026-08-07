@@ -1,0 +1,53 @@
+{
+  "pr_number": 188,
+  "title": "fix(live-preview): reveal footnote source in edit mode",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "d2243960463ec6ea85d3d2685de80f3d1f59de1a",
+  "merge_commit_sha": "7eee527346b34888be1f71e1fe6b027f302dd5dd",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "d2243960463ec6ea85d3d2685de80f3d1f59de1a",
+      "message": "fix(live-preview): reveal footnote source in edit mode",
+      "date": "2026-07-27T06:00:45Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 2,
+      "changes": 32
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 76,
+      "deletions": 0,
+      "changes": 76
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=188",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

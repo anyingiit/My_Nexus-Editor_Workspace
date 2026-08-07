@@ -1,0 +1,95 @@
+{
+  "pr_number": 158,
+  "title": "feat(search): add fuzzy subsequence matching ",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "6e16b0c63a6d420c741c53b7e3aaa62bdec68e8d",
+  "merge_commit_sha": "6a13f808888c2ebd3b81b5b8485b59f39e82f31c",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "6e16b0c63a6d420c741c53b7e3aaa62bdec68e8d",
+      "message": "feat(search): add fuzzy subsequence matching\n\nImplement ROADMAP #17 fuzzy search as an opt-in mode for in-document\nfind/replace. Users can match ordered character subsequences (e.g. `tbe`\n→ `table`) without changing the default literal search behavior.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-07-15T02:31:21Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/search-bar.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 3,
+      "changes": 32
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-search/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-search/src/fuzzy-match.ts",
+      "status": "added",
+      "additions": 101,
+      "deletions": 0,
+      "changes": 101
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 261,
+      "deletions": 21,
+      "changes": 282
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 1,
+      "changes": 30
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 16,
+      "deletions": 0,
+      "changes": 16
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=158",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

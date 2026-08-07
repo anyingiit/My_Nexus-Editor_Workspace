@@ -1,0 +1,46 @@
+{
+  "pr_number": 4,
+  "title": "feat(slash): add command sorting by match priority and limit parameter",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-05-13T06:13:15Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "60e109aa6789382df6069742ba37e7f0b73d19e6",
+  "merge_commit_sha": "20211ea2122f94a286d3df1846517368c20d1e53",
+  "base_sha": "78b7bdfd2f499f5cb570cbfeb9cd38aaacdc3364",
+  "commits": [
+    {
+      "sha": "60e109aa6789382df6069742ba37e7f0b73d19e6",
+      "message": "feat(slash): add command sorting by match priority and limit parameter",
+      "date": "2026-05-12T14:18:33Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-slash/src/index.ts",
+      "status": "modified",
+      "additions": 42,
+      "deletions": 10,
+      "changes": 52
+    },
+    {
+      "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+      "status": "modified",
+      "additions": 127,
+      "deletions": 0,
+      "changes": 127
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

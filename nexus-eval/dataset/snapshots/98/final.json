@@ -1,0 +1,282 @@
+{
+  "pr_number": 98,
+  "title": "feat(core,plugins): implement P1+P2 roadmap — fuzzy search, history grouping, widget v2, plugin bus, vault API",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "3e2542cd433b78af0b1211c52e9dbcd34d838bcb",
+  "merge_commit_sha": "9f49547f0cf0a582bd6826f3f7b0b9e73500e7e4",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "7f432c85f6a866f33f9a61694c501922f717b67b",
+      "message": "chore(git): 添加 .qoder , .trae",
+      "date": "2026-07-02T05:06:55Z"
+    },
+    {
+      "sha": "3e2542cd433b78af0b1211c52e9dbcd34d838bcb",
+      "message": "feat(electron-demo):\ndone >p2 tasks",
+      "date": "2026-07-02T07:05:56Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/workflows/ci.yml",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 0,
+      "changes": 17
+    },
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 1,
+      "changes": 29
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/preview-panel.ts",
+      "status": "added",
+      "additions": 128,
+      "deletions": 0,
+      "changes": 128
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 173,
+      "deletions": 0,
+      "changes": 173
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "e2e/helpers/electron-fixture.ts",
+      "status": "added",
+      "additions": 38,
+      "deletions": 0,
+      "changes": 38
+    },
+    {
+      "filename": "e2e/playwright.config.ts",
+      "status": "added",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "e2e/tests/editor-core.spec.ts",
+      "status": "added",
+      "additions": 38,
+      "deletions": 0,
+      "changes": 38
+    },
+    {
+      "filename": "package.json",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 2,
+      "changes": 6
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 153,
+      "deletions": 10,
+      "changes": 163
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 0,
+      "changes": 18
+    },
+    {
+      "filename": "packages/core/src/live-preview-highlight.ts",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 0,
+      "changes": 15
+    },
+    {
+      "filename": "packages/core/src/plugin-bus.ts",
+      "status": "added",
+      "additions": 115,
+      "deletions": 0,
+      "changes": 115
+    },
+    {
+      "filename": "packages/core/src/snapshot.ts",
+      "status": "added",
+      "additions": 154,
+      "deletions": 0,
+      "changes": 154
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 99,
+      "deletions": 1,
+      "changes": 100
+    },
+    {
+      "filename": "packages/core/src/vault.ts",
+      "status": "added",
+      "additions": 146,
+      "deletions": 0,
+      "changes": 146
+    },
+    {
+      "filename": "packages/core/src/widget-extension.ts",
+      "status": "modified",
+      "additions": 63,
+      "deletions": 13,
+      "changes": 76
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 23,
+      "deletions": 3,
+      "changes": 26
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 41,
+      "deletions": 0,
+      "changes": 41
+    },
+    {
+      "filename": "packages/plugin-search/src/index.ts",
+      "status": "modified",
+      "additions": 109,
+      "deletions": 0,
+      "changes": 109
+    },
+    {
+      "filename": "packages/plugin-search/test/plugin-search.test.ts",
+      "status": "modified",
+      "additions": 69,
+      "deletions": 0,
+      "changes": 69
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/emoji-picker.ts",
+      "status": "added",
+      "additions": 118,
+      "deletions": 0,
+      "changes": 118
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/icons.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/table-tool.ts",
+      "status": "added",
+      "additions": 114,
+      "deletions": 0,
+      "changes": 114
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 11,
+      "deletions": 2,
+      "changes": 13
+    },
+    {
+      "filename": "packages/wc/package.json",
+      "status": "added",
+      "additions": 22,
+      "deletions": 0,
+      "changes": 22
+    },
+    {
+      "filename": "packages/wc/src/index.ts",
+      "status": "added",
+      "additions": 136,
+      "deletions": 0,
+      "changes": 136
+    },
+    {
+      "filename": "packages/wc/tsconfig.json",
+      "status": "added",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 98,
+      "deletions": 0,
+      "changes": 98
+    },
+    {
+      "filename": "vitest.config.ts",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=98",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

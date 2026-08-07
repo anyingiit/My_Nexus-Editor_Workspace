@@ -1,0 +1,69 @@
+{
+  "pr_number": 76,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR is too broad and not suitable as-is"
+    },
+    {
+      "id": 2,
+      "summary": "Includes generated dist outputs (dist-electron files)"
+    },
+    {
+      "id": 3,
+      "summary": "Includes local/agent config files (AGENTS.md, CLAUDE.md)"
+    },
+    {
+      "id": 4,
+      "summary": "Includes many unrelated docs/OpenSpec/Electron/Python changes"
+    },
+    {
+      "id": 5,
+      "summary": "Should resubmit from clean branch with one focused change"
+    },
+    {
+      "id": 6,
+      "summary": "Nexus does not intend to introduce LLM/AI capabilities"
+    },
+    {
+      "id": 7,
+      "summary": "Nexus is pure headless AST-driven editor engine; LLM is host app's concern"
+    },
+    {
+      "id": 8,
+      "summary": "PR did not follow OpenSpec process (CONTRIBUTING.md §3.1)"
+    },
+    {
+      "id": 9,
+      "summary": "Violates GOVERNANCE.md §4 scope policy"
+    },
+    {
+      "id": 10,
+      "summary": "Modified project/agent instruction files should not be overwritten"
+    },
+    {
+      "id": 11,
+      "summary": "Added entire Python subproject (llm-wiki) not acceptable in TS monorepo"
+    },
+    {
+      "id": 12,
+      "summary": "Committed build artifacts violating .gitignore and governance rules"
+    },
+    {
+      "id": 13,
+      "summary": "Deleted 3006 lines including others' planning/spec files"
+    },
+    {
+      "id": 14,
+      "summary": "Large PR size (+8586/-3006, 52 files) and CLA not signed"
+    },
+    {
+      "id": 15,
+      "summary": "Suggested using engine's atomic capabilities in own project/fork"
+    },
+    {
+      "id": 16,
+      "summary": "If engine lacks capability, propose via OpenSpec for core layer"
+    }
+  ]
+}

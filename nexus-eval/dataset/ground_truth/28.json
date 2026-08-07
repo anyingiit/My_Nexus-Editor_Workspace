@@ -1,0 +1,38 @@
+{
+  "pr_number": 28,
+  "title": "feat(plugin-search): add fuzzy search mode",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:39:39Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "1814980491-ops",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-05-22T12:52:17Z",
+      "body": "### Overall\n\n感谢提交 👋 整体方向 OK，fuzzy 算法本身有思考——加入 word-boundary 加分、相邻字符加分、score 排序，测试也覆盖了 fuzzy matching / case sensitivity / panel behavior / 查询 pattern 主要分支。\n\n不过我们这边对 PR 的完整度要求会偏严格一些（可以参考 #5 那种「关闭一个 Roadmap 条目 + OpenSpec proposal + README + 手动验证清单 + sample-vault 引导文档」的完整度），目前这个 PR 还有几个明显缺口，希望能补齐后再 merge / 进入面试评估：\n\n#### 🎯 亮点\n\n- `scoreFuzzyMatch` 综合了「query 长度奖励 - 跨度惩罚 + 词边界加分 + 相邻加分」，是 fzf-style 的标准做法。\n- `createFuzzySearchPattern` 复用 `escapeRegExp` 把 query 编译成 line-local regex，避免了换行串扰，安全性 OK。\n- 88 行新测试，case sensitivity / 子序列匹配 / 边界都有覆盖。\n\n#### ⚠️ 需要补齐\n\n1. **Roadmap / OpenSpec 关联缺失**\n   - PR 描述里没有引用 `docs/ROADMAP.md` 的具体条目；fuzzy search 在 Roadmap 上是有规划的，请显式 link 上去。\n   - 这是 capability 级别的新增（搜索面板多了一种模式 + 新增 `FuzzySearchMatch` / `createFuzzySearchPattern` 公共导出），建议补一个 `openspec/changes/add-fuzzy-search-mode/`（proposal.md + design.md + tasks.md + delta spec），参考 #5。\n\n2. **README / 文档没更新**\n   - `packages/plugin-search/` 如果还没有 README，请新建一个；如果已有，请加 fuzzy 用法、`SearchOptions.fuzzy` 和 `createFuzzySearchPattern` 的说明。\n   - 顶层 `docs/ROADMAP.md` / `docs/ROADMAP.zh.md` 把对应条目标 done。\n\n3. **Demo / 可验证性**\n   - 在 `apps/electron-demo/sample-vault/` 加一个 `fuzzy-demo.md` 引导文档（或者扩展现有的 search-demo），让用户在 demo 里能体验到。\n   - PR 描述里附一两张截图或 gif，演示「`nxe` 匹配 `Nexus Editor`」这种典型 case（PR #5 那种 manual UI check 清单+演示是我们的标杆）。\n\n4. **PR 模板信息补全**\n   - Motivation / Issue / Roadmap / OpenSpec 几栏目前是空的，请补上；Testing checklist 勾上对应项。\n\n5. **API 表面一致性**\n   - `SearchOptions.fuzzy` 和 `SearchPluginOptions.fuzzy` 同名但作用范围不同，建议在 README / JSDoc 里明确「插件级默认值 vs 单次查询覆盖」的关系。\n\n#### 下一步\n\n24h 内更新一版就行，不需要重做，把上述 5 项补齐后我再做一次最终评估，再决定面试安排。\n\nThanks! 🙏\n"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-22T05:38:47Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=28) <br/>All committers have signed the CLA."
+    },
+    {
+      "user": "1814980491-ops",
+      "created_at": "2026-05-23T03:10:49Z",
+      "body": "已根据 review 更新，感谢详细反馈！\r\n\r\n本次补充内容：\r\n\r\n- 补充 OpenSpec proposal：`openspec/changes/add-fuzzy-search-mode`\r\n- 补充 `packages/plugin-search/README.md`\r\n- 更新 `docs/ROADMAP.md` / `docs/ROADMAP.zh.md`，将 #17 Fuzzy search 标记为 `done` 并关联 OpenSpec change\r\n- 新增 `apps/electron-demo/sample-vault/fuzzy-demo.md`，并从 sample vault index 中链接\r\n- 在 electron-demo 搜索栏中增加 `Fuzzy` toggle，方便手动验证\r\n- 收紧 fuzzy gap，避免 `nxe` 出现长跨度误匹配\r\n- 补全 PR 描述中的 Roadmap / OpenSpec / Testing checklist 信息\r\n\r\n验证命令：\r\n\r\n- `corepack pnpm vitest run packages/plugin-search/test/plugin-search.test.ts apps/electron-demo/test/editor-shell.test.ts`\r\n- `corepack pnpm --filter @floatboat/nexus-plugin-search build`\r\n- `corepack pnpm --filter @floatboat/nexus-electron-demo build`\r\n- `corepack pnpm -r exec tsc --noEmit`\r\n\r\n说明：\r\n\r\n- `openspec validate add-fuzzy-search-mode --strict` 本地未能运行，因为当前 repo/dev environment 中没有安装 OpenSpec CLI；已按 `openspec/AGENTS.md` 手动核对 spec 格式。\r\n- 全量 `pnpm test` 本地未勾选，原因是 Windows 环境下存在既有的 `apps/electron-demo/test/sample-vault.test.ts` 路径分隔符失败，与本 PR 改动无关。\r\n\r\nManual UI check / 手动 UI 验证：\r\n\r\n- 打开 `apps/electron-demo/sample-vault/fuzzy-demo.md`\r\n- 打开 search panel\r\n- 启用 `Fuzzy`\r\n- 输入 `nxe`\r\n- 确认可以匹配 `Nexus Editor`\r\n\r\n截图如下：\r\n<img width=\"1332\" height=\"953\" alt=\"屏幕截图 2026-05-23 111029\" src=\"https://github.com/user-attachments/assets/96f808e3-3dd8-4dac-823d-1454218ee4be\" />\r\n\r\n"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:39:37Z",
+      "body": "感谢模糊搜索的实现，设计文档很用心 🙏 但本轮严格门槛下它被拦下：`findNextFuzzyCandidate` 是贪心匹配、无回溯——当中间字符同时落在 gap 窗口内外时，会过早锁定首个候选而漏掉本可成立的有界匹配。这是一个已知正确性缺陷。建议改为带回溯的子序列匹配（或文档化该限制并补足边界测试）后重提。另注意：合并前请勿提前把 ROADMAP #17 标成 done。\n\n—— 评审基于本轮统一的质量门槛（本地 build/test/typecheck 全绿 + 无已知正确性缺陷 + 核心逻辑有自动化测试）。修好后非常欢迎基于当前 main 重新提交 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

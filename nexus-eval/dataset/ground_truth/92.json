@@ -1,0 +1,26 @@
+{
+  "pr_number": 92,
+  "title": "feat/add-image-paste-plugin",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-02T07:00:56Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "voly212",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-01T17:13:27Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=92) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=92) before we can accept your contribution.<br/><hr/>**dt_2956137330** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=92) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-02T07:00:54Z",
+      "body": "感谢提交。本 PR 暂不建议合入，主要原因如下：\n\n1. 当前实现存在 TypeScript 编译问题。此前本地合并态验证中，`packages/core/src/search-highlight.ts` 从 `@codemirror/view` 导入 `Range`，但该模块不导出该类型，导致 `pnpm -r exec tsc --noEmit` 失败。\n2. fuzzy matcher 存在明显复杂度风险：当前实现使用未充分剪枝的 DFS / subsequence search，重复字符场景很容易出现组合爆炸。\n3. 该计算路径发生在搜索输入、高亮同步、find next / previous、replace 等编辑器主交互链路中，最坏情况下可能直接卡住 UI。\n4. 测试覆盖不足：缺少重复字符、高候选量、长文档、交互更新频率等性能/边界场景的回归测试。\n5. 变更规模较大，涉及 core highlight、live preview、search plugin、demo search bar 等多个高风险区域，需要先拆小并保证每层行为可独立验证。\n\n结论：当前 PR 不通过。建议先修复类型错误，再将 fuzzy 算法替换为复杂度可控的实现，并补充性能边界测试后重新提交。\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

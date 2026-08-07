@@ -1,0 +1,74 @@
+{
+  "pr_number": 63,
+  "title": "feat(toolbar): extend list, blockquote and heading toggle to multi-line selections",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:40:50Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "2b58daeb799eb54101c9b618901645f3484f4874",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "2b58daeb799eb54101c9b618901645f3484f4874",
+      "message": "feat(toolbar): extend list, blockquote and heading toggle to multi-line selections\n\nPreviously toggleOrderedList, toggleUnorderedList, toggleBlockquote, and\ntoggleHeading only operated on the single line containing the anchor\nposition, ignoring the selection end (head). This meant clicking a toolbar\nbutton while multiple lines were selected silently transformed just one line.\n\nThis change extends all four functions to act on every line covered by the\ncurrent selection:\n\n- toggleUnorderedList / toggleOrderedList: if all selected lines are already\n  in the target list format the markers are removed (toggle off); otherwise\n  every line receives the marker. Ordered lists re-number from 1. Existing\n  markers of the opposite type are replaced rather than stacked.\n- toggleBlockquote: same toggle-off-when-all semantics; in the mixed case\n  only lines that are not yet blockquotes receive \"> \".\n- toggleHeading: toggles off when every selected line is already at the\n  requested level; upgrades or adds the heading prefix otherwise.\n\nAll four functions degrade gracefully to the previous single-line behaviour\nwhen anchor === head (no selection).\n\nAdds 22 new test cases covering: apply-to-all, toggle-off, mixed state,\ncross-type conversion (ol↔ul), indented nested lists, and single-line\nfallback.\n\nRoadmap: P1 · Item #1\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-06-11T14:13:03Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 139,
+      "deletions": 47,
+      "changes": 186
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 20,
+      "changes": 63
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 228,
+      "deletions": 0,
+      "changes": 228
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=63",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "pr_number": 17,
+  "title": "feat(core,react,vue,search,slash,toolbar): editor API, search, slash commands and toolbar enhancements",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:40:47Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "niubilityzy",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "COMMENTED",
+      "submitted_at": "2026-05-13T13:49:55Z",
+      "body": "## Review: PR #17 — feat(core,react,vue,search,slash,toolbar): editor API, search, slash commands and toolbar enhancements\n\nThanks for the comprehensive PR — covering 6 roadmap items in one shot is ambitious and the implementation quality is solid across the board. Here are my notes:\n\n### Highlights\n\n1. **Broad roadmap coverage** — Addresses P0 (#5 getSelectedText, #4 onReady, #3 Slash sorting) and P1 (#2 wholeWord, #15 regex, #1 multi-line list toggle) items in a single cohesive PR.\n2. **Good test coverage** — Each feature comes with well-structured tests. The toolbar tests especially cover edge cases (mixed list types, toggle-off behavior).\n3. **Clean implementation** — `getSelectedText()` is minimal and correct; search options use proper try/catch for invalid regex; slash scoring logic is clear and well-layered.\n4. **Framework parity** — `onReady` is implemented consistently across both React and Vue with matching test patterns.\n\n### Issues to address\n\n1. **Merge conflicts** — The PR currently has conflicts that need to be resolved before it can be merged. Likely caused by recent merges on `main` (PR #16 touched `plugin-search/src/index.ts` and `core/src/index.ts`). Please rebase or merge `main` into your branch and resolve the conflicts.\n\n2. **PR scope** — This is a large PR touching 6 features across 15 files. For future contributions, consider splitting into smaller, focused PRs (one per feature). It makes review faster and reduces conflict risk. That said, the code quality here is good enough that this isn't a blocker — just a suggestion for next time.\n\n3. **Minor: `filterSlashCommands` mutates input** — `commands.sort(...)` mutates the original array. Consider using `[...commands].sort(...)` or `commands.toSorted(...)` to avoid surprising callers.\n\n### Verdict\n\nThe code itself looks good — once the merge conflicts are resolved, this is ready to go. Please rebase on latest `main`, resolve conflicts, and push. I'll do a final check and merge after that.\n\nLooking forward to the updated version 👍"
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "niubilityzy",
+      "created_at": "2026-05-13T14:10:20Z",
+      "body": "@reviewer 感谢 review！\r\n\r\n**已处理：**\r\n\r\n1. **Merge conflicts** — 已 rebase 到最新 main，冲突已解决\r\n2. **filterSlashCommands mutation** — 已修复，使用 `[...commands].sort(...)` 避免突变输入数组，详见 `packages/plugin-slash/src/index.ts` 第 89 行\r\n3. **PR scope** — 完全理解，下次会按功能拆分为更小、更聚焦的 PR\r\n\r\n请再次检查，如有其他问题我会及时跟进！"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-05-14T04:17:53Z",
+      "body": "### Code review\n\nFound 5 issues:\n\n1. `findSearchMatches` with `regexp: true` runs the user-supplied pattern straight through `new RegExp(query, flags)` + `doc.matchAll(...)` on the main thread. The try/catch only catches `SyntaxError` at construction; catastrophic-backtracking patterns (`(a+)+$`, `(a|aa)+b`, etc.) hang the renderer at execution. Either run the match in a worker, time-bound the operation, or reject obviously dangerous patterns before constructing.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/faddfd3580064f125980e6ab3707f8a17e309857/packages/plugin-search/src/index.ts#L131-L150\n\n2. `wholeWord` wraps the escaped query in `\\b…\\b`. JavaScript `\\b` is ASCII-only — it never matches between two CJK characters — so `wholeWord: true` silently returns zero (or wrong) matches for Chinese/Japanese/Korean queries. In a markdown editor this is a common case. Use a Unicode-aware boundary (lookarounds against `\\p{L}` with the `u` flag) or document the ASCII-only limitation.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/faddfd3580064f125980e6ab3707f8a17e309857/packages/plugin-search/src/index.ts#L137-L143\n\n3. `plugin-slash` redefines `filterSlashCommands` with a default `limit = 10` and removes the prior `export { filterSlashCommands, getSlashMatch }` re-export from core. Hosts that previously imported `filterSlashCommands` from `@floatboat/nexus-plugin-slash` got every matching command back; they now silently get capped at 10. This is a breaking change for the public API surface with no opt-out and no roadmap/changelog note.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/faddfd3580064f125980e6ab3707f8a17e309857/packages/plugin-slash/src/index.ts#L60-L120\n\n4. `getSelectedLines` over-collects when the selection ends exactly at the start of the next line. The loop is `while (pos <= to) { ...; pos = lineEndIdx + 1; }` with `lineStart = doc.lastIndexOf(\"\\n\", pos - 1) + 1`. For `doc=\"Line 1\\nLine 2\"` and `to=7` (cursor positioned at start of \"Line 2\", a common CodeMirror line-mode selection), the loop runs a second iteration at `pos=7`, recomputes `lineStart=7`, and pushes `\"Line 2\"` even though it isn't part of the user's intended selection. None of the new tests exercise a selection ending at a line boundary like this.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/faddfd3580064f125980e6ab3707f8a17e309857/packages/plugin-toolbar/src/formatting.ts#L11-L30\n\n5. `toggleOrderedList` and `toggleUnorderedList` collapse the user's selection to a single caret after running. The old single-line code restored the selection at `lineStart + newLine.length`; the new code calls `editor.setSelection(lastNewLineEnd)` only, so a multi-line selection becomes a zero-length cursor at the end of the last toggled line. Chaining toggles (e.g. list → bold) loses the original range, which is exactly the workflow this PR's multi-line capability is supposed to enable. Restore the range to `[firstLineStart, lastNewLineEnd]`.\n\nhttps://github.com/floatboatai/Nexus-Editor/blob/faddfd3580064f125980e6ab3707f8a17e309857/packages/plugin-toolbar/src/formatting.ts#L80-L95\n\nLower-confidence flags worth a look (not blocking): the PR bundles ~6 new public capabilities across 6 packages with no `openspec/` change proposal — CLAUDE.md asks AI assistants to consult `openspec/AGENTS.md` for new capabilities, and sibling PRs #13/#14/#15 follow that pattern; PR overlaps with the still-open PR #13 (both add `priority` to `SlashCommandDef` with different scoring semantics — additive bonus here vs separate sort key in #13), so whichever lands second will need conflict resolution; and the `regexp` path silently `return []`s on invalid patterns with no `console.warn` and no README update — the same feedback the maintainer left on PR #9.\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\n<sub>- If this code review was useful, please react with 👍. Otherwise, react with 👎.</sub>"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:21Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=17) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you all sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=17) before we can accept your contribution.<br/>**0** out of **2** committers have signed the CLA.<br/><br/>:x: Nexus Editor Dev<br/>:x: niubilityzy<br/><hr/>**Nexus Editor Dev** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=17) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:40:45Z",
+      "body": "感谢这份覆盖 editor API / search / slash / toolbar 的综合 PR 🙏 但它跨多包捆绑、对当前 main CONFLICTING，且其中多数能力已分别由 #21（getSelectedText/replaceRange/多行列表）、#68（搜索）、#29（react/vue）在 main 上落地。按 §2「One PR, one concern」，这种大杂烩无法评审合并，故关闭。若仍有独特未覆盖的点，欢迎单独聚焦提交。\n\n—— 此关闭基于代码评审；如果其中某块功能你想单独推进，欢迎基于当前 main 提一个聚焦的小 PR（记得先签 CLA）🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

@@ -1,0 +1,260 @@
+{
+  "pr_number": 5,
+  "title": "feat(slash): floating menu UI with ranking, result cap, and toolbar slash commands",
+  "state": "closed",
+  "merged": true,
+  "merged_at": "2026-05-13T09:11:01Z",
+  "closed_at": "2026-05-13T09:11:01Z",
+  "merged_by": "ketd",
+  "closed_by": "ketd",
+  "head_sha_final": "da66d7addcccb6e99a52512c89a197ca829a3534",
+  "merge_commit_sha": "372a9743ab2897dbd1dfdeca6ebb56aceeb36de2",
+  "base_sha": "78b7bdfd2f499f5cb570cbfeb9cd38aaacdc3364",
+  "commits": [
+    {
+      "sha": "51d566685a64e2658201ffee8b6d2a470d50dd12",
+      "message": "docs(openspec): scaffold add-slash-menu-ui proposal",
+      "date": "2026-05-12T15:48:00Z"
+    },
+    {
+      "sha": "89c75c19230c11d126104b3cef8a84481aa1fa2b",
+      "message": "feat(core): add run callback and ranking to slash commands\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-12T15:48:15Z"
+    },
+    {
+      "sha": "bffeac27db2565ab4a540518435e1048a8fa4666",
+      "message": "feat(slash): floating menu UI with keyboard navigation and a11y\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-12T15:48:21Z"
+    },
+    {
+      "sha": "38679ab3754b9860420d015433946f73f5753969",
+      "message": "feat(toolbar): register slash commands for formatting actions\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-12T15:48:27Z"
+    },
+    {
+      "sha": "b5a1666f2ef3a74ced9e49f090818b0d2ca285f0",
+      "message": "feat(electron): mount slash menu and add demo content\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-12T15:48:34Z"
+    },
+    {
+      "sha": "da66d7addcccb6e99a52512c89a197ca829a3534",
+      "message": "docs: mark slash menu sorting/limit roadmap done\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "date": "2026-05-12T15:48:40Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "apps/electron-demo/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/index.md",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/slash-demo.md",
+      "status": "added",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 61,
+      "deletions": 0,
+      "changes": 61
+    },
+    {
+      "filename": "apps/electron-demo/vite.config.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "docs/ROADMAP.zh.md",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/design.md",
+      "status": "added",
+      "additions": 120,
+      "deletions": 0,
+      "changes": 120
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/proposal.md",
+      "status": "added",
+      "additions": 58,
+      "deletions": 0,
+      "changes": 58
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/specs/editor-core/spec.md",
+      "status": "added",
+      "additions": 73,
+      "deletions": 0,
+      "changes": 73
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/specs/slash-menu/spec.md",
+      "status": "added",
+      "additions": 181,
+      "deletions": 0,
+      "changes": 181
+    },
+    {
+      "filename": "openspec/changes/add-slash-menu-ui/tasks.md",
+      "status": "added",
+      "additions": 52,
+      "deletions": 0,
+      "changes": 52
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "packages/core/src/slash-state.ts",
+      "status": "modified",
+      "additions": 126,
+      "deletions": 8,
+      "changes": 134
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "packages/core/test/events.test.ts",
+      "status": "modified",
+      "additions": 51,
+      "deletions": 0,
+      "changes": 51
+    },
+    {
+      "filename": "packages/core/test/slash-state.test.ts",
+      "status": "added",
+      "additions": 192,
+      "deletions": 0,
+      "changes": 192
+    },
+    {
+      "filename": "packages/plugin-slash/README.md",
+      "status": "added",
+      "additions": 111,
+      "deletions": 0,
+      "changes": 111
+    },
+    {
+      "filename": "packages/plugin-slash/src/index.ts",
+      "status": "modified",
+      "additions": 31,
+      "deletions": 86,
+      "changes": 117
+    },
+    {
+      "filename": "packages/plugin-slash/src/menu-ui.ts",
+      "status": "added",
+      "additions": 456,
+      "deletions": 0,
+      "changes": 456
+    },
+    {
+      "filename": "packages/plugin-slash/test/menu-ui.test.ts",
+      "status": "added",
+      "additions": 355,
+      "deletions": 0,
+      "changes": 355
+    },
+    {
+      "filename": "packages/plugin-slash/test/plugin-slash.test.ts",
+      "status": "modified",
+      "additions": 30,
+      "deletions": 0,
+      "changes": 30
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 120,
+      "deletions": 1,
+      "changes": 121
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 28,
+      "deletions": 0,
+      "changes": 28
+    },
+    {
+      "filename": "pnpm-lock.yaml",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 0,
+      "changes": 3
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 0,
+    "statuses": []
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

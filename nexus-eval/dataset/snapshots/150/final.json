@@ -1,0 +1,130 @@
+{
+  "pr_number": 150,
+  "title": "fix(live-preview): make image rendering AST-driven and linked images navigable",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "262adb3f82cefe3af0633c12fff66f7e82bde553",
+  "merge_commit_sha": "f85288ceba3c11aa70aec3ad46d59f6f9a050d7f",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "f6c5d1a4a9ea6a61c8b0fbf212db4390f76a31cb",
+      "message": "fix(live-preview): resolve image ranges from the AST, not a regex scan\n\nThe live preview located images with a document-wide regex, blind to\nparse context. Three user-visible bugs follow from that root cause:\n\n- [![alt](img)](url) (e.g. README CI badges): the regex image range\n  overlapped the link decoration, and the link marker arithmetic split\n  at the first ](, garbling the label and the navigation URL. Links\n  whose label contains an image now render as a clickable image widget.\n- Image syntax inside fenced code blocks / inline code was rendered as\n  a real image instead of staying literal text.\n- URLs with balanced parentheses (.../Foo_(bar)) were truncated at the\n  first ), breaking the image and leaving a stray paren.\n\nImages are now emitted by the mdast walk like every other inline node.\nThe Lezer adapter preserves the image title so tooltip-dependent\nrenderers keep working, and reference-style images without an inline\nURL stay raw text instead of becoming an empty-src widget.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T11:26:01Z"
+    },
+    {
+      "sha": "fae079266ece35f852b735deaa7dd030b8096b41",
+      "message": "fix(live-preview): keep linked-image preview visible while editing\n\nStandalone images show source + a preview widget below when the cursor\nis inside their range. Linked images rendered raw source only, so\npasting a badge line (cursor lands at its end, which counts as on the\nlink) looked broken until the cursor moved away. Mirror the standalone\nimage contract: cursor out - replace widget; cursor in - editable\nsource plus a block preview widget right below.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T11:46:31Z"
+    },
+    {
+      "sha": "ce3e5d2400d818deb7a6cba3930959be119bd17a",
+      "message": "fix(live-preview): let clicks reach the linked-image navigation handler\n\nCM6 skips every registered domEventHandler - including the\n[data-link-url] mousedown handler that opens links - for events inside\nwidgets whose ignoreEvent() returns true, so the linked-image widget\nrendered but never navigated. Match the plain-link widget contract\n(ignoreEvent false); interactive chrome inside custom image renderers\nalready protects itself by stopping propagation.\n\nAlso surface the destination on hover: browsers resolve tooltips from\nthe innermost titled element, so an image-level tooltip set by a\nrenderer would mask the wrapper title. Inside a linked image the\ndestination outranks it.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T12:00:09Z"
+    },
+    {
+      "sha": "6487023d08925d2a02312946eda7a8ce85da3ea5",
+      "message": "fix(electron): open editor links in the system browser\n\nThe demo never installed a window-open handler, so every link click in\nthe live preview (window.open from the renderer) spawned a bare child\nBrowserWindow instead of the user browser. Route http(s) targets\nthrough shell.openExternal and deny all other window opens; apply the\nsame policy to will-navigate so stray <a href> navigations cannot\nreplace the editor page (current-URL reloads stay allowed).\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T12:04:30Z"
+    },
+    {
+      "sha": "1146603a32dbf324c2031f66355abd5a92d21916",
+      "message": "fix(live-preview): handle nested and reference-style link-label images\n\nTwo gaps in the linked-image branch, both found by adversarial review:\n\n- The image check only looked at the label top level, so\n  [*![a](i)*](u) (image wrapped in emphasis) still fell into the\n  marker-arithmetic path and rendered the garbage label the branch\n  exists to prevent. Detect images at any depth and flatten wrapper\n  nodes when rendering the label.\n- A Link node with no URL child (reference-style [x][ref], empty [x]())\n  fell back to the whole node source as its url, leaking raw markdown\n  into data-link-url and the hover tooltip. Only autolinks keep the\n  node-text fallback; such labels now render their image without\n  pretending to navigate.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T12:46:13Z"
+    },
+    {
+      "sha": "8122e2d043c73a456f6814b3ea488ad3298868cb",
+      "message": "fix(live-preview): only open web and mail schemes from link clicks\n\ndata-link-url is authored document content, so clicking a link whose\ndestination is javascript:, file: or a custom scheme must not reach\nwindow.open. Scheme-less GFM autolink literals (www.example.com) used\nto be opened as relative paths and now get an https prefix instead.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T12:48:48Z"
+    },
+    {
+      "sha": "cc25f60f6ef85f8be316753fb1c56f5b0e306004",
+      "message": "test(live-preview): lock navigation contract and widen linked-image coverage\n\nThe click-to-navigate behavior hinges on the widget NOT swallowing\nevents: CM6 skips every domEventHandler for events inside widgets whose\nignoreEvent() returns true, and the rendered DOM is identical either\nway, so only a dispatched mousedown can catch that regression. Also\ncover: scheme filtering, single-preview suppression in edit mode, mixed\ntext-and-images labels, all three CommonMark title delimiters, images\ninside raw HTML blocks, and scope the stray-paren assertion to the\nimage line so unrelated renderer chrome cannot break it.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T12:48:49Z"
+    },
+    {
+      "sha": "262adb3f82cefe3af0633c12fff66f7e82bde553",
+      "message": "refactor(electron): extract testable link policy and allow mailto\n\nThe window-open / will-navigate rules were inline closures over\nmainWindow, so nothing could exercise them. Pull the pure decisions\ninto link-policy.ts with unit tests, and let mailto: reach the system\nhandler alongside http(s) — it was silently dead before.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>",
+      "date": "2026-07-12T12:51:13Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/electron/link-policy.ts",
+      "status": "added",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/electron/main.ts",
+      "status": "modified",
+      "additions": 21,
+      "deletions": 0,
+      "changes": 21
+    },
+    {
+      "filename": "apps/electron-demo/test/link-policy.test.ts",
+      "status": "added",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "packages/core/src/lezer-mdast-adapter.ts",
+      "status": "modified",
+      "additions": 17,
+      "deletions": 2,
+      "changes": 19
+    },
+    {
+      "filename": "packages/core/src/live-preview-ranges.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 29,
+      "changes": 36
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 106,
+      "deletions": 3,
+      "changes": 109
+    },
+    {
+      "filename": "packages/core/test/live-preview-ranges.test.ts",
+      "status": "modified",
+      "additions": 96,
+      "deletions": 0,
+      "changes": 96
+    },
+    {
+      "filename": "packages/core/test/live-preview-regressions.test.ts",
+      "status": "modified",
+      "additions": 189,
+      "deletions": 1,
+      "changes": 190
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=150",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

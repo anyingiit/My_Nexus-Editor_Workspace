@@ -1,0 +1,33 @@
+{
+  "pr_number": 20,
+  "title": "feat(toolbar): extend list toggle to multi-line selections",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-06-23T12:38:45Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "HopeBearer",
+  "reviews": [
+    {
+      "user": "ketd",
+      "state": "CHANGES_REQUESTED",
+      "submitted_at": "2026-05-15T06:37:38Z",
+      "body": "Thanks for the contribution. I found one correctness issue that should be fixed before merge.\n\n1. `packages/plugin-toolbar/src/formatting.ts`: `getSelectedLines()` currently searches for the next newline starting at `to`, which makes the end of the selection behave as inclusive. A common editor selection like `[0, 4]` in `foo\\nbar` means the user selected the first line and the caret is at column 0 of the second line; this implementation formats both `foo` and `bar`. Selections should be treated as half-open ranges, so a line whose start equals `to` should be excluded. Please add a regression test for this boundary.\n\n2. This is a new toolbar behavior but the PR does not include an OpenSpec change. Please add the proposal/spec/tasks delta for the multi-line list toggle behavior and run `openspec validate <change-id> --strict`.\n\nThe existing toolbar test/build path passes locally (`pnpm vitest run packages/plugin-toolbar/test/plugin-toolbar.test.ts` and `pnpm --filter @floatboat/nexus-plugin-toolbar build`), but the missing boundary case is user-visible."
+    }
+  ],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-05-20T07:20:12Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=20) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=20) before we can accept your contribution.<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=20) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:38:44Z",
+      "body": "感谢多行 list toggle 的实现 🙏 该功能已随 #21 合入 main（`ccbb25f`），并带 mixed-state / 跨 marker / 反向选区等测试。本 PR 重复，故关闭。\n\n—— 此关闭基于代码评审与去重，不针对贡献本身；欢迎继续参与其他 roadmap 项 🙌"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

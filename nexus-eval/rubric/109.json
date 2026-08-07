@@ -1,0 +1,17 @@
+{
+  "pr_number": 109,
+  "points": [
+    {
+      "id": 1,
+      "summary": "CLA is not signed yet"
+    },
+    {
+      "id": 2,
+      "summary": "Architecture-level change lacks required OpenSpec proposal"
+    },
+    {
+      "id": 3,
+      "summary": "PR marks OpenSpec change as N/A despite public API changes"
+    }
+  ]
+}

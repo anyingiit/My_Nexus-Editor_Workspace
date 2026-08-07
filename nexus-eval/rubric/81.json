@@ -1,0 +1,9 @@
+{
+  "pr_number": 81,
+  "points": [
+    {
+      "id": 1,
+      "summary": "Split PR into focused PRs for independent review"
+    }
+  ]
+}

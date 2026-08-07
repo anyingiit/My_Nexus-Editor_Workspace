@@ -1,0 +1,27 @@
+{
+  "source_splits": [
+    "train",
+    "dev"
+  ],
+  "split_counts": {
+    "train": 47,
+    "dev": 15
+  },
+  "n_pr": 62,
+  "patch_pr": 62,
+  "patch_files_omitted_by_prompt_cap": 0,
+  "checks_pr": 62,
+  "ours_chars": 60653,
+  "ours_sha256": "b77be1ffa2c7de1413d1b4ea4120790e9e7bf2dd7dd87a27eb13db33dbff98e2",
+  "prompt_budget": {
+    "PER_FILE_PATCH_FLOOR": 2000,
+    "PER_FILE_PATCH_MAX": 12000,
+    "TOTAL_PATCH_CHARS": 120000,
+    "MAX_AGENTS_CHARS": 90000
+  },
+  "prompt_chars_min": 64177,
+  "prompt_chars_max": 193273,
+  "judge_system_sha256": "6d18c59badb38f40a4c8a1d3d4603fb82f9e7cea68e9ee16aeec30bd9cacd7d8",
+  "passed": true,
+  "failures": []
+}

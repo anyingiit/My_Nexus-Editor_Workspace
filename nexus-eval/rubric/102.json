@@ -1,0 +1,45 @@
+{
+  "pr_number": 102,
+  "points": [
+    {
+      "id": 1,
+      "summary": "PR lacks actual table column drag fix; only eval harness."
+    },
+    {
+      "id": 2,
+      "summary": "Corpus contains many expected failures marked table-corruption."
+    },
+    {
+      "id": 3,
+      "summary": "Default pnpm eval baseline creates failing command for CI."
+    },
+    {
+      "id": 4,
+      "summary": "No proof pnpm build passed."
+    },
+    {
+      "id": 5,
+      "summary": "Bridge uses synthetic layout calculations, not real browser behavior."
+    },
+    {
+      "id": 6,
+      "summary": "Markdown parser ignores fences, escaped pipes, alignment rows."
+    },
+    {
+      "id": 7,
+      "summary": "Missing CI integration and failure/expected-failure layering."
+    },
+    {
+      "id": 8,
+      "summary": "Python venv and dynamic bundling add maintenance burden."
+    },
+    {
+      "id": 9,
+      "summary": "Eval/test blocked by Rollup optional dependency; chain heavy."
+    },
+    {
+      "id": 10,
+      "summary": "Recommends closing PR; submit minimal fix with vitest/Playwright."
+    }
+  ]
+}

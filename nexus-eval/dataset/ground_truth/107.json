@@ -1,0 +1,26 @@
+{
+  "pr_number": 107,
+  "title": "feat(search): add fuzzy search with fzy-inspired scoring and per-character position tracking",
+  "merged": false,
+  "state": "closed",
+  "closed_at": "2026-07-03T05:46:11Z",
+  "merged_at": null,
+  "merged_by": null,
+  "user": "danlylois-code",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-03T04:14:39Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=107) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=107) before we can accept your contribution.<br/><hr/>**刘洋** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=107) it.</sub>"
+    },
+    {
+      "user": "redreamality",
+      "created_at": "2026-07-03T05:46:07Z",
+      "body": "Thanks for the contribution. I reviewed and ran the relevant checks, but this PR cannot be accepted in its current state.\n\nBlocking issues:\n\n1. TypeScript type check fails:\n\n```text\npackages/plugin-search/test/plugin-search.test.ts(904,23): error TS2339: Property 'matchedIndices' does not exist on type 'ScoredSearchMatch'.\n```\n\nThe implementation/tests are inconsistent: the test asserts `match.matchedIndices`, but `ScoredSearchMatch` does not expose that property. Please either add the field to the public type and ensure it is populated consistently, or update the test to assert the actual API shape.\n\n2. CLA is not signed yet, so the contribution cannot be accepted until the CLA check passes.\n\nValidation performed:\n- `pnpm --filter @floatboat/nexus-plugin-search test -- --runInBand` passed.\n- `pnpm exec tsc --noEmit -p packages/plugin-search/tsconfig.json` failed with the error above.\n\nClosing this PR for now. Feel free to open a new PR after fixing the type/API mismatch and completing the CLA.\n"
+    }
+  ],
+  "golden_decision": "reject",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

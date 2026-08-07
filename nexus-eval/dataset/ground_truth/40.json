@@ -1,0 +1,24 @@
+{
+  "pr_number": 40,
+  "title": "feat(core): add plugin lifecycle hooks and enhanced event bus system",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "Albertzhong76",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-06-01T17:47:57Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/not_signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=40) <br/>Thank you for your submission! We really appreciate it. Like many open source projects, we ask that you sign our [Contributor License Agreement](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=40) before we can accept your contribution.<br/><hr/>**Nexus Contributor** seems not to be a GitHub user. You need a GitHub account to be able to sign the CLA. If you have already a GitHub account, please [add the email address used for this commit to your account](https://help.github.com/articles/why-are-my-commits-linked-to-the-wrong-user/#commits-are-not-linked-to-any-user).<br/><sub>You have signed the CLA already but the status is still pending? Let us [recheck](https://cla-assistant.io/check/floatboatai/Nexus-Editor?pullRequest=40) it.</sub>"
+    },
+    {
+      "user": "ketd",
+      "created_at": "2026-06-23T12:45:03Z",
+      "body": "感谢插件生命周期钩子 + 事件总线（roadmap #10）🙏 这是 roadmap 规划的能力，且会影响每一个现有 plugin-*。当前对 main 为 CONFLICTING。按 roadmap #10 标注「需 OpenSpec」，建议先在 openspec/changes/ 下提 proposal，把生命周期钩子的触发时机、事件总线的事件契约、对现有插件的迁移影响讲清楚，与维护者对齐后再做实现。rebase + 补 OpenSpec 后重提。\n\n⚠️ 该 PR 目前 **CLA 未签署**，签署前无法合并。请点 PR 内 CLA 机器人的链接签署；签完并调整后维护者会重新评审。感谢理解 🙏"
+    }
+  ]
+}

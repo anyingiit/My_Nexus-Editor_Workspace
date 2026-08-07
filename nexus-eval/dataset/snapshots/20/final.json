@@ -1,0 +1,53 @@
+{
+  "pr_number": 20,
+  "title": "feat(toolbar): extend list toggle to multi-line selections",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:38:45Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "67a820ebeb095a685ba018b78f14b045d28b9f35",
+  "merge_commit_sha": null,
+  "base_sha": "c78cd5e2280d7b9767d62b929ab178b61143277a",
+  "commits": [
+    {
+      "sha": "67a820ebeb095a685ba018b78f14b045d28b9f35",
+      "message": "feat(toolbar): extend list toggle to multi-line selections",
+      "date": "2026-05-14T06:48:51Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 156,
+      "deletions": 69,
+      "changes": 225
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 119,
+      "deletions": 0,
+      "changes": 119
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=20",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

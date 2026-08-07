@@ -1,0 +1,74 @@
+{
+  "pr_number": 180,
+  "title": "feat(toolbar): add insertTable helper and table-picker grid UI",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "bcf96a5cef061cb3fe3bbde7f1fd643f91e0e95f",
+  "merge_commit_sha": "59c1b3f0c4398f36b5797a6715ef57aaedaf9f6e",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "bcf96a5cef061cb3fe3bbde7f1fd643f91e0e95f",
+      "message": "feat(toolbar): add insertTable helper and table-picker grid UI",
+      "date": "2026-07-23T18:47:45Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-toolbar/src/formatting.ts",
+      "status": "modified",
+      "additions": 44,
+      "deletions": 0,
+      "changes": 44
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/icons.ts",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/index.ts",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 1,
+      "changes": 10
+    },
+    {
+      "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+      "status": "modified",
+      "additions": 119,
+      "deletions": 1,
+      "changes": 120
+    },
+    {
+      "filename": "packages/plugin-toolbar/test/plugin-toolbar.test.ts",
+      "status": "modified",
+      "additions": 146,
+      "deletions": 0,
+      "changes": 146
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=180",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

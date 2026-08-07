@@ -1,0 +1,24 @@
+{
+  "pr_number": 165,
+  "title": "feat(search): add fuzzy search to editor search panel",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "abobb414",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "abobb414",
+      "created_at": "2026-07-17T06:40:36Z",
+      "body": "Demo recording:\r\n\r\nhttps://github.com/user-attachments/assets/64a0d405-4b93-4a98-b889-938651b9500a"
+    },
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-23T00:42:02Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=165) <br/>All committers have signed the CLA."
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "pr_number": 184,
+  "title": "feat: add list drag-to-reorder, command palette, dark mode toggle, and Chinese docs",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "705bc9e084cc078287365ce6dc2a58f818865e94",
+  "merge_commit_sha": "26b7b2926b50d456253aef2ba1c27a4ebd44229f",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "b14239d8fff5f58cc9504e946431edd91da74b1a",
+      "message": "docs(plugin-slash): add Chinese usage examples",
+      "date": "2026-07-24T13:35:24Z"
+    },
+    {
+      "sha": "3041fa9293d3fb496dddcdefeda6a1216bb062ee",
+      "message": "feat: add list item drag-to-reorder and Chinese slash plugin docs",
+      "date": "2026-07-24T15:10:02Z"
+    },
+    {
+      "sha": "705bc9e084cc078287365ce6dc2a58f818865e94",
+      "message": "feat: list drag reorder, command palette, dark mode toggle, Chinese docs",
+      "date": "2026-07-24T17:23:15Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 56,
+      "deletions": 1,
+      "changes": 57
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/command-palette.ts",
+      "status": "added",
+      "additions": 231,
+      "deletions": 0,
+      "changes": 231
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/style.css",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 0,
+      "changes": 26
+    },
+    {
+      "filename": "package-lock.json",
+      "status": "added",
+      "additions": 4344,
+      "deletions": 0,
+      "changes": 4344
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 319,
+      "deletions": 1,
+      "changes": 320
+    },
+    {
+      "filename": "packages/plugin-slash/README.md",
+      "status": "modified",
+      "additions": 109,
+      "deletions": 0,
+      "changes": 109
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=184",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

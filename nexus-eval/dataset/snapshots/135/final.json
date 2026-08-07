@@ -1,0 +1,64 @@
+{
+  "pr_number": 135,
+  "title": "fix: render strikethrough text inside markdown table cells",
+  "state": "closed",
+  "merged": true,
+  "merged_at": "2026-07-13T03:18:17Z",
+  "closed_at": "2026-07-13T03:18:17Z",
+  "merged_by": "2391384896",
+  "closed_by": "2391384896",
+  "head_sha_final": "0cf65607ba73a177d33658c7c612064de91ff281",
+  "merge_commit_sha": "cc2cf1f4d5fb79df0b8a5e88e46a35abccef6c7c",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "0cf65607ba73a177d33658c7c612064de91ff281",
+      "message": "fix: render strikethrough text inside markdown table cells",
+      "date": "2026-07-06T14:51:52Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/core/src/lezer-mdast-adapter.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/core/test/live-preview.test.ts",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 2,
+      "changes": 6
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=135",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 2,
+    "check_runs": [
+      {
+        "name": "Publish Packages",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Test and Build",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  }
+}

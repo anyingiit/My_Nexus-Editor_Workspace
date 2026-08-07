@@ -1,0 +1,64 @@
+{
+  "pr_number": 68,
+  "title": "feat(search): add whole-word and regex matching to utility functions",
+  "body": "## Summary / 摘要\n\n实现 ROADMAP #2（whole-word 匹配）与 #15（正则搜索）的工具函数侧。把 `findSearchMatches` / `replaceAllMatches` 的 `SearchOptions` 扩展为支持 `wholeWord` 与 `regexp` 两个新选项，并对非法正则做 graceful fallback（返回空结果 / 原文档，而非抛错）。\n\n## Motivation / 背景与动机\n\n- Issue: N/A（开放命题面试 PR）\n- Roadmap (docs/ROADMAP.md):\n  - **#2 whole-word 匹配**（P1、planned），由本 PR 转为 done\n  - **#15 正则搜索**（P1、in-progress；PR #9 in review）—— 本 PR 仅补完**导出工具函数**侧，与 PR #9 的搜索面板 UI / `SearchQuery` 改动**互不重叠**\n- OpenSpec change: N/A —— 现有 `SearchOptions` 增量扩展，无破坏性变更\n\nPR 之前的状态：\n- `plugin-search` 暴露的 `NexusSearchPanel` 已通过 CM6 `SearchQuery` 原生支持 `wholeWord` / `regexp`（面板上的 `wholeWordField` / `regexpField` checkbox 已就位）\n- 但导出的**独立工具函数** `findSearchMatches(doc, query, options)` 与 `replaceAllMatches(doc, query, replacement, options)` 只支持 `caseSensitive`，宿主在编辑器外做批量字符串处理（跨文件搜索、headless 替换脚本、测试断言）时拿不到面板已有的能力 —— 两条路径行为不对称\n\n本 PR 把工具函数与面板能力对齐，**不引入新 API**，仅扩展现有 `SearchOptions` 接口。\n\n## Changes / 变更内容\n\n- `packages/plugin-search`:\n  - `src/index.ts`:\n    - `SearchOptions` 接口新增 `wholeWord?: boolean` 与 `regexp?: boolean`\n    - 抽出 `buildSearchPattern(query, options): RegExp | null` 辅助函数，统一三种模式（普通 / wholeWord / regexp / 组合）的 RegExp 构造\n    - **正则模式**：query 不再 escape，直接作为 pattern；`wholeWord + regexp` 组合时用 `\\b(?:${query})\\b` 包裹以避免与用户 query 内的 alternation `|` 优先级冲突\n    - **非法正则 graceful fallback**：`buildSearchPattern` 内 `try { new RegExp(...) } catch { return null }`；`findSearchMatches` 返回 `[]`、`replaceAllMatches` 返回原 `doc`，避免抛错打断宿主调用链\n  - 测试：新增 7 cases（详见 Testing 段）\n- `packages/core`: 无改动\n- 其他：无文档 / 配置改动\n\n## Testing / 测试\n\n- [x] `pnpm test` passes / 全绿 —— **343 / 343 通过**（合并 #1 多行列表的 13 cases 后；本 PR 单独跑 plugin-search 为 17 cases，已含 10 个原有 case）\n- [x] Affected package builds (`pnpm --filter @floatboat/nexus-plugin-search build`) 通过\n- [x] `pnpm --filter @floatboat/nexus-plugin-search exec tsc --noEmit` 类型检查无报错\n- [x] New / updated vitest cases / 新增 vitest 用例 —— `packages/plugin-search/test/plugin-search.test.ts` 新增 **7 cases**：\n  - whole-word 部分 (3)：\n    - whole-word 匹配 `\"cat\"` 不命中 `\"cats\"` / `\"catalog\"`\n    - case-sensitive + whole-word 组合 —— `\"Cat\"` 在 `\"cat Cat CAT\"` 中只命中 `Cat`\n    - `replaceAllMatches` whole-word 模式只替换完整单词\n  - regex 部分 (4)：\n    - 基本数字模式 `\\d+`\n    - 多字段日期模式 `\\d{4}-\\d{2}-\\d{2}`\n    - case-sensitive regex —— `h.llo` 只命中 `hello`，不命中 `Hello` / `HELLO`\n    - 非法正则 graceful fallback —— `findSearchMatches` 返回 `[]`，`replaceAllMatches` 返回原 doc\n  - 组合 (1)：regex + wholeWord 同开 —— `cat|dog` 在 `\"cat cats concatenate\"` 中只命中独立 `cat`\n- [ ] Manual UI check in electron-demo / electron-demo 手动验证 —— **未做**：面板侧 UI 由 CM6 `SearchQuery` 直接驱动，**不经过本 PR 改动的工具函数**（详见下方\"边界说明\"），无需 UI 验证\n\n## Checklist / 自检清单\n\n- [x] Title follows Conventional Commits / 标题遵循 Conventional Commits（`feat(search): ...`）\n- [x] Public API changes update package README / types —— `SearchOptions` 类型已扩展并随 `dist/index.d.ts` 一并构建；`plugin-search` 未提供独立 README\n- [x] Touched `live-preview-table.ts` → walked through the 12 Table Widget rules in CLAUDE.md —— **本 PR 未触及 `live-preview-table.ts`**\n- [x] New capability / breaking change → OpenSpec proposal linked / 新 capability 或破坏性变更已附 OpenSpec —— N/A：现有接口增量扩展\n- [x] No secrets / personal vault data committed / 无敏感信息被提交\n\n## 边界说明（评审参考）\n\n**本 PR 与 PR #9（in review 的 #15 正则搜索）的关系**：\n\n- `NexusSearchPanel.commit()` 把面板字段打包成 `SearchQuery` 并 dispatch 给编辑器，**面板搜索完全走 CM6 内部引擎**，不经过 `findSearchMatches` / `replaceAllMatches`\n- 因此本 PR 只动**独立工具函数**侧，与 PR #9 的面板 / `SearchQuery` 改动正交，不存在 conflict\n- 两条路径合流后用户可以在面板与脚本中获得一致的搜索能力\n\n**为什么对非法正则选择 graceful fallback 而非抛错？**\n\n`findSearchMatches` 用于\"实时联想\"场景（用户每次按键都重算结果），非法正则在输入过程中是**常态**而非异常（`(` 输入到一半就是非法的）。抛错会让宿主必须包 `try/catch`，并要决定\"半路非法是显示空列表还是保留上次结果\" —— 把策略锁死在工具函数侧反而限制宿主选择。返回 `[]` / 原 doc 表达的语义是\"当前没有命中\"，宿主可以叠加\"上次结果防抖\"等高级行为。\n\n## Out of scope（识别但本 PR 不做）\n\n- **正则模式的 replace 捕获组验证**：JS `String.replace` 原生支持 `$1` / `$2` 等捕获组替换，本 PR 通过测试 `replaceAllMatches(\"foo bar baz\", \"(\\\\w+)\", \"[$1]\", { regexp: true })` 隐式验证（已在 #15 范围）；但当前**未单独**加测试断言（commit message 中提及但代码未落地），建议合入后另开小 PR 补\n- **面板侧的非法正则 UX 反馈**（红框、错误提示）：由 PR #9 负责面板侧，本 PR 不涉及\n- **fuzzy / fzf 匹配**：Roadmap #17（P2），独立条目\n- **多 query 同时搜索 / 排除模式**：超出 #2 / #15 范围\n\n## Screenshots / Recordings · 截图或录屏 (UI changes)\n\nN/A —— 工具函数扩展，无 UI 改动。使用示例：\n\n```ts\nimport { findSearchMatches, replaceAllMatches } from \"@floatboat/nexus-plugin-search\";\n\n// 整词匹配：避开 cats / catalog\nfindSearchMatches(\"cat cats catalog\", \"cat\", { wholeWord: true });\n// → [{ from: 0, to: 3, text: \"cat\" }]\n\n// 正则匹配：日期\nfindSearchMatches(\"2024-01-15 to 2024-12-31\", \"\\\\d{4}-\\\\d{2}-\\\\d{2}\", { regexp: true });\n// → [{ from: 0, to: 10, ... }, { from: 14, to: 24, ... }]\n\n// 非法正则 → 空数组，不抛错\nfindSearchMatches(\"anything\", \"[invalid(\", { regexp: true });\n// → []\n```",
+  "created_at": "2026-06-17T08:20:26Z",
+  "draft": false,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "head_sha_at_first_review": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+  "first_review_time": "2026-06-17T08:20:44Z",
+  "commits_at_first_review": [
+    {
+      "sha": "856e57ab908ea28177f7750a7313dedd375eb2ae",
+      "message": "feat(search): add whole-word and regex matching to utility functions\n\nAdd `wholeWord` and `regexp` options to `SearchOptions`. Whole-word uses\n\\b boundaries; regex mode passes the query as a raw pattern with graceful\nhandling of invalid expressions (returns empty results).\n\nCo-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>",
+      "date": "2026-06-17T05:37:10Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "9ba2cf56e606c24099fc17a3068ed8047833699c",
+        "filename": "packages/plugin-search/src/index.ts",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 4,
+        "changes": 33,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/856e57ab908ea28177f7750a7313dedd375eb2ae/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/856e57ab908ea28177f7750a7313dedd375eb2ae/packages%2Fplugin-search%2Fsrc%2Findex.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Fsrc%2Findex.ts?ref=856e57ab908ea28177f7750a7313dedd375eb2ae",
+        "patch": "@@ -25,6 +25,8 @@ export interface SearchMatch {\n \n export interface SearchOptions {\n   caseSensitive?: boolean;\n+  wholeWord?: boolean;\n+  regexp?: boolean;\n }\n \n export interface SearchPluginOptions {\n@@ -79,6 +81,24 @@ function escapeRegExp(value: string): string {\n   return value.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\");\n }\n \n+function buildSearchPattern(query: string, options: SearchOptions = {}): RegExp | null {\n+  const flags = options.caseSensitive ? \"g\" : \"gi\";\n+\n+  let pattern: string;\n+  if (options.regexp) {\n+    pattern = options.wholeWord ? `\\\\b(?:${query})\\\\b` : query;\n+  } else {\n+    const escaped = escapeRegExp(query);\n+    pattern = options.wholeWord ? `\\\\b${escaped}\\\\b` : escaped;\n+  }\n+\n+  try {\n+    return new RegExp(pattern, flags);\n+  } catch {\n+    return null;\n+  }\n+}\n+\n export function findSearchMatches(\n   doc: string,\n   query: string,\n@@ -88,8 +108,10 @@ export function findSearchMatches(\n     return [];\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  const pattern = new RegExp(escapeRegExp(query), flags);\n+  const pattern = buildSearchPattern(query, options);\n+  if (!pattern) {\n+    return [];\n+  }\n   const matches: SearchMatch[] = [];\n \n   for (const match of doc.matchAll(pattern)) {\n@@ -116,8 +138,11 @@ export function replaceAllMatches(\n     return doc;\n   }\n \n-  const flags = options.caseSensitive ? \"g\" : \"gi\";\n-  return doc.replace(new RegExp(escapeRegExp(query), flags), replacement);\n+  const pattern = buildSearchPattern(query, options);\n+  if (!pattern) {\n+    return doc;\n+  }\n+  return doc.replace(pattern, replacement);\n }\n \n function resolveLabel("
+      },
+      {
+        "sha": "0f89abc56ff3fb15680a04253ebc8d1ae9a91d89",
+        "filename": "packages/plugin-search/test/plugin-search.test.ts",
+        "status": "modified",
+        "additions": 56,
+        "deletions": 0,
+        "changes": 56,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/856e57ab908ea28177f7750a7313dedd375eb2ae/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/856e57ab908ea28177f7750a7313dedd375eb2ae/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-search%2Ftest%2Fplugin-search.test.ts?ref=856e57ab908ea28177f7750a7313dedd375eb2ae",
+        "patch": "@@ -21,10 +21,66 @@ describe(\"@floatboat/nexus-plugin-search\", () => {\n     ]);\n   });\n \n+  it(\"supports whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat cats catalog\", \"cat\", { wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive whole-word matching\", () => {\n+    expect(findSearchMatches(\"cat Cat CAT\", \"Cat\", { wholeWord: true, caseSensitive: true })).toEqual([\n+      { from: 4, to: 7, text: \"Cat\" }\n+    ]);\n+  });\n+\n   it(\"replaces all matches in a document\", () => {\n     expect(replaceAllMatches(\"cat scatter cat\", \"cat\", \"dog\")).toBe(\"dog sdogter dog\");\n   });\n \n+  it(\"replaces only whole-word matches\", () => {\n+    expect(replaceAllMatches(\"cat catalog cat concatenate\", \"cat\", \"dog\", { wholeWord: true })).toBe(\n+      \"dog catalog dog concatenate\"\n+    );\n+  });\n+\n+  it(\"supports regex search\", () => {\n+    expect(findSearchMatches(\"foo123 bar456 baz\", \"\\\\d+\", { regexp: true })).toEqual([\n+      { from: 3, to: 6, text: \"123\" },\n+      { from: 10, to: 13, text: \"456\" }\n+    ]);\n+  });\n+\n+  it(\"supports regex search with groups\", () => {\n+    expect(findSearchMatches(\"2024-01-15 and 2024-12-31\", \"\\\\d{4}-\\\\d{2}-\\\\d{2}\", { regexp: true })).toEqual([\n+      { from: 0, to: 10, text: \"2024-01-15\" },\n+      { from: 15, to: 25, text: \"2024-12-31\" }\n+    ]);\n+  });\n+\n+  it(\"supports case-sensitive regex search\", () => {\n+    expect(findSearchMatches(\"Hello hello HELLO\", \"h.llo\", { regexp: true, caseSensitive: true })).toEqual([\n+      { from: 6, to: 11, text: \"hello\" }\n+    ]);\n+  });\n+\n+  it(\"returns empty results for invalid regex\", () => {\n+    expect(findSearchMatches(\"hello world\", \"[invalid(\", { regexp: true })).toEqual([]);\n+  });\n+\n+  it(\"replaces with regex capture groups\", () => {\n+    expect(replaceAllMatches(\"foo bar baz\", \"(\\\\w+)\", \"[$1]\", { regexp: true })).toBe(\"[foo] [bar] [baz]\");\n+  });\n+\n+  it(\"returns original doc for invalid regex in replace\", () => {\n+    expect(replaceAllMatches(\"hello world\", \"[bad(\", \"x\", { regexp: true })).toBe(\"hello world\");\n+  });\n+\n+  it(\"supports regex with whole-word combined\", () => {\n+    expect(findSearchMatches(\"cat cats concatenate\", \"cat|dog\", { regexp: true, wholeWord: true })).toEqual([\n+      { from: 0, to: 3, text: \"cat\" }\n+    ]);\n+  });\n+\n   it(\"creates a search plugin descriptor\", () => {\n     const plugin = createSearchPlugin();\n "
+      }
+    ]
+  },
+  "status_first": {
+    "state": "success",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "success",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=68",
+        "description": "Contributor License Agreement is signed."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

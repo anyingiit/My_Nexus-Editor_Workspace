@@ -1,0 +1,15 @@
+{
+  "pr_number": 3,
+  "title": "test: harden fixture checks and add typecheck",
+  "merged": true,
+  "state": "closed",
+  "closed_at": "2026-05-13T09:10:04Z",
+  "merged_at": "2026-05-13T09:10:04Z",
+  "merged_by": "ketd",
+  "user": "ketd",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [],
+  "golden_decision": "approve",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}

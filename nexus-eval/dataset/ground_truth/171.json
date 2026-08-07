@@ -1,0 +1,51 @@
+{
+  "pr_number": 171,
+  "title": "feat(streaming,search): add AI token streaming plugin and subsequence fuzzy matcher",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "PhoebeCLS",
+  "reviews": [
+    {
+      "user": "copilot-pull-request-reviewer[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-07-22T08:41:31Z",
+      "body": "## Pull request overview\n\nAdds a new CodeMirror-based streaming plugin to support AI token delta injection with a typing-cursor decoration, and extends the existing search plugin with a subsequence fuzzy matcher (with scoring + position extraction) aligned to the roadmap and OpenSpec change.\n\n**Changes:**\n- Introduce `@floatboat/nexus-plugin-streaming` with session state/effects, a cursor widget decoration, and a `StreamingManager` API.\n- Add subsequence fuzzy matching via `findFuzzyMatches()` and integrate it behind `findSearchMatches(..., { fuzzy: true })`.\n- Update workspace wiring (tsconfig paths, root build script, lockfile) and document roadmap/spec artifacts.\n\n### Reviewed changes\n\nCopilot reviewed 14 out of 15 changed files in this pull request and generated 4 comments.\n\n<details>\n<summary>Show a summary per file</summary>\n\n| File | Description |\r\n| ---- | ----------- |\r\n| tsconfig.base.json | Adds TS path alias for the new streaming plugin package. |\r\n| pnpm-lock.yaml | Registers the new `packages/plugin-streaming` importer dependencies. |\r\n| packages/plugin-streaming/tsconfig.json | Adds TS config for the new package including `src/` and `test/`. |\r\n| packages/plugin-streaming/test/streaming.test.ts | New Vitest coverage for streaming session lifecycle and chunk insertion. |\r\n| packages/plugin-streaming/src/streaming-plugin.ts | Implements streaming session StateField/effects, cursor decoration, and `StreamingManager`. |\r\n| packages/plugin-streaming/src/index.ts | Exposes the streaming plugin public API surface. |\r\n| packages/plugin-streaming/package.json | New package manifest for publishing/building the streaming plugin. |\r\n| packages/plugin-search/test/fuzzy-search.test.ts | Adds unit tests for fuzzy matching behavior and delegation via `findSearchMatches`. |\r\n| packages/plugin-search/src/index.ts | Adds `FuzzyMatch`, `findFuzzyMatches()`, and `fuzzy` options integration. |\r\n| package.json | Includes streaming plugin in the root build pipeline. |\r\n| openspec/specs/plugin-streaming/spec.md | Adds the capability spec for streaming initialization, delta insertion, and cursor decoration. |\r\n| openspec/changes/add-plugin-streaming/tasks.md | Tracks implementation checklist for the OpenSpec change. |\r\n| openspec/changes/add-plugin-streaming/proposal.md | Records motivation/scope/verification steps for the streaming plugin change. |\r\n| docs/ROADMAP.md | Marks fuzzy search roadmap item as done and documents the implemented approach. |\r\n| docs/ROADMAP.zh.md | Same roadmap status update and description for the Chinese roadmap. |\n</details>\n\n\n<details>\n<summary>Files not reviewed (1)</summary>\n\n* **pnpm-lock.yaml**: Generated file\n</details>\n\n\n\n\n\n\n---\n\n💡 <a href=\"/floatboatai/Nexus-Editor/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>."
+    }
+  ],
+  "review_comments": [
+    {
+      "user": "Copilot",
+      "created_at": "2026-07-22T08:41:29Z",
+      "body": "`startStream()` accepts an arbitrary `atPos` and stores it as `startPos/currentPos` without validating it against the current document length. If a caller passes an out-of-range position, later `appendChunk()` dispatches an invalid change and `streamingDecorationPlugin` can also throw when placing a widget range beyond `doc.length`.\n\nClamp the position into `[0, doc.length]` before dispatching the effect.",
+      "path": "packages/plugin-streaming/src/streaming-plugin.ts"
+    },
+    {
+      "user": "Copilot",
+      "created_at": "2026-07-22T08:41:30Z",
+      "body": "`StreamingPluginOptions` exposes `shimmerClassName`, but the implementation never reads it (the widget/theme always hardcode `\"nexus-streaming-cursor\"`). This makes the public API misleading because changing `shimmerClassName` has no effect.\n\nEither wire this option through to the decoration + theme, or remove it until it’s supported.",
+      "path": "packages/plugin-streaming/src/streaming-plugin.ts"
+    },
+    {
+      "user": "Copilot",
+      "created_at": "2026-07-22T08:41:30Z",
+      "body": "The tests create `EditorView` instances but never call `view.destroy()`. Other CodeMirror-based tests in this repo consistently destroy views to avoid leaking DOM/event handlers across the test suite.\n\nAdd a shared cleanup (e.g., `afterEach`) to destroy any views created by `createView()`.",
+      "path": "packages/plugin-streaming/test/streaming.test.ts"
+    },
+    {
+      "user": "Copilot",
+      "created_at": "2026-07-22T08:41:30Z",
+      "body": "`tsconfig.base.json` adds a path alias for `@floatboat/nexus-plugin-streaming`, but the Vitest alias map (`vitest.config.ts`) is still missing the corresponding entry. In this repo, tests typically rely on Vitest’s `resolve.alias` being kept in sync with TS path aliases; leaving it out can cause `@floatboat/*` imports to work in TS/IDE but fail under Vitest/bundler resolution.\n\nPlease add the same alias to `vitest.config.ts`.",
+      "path": "tsconfig.base.json"
+    }
+  ],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-22T08:37:58Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=171) <br/>All committers have signed the CLA."
+    }
+  ]
+}

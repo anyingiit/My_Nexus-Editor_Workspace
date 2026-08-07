@@ -1,0 +1,60 @@
+{
+  "pr_number": 190,
+  "title": "feat(history): add programmatic undo-group control",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "7d24689f71b7436b03125fcedf8771f4c9160cf4",
+  "merge_commit_sha": "2a3f1f9021240bfbcd9a2d96297fb6f3a141a003",
+  "base_sha": "dfd466d657c56d31fe0e8d73d0a9fcaf730d5b73",
+  "commits": [
+    {
+      "sha": "7d24689f71b7436b03125fcedf8771f4c9160cf4",
+      "message": "feat(history): add programmatic undo-group control\n\nAdd groupUndo(view, fn) API that collapses all editor changes made\ninside the callback into a single undo step — one Ctrl+Z reverts\nthe entire group.\n\n- StateField<number> undoGroupDepth tracks active nesting\n- startUndoGroup / endUndoGroup StateEffects manage depth\n- history() joinToEvent forces transaction joining when depth > 0\n- isolateHistory annotations isolate the group from surrounding edits\n- Supports nested groupUndo calls (outermost boundary defines step)\n- Callback errors are handled: group closes properly in finally block\n- Re-exports undo/redo/undoDepth/redoDepth from @codemirror/commands\n\nRoadmap: #8 (P1)\nNo OpenSpec required per docs/ROADMAP.md\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+      "date": "2026-07-27T08:12:25Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "packages/plugin-history/package.json",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1
+    },
+    {
+      "filename": "packages/plugin-history/src/index.ts",
+      "status": "modified",
+      "additions": 145,
+      "deletions": 4,
+      "changes": 149
+    },
+    {
+      "filename": "packages/plugin-history/test/plugin-history.test.ts",
+      "status": "modified",
+      "additions": 419,
+      "deletions": 3,
+      "changes": 422
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=190",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

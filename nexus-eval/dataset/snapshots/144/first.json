@@ -1,0 +1,76 @@
+{
+  "pr_number": 144,
+  "title": "feat(toolbar): add one-click clear format button with separate Tx icon",
+  "body": "<!--\r\nPR title must follow Conventional Commits:  <type>(<scope>): <subject>\r\n  e.g.  feat(toolbar): list toggle for multi-line selection\r\nAllowed scopes — see CONTRIBUTING.md §2.\r\nProject scope and contribution policy — see GOVERNANCE.md.\r\n\r\nPR 标题请遵循 Conventional Commits 规范，合法 scope 见 CONTRIBUTING.md §2。\r\n项目范围与贡献政策见 GOVERNANCE.md。\r\n-->\r\n\r\n## Summary / 摘要\r\n为编辑器工具栏新增一键清除文本格式按钮，剥离选中内容所有Markdown富文本样式，使用独立 T× 图标区分功能。\r\n\r\n## Changes / 修改内容\r\n1. `packages/plugin-toolbar/src/icons.ts`：新增 `iconClearFormat` 工具图标，显示 T×\r\n2. `packages/plugin-toolbar/src/formatting.ts`：实现 `clearAllFormat` 函数，通过原生接口剔除 * _ ` # 等格式标记\r\n3. `packages/plugin-toolbar/src/toolbar-ui.ts`：在文字颜色分组末尾新增清除格式按钮，UI风格与现有组件统一\r\n\r\n## Test / 自测验证\r\n1. 混合格式文本：`**加粗** _斜体_ ==高亮==` 选中后一键清除样式\r\n2. 单行彩色 span 标签文本，可正常剥离样式标记\r\n3. 空选区、多行混合文本均无运行报错\r\n\r\n## Screenshot / 效果截图\r\n<img width=\"1907\" height=\"661\" alt=\"点击前带完整格式文本\" src=\"https://github.com/user-attachments/assets/0aeddc95-65b6-4c8a-9c1c-bfb05f438dee\" />\r\n<img width=\"1908\" height=\"537\" alt=\"点击清除后纯文本效果\" src=\"https://github.com/user-attachments/assets/89cb4171-ff97-4d35-903a-a116ec34d2fa\" />\r\n<img width=\"1908\" height=\"578\" alt=\"点击前带完整格式文本\" src=\"https://github.com/user-attachments/assets/38be98f2-2eb9-424f-91bc-7be36f1565d0\" />\r\n<img width=\"1912\" height=\"554\" alt=\"点击清除后纯文本效果\" src=\"https://github.com/user-attachments/assets/c85c836b-2263-4c7c-acdb-af5d8286c684\" />\r\n\r\n1. 第一张：点击清除按钮前，完整保留颜色、加粗等富文本样式；\r\n2. 第二张：点击 T× 清除按钮后，所有格式标记剥离，仅保留纯文字内容。\r\n",
+  "created_at": "2026-07-09T15:41:44Z",
+  "draft": false,
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "head_sha_at_first_review": "7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+  "first_review_time": "2026-07-09T15:48:15Z",
+  "commits_at_first_review": [
+    {
+      "sha": "7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+      "message": "feat(toolbar): add one-click clear format button with separate Tx icon",
+      "date": "2026-07-09T15:30:10Z"
+    }
+  ],
+  "compare_first_review": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "files": [
+      {
+        "sha": "01914cd8823502cebf1337f26a8260b3f3b85efa",
+        "filename": "packages/plugin-toolbar/src/formatting.ts",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Fformatting.ts?ref=7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+        "patch": "@@ -208,3 +208,16 @@ export function insertHorizontalRule(editor: EditorAPI): boolean {\n   editor.setSelection(anchor + hr.length);\n   return true;\n }\n+export function clearAllFormat(editor: EditorAPI) {\n+  if (!editor) return;\n+\n+  // 获取全文与选中区间\n+  const doc = editor.getDocument();\n+  const { anchor, head } = editor.getSelection();\n+  const start = Math.min(anchor, head);\n+  const end = Math.max(anchor, head);\n+  const selectedText = doc.slice(start, end);\n+\n+  // 直接替换选中内容为纯文本，剥离所有Markdown/富文本标记\n+  editor.replaceRange(start, end, selectedText.replace(/[*_`#~=]/g, \"\"));\n+}\n\\ No newline at end of file"
+      },
+      {
+        "sha": "7f5f51e3e01967390ff261e440e92db7d7df7a00",
+        "filename": "packages/plugin-toolbar/src/icons.ts",
+        "status": "modified",
+        "additions": 6,
+        "deletions": 0,
+        "changes": 6,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3/packages%2Fplugin-toolbar%2Fsrc%2Ficons.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3/packages%2Fplugin-toolbar%2Fsrc%2Ficons.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Ficons.ts?ref=7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+        "patch": "@@ -174,3 +174,9 @@ export function iconHorizontalRule(): HTMLElement {\n     `<line x1=\"2\" y1=\"9\" x2=\"16\" y2=\"9\"/>`\n   );\n }\n+export const iconClearFormat = () => {\n+  const el = document.createElement(\"span\");\n+  el.textContent = \"T×\";\n+  el.style.fontSize = \"14px\";\n+  return el;\n+};\n\\ No newline at end of file"
+      },
+      {
+        "sha": "14e9d38a1274b475762cc3733bd66ce21c30421f",
+        "filename": "packages/plugin-toolbar/src/toolbar-ui.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "blob_url": "https://github.com/floatboatai/Nexus-Editor/blob/7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "raw_url": "https://github.com/floatboatai/Nexus-Editor/raw/7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts",
+        "contents_url": "https://api.github.com/repos/floatboatai/Nexus-Editor/contents/packages%2Fplugin-toolbar%2Fsrc%2Ftoolbar-ui.ts?ref=7e01a7a0ecee620adc5cfc1514a370b1e7b76dc3",
+        "patch": "@@ -17,6 +17,7 @@ import {\n   insertImage,\n   applyTextColor,\n   applyHighlight,\n+  clearAllFormat,\n } from \"./formatting\";\n import {\n   iconUndo,\n@@ -38,6 +39,7 @@ import {\n   iconHighlight,\n   iconImage,\n   iconFullscreen,\n+  iconClearFormat, // 新增\n } from \"./icons\";\n \n export interface ToolbarButton {\n@@ -177,6 +179,13 @@ function defaultGroups(options?: ToolbarUIOptions): ToolbarGroup[] {\n       buttons: [\n         { id: \"text-color\", title: \"Text color\", icon: iconTextColor, action: () => {} },\n         { id: \"highlight\", title: \"Highlight\", icon: iconHighlight, action: () => {} },\n+        // 直接追加到同组末尾，不要新建大括号分组\n+    {\n+      id: \"clear-format\",\n+      title: \"Clear all text format\",\n+      icon: iconClearFormat, // 换成专属图标\n+      action: (editor) => clearAllFormat(editor),\n+    },\n       ],\n     },\n     {"
+      }
+    ]
+  },
+  "status_first": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=144",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_first": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

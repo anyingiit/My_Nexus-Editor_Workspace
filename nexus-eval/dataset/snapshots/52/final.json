@@ -1,0 +1,123 @@
+{
+  "pr_number": 52,
+  "title": "feat: add editor container props and onReady",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-06-23T12:37:49Z",
+  "merged_by": null,
+  "closed_by": "ketd",
+  "head_sha_final": "2a1036826e436aaae4b043c202be80ef1922309b",
+  "merge_commit_sha": null,
+  "base_sha": "a5b87a59dc9253dde19eb0ad47d0928c3b2b1d51",
+  "commits": [
+    {
+      "sha": "2a1036826e436aaae4b043c202be80ef1922309b",
+      "message": "feat: add editor container props and onReady",
+      "date": "2026-06-09T15:06:36Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "README.zh.md",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7
+    },
+    {
+      "filename": "packages/react/src/editor.tsx",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 4,
+      "changes": 47
+    },
+    {
+      "filename": "packages/react/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/react/src/types.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 2,
+      "changes": 9
+    },
+    {
+      "filename": "packages/react/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/react/test/editor-react.test.tsx",
+      "status": "modified",
+      "additions": 46,
+      "deletions": 0,
+      "changes": 46
+    },
+    {
+      "filename": "packages/vue/src/editor.ts",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 8,
+      "changes": 34
+    },
+    {
+      "filename": "packages/vue/src/index.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/vue/src/types.ts",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 2,
+      "changes": 9
+    },
+    {
+      "filename": "packages/vue/src/use-editor.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4
+    },
+    {
+      "filename": "packages/vue/test/editor-vue.test.ts",
+      "status": "modified",
+      "additions": 54,
+      "deletions": 0,
+      "changes": 54
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=52",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "pr_number": 126,
+  "title": "feat(mention): add @mention plugin with async query and live-preview …",
+  "state": "open",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": null,
+  "merged_by": null,
+  "closed_by": null,
+  "head_sha_final": "943799420945d927e2542bd48641485be825ee42",
+  "merge_commit_sha": "31f8ed1134aaec1d02ec386ccb49ae139e0b16e7",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "943799420945d927e2542bd48641485be825ee42",
+      "message": "feat(mention): add @mention plugin with async query and live-preview widget\n\n- Add plugin-mention package with headless floating menu\n- Extend mdast with mention node type via remark plugin\n- Provide CM6 ViewPlugin for @-trigger detection and keyboard navigation\n- Add live-preview widget for rendered mention chips\n- Include full test coverage and OpenSpec proposal\n\nCloses roadmap item #20 (prerequisite for shared comments / @mention)",
+      "date": "2026-07-04T03:26:05Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "openspec/changes/add-plugin-mention/proposal.md",
+      "status": "added",
+      "additions": 63,
+      "deletions": 0,
+      "changes": 63
+    },
+    {
+      "filename": "packages/plugin-mention/README.md",
+      "status": "added",
+      "additions": 135,
+      "deletions": 0,
+      "changes": 135
+    },
+    {
+      "filename": "packages/plugin-mention/package.json",
+      "status": "added",
+      "additions": 32,
+      "deletions": 0,
+      "changes": 32
+    },
+    {
+      "filename": "packages/plugin-mention/src/index.ts",
+      "status": "added",
+      "additions": 40,
+      "deletions": 0,
+      "changes": 40
+    },
+    {
+      "filename": "packages/plugin-mention/src/mention-ast.ts",
+      "status": "added",
+      "additions": 62,
+      "deletions": 0,
+      "changes": 62
+    },
+    {
+      "filename": "packages/plugin-mention/src/mention-extension.ts",
+      "status": "added",
+      "additions": 263,
+      "deletions": 0,
+      "changes": 263
+    },
+    {
+      "filename": "packages/plugin-mention/src/mention-menu.ts",
+      "status": "added",
+      "additions": 137,
+      "deletions": 0,
+      "changes": 137
+    },
+    {
+      "filename": "packages/plugin-mention/src/mention-types.ts",
+      "status": "added",
+      "additions": 71,
+      "deletions": 0,
+      "changes": 71
+    },
+    {
+      "filename": "packages/plugin-mention/src/mention-widget.ts",
+      "status": "added",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67
+    },
+    {
+      "filename": "packages/plugin-mention/tests/mention-ast.test.ts",
+      "status": "added",
+      "additions": 58,
+      "deletions": 0,
+      "changes": 58
+    },
+    {
+      "filename": "packages/plugin-mention/tests/mention-extension.test.ts",
+      "status": "added",
+      "additions": 49,
+      "deletions": 0,
+      "changes": 49
+    },
+    {
+      "filename": "packages/plugin-mention/tests/mention-menu.test.ts",
+      "status": "added",
+      "additions": 51,
+      "deletions": 0,
+      "changes": 51
+    },
+    {
+      "filename": "packages/plugin-mention/tsconfig.json",
+      "status": "added",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=126",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

@@ -1,0 +1,832 @@
+=== judge empty on test tag=final ===
+[judge empty 118] decision=approve ci=pass reasons=4
+[judge empty 120] decision=reject ci=unknown reasons=1
+[judge empty 121] decision=approve ci=pass reasons=4
+[judge empty 135] decision=approve ci=pass reasons=3
+[judge empty 138] decision=approve ci=pass reasons=3
+[judge empty 144] decision=reject ci=unknown reasons=1
+[judge empty 145] decision=reject ci=unknown reasons=2
+[judge empty 146] decision=reject ci=unknown reasons=3
+[judge empty 151] decision=reject ci=unknown reasons=4
+[judge empty 152] decision=approve ci=pass reasons=3
+[judge empty 153] decision=reject ci=unknown reasons=5
+[judge empty 154] decision=reject ci=unknown reasons=2
+[judge empty 155] decision=reject ci=unknown reasons=3
+[judge empty 157] decision=reject ci=unknown reasons=3
+[judge empty 160] decision=reject ci=unknown reasons=2
+[judge empty 163] decision=reject ci=unknown reasons=2
+[judge empty 182] decision=approve ci=pass reasons=3
+[judge empty 183] decision=approve ci=pass reasons=0
+[judge empty 196] decision=approve ci=unknown reasons=3
+[judge empty 202] decision=reject ci=unknown reasons=2
+[judge empty 212] decision=reject ci=unknown reasons=3
+judge empty on test: 21 PRs
+=== judge baseline on test tag=final ===
+[judge baseline 118] decision=reject ci=pass reasons=3
+[judge baseline 120] decision=reject ci=unknown reasons=1
+[judge baseline 121] decision=reject ci=pass reasons=4
+[judge baseline 135] decision=approve ci=pass reasons=4
+[judge baseline 138] decision=reject ci=pass reasons=3
+[judge baseline 144] decision=reject ci=unknown reasons=3
+[judge baseline 145] decision=reject ci=unknown reasons=3
+[judge baseline 146] decision=reject ci=unknown reasons=3
+[judge baseline 151] decision=reject ci=unknown reasons=4
+[judge baseline 152] decision=approve ci=pass reasons=3
+[judge baseline 153] decision=reject ci=unknown reasons=5
+[judge baseline 154] decision=reject ci=unknown reasons=3
+[judge baseline 155] decision=reject ci=unknown reasons=3
+[judge baseline 157] decision=reject ci=unknown reasons=3
+[judge baseline 160] decision=reject ci=unknown reasons=3
+[judge baseline 163] decision=reject ci=unknown reasons=3
+[judge baseline 182] decision=approve ci=pass reasons=4
+[judge baseline 183] decision=approve ci=pass reasons=3
+[judge baseline 196] decision=reject ci=unknown reasons=3
+[judge baseline 202] decision=reject ci=unknown reasons=4
+[judge baseline 212] decision=reject ci=unknown reasons=3
+judge baseline on test: 21 PRs
+=== judge ours on test tag=final ===
+[llm empty] retry 0: None finish=length
+[judge ours 118] decision=reject ci=pass reasons=4
+[judge ours 120] decision=reject ci=unknown reasons=2
+[judge ours 121] decision=reject ci=pass reasons=0
+[judge ours 135] decision=approve ci=pass reasons=3
+[judge ours 138] decision=reject ci=pass reasons=4
+[judge ours 144] decision=reject ci=unknown reasons=5
+[judge ours 145] decision=reject ci=unknown reasons=5
+[judge ours 146] decision=reject ci=unknown reasons=4
+[judge ours 151] decision=reject ci=unknown reasons=4
+[judge ours 152] decision=reject ci=pass reasons=2
+[judge ours 153] decision=reject ci=unknown reasons=5
+[judge ours 154] decision=reject ci=unknown reasons=4
+[judge ours 155] decision=reject ci=unknown reasons=3
+[judge ours 157] decision=reject ci=unknown reasons=4
+[judge ours 160] decision=reject ci=unknown reasons=2
+[judge ours 163] decision=reject ci=unknown reasons=2
+[judge ours 182] decision=reject ci=pass reasons=1
+[judge ours 183] decision=reject ci=pass reasons=2
+[judge ours 196] decision=reject ci=unknown reasons=3
+[judge ours 202] decision=reject ci=unknown reasons=3
+[judge ours 212] decision=reject ci=unknown reasons=3
+judge ours on test: 21 PRs
+PR 118: golden=reject judge=approve dec_ok=False ci_ok=True coverage=0.38 precision=0.75 pass=False
+PR 120: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.17 precision=1.00 pass=False
+PR 121: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.00 pass=False
+PR 135: golden=approve judge=approve dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 138: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.00 pass=False
+PR 144: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 145: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 146: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 151: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.25 pass=True
+PR 152: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.00 pass=False
+PR 153: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.67 precision=0.60 pass=True
+PR 154: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 155: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 157: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 160: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 163: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 182: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.33 pass=False
+PR 183: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=1.00 pass=False
+PR 196: golden=reject judge=approve dec_ok=False ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 202: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 212: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.50 precision=1.00 pass=True
+SUMMARY: {
+  "n": 21,
+  "decision_accuracy": 0.6667,
+  "ci_match": 1.0,
+  "per_pr_pass_rate": 0.4762,
+  "reject_class_recall": 0.65,
+  "n_rejects": 20,
+  "n_approves": 1,
+  "coverage_mean": 0.7004,
+  "precision_mean": 0.2825,
+  "coverage_p50": 1.0,
+  "rows": [
+    {
+      "pr": 118,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.375,
+      "precision": 0.75
+    },
+    {
+      "pr": 120,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.167,
+      "precision": 1.0
+    },
+    {
+      "pr": 121,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 135,
+      "decision": "approve",
+      "golden": "approve",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 138,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 144,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 145,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 146,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 151,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.25
+    },
+    {
+      "pr": 152,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 153,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.667,
+      "precision": 0.6
+    },
+    {
+      "pr": 154,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 155,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 157,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 160,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 163,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 182,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 183,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 1.0
+    },
+    {
+      "pr": 196,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 202,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 212,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.5,
+      "precision": 1.0
+    }
+  ]
+}
+empty test: acc=0.6667 recall=0.65
+PR 118: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.50 precision=0.67 pass=True
+PR 120: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.17 precision=1.00 pass=False
+PR 121: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 135: golden=approve judge=approve dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 138: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 144: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 145: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 146: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 151: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 152: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.00 pass=False
+PR 153: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.50 precision=0.20 pass=True
+PR 154: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 155: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 157: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 160: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 163: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 182: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.50 pass=False
+PR 183: golden=reject judge=approve dec_ok=False ci_ok=True coverage=1.00 precision=0.00 pass=False
+PR 196: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 202: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 212: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.50 precision=0.67 pass=True
+SUMMARY: {
+  "n": 21,
+  "decision_accuracy": 0.8571,
+  "ci_match": 1.0,
+  "per_pr_pass_rate": 0.5714,
+  "reject_class_recall": 0.85,
+  "n_rejects": 20,
+  "n_approves": 1,
+  "coverage_mean": 0.6508,
+  "precision_mean": 0.192,
+  "coverage_p50": 1.0,
+  "rows": [
+    {
+      "pr": 118,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.5,
+      "precision": 0.667
+    },
+    {
+      "pr": 120,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.167,
+      "precision": 1.0
+    },
+    {
+      "pr": 121,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 135,
+      "decision": "approve",
+      "golden": "approve",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 138,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 144,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 145,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 146,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 151,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 152,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 153,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.5,
+      "precision": 0.2
+    },
+    {
+      "pr": 154,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 155,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 157,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 160,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 163,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 182,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.5
+    },
+    {
+      "pr": 183,
+      "decision": "approve",
+      "golden": "reject",
+      "decision_ok": false,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 196,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 202,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 212,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.5,
+      "precision": 0.667
+    }
+  ]
+}
+baseline test: acc=0.8571 recall=0.85
+PR 118: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.62 precision=0.75 pass=True
+PR 120: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.33 precision=1.00 pass=False
+PR 121: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=1.00 pass=True
+PR 135: golden=approve judge=approve dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 138: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 144: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 145: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 146: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.25 pass=True
+PR 151: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 152: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 153: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.67 precision=0.60 pass=True
+PR 154: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 155: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 157: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.50 pass=True
+PR 160: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 163: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 182: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=1.00 pass=True
+PR 183: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.00 pass=True
+PR 196: golden=reject judge=reject dec_ok=True ci_ok=True coverage=1.00 precision=0.33 pass=True
+PR 202: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.00 precision=0.00 pass=False
+PR 212: golden=reject judge=reject dec_ok=True ci_ok=True coverage=0.50 precision=0.67 pass=True
+SUMMARY: {
+  "n": 21,
+  "decision_accuracy": 1.0,
+  "ci_match": 1.0,
+  "per_pr_pass_rate": 0.7619,
+  "reject_class_recall": 1.0,
+  "n_rejects": 20,
+  "n_approves": 1,
+  "coverage_mean": 0.7202,
+  "precision_mean": 0.3063,
+  "coverage_p50": 1.0,
+  "rows": [
+    {
+      "pr": 118,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.625,
+      "precision": 0.75
+    },
+    {
+      "pr": 120,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.333,
+      "precision": 1.0
+    },
+    {
+      "pr": 121,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 1.0
+    },
+    {
+      "pr": 135,
+      "decision": "approve",
+      "golden": "approve",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 138,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 144,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 145,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 146,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.25
+    },
+    {
+      "pr": 151,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 152,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 153,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.667,
+      "precision": 0.6
+    },
+    {
+      "pr": 154,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 155,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 157,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.5
+    },
+    {
+      "pr": 160,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 163,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 182,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 1.0
+    },
+    {
+      "pr": 183,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 196,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 1.0,
+      "precision": 0.333
+    },
+    {
+      "pr": 202,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": false,
+      "coverage": 0.0,
+      "precision": 0.0
+    },
+    {
+      "pr": 212,
+      "decision": "reject",
+      "golden": "reject",
+      "decision_ok": true,
+      "ci_ok": true,
+      "pass": true,
+      "coverage": 0.5,
+      "precision": 0.667
+    }
+  ]
+}
+ours test: acc=1.0 recall=1.0
+{
+  "split": "test",
+  "tag": "final",
+  "n_iter": 10000,
+  "seed": 1234,
+  "ours_vs_baseline": {
+    "n": 21,
+    "delta_acc": 0.1429,
+    "p_value": 0.0395
+  },
+  "ours_vs_empty": {
+    "n": 21,
+    "delta_acc": 0.3333,
+    "p_value": 0.0004
+  },
+  "observed": {
+    "acc": {
+      "empty": 0.6667,
+      "baseline": 0.8571,
+      "ours": 1.0
+    }
+  }
+}
+Done. score files + bootstrap.json under reports/. Assemble the report card with reports/make_final_card.py

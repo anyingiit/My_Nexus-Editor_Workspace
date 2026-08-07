@@ -1,0 +1,13 @@
+{
+  "pr_number": 131,
+  "title": "feat(search): add fuzzy search with fzy-inspired scoring and position tracking",
+  "merged": false,
+  "state": "open",
+  "closed_at": null,
+  "merged_at": null,
+  "merged_by": null,
+  "user": "danlylois-code",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": []
+}

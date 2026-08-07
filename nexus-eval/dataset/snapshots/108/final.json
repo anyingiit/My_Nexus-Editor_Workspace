@@ -1,0 +1,158 @@
+{
+  "pr_number": 108,
+  "title": "在 Demo 应用中接入块引用与内容嵌入",
+  "state": "closed",
+  "merged": false,
+  "merged_at": null,
+  "closed_at": "2026-07-03T05:46:57Z",
+  "merged_by": null,
+  "closed_by": "redreamality",
+  "head_sha_final": "623438258973236a1423a0cef19fef2217e7553d",
+  "merge_commit_sha": "e8f88638abdd29b07601b60d8803a0219d120ed5",
+  "base_sha": "63667f7604eda0da4fea294db6a1d3a2689d487a",
+  "commits": [
+    {
+      "sha": "623438258973236a1423a0cef19fef2217e7553d",
+      "message": "在 Demo 应用中接入块引用与内容嵌入\n将核心引擎已有的块引用/嵌入基础设施接入 Electron Demo，\n实现 [[file#block-id]] 点击导航和 ![[file#block-id]] 内容嵌入渲染。",
+      "date": "2026-07-03T04:00:48Z"
+    }
+  ],
+  "files": [
+    {
+      "filename": "apps/electron-demo/sample-vault/Projects/Ideas.md",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 2,
+      "changes": 6
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/index.md",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "apps/electron-demo/sample-vault/transclusion-demo.md",
+      "status": "added",
+      "additions": 35,
+      "deletions": 0,
+      "changes": 35
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/app.ts",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/editor-shell.ts",
+      "status": "modified",
+      "additions": 19,
+      "deletions": 0,
+      "changes": 19
+    },
+    {
+      "filename": "apps/electron-demo/src/renderer/link-index.ts",
+      "status": "modified",
+      "additions": 43,
+      "deletions": 1,
+      "changes": 44
+    },
+    {
+      "filename": "packages/core/src/block-id.ts",
+      "status": "added",
+      "additions": 196,
+      "deletions": 0,
+      "changes": 196
+    },
+    {
+      "filename": "packages/core/src/editor.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2
+    },
+    {
+      "filename": "packages/core/src/index.ts",
+      "status": "modified",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "packages/core/src/live-preview-ranges.ts",
+      "status": "modified",
+      "additions": 18,
+      "deletions": 3,
+      "changes": 21
+    },
+    {
+      "filename": "packages/core/src/live-preview.ts",
+      "status": "modified",
+      "additions": 69,
+      "deletions": 5,
+      "changes": 74
+    },
+    {
+      "filename": "packages/core/src/transclusion-widget.ts",
+      "status": "added",
+      "additions": 295,
+      "deletions": 0,
+      "changes": 295
+    },
+    {
+      "filename": "packages/core/src/types.ts",
+      "status": "modified",
+      "additions": 59,
+      "deletions": 4,
+      "changes": 63
+    },
+    {
+      "filename": "packages/core/src/wikilinks.ts",
+      "status": "modified",
+      "additions": 89,
+      "deletions": 3,
+      "changes": 92
+    },
+    {
+      "filename": "packages/core/test/block-id.test.ts",
+      "status": "added",
+      "additions": 154,
+      "deletions": 0,
+      "changes": 154
+    },
+    {
+      "filename": "packages/core/test/live-preview-ranges.test.ts",
+      "status": "modified",
+      "additions": 48,
+      "deletions": 5,
+      "changes": 53
+    },
+    {
+      "filename": "packages/core/test/transclusion-widget.test.ts",
+      "status": "added",
+      "additions": 193,
+      "deletions": 0,
+      "changes": 193
+    }
+  ],
+  "compare_final": null,
+  "status_final": {
+    "state": "pending",
+    "total_count": 1,
+    "statuses": [
+      {
+        "context": "license/cla",
+        "state": "pending",
+        "target_url": "https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=108",
+        "description": "Contributor License Agreement is not signed yet."
+      }
+    ]
+  },
+  "check_runs_final": {
+    "total_count": 0,
+    "check_runs": []
+  }
+}

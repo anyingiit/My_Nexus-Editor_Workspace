@@ -1,0 +1,21 @@
+{
+  "pr_number": 135,
+  "title": "fix: render strikethrough text inside markdown table cells",
+  "merged": true,
+  "state": "closed",
+  "closed_at": "2026-07-13T03:18:17Z",
+  "merged_at": "2026-07-13T03:18:17Z",
+  "merged_by": "2391384896",
+  "user": "2391384896",
+  "reviews": [],
+  "review_comments": [],
+  "issue_comments": [
+    {
+      "user": "CLAassistant",
+      "created_at": "2026-07-06T14:52:54Z",
+      "body": "[![CLA assistant check](https://cla-assistant.io/pull/badge/signed)](https://cla-assistant.io/floatboatai/Nexus-Editor?pullRequest=135) <br/>All committers have signed the CLA."
+    }
+  ],
+  "golden_decision": "approve",
+  "gt_basis": "final outcome (merged->approve, closed->reject)"
+}
