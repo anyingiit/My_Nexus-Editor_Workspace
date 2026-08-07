@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "paths": {
+      "@floatboat/nexus-core": ["packages/core/src/index.ts"],
+      "@floatboat/nexus-react": ["packages/react/src/index.ts"],
+      "@floatboat/nexus-vue": ["packages/vue/src/index.ts"],
+      "@floatboat/nexus-preset-gfm": ["packages/preset-gfm/src/index.ts"],
+      "@floatboat/nexus-plugin-slash": ["packages/plugin-slash/src/index.ts"],
+      "@floatboat/nexus-plugin-history": ["packages/plugin-history/src/index.ts"],
+      "@floatboat/nexus-plugin-search": ["packages/plugin-search/src/index.ts"],
+      "@floatboat/nexus-plugin-toolbar": ["packages/plugin-toolbar/src/index.ts"],
+      "@floatboat/nexus-plugin-math": ["packages/plugin-math/src/index.ts"],
+      "@floatboat/nexus-plugin-vim": ["packages/plugin-vim/src/index.ts"],
+      "@floatboat/nexus-plugin-wordcount": ["packages/plugin-wordcount/src/index.ts"]
+    },
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "lib": ["ES2022", "DOM"],
+    "types": ["node", "vitest/globals"]
+  }
+}

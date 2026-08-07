@@ -1,0 +1,123 @@
+{
+  "name": "@floatboat/nexus-electron-demo",
+  "productName": "Nexus Editor",
+  "version": "0.0.11",
+  "private": true,
+  "description": "Nexus Editor — Obsidian-style markdown editor",
+  "author": "Nexus Editor",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:renderer dev:electron",
+    "dev:renderer": "vite",
+    "dev:electron": "node scripts/dev-electron.mjs",
+    "build": "tsup electron/main.ts electron/preload.ts --outDir dist-electron --format cjs --platform node --external electron --clean && vite build",
+    "start": "electron dist-electron/main.js",
+    "test": "vitest run --config ../../vitest.config.ts",
+    "dist": "pnpm run build && electron-builder",
+    "dist:mac": "pnpm run build && electron-builder --mac",
+    "dist:mac-arm64": "pnpm run build && electron-builder --mac --arm64",
+    "dist:mac-x64": "pnpm run build && electron-builder --mac --x64",
+    "dist:win": "pnpm run build && electron-builder --win",
+    "dist:linux": "pnpm run build && electron-builder --linux",
+    "dist:dir": "pnpm run build && electron-builder --dir"
+  },
+  "dependencies": {
+    "@floatboat/nexus-core": "workspace:*",
+    "@floatboat/nexus-plugin-history": "workspace:*",
+    "@floatboat/nexus-plugin-search": "workspace:*",
+    "@floatboat/nexus-plugin-slash": "workspace:*",
+    "@floatboat/nexus-plugin-toolbar": "workspace:*",
+    "@floatboat/nexus-plugin-wordcount": "workspace:*",
+    "@floatboat/nexus-preset-gfm": "workspace:*",
+    "highlight.js": "^11.11.0"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
+    "npm-run-all2": "^7.0.0",
+    "tsup": "^8.5.0",
+    "vite": "^6.3.0"
+  },
+  "build": {
+    "appId": "com.nexus.editor",
+    "productName": "Nexus Editor",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraMetadata": {
+      "name": "nexus-editor",
+      "main": "dist-electron/main.js",
+      "dependencies": {}
+    },
+    "npmRebuild": false,
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "writeUpdateInfo": false
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Office"
+    }
+  }
+}
