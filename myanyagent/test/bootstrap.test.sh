@@ -8,6 +8,9 @@ trap cleanup EXIT
 
 fail() { printf 'FAIL: %s\n' "$1" >&2; exit 1; }
 
+# Isolate global git config to avoid polluting the host
+export GIT_CONFIG_GLOBAL="$TMPDIR/git-config-global"
+
 # --- Setup: throwaway git repo with .myanyagent.toml ---
 git init -q "$TMPDIR/repo" || fail "git init failed"
 cd "$TMPDIR/repo"
