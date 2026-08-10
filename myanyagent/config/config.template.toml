@@ -1,0 +1,12 @@
+# MyAnyAgent machine-level configuration
+# Installed by myanyagent/install.sh to ~/.config/myanyagent/config.toml
+# These values are shared across all repos using the MyAnyAgent GitHub App.
+
+# GitHub App Client ID (public identifier, used as JWT issuer)
+client_id = "Iv23lioD363YBpJJB9QE"
+
+# GitHub App ID (public identifier, reference only)
+app_id = "4483813"
+
+# Default private key path. Override per-invocation with MYANYAGENT_PRIVATE_KEY env var.
+private_key = "~/.secrets/myanyagent.2026-08-04.private-key.pem"
