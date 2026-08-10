@@ -275,15 +275,7 @@ test("failure message includes -> run: remediation hint", () => {
   execSync("git config --local myanyagent.installationId 151195329", { cwd: tmpRepo });
   execSync("git config --local myanyagent.privateKey /nonexistent/key.pem", { cwd: tmpRepo });
 
-  const r = execFileSync("node", [helperPath, "get"], {
-    input: "protocol=https\nhost=github.com\npath=anyingiit/My_Nexus-Editor_Workspace.git\n\n",
-    encoding: "utf8",
-    env: { ...process.env, GIT_DIR: path.join(tmpRepo, ".git") },
-  }).trim().length > 0
-    ? { stderr: "", status: 0 }
-    : { stderr: "", status: 0 };
-  // Helper reads git config via execFileSync("git", ...) which uses cwd, not GIT_DIR.
-  // So we must run the helper with cwd=tmpRepo.
+  // Helper reads git config via execFileSync("git", ...) which uses cwd, so run with cwd=tmpRepo.
   try {
     execFileSync("node", [helperPath, "get"], {
       input: "protocol=https\nhost=github.com\npath=anyingiit/My_Nexus-Editor_Workspace.git\n\n",
@@ -1117,9 +1109,9 @@ and GITHUB_APP_AUTH.md (replaced by the machine-level tool at
 
 Run:
 ```bash
-git push origin main
+git push origin myanyagent-extraction
 ```
-Expected: push succeeds via the new tool.
+Expected: push succeeds via the new tool. Final merge to `main` handled by `finishing-a-development-branch`.
 
 ---
 
