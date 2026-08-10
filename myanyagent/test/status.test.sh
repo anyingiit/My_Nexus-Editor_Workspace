@@ -36,7 +36,7 @@ printf 'PASS: not-bootstrapped emits bootstrap hint\n'
 git config --local myanyagent.repository "anyingiit/My_Nexus-Editor_Workspace"
 git config --local myanyagent.installationId "151195329"
 git config --local myanyagent.privateKey "/nonexistent/key.pem"  # status checks key path readability separately
-git config --local credential.helper '!node "/some/helper.cjs"'
+git config --local credential.helper '!node "/home/u/.local/share/myanyagent/bin/myanyagent-credential-helper.cjs"'
 
 out=$(sh "$STATUS" 2>&1) || true
 echo "$out" | grep -q "git config: configured" || fail "should report configured"
@@ -44,14 +44,46 @@ echo "$out" | grep -q "git config: configured" || fail "should report configured
 printf 'PASS: bootstrapped reports configured\n'
 
 # --- Test 3: -> run: uses absolute path fallback when ~/.local/bin not on PATH ---
-# Simulate by running with a PATH that excludes ~/.local/bin
+# Force a not-configured state so the bootstrap hint is emitted, then verify the
+# absolute path fallback is used when ~/.local/bin is not on PATH.
+git config --local --unset credential.helper 2>/dev/null || true
 out=$(PATH="/usr/bin:/bin" sh "$STATUS" 2>&1) || true
 echo "$out" | grep -qE -- '-> run:.*myanyagent-bootstrap' || fail "should still emit bootstrap hint even with restricted PATH"
 printf 'PASS: hint present with restricted PATH\n'
+# Restore configured state for subsequent tests
+git config --local credential.helper '!node "/home/u/.local/share/myanyagent/bin/myanyagent-credential-helper.cjs"'
 
 # --- Test 4: reports repo from .myanyagent.toml ---
 out=$(sh "$STATUS" 2>&1) || true
 echo "$out" | grep -q "repo: anyingiit/My_Nexus-Editor_Workspace" || fail "should report repo from toml"
 printf 'PASS: reports repo from toml\n'
+
+# --- Test 5: all-green path -> emits OK, no -> run: line ---
+# Need a temp HOME with the tool installed, a machine config, and a readable key
+TESTHOME=$(mktemp -d)
+# Install a minimal tool dir under the temp HOME so the tool check passes
+mkdir -p "$TESTHOME/.local/share/myanyagent/bin"
+cp "$(cd "$(dirname "$STATUS")" && pwd)/myanyagent-credential-helper.cjs" "$TESTHOME/.local/share/myanyagent/bin/"
+printf '1' > "$TESTHOME/.local/share/myanyagent/VERSION"
+mkdir -p "$TESTHOME/.config/myanyagent"
+cat > "$TESTHOME/.config/myanyagent/config.toml" <<CONF
+client_id = "Iv23lioD363YBpJJB9QE"
+app_id = "4483813"
+private_key = "$TMPDIR/dummy.pem"
+CONF
+# Generate a dummy RSA key
+openssl genrsa -out "$TMPDIR/dummy.pem" 2048 2>/dev/null || fail "openssl genrsa failed"
+# Reset git config to a clean bootstrapped state
+git config --local myanyagent.repository "anyingiit/My_Nexus-Editor_Workspace"
+git config --local myanyagent.installationId "151195329"
+git config --local myanyagent.privateKey "$TMPDIR/dummy.pem"
+git config --local credential.helper '!node "/home/u/.local/share/myanyagent/bin/myanyagent-credential-helper.cjs"'
+
+out=$(HOME="$TESTHOME" sh "$STATUS" 2>&1) || true
+last_line=$(echo "$out" | tail -1)
+[ "$last_line" = "OK" ] || fail "last line should be OK, got: $last_line"
+echo "$out" | grep -q -- "-> run:" && fail "should NOT emit -> run: when all green" || true
+printf 'PASS: all-green path emits OK with no -> run:\n'
+rm -rf "$TESTHOME" "$TMPDIR/dummy.pem"
 
 printf '\nALL status tests passed\n'

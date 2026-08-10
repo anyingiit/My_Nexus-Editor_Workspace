@@ -42,7 +42,8 @@ if [ -d "$tool_dir" ] && [ -f "$bin_dir/myanyagent-credential-helper.cjs" ]; the
   printf 'tool: installed v%s at %s\n' "$version" "$tool_dir"
 else
   printf 'tool: NOT installed\n'
-  printf '%s\n' "-> run: install the tool first (see repo README for install.sh URL)"
+  printf 'install the tool first, then run myanyagent-bootstrap\n'
+  printf '%s\n' "-> run: sh myanyagent/install.sh"
   exit 0
 fi
 
@@ -74,7 +75,7 @@ configured=false
 if [ -n "$repo_root" ]; then
   cfg_repo=$(git config --local --get myanyagent.repository 2>/dev/null || true)
   cfg_helper=$(git config --local --get credential.helper 2>/dev/null || true)
-  if [ -n "$cfg_repo" ] && [ -n "$cfg_helper" ]; then
+  if [ -n "$cfg_repo" ] && echo "$cfg_helper" | grep -q "myanyagent-credential-helper" 2>/dev/null; then
     configured=true
   fi
 fi
