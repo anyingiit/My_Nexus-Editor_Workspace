@@ -110,3 +110,58 @@ test("failure message includes -> run: remediation hint", () => {
   }
   fs.rmSync(tmpRepo, { recursive: true, force: true });
 });
+
+test("mintToken returns x-access-token and token on success", async () => {
+  const helper = require("../bin/myanyagent-credential-helper.cjs");
+  const keyPair = crypto.generateKeyPairSync("rsa", { modulusLength: 2048 });
+  const tmpKey = path.join(os.tmpdir(), `test-mint-key-${process.pid}.pem`);
+  fs.writeFileSync(tmpKey, keyPair.privateKey.export({ type: "pkcs8", format: "pem" }));
+
+  const originalFetch = global.fetch;
+  let capturedUrl, capturedBody, capturedHeaders;
+  global.fetch = async (url, opts) => {
+    capturedUrl = url;
+    capturedBody = JSON.parse(opts.body);
+    capturedHeaders = opts.headers;
+    return {
+      ok: true,
+      json: async () => ({ token: "mock-installation-token", permissions: { contents: "write" } }),
+    };
+  };
+
+  try {
+    const result = await helper.mintToken("anyingiit/My_Nexus-Editor_Workspace", "151195329", "Iv23lioD363YBpJJB9QE", tmpKey);
+    assert.equal(result.username, "x-access-token");
+    assert.equal(result.password, "mock-installation-token");
+    assert.ok(capturedUrl.includes("/151195329/access_tokens"), "should POST to the installation tokens endpoint");
+    assert.deepEqual(capturedBody, { repositories: ["My_Nexus-Editor_Workspace"] }, "should scope to the repo name");
+    assert.equal(capturedHeaders["X-GitHub-Api-Version"], "2022-11-28");
+    assert.equal(capturedHeaders["Content-Type"], "application/json");
+  } finally {
+    global.fetch = originalFetch;
+    fs.unlinkSync(tmpKey);
+  }
+});
+
+test("mintToken throws on non-write permissions", async () => {
+  const helper = require("../bin/myanyagent-credential-helper.cjs");
+  const keyPair = crypto.generateKeyPairSync("rsa", { modulusLength: 2048 });
+  const tmpKey = path.join(os.tmpdir(), `test-mint-key-${process.pid}.pem`);
+  fs.writeFileSync(tmpKey, keyPair.privateKey.export({ type: "pkcs8", format: "pem" }));
+
+  const originalFetch = global.fetch;
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({ token: "mock-token", permissions: { contents: "read" } }),
+  });
+
+  try {
+    await helper.mintToken("owner/repo", "123", "client_id", tmpKey);
+    assert.fail("should have thrown");
+  } catch (e) {
+    assert.ok(e.message.includes("contents:write"), `should mention contents:write, got: ${e.message}`);
+  } finally {
+    global.fetch = originalFetch;
+    fs.unlinkSync(tmpKey);
+  }
+});
