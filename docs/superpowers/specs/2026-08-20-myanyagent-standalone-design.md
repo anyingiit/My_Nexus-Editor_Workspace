@@ -13,7 +13,7 @@ be installed, versioned, and discovered on its own.
 
 | Decision | Choice |
 |---|---|
-| Git history | Preserve via subdirectory filter (7 commits, paths rewritten to root) |
+| Git history | Preserve via subdirectory filter (8 commits, paths rewritten to root) |
 | Local location | `~/Workspace/myanyagent` (sibling of this workspace) |
 | Workspace `myanyagent/` dir | Deleted after the new repo is pushed and verified |
 | Untracked `docs/contributing-to-third-party-repos.md` | Included in the new repo |
@@ -40,7 +40,7 @@ be installed, versioned, and discovered on its own.
 
 ## Verification
 
-- `git log --oneline` in the new repo shows exactly the 7 myanyagent commits.
+- `git log --oneline` in the new repo shows exactly the 8 myanyagent commits.
 - `node --test test/helper.test.cjs && sh test/bootstrap.test.sh && sh test/status.test.sh` pass.
 - `git ls-remote origin` shows `main` on GitHub; `myanyagent-status` is green
   in both repos.
