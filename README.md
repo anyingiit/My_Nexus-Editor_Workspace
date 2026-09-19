@@ -1,11 +1,12 @@
 <!-- Source: Best-README-Template BLANK_README (Unlicense) — https://github.com/othneildrew/Best-README-Template -->
 <a id="readme-top"></a>
 
-# My Nexus Editor Workspace
+# My_Nexus-Editor_Workspace
 
-My nexus editor workspace: no README or manifest to go on; based on its name, built with TypeScript, this looks like a software project — open the repository to confirm.
+A personal workspace archiving an abandoned attempt to build and evaluate a Nexus-Editor contribution AGENTS.md with AI coding agents, holding a My_Nexus-Editor_Workspace_V1 snapshot and its nexus-eval harness alongside an unresolved Nexus-Editor git submodule, with no buildable source of its own.
 
-[![CI](https://github.com/anyingiit/My_Nexus-Editor_Workspace/actions/workflows/ci.yml/badge.svg)](https://github.com/anyingiit/My_Nexus-Editor_Workspace/actions/workflows/ci.yml)
+**English** · [简体中文](README.zh-CN.md)
+
 [![License](https://img.shields.io/github/license/anyingiit/My_Nexus-Editor_Workspace)](LICENSE)
 
 [Report a bug](https://github.com/anyingiit/My_Nexus-Editor_Workspace/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/anyingiit/My_Nexus-Editor_Workspace/issues/new?template=feature_request.yml)
@@ -24,27 +25,33 @@ My nexus editor workspace: no README or manifest to go on; based on its name, bu
 
 ## About The Project
 
-My nexus editor workspace: no README or manifest to go on; based on its name, built with TypeScript, this looks like a software project — open the repository to confirm.
-
-See the [open issues](https://github.com/anyingiit/My_Nexus-Editor_Workspace/issues) for planned features and known issues.
+`My_Nexus-Editor_Workspace` is anyingiit's personal archive of one attempt to write and evaluate a layered, contribution-only `AGENTS.md` for the [Nexus-Editor](https://github.com/floatboatai/Nexus-Editor) editor project using AI coding agents configured under `.opencode/agent/`. That attempt lives entirely under `My_Nexus-Editor_Workspace_V1/`, whose own `README.md` records the run as abandoned, and its `nexus-eval/` subdirectory holds the dataset, rubric, and reports the attempt produced while scoring itself. At the repository root, `Nexus-Editor` is declared only as a git submodule pointing at that separate, third-party project (see [.gitmodules](.gitmodules)) and is left unresolved in this checkout, so there is no source of this repository's own to compile or run.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Git
+- A text editor or Markdown/JSON viewer, to read the archived notes and datasets — everything here is plain text.
+- Optionally, Git with submodule support, only if you want to fetch the code the top-level `Nexus-Editor` submodule points at; see [.gitmodules](.gitmodules). That fetches a separate repository and is not needed to read anything else in this workspace.
 
 ### Installation
+
+There is no build step and nothing of this repository's own to install. Cloning it gets you the archived files:
 
 ```sh
 git clone https://github.com/anyingiit/My_Nexus-Editor_Workspace.git
 cd My_Nexus-Editor_Workspace
 ```
 
+The top-level `Nexus-Editor/` directory stays empty unless you separately run `git submodule update --init`, which fetches `https://github.com/floatboatai/Nexus-Editor` — a different repository — and is entirely optional.
+
 ## Usage
 
+There is nothing to run; the point of this workspace is to read what it recorded:
+
 ```sh
-My_Nexus-Editor_Workspace --help
+$EDITOR My_Nexus-Editor_Workspace_V1/README.md            # the attempt's own status note
+$EDITOR My_Nexus-Editor_Workspace_V1/nexus-eval/README.md  # what the evaluation harness built and measured
 ```
 
 ## Contributing
